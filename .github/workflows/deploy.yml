@@ -15,7 +15,7 @@ env:
 jobs:
   build:
     # We build in the cloud because the cheap EC2 we're using to host kept crashing when building the project.
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - uses: actions/checkout@v4
