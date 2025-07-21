@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    --primary-50: 240 248 255;
+    --primary-100: 224 239 254;
+    --primary-200: 186 224 253;
+    --primary-300: 124 200 253;
+    --primary-400: 55 172 249;
+    --primary-500: 13 146 234;
+    --primary-600: 1 110 193;
+    --primary-700: 2 90 162;
+    --primary-800: 6 78 134;
+    --primary-900: 12 65 110;
+    --primary-950: 8 41 73;
+    --primary: var(--primary-200);
+    --primary-foreground: var(--primary-700);
+    --primary-text: var(--primary-500);
+
+    --destructive-50: 254 242 242; /* rgb of colors.red.50 */
+    --destructive-100: 254 226 226; /* rgb of colors.red.100 */
+    --destructive-200: 254 202 202; /* rgb of colors.red.200 */
+    --destructive-300: 252 165 165; /* rgb of colors.red.300 */
+    --destructive-400: 248 113 113; /* rgb of colors.red.400 */
+    --destructive-500: 239 68 68; /* rgb of colors.red.500 */
+    --destructive-600: 220 38 38; /* rgb of colors.red.600 */
+    --destructive-700: 185 28 28; /* rgb of colors.red.700 */
+    --destructive-800: 153 27 27; /* rgb of colors.red.800 */
+    --destructive-900: 127 29 29; /* rgb of colors.red.900 */
+    --destructive-950: 69 10 10; /* rgb of colors.red.950 */
+
+    --background-50: 248 250 252; /* rgb of colors.slate.50 */
+    --background-100: 241 245 249; /* rgb of colors.slate.100 */
+    --background-200: 226 232 240; /* rgb of colors.slate.200 */
+    --background-300: 203 213 225; /* rgb of colors.slate.300 */
+    --background-400: 148 163 184; /* rgb of colors.slate.400 */
+    --background-500: 100 116 139; /* rgb of colors.slate.500 */
+    --background-600: 71 85 105; /* rgb of colors.slate.600 */
+    --background-700: 51 65 85; /* rgb of colors.slate.700 */
+    --background-800: 30 41 59; /* rgb of colors.slate.800 */
+    --background-900: 15 23 42; /* rgb of colors.slate.900 */
+    --background: 255 255 255; /* rgb of colors.slate.50 */
+
+    --foreground-50: 30 41 59; /* rgb of colors.slate.800 */
+    --foreground-100: 30 41 59; /* rgb of colors.slate.800 */
+    --foreground-200: 51 65 85; /* rgb of colors.slate.700 */
+    --foreground-300: 71 85 105; /* rgb of colors.slate.600 */
+    --foreground-400: 100 116 139; /* rgb of colors.slate.500 */
+    --foreground-500: 148 163 184; /* rgb of colors.slate.400 */
+    --foreground-600: 203 213 225; /* rgb of colors.slate.300 */
+    --foreground-700: 226 232 240; /* rgb of colors.slate.200 */
+    --foreground-800: 241 245 249; /* rgb of colors.slate.100 */
+    --foreground-900: 248 250 252; /* rgb of colors.slate.50 */
+    --foreground: var(--foreground-50);
+    --foreground-discreet: var(--foreground-400);
+    --foreground-discreeter: var(--foreground-500);
+
+    --secondary: var(--background-200);
+    --secondary-foreground: var(--background-900);
+    --muted: var(--background-200);
+    --muted-foreground: var(--background-900);
+    --accent: var(--background-200);
+    --accent-foreground: var(--background-900);
+
+    --border: 203 213 225; /* rgb of colors.gray.300 */
+    --input: var(--border);
+    --link: var(--primary-600);
+    --link-hover: var(--primary-800);
+    --ring: var(--primary-600);
+
+    --card: 255 255 255;
+    --card-foreground: var(--background-900);
+    --popover: var(--background);
+    --popover-foreground: var(--background-900);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+
+    --selection: #b3d6ff;
+  }
+
+  .dark,
+  :root[class~='dark'] {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    --primary-text: var(--primary-400);
+
+    /* Uses the "stone" tailwind theme */
+    --background: 28 25 23; /* rgb of colors.stone.900 */
+    --background-100: 41 37 36; /* rgb of colors.stone.800 */
+    --background-200: 68 64 60; /* rgb of colors.stone.700 */
+    --background-300: 87 83 78; /* rgb of colors.stone.600 */
+    --background-400: 120 113 108; /* rgb of colors.stone.500 */
+    --background-500: 168 162 158; /* rgb of colors.stone.400 */
+    --background-600: 214 211 209; /* rgb of colors.stone.300 */
+    --background-700: 231 229 228; /* rgb of colors.stone.200 */
+    --background-800: 245 245 244; /* rgb of colors.stone.100 */
+    --background-900: 250 250 249; /* rgb of colors.slate.50 */
+
+    --foreground-900: 28 25 23; /* rgb of colors.stone.900 */
+    --foreground-800: 41 37 36; /* rgb of colors.stone.800 */
+    --foreground-700: 68 64 60; /* rgb of colors.stone.700 */
+    --foreground-600: 87 83 78; /* rgb of colors.stone.600 */
+    --foreground-500: 120 113 108; /* rgb of colors.stone.500 */
+    --foreground-400: 168 162 158; /* rgb of colors.stone.400 */
+    --foreground-300: 214 211 209; /* rgb of colors.stone.300 */
+    --foreground-200: 231 229 228; /* rgb of colors.stone.200 */
+    --foreground-100: 245 245 244; /* rgb of colors.stone.100 */
+    --foreground-50: 250 250 249; /* rgb of colors.slate.50 */
+    --foreground: var(--foreground-300);
+    --foreground-discreet: var(--foreground-400);
+    --foreground-discreeter: var(--foreground-500);
+
+    --secondary: var(--background-100);
+    --secondary-foreground: var(--background-800);
+    --muted: var(--background-100);
+    --muted-foreground: var(--background-800);
+    --accent: var(--background-100);
+    --accent-foreground: var(--background-800);
+
+    --border: var(--background-200);
+    --link: var(--primary-400);
+    --link-hover: var(--primary-300);
+    --ring: var(--primary-400);
+
+    --card: var(--background-100);
+    --card-foreground: var(--background-900);
+    --popover: var(--background);
+    --popover-foreground: var(--background-900);
+
+    --sidebar-background: 24 10% 8%; /* rgb of colors.stone.900 a little bit darker */
+    --sidebar-foreground: 24 6% 83%; /* rgb of colors.stone.300 */
+    --sidebar-primary: var(--primary-400);
+    --sidebar-primary-foreground: var(--primary-950);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+
+    --selection: #547caa;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  ::selection {
+    background: var(--selection);
+  }
+}
+
+@layer components {
+  .link {
+    @apply text-link no-underline underline-offset-4 transition-colors;
+  }
+
+  .link:hover {
+    @apply underline;
+  }
+}
+
+.reveal-viewport {
+  @apply !bg-background !text-foreground !opacity-100;
+}
+
+.reveal-viewport .slides > section,
+.reveal-viewport .slide-container {
+  /* overflow-y: auto !important;
+  overflow-x: hidden !important; */
+  @apply !max-h-[90vh];
+}
+
+.reveal-viewport .progress span {
+  @apply !bg-primary;
+}
+
+.reveal-viewport .slide-number {
+  @apply !rounded-2xl !bg-background-300 !px-3 !py-2 !text-foreground;
+}
+
+.reveal-viewport .navigate-left,
+.reveal-viewport .navigate-right,
+.reveal-viewport .navigate-up,
+.reveal-viewport .navigate-down {
+  @apply !text-foreground;
+}

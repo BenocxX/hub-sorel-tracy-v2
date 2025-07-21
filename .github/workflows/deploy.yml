@@ -1,0 +1,63 @@
+name: Build and deploy website
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ORIGIN: ${{ secrets.ORIGIN }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+  POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+
+jobs:
+  build:
+    # We build in the cloud because the cheap EC2 we're using to host kept crashing when building the project.
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build project
+        run: bun run build
+
+      - name: Archive build
+        run: tar -czf project.tar.gz ./*
+
+      - name: Upload project artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: project
+          path: project.tar.gz
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+
+    steps:
+      - name: Download project artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: project
+          path: ./
+
+      - name: Extract
+        run: tar -xzf ./project.tar.gz
+
+      - name: Migrate database
+        run: bunx prisma migrate deploy
+
+      - name: Generate prisma client
+        run: bunx prisma generate
+
+      - name: Delete website process
+        run: bunx pm2 delete hub-sorel-tracy || true # "|| true" is used to ignore errors if the process is not found
+
+      - name: Start website process
+        run: bunx pm2 start bun --name hub-sorel-tracy -- run ./build

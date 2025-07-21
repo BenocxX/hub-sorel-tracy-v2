@@ -1,0 +1,11 @@
+services:
+  hub-sorel-tracy-db:
+    build:
+      dockerfile: ./Docker/PostgreSQL/Dockerfile
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      POSTGRES_DB: local
