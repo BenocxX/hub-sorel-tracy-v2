@@ -24,6 +24,7 @@ You can preview the production build with `npm run preview`.
 ## Deploy on a fresh EC2
 
 Start an EC2 instance on AWS. Recommended settings:
+
 - Distribution: Debian 12
 - Architecture: 64-bit Arm (needed to use `t4g.*` instances)
 - Instance type: t4g.small
