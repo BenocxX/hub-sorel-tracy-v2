@@ -16,6 +16,7 @@
   "dependencies": {
     "@prisma/client": "6.12.0",
     "@types/reveal.js": "^5.0.5",
+    "bcrypt": "^6.0.0",
     "lucide-svelte": "^0.487.0",
     "mode-watcher": "0.5.1",
     "oslo": "^1.2.1",
