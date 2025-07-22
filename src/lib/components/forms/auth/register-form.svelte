@@ -4,19 +4,12 @@
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { registerSchema, type RegisterSchema } from './schema';
+  import DiscordButton from '$lib/components/custom-ui/ui/buttons/discord-button.svelte';
+  import { Separator } from '$lib/components/ui/separator';
 
   export let data: SuperValidated<Infer<RegisterSchema>>;
 
-  const form = superForm(data, {
-    validators: zodClient(registerSchema),
-    onResult: ({ result }) => {
-      console.log('Form result:', result);
-      // makeFormResultToast(result, {
-      //   success: 'Inscription complété avec succès.',
-      //   error: "Erreur lors de l'inscription.",
-      // });
-    },
-  });
+  const form = superForm(data, { validators: zodClient(registerSchema) });
 
   const { form: formData, delayed, enhance } = form;
 </script>
@@ -59,5 +52,13 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <Form.Button class="mt-4" {delayed}>Inscription</Form.Button>
+  <div class="mt-2 flex flex-col gap-2">
+    <Form.Button {delayed}>Inscription</Form.Button>
+    <div class="my-2 flex items-center">
+      <Separator class="flex-1" />
+      <span class="mx-4 text-foreground-discreet">OU</span>
+      <Separator class="flex-1" />
+    </div>
+    <DiscordButton>Se connecter avec Discord</DiscordButton>
+  </div>
 </form>

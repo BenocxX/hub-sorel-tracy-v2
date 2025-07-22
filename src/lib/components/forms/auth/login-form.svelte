@@ -1,28 +1,17 @@
 <script lang="ts">
-  import Button from '$lib/components/ui/button/button.svelte';
+  import DiscordButton from '$lib/components/custom-ui/ui/buttons/discord-button.svelte';
   import * as Form from '$lib/components/ui/form/index.js';
   import { Input } from '$lib/components/ui/input';
-  import { makeSearchParams } from '$lib/tools/search-params';
+  import Separator from '$lib/components/ui/separator/separator.svelte';
   import { loginSchema, type LoginSchema } from './schema';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
   const { data }: { data: SuperValidated<Infer<LoginSchema>> } = $props();
 
-  const form = superForm(data, {
-    validators: zodClient(loginSchema),
-    onResult: ({ result }) => {
-      console.log('Form result:', result);
-      // makeFormResultToast(result, {
-      //   success: 'Authentification complété avec succès.',
-      //   error: "Erreur lors de l'authentification.",
-      // });
-    },
-  });
+  const form = superForm(data, { validators: zodClient(loginSchema) });
 
   const { form: formData, delayed, enhance } = form;
-
-  const { searchParams } = $derived(makeSearchParams($formData, ['username']));
 </script>
 
 <form method="POST" class="flex flex-col gap-2" use:enhance>
@@ -49,8 +38,13 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <div class="mt-4 flex flex-col gap-2">
+  <div class="mt-2 flex flex-col gap-2">
     <Form.Button {delayed}>Connexion</Form.Button>
-    <Button variant="outline" href={`/login/passkey${searchParams}`}>Utiliser une passkey</Button>
+    <div class="my-2 flex items-center">
+      <Separator class="flex-1" />
+      <span class="mx-4 text-foreground-discreet">OU</span>
+      <Separator class="flex-1" />
+    </div>
+    <DiscordButton>Se connecter avec Discord</DiscordButton>
   </div>
 </form>
