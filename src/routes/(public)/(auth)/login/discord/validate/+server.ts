@@ -11,14 +11,13 @@ export const GET = async (event) => {
     return redirect(302, '/login');
   }
 
-  const isSuccess = await discordAuthService.validateAuthorizationCode(code, async (tokens) => {
-    const discordUser = await discordAuthService.getDiscordUserFromTokens(tokens);
-    await authenticate(event, discordUser, tokens);
-  });
-
-  if (!isSuccess) {
+  const tokens = await discordAuthService.askDiscordForAccessToken(code);
+  if (!tokens) {
     return redirect(302, '/login');
   }
+
+  const discordUser = await discordAuthService.getDiscordUserFromTokens(tokens);
+  await authenticate(event, discordUser, tokens);
 
   return redirect(302, '/savant');
 };

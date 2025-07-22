@@ -77,9 +77,9 @@ export class AuthService {
     const session = await sessionService.create(sessionToken, user.id, sessionName);
 
     if (tokens) {
-      const accessToken = tokens?.accessToken();
-      const expiresAt = tokens?.accessTokenExpiresAt();
-      const refreshToken = tokens?.refreshToken();
+      const accessToken = tokens.accessToken();
+      const expiresAt = tokens.accessTokenExpiresAt();
+      const refreshToken = tokens.refreshToken();
 
       await db.oAuthToken.create({
         data: {

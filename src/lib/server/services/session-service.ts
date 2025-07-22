@@ -95,20 +95,7 @@ export class SessionService {
     }
 
     const discordAuthService = new DiscordAuthService();
-    await discordAuthService.refreshAccessToken(oauthToken.refreshToken, async (tokens) => {
-      const accessToken = tokens.accessToken();
-      const expiresAt = tokens.accessTokenExpiresAt();
-      const refreshToken = tokens.refreshToken();
-
-      await db.oAuthToken.update({
-        where: { sessionId: session.id },
-        data: {
-          accessToken,
-          expiresAt,
-          refreshToken,
-        },
-      });
-    });
+    await discordAuthService.refreshToken(session.id, oauthToken.refreshToken);
   }
 
   /** Gets the session token from the cookies. */
