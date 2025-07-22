@@ -11,11 +11,11 @@ import type { Session, User } from '@prisma/client';
 export class SessionService {
   public static SESSION_COOKIE_NAME = 'auth-session';
 
-  /** The session token is valid for 15 days */
-  public static REFRESH_DELAY = TimeConstants.FIFTEEN_DAYS_IN_MS;
+  /** The session token is valid for 3 days */
+  public static REFRESH_DELAY = TimeConstants.DAY_IN_MS * 3;
 
-  /** The session token is valid for 30 days */
-  public static EXPIRY_DELAY = TimeConstants.MONTH_IN_MS;
+  /** The session token is valid for 7 days */
+  public static EXPIRY_DELAY = TimeConstants.WEEK_IN_MS;
 
   private readonly textEncoder = new TextEncoder();
 
@@ -33,57 +33,29 @@ export class SessionService {
       await sha256(this.textEncoder.encode(`session-public-id-${token}-${new Date().toString()}`))
     );
 
-    const session = await db.session.create({
-      data: {
-        id: sessionId,
-        publicId,
-        userId,
-        name,
-        lastUsed: new Date(),
-        expiresAt: new Date(Date.now() + SessionService.EXPIRY_DELAY),
-      },
-    });
+    const session = await this.createFreshSession(sessionId, publicId, userId, name);
 
     return session;
   }
 
   /**
    * Validates a session token. If the token is invalid or expired, the session is deleted from the database.
-   * If the token is valid, the session is refreshed if it is about to expire (< 15 days).
+   * If the token is valid, the session is refreshed if it is about to expire (< 3 days).
    */
   public async validate(token: string): Promise<SessionValidationResult> {
     const sessionId = encodeHex(await sha256(new TextEncoder().encode(token)));
 
-    const sessionResult = await db.session.findFirst({
-      where: { id: sessionId },
-      include: {
-        user: true,
-      },
-    });
-
-    if (!sessionResult) {
+    const { session, user } = await this.getSessionAndAssociatedUser(sessionId);
+    if (!session || !user) {
       return { session: null, user: null };
     }
 
-    const { user, ...session } = sessionResult;
-
-    const sessionExpired = Date.now() >= session.expiresAt.getTime();
-    if (sessionExpired) {
-      await db.session.delete({ where: { id: session.id } });
+    if (this.isExpired(session)) {
+      await this.invalidate(session.id);
       return { session: null, user: null };
     }
 
-    const needRenew = Date.now() >= session.expiresAt.getTime() - SessionService.REFRESH_DELAY;
-
-    await db.session.update({
-      where: { id: session.id },
-      data: {
-        lastUsed: new Date(),
-        expiresAt: needRenew
-          ? new Date(Date.now() + SessionService.EXPIRY_DELAY) // Refresh the session for 30 days
-          : session.expiresAt,
-      },
-    });
+    await this.refresh(session);
 
     return { session, user };
   }
@@ -91,6 +63,21 @@ export class SessionService {
   /** Deletes a session from the database. */
   public async invalidate(sessionId: string): Promise<void> {
     await db.session.delete({ where: { id: sessionId } });
+  }
+
+  /** Updates the current session and renew expiration date if needed. */
+  public async refresh(session: Session) {
+    const needRenew = Date.now() >= session.expiresAt.getTime() - SessionService.REFRESH_DELAY;
+
+    await db.session.update({
+      where: { id: session.id },
+      data: {
+        lastUsed: new Date(),
+        expiresAt: needRenew
+          ? new Date(Date.now() + SessionService.EXPIRY_DELAY) // Refresh the session for 7 days
+          : session.expiresAt,
+      },
+    });
   }
 
   /** Gets the session token from the cookies. */
@@ -111,6 +98,39 @@ export class SessionService {
       expires: expiresAt,
       path: '/',
     });
+  }
+
+  private isExpired(session: Session) {
+    return Date.now() >= session.expiresAt.getTime();
+  }
+
+  private async createFreshSession(id: string, publicId: string, userId: string, name: string) {
+    return await db.session.create({
+      data: {
+        id,
+        publicId,
+        userId,
+        name,
+        lastUsed: new Date(),
+        expiresAt: new Date(Date.now() + SessionService.EXPIRY_DELAY),
+      },
+    });
+  }
+
+  private async getSessionAndAssociatedUser(sessionId: string) {
+    const result = await db.session.findFirst({
+      where: { id: sessionId },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!result) {
+      return { user: null, session: null };
+    }
+
+    const { user, ...session } = result;
+    return { user, session };
   }
 }
 
