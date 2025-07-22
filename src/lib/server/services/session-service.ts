@@ -7,6 +7,7 @@ import { db } from '../prisma';
 import { base64url, encodeHex } from 'oslo/encoding';
 import { sha256 } from 'oslo/crypto';
 import type { Session, User } from '@prisma/client';
+import { DiscordAuthService } from './discord-auth-service';
 
 export class SessionService {
   public static SESSION_COOKIE_NAME = 'auth-session';
@@ -55,7 +56,8 @@ export class SessionService {
       return { session: null, user: null };
     }
 
-    await this.refresh(session);
+    await this.refreshSession(session);
+    await this.refreshOAuthToken(session);
 
     return { session, user };
   }
@@ -66,7 +68,7 @@ export class SessionService {
   }
 
   /** Updates the current session and renew expiration date if needed. */
-  public async refresh(session: Session) {
+  public async refreshSession(session: Session) {
     const needRenew = Date.now() >= session.expiresAt.getTime() - SessionService.REFRESH_DELAY;
 
     await db.session.update({
@@ -77,6 +79,35 @@ export class SessionService {
           ? new Date(Date.now() + SessionService.EXPIRY_DELAY) // Refresh the session for 7 days
           : session.expiresAt,
       },
+    });
+  }
+
+  /** Renew the oauth token if needed. */
+  public async refreshOAuthToken(session: Session) {
+    const oauthToken = await db.oAuthToken.findFirst({ where: { sessionId: session.id } });
+    if (!oauthToken) {
+      return;
+    }
+
+    const needRenew = Date.now() >= oauthToken?.expiresAt.getTime() - SessionService.REFRESH_DELAY;
+    if (!needRenew) {
+      return;
+    }
+
+    const discordAuthService = new DiscordAuthService();
+    await discordAuthService.refreshAccessToken(oauthToken.refreshToken, async (tokens) => {
+      const accessToken = tokens.accessToken();
+      const expiresAt = tokens.accessTokenExpiresAt();
+      const refreshToken = tokens.refreshToken();
+
+      await db.oAuthToken.update({
+        where: { sessionId: session.id },
+        data: {
+          accessToken,
+          expiresAt,
+          refreshToken,
+        },
+      });
     });
   }
 

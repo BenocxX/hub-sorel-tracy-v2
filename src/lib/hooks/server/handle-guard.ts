@@ -15,7 +15,7 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
 };
 
 /**
- * Guard public routes from authenticated users
+ * Guard public auth routes from authenticated users
  */
 function publicGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/(public)/(auth)') && user) {

@@ -11,13 +11,13 @@ datasource db {
 model User {
   id           String  @id
   username     String  @unique
+  firstname    String?
+  lastname     String?
   passwordHash String?
   discordId    String? @unique
   role         String  @default("user")
 
-  sessions                 Session[]
-  Passkey                  Passkey[]
-  PasskeyCredentialOptions PasskeyCredentialOptions?
+  sessions Session[]
 }
 
 model Session {
@@ -29,35 +29,16 @@ model Session {
   expiresAt DateTime
   createdAt DateTime @default(now()) @db.Timestamptz(3)
 
+  oauthToken OAuthToken?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Passkey {
-  id             String   @id @unique
-  userId         String
-  publicKey      Bytes
-  webauthnUserID String   @unique
-  counter        BigInt
-  deviceType     String
-  backedUp       Boolean
-  transports     String[]
+model OAuthToken {
+  sessionId    String   @id @unique
+  accessToken  String   @unique
+  refreshToken String
+  expiresAt    DateTime
 
-  name      String
-  lastUsed  DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([id], name: "passkey_id_index")
-  @@index([userId], name: "passkey_user_id_index")
-  @@index([webauthnUserID], name: "passkey_webauthn_user_id_index")
-}
-
-model PasskeyCredentialOptions {
-  id          Int    @id @default(autoincrement())
-  userId      String @unique
-  optionsJson String
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }

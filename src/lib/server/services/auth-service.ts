@@ -3,6 +3,8 @@ import { SessionService } from './session-service';
 import type { RequestEvent } from '@sveltejs/kit';
 import { base32 } from 'oslo/encoding';
 import { Argon2id } from 'oslo/password';
+import type { DiscordUser } from './discord-auth-service';
+import type { OAuth2Tokens } from 'arctic';
 
 type AuthData = {
   username: string;
@@ -22,16 +24,26 @@ export class AuthService {
   private readonly argon2id = new Argon2id();
   private readonly sessionService = new SessionService();
 
-  /** Creates a new user/key in the database, with the given email and password (hashed with Argon2id). */
+  /** Creates a new user in the database, with the given email and password (hashed with Argon2id). */
   public async signup({ username, password }: AuthData) {
-    const userId = generateUserId();
     const passwordHash = await this.argon2id.hash(password);
 
     return await db.user.create({
       data: {
-        id: userId,
+        id: generateUserId(),
         username,
         passwordHash,
+      },
+    });
+  }
+
+  /** Creates a new user in the database, with the given discord user data. */
+  public async signupWithDiscord(discordUser: DiscordUser) {
+    return await db.user.create({
+      data: {
+        id: generateUserId(),
+        username: discordUser.username,
+        discordId: discordUser.id,
       },
     });
   }
@@ -43,7 +55,7 @@ export class AuthService {
       omit: { passwordHash: false },
     });
 
-    if (!user) {
+    if (!user || !user.passwordHash) {
       return;
     }
 
@@ -53,12 +65,34 @@ export class AuthService {
   }
 
   /** Creates a new session for the given user. */
-  public async createSession(event: RequestEvent, user: NonNullable<App.Locals['user']>) {
+  public async createSession(
+    event: RequestEvent,
+    user: NonNullable<App.Locals['user']>,
+    tokens: OAuth2Tokens | null = null
+  ) {
     const sessionService = new SessionService();
 
     const sessionToken = sessionService.generateToken();
     const sessionName = event.request.headers.get('user-agent') ?? 'Unknown';
     const session = await sessionService.create(sessionToken, user.id, sessionName);
+
+    if (tokens) {
+      const accessToken = tokens?.accessToken();
+      const expiresAt = tokens?.accessTokenExpiresAt();
+      const refreshToken = tokens?.refreshToken();
+
+      await db.oAuthToken.create({
+        data: {
+          accessToken,
+          expiresAt,
+          refreshToken,
+          session: {
+            connect: session,
+          },
+        },
+      });
+    }
+
     sessionService.setCookie(event, sessionToken, session.expiresAt);
 
     return session;
@@ -66,11 +100,13 @@ export class AuthService {
 
   /** Logs out the user by invalidating their session. */
   public async logout(event: RequestEvent) {
-    if (!event.locals.session?.id) {
+    const sessionId = event.locals.session?.id;
+
+    if (!sessionId) {
       return;
     }
 
-    await this.sessionService.invalidate(event.locals.session.id.toString());
+    await this.sessionService.invalidate(sessionId.toString());
     this.sessionService.deleteCookie(event);
   }
 
@@ -85,5 +121,9 @@ export class AuthService {
 
   public async isUsernameAlreadyUsed(username: string) {
     return Boolean(await db.user.findFirst({ where: { username } }));
+  }
+
+  public async getUserByDiscordId(discordId: string) {
+    return await db.user.findFirst({ where: { discordId } });
   }
 }
