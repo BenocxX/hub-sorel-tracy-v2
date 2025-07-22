@@ -10,4 +10,5 @@
     Vous n'avez pas de compte? <a href="/register" class="link">S'inscrire</a>
   </p>
   <LoginForm data={data.form} />
+  <a href="/login/discord" class="link">Se connecter avec Discord</a>
 </div>
