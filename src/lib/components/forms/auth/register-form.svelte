@@ -52,13 +52,13 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <div class="mt-2 flex flex-col gap-2">
-    <Form.Button {delayed}>Inscription</Form.Button>
-    <div class="my-2 flex items-center">
+  <div class="mt-2 flex flex-col gap-2 md:flex-row lg:flex-col xl:flex-row">
+    <Form.Button class="flex-1" {delayed}>Inscription</Form.Button>
+    <div class="my-2 flex items-center md:hidden lg:flex xl:hidden">
       <Separator class="flex-1" />
-      <span class="mx-4 text-foreground-discreet">OU</span>
+      <span class="mx-4 text-foreground-discreeter">OU</span>
       <Separator class="flex-1" />
     </div>
-    <DiscordButton>Se connecter avec Discord</DiscordButton>
+    <DiscordButton class="flex-1">Se connecter avec Discord</DiscordButton>
   </div>
 </form>
