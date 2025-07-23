@@ -14,10 +14,10 @@ model User {
   firstname    String?
   lastname     String?
   passwordHash String?
-  discordId    String? @unique
   role         String  @default("user")
 
-  sessions Session[]
+  discordUser DiscordUser?
+  sessions    Session[]
 }
 
 model Session {
@@ -41,4 +41,13 @@ model OAuthToken {
   expiresAt    DateTime
 
   session Session @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model DiscordUser {
+  userId    String @id @unique
+  discordId String @unique
+  username  String
+  avatar    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

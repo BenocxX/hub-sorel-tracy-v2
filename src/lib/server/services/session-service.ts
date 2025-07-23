@@ -43,23 +43,23 @@ export class SessionService {
    * Validates a session token. If the token is invalid or expired, the session is deleted from the database.
    * If the token is valid, the session is refreshed if it is about to expire (< 3 days).
    */
-  public async validate(token: string): Promise<SessionValidationResult> {
+  public async validate(token: string) {
     const sessionId = encodeHex(await sha256(new TextEncoder().encode(token)));
 
-    const { session, user } = await this.getSessionAndAssociatedUser(sessionId);
-    if (!session || !user) {
-      return { session: null, user: null };
+    const session = await this.getSessionAndAssociatedUser(sessionId);
+    if (!session) {
+      return null;
     }
 
     if (this.isExpired(session)) {
       await this.invalidate(session.id);
-      return { session: null, user: null };
+      return null;
     }
 
     await this.refreshSession(session);
     await this.refreshOAuthToken(session);
 
-    return { session, user };
+    return session;
   }
 
   /** Deletes a session from the database. */
@@ -84,7 +84,7 @@ export class SessionService {
 
   /** Renew the oauth token if needed. */
   public async refreshOAuthToken(session: Session) {
-    const oauthToken = await db.oAuthToken.findFirst({ where: { sessionId: session.id } });
+    let oauthToken = await db.oAuthToken.findFirst({ where: { sessionId: session.id } });
     if (!oauthToken) {
       return;
     }
@@ -95,7 +95,13 @@ export class SessionService {
     }
 
     const discordAuthService = new DiscordAuthService();
-    await discordAuthService.refreshToken(session.id, oauthToken.refreshToken);
+    oauthToken = await discordAuthService.refreshToken(session.id, oauthToken.refreshToken);
+    if (!oauthToken) {
+      return;
+    }
+
+    const user = await db.user.findFirstOrThrow({ where: { id: session.userId } });
+    await discordAuthService.updateLocalDiscordUserData(oauthToken.accessToken, user);
   }
 
   /** Gets the session token from the cookies. */
@@ -136,22 +142,22 @@ export class SessionService {
   }
 
   private async getSessionAndAssociatedUser(sessionId: string) {
-    const result = await db.session.findFirst({
+    const session = await db.session.findFirst({
       where: { id: sessionId },
       include: {
-        user: true,
+        user: {
+          include: {
+            discordUser: true,
+          },
+        },
+        oauthToken: true,
       },
     });
 
-    if (!result) {
-      return { user: null, session: null };
+    if (!session) {
+      return null;
     }
 
-    const { user, ...session } = result;
-    return { user, session };
+    return session;
   }
 }
-
-export type SessionValidationResult =
-  | { session: Session; user: Omit<User, 'passwordHash'> }
-  | { session: null; user: null };

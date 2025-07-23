@@ -3,7 +3,7 @@ import { SessionService } from './session-service';
 import type { RequestEvent } from '@sveltejs/kit';
 import { base32 } from 'oslo/encoding';
 import { Argon2id } from 'oslo/password';
-import type { DiscordUser } from './discord-auth-service';
+import { DiscordAuthService, type DiscordUser } from './discord-auth-service';
 import type { OAuth2Tokens } from 'arctic';
 
 type LoginData = {
@@ -46,13 +46,25 @@ export class AuthService {
 
   /** Creates a new user in the database, with the given discord user data. */
   public async signupWithDiscord(discordUser: DiscordUser) {
-    return await db.user.create({
+    const newUser = await db.user.create({
       data: {
         id: generateUserId(),
         username: discordUser.username,
-        discordId: discordUser.id,
       },
     });
+
+    await db.discordUser.create({
+      data: {
+        discordId: discordUser.id,
+        username: discordUser.username,
+        avatar: discordUser.avatar,
+        user: {
+          connect: newUser,
+        },
+      },
+    });
+
+    return newUser;
   }
 
   /** Tries to log in the user with the given email and password. */
@@ -84,20 +96,9 @@ export class AuthService {
     const session = await sessionService.create(sessionToken, user.id, sessionName);
 
     if (tokens) {
-      const accessToken = tokens.accessToken();
-      const expiresAt = tokens.accessTokenExpiresAt();
-      const refreshToken = tokens.refreshToken();
-
-      await db.oAuthToken.create({
-        data: {
-          accessToken,
-          expiresAt,
-          refreshToken,
-          session: {
-            connect: session,
-          },
-        },
-      });
+      const discordAuthService = new DiscordAuthService();
+      await discordAuthService.insertOAuthToken(tokens, session);
+      await discordAuthService.updateLocalDiscordUserData(tokens.accessToken(), user);
     }
 
     sessionService.setCookie(event, sessionToken, session.expiresAt);
@@ -131,6 +132,12 @@ export class AuthService {
   }
 
   public async getUserByDiscordId(discordId: string) {
-    return await db.user.findFirst({ where: { discordId } });
+    return await db.user.findFirst({
+      where: {
+        discordUser: {
+          discordId,
+        },
+      },
+    });
   }
 }

@@ -1,15 +1,11 @@
 <script lang="ts">
-  import * as Sidebar from '$lib/components/ui/sidebar';
-  import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
   import ClassSwitcher from './class-switcher.svelte';
+  import * as Sidebar from '$lib/components/ui/sidebar';
+  import SidebarUser from './sidebar-user.svelte';
+  import { page } from '$app/state';
 
-  // This is sample data.
   const data = {
-    user: {
-      name: 'Mathis Côté',
-      // email: 'm@example.com',
-      // avatar: '/avatars/shadcn.jpg',
-    },
+    user: page.data.user!,
     classes: [
       {
         name: 'Web 1',
@@ -41,5 +37,7 @@
       {/snippet}
     </Sidebar.MenuButton>
   </Sidebar.Content>
-  <Sidebar.Footer />
+  <Sidebar.Footer>
+    <SidebarUser user={page.data.user} />
+  </Sidebar.Footer>
 </Sidebar.Root>

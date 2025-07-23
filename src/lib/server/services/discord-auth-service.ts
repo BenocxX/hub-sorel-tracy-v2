@@ -7,6 +7,8 @@ import {
 import { type Cookies } from '@sveltejs/kit';
 import * as arctic from 'arctic';
 import { db } from '../prisma';
+import type { User } from '$lib/types/prisma-types';
+import type { Session } from '@prisma/client';
 
 const discord = new arctic.Discord(DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_REDIRECT_URI);
 const DISCORD_COOKIE_NAME = 'discord_auth_state';
@@ -73,14 +75,14 @@ export class DiscordAuthService {
   public async refreshToken(sessionId: string, refreshToken: string) {
     const tokens = await this.askDiscordForAccessToken(refreshToken, true);
     if (!tokens) {
-      return;
+      return null;
     }
 
     const accessToken = tokens.accessToken();
     const expiresAt = tokens.accessTokenExpiresAt();
     const newRefreshToken = tokens.refreshToken();
 
-    await db.oAuthToken.update({
+    return await db.oAuthToken.update({
       where: { sessionId: sessionId },
       data: {
         accessToken,
@@ -90,9 +92,43 @@ export class DiscordAuthService {
     });
   }
 
-  public async getDiscordUserFromTokens(tokens: arctic.OAuth2Tokens) {
+  public async insertOAuthToken(tokens: arctic.OAuth2Tokens, session: Session) {
     const accessToken = tokens.accessToken();
+    const expiresAt = tokens.accessTokenExpiresAt();
+    const refreshToken = tokens.refreshToken();
 
+    await db.oAuthToken.create({
+      data: {
+        accessToken,
+        expiresAt,
+        refreshToken,
+        session: {
+          connect: session,
+        },
+      },
+    });
+  }
+
+  public async updateLocalDiscordUserData(accessToken: string, user: User) {
+    const discordUser = await this.getDiscordUser(accessToken);
+
+    await db.discordUser.upsert({
+      where: { userId: user.id },
+      create: {
+        userId: user.id,
+        discordId: discordUser.id,
+        username: discordUser.username,
+        avatar: discordUser.avatar,
+      },
+      update: {
+        discordId: discordUser.id,
+        username: discordUser.username,
+        avatar: discordUser.avatar,
+      },
+    });
+  }
+
+  public async getDiscordUser(accessToken: string) {
     const response = await fetch('https://discord.com/api/users/@me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,

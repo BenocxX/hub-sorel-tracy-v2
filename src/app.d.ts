@@ -1,14 +1,17 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
+
+import type { Session, User } from '$lib/types/prisma-types';
+
 // for information about these interfaces
 declare global {
   namespace App {
     interface Locals {
-      user: import('$lib/server/services/session-service').SessionValidationResult['user'];
-      session: import('$lib/server/services/session-service').SessionValidationResult['session'];
+      user?: User<{ discordUser: true }> | null;
+      session?: Session<{ oauthToken: true; user: { include: { discordUser: true } } }> | null;
     }
 
     interface PageData {
-      user: App.Locals['user'];
+      user: NonNullable<App.Locals['user']>;
     }
   }
 }
