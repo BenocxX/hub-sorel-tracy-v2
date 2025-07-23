@@ -6,9 +6,14 @@ import { Argon2id } from 'oslo/password';
 import type { DiscordUser } from './discord-auth-service';
 import type { OAuth2Tokens } from 'arctic';
 
-type AuthData = {
+type LoginData = {
   username: string;
   password: string;
+};
+
+type SignupData = LoginData & {
+  firstname: string;
+  lastname: string;
 };
 
 function generateUserId() {
@@ -24,14 +29,16 @@ export class AuthService {
   private readonly argon2id = new Argon2id();
   private readonly sessionService = new SessionService();
 
-  /** Creates a new user in the database, with the given email and password (hashed with Argon2id). */
-  public async signup({ username, password }: AuthData) {
+  /** Creates a new user in the database, with the given SignupData, the password is hashed with Argon2id. */
+  public async signup({ username, firstname, lastname, password }: SignupData) {
     const passwordHash = await this.argon2id.hash(password);
 
     return await db.user.create({
       data: {
         id: generateUserId(),
         username,
+        firstname,
+        lastname,
         passwordHash,
       },
     });
@@ -49,7 +56,7 @@ export class AuthService {
   }
 
   /** Tries to log in the user with the given email and password. */
-  public async login({ username, password }: AuthData) {
+  public async login({ username, password }: LoginData) {
     const user = await db.user.findFirst({
       where: { username },
       omit: { passwordHash: false },

@@ -38,11 +38,11 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <div class="mt-2 flex flex-col gap-2 md:flex-row lg:flex-col xl:flex-row">
+  <div class="mt-2 flex flex-col gap-2">
     <Form.Button class="flex-1" {delayed}>Connexion</Form.Button>
-    <div class="my-2 flex items-center md:hidden lg:flex xl:hidden">
+    <div class="my-2 flex items-center">
       <Separator class="flex-1" />
-      <span class="mx-4 text-foreground-discreet">OU</span>
+      <span class="mx-4 text-foreground-discreeter">OU</span>
       <Separator class="flex-1" />
     </div>
     <DiscordButton class="flex-1">Se connecter avec Discord</DiscordButton>
