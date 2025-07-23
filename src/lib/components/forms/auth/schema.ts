@@ -14,21 +14,9 @@ export const registerSchema = z
     confirmPassword: z.string().min(8).max(50),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
+    message: 'Les mots de passe ne correspondent pas',
     path: ['confirmPassword'],
-  });
-
-export const resetPasswordSchema = z
-  .object({
-    oldPassword: z.string().min(2).max(50),
-    newPassword: z.string().min(2).max(50),
-    confirmNewPassword: z.string().min(2).max(50),
-  })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmNewPassword'],
   });
 
 export type LoginSchema = typeof loginSchema;
 export type RegisterSchema = typeof registerSchema;
-export type ResetPasswordSchema = typeof resetPasswordSchema;

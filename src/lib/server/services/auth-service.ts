@@ -5,6 +5,7 @@ import { base32 } from 'oslo/encoding';
 import { Argon2id } from 'oslo/password';
 import { DiscordAuthService, type DiscordUser } from './discord-auth-service';
 import type { OAuth2Tokens } from 'arctic';
+import type { User } from '$lib/types/prisma-types';
 
 type LoginData = {
   username: string;
@@ -86,7 +87,7 @@ export class AuthService {
   /** Creates a new session for the given user. */
   public async createSession(
     event: RequestEvent,
-    user: NonNullable<App.Locals['user']>,
+    user: NonNullable<User>,
     tokens: OAuth2Tokens | null = null
   ) {
     const sessionService = new SessionService();
@@ -118,7 +119,7 @@ export class AuthService {
     this.sessionService.deleteCookie(event);
   }
 
-  public async changePassword(user: App.Locals['user'], newPassword: string) {
+  public async changePassword(user: User, newPassword: string) {
     const passwordHash = await this.argon2id.hash(newPassword);
 
     await db.user.update({

@@ -5,7 +5,7 @@
   import { page } from '$app/state';
 
   const data = {
-    user: page.data.user!,
+    user: page.data.user,
     classes: [
       {
         name: 'Web 1',
@@ -38,6 +38,6 @@
     </Sidebar.MenuButton>
   </Sidebar.Content>
   <Sidebar.Footer>
-    <SidebarUser user={page.data.user} />
+    <SidebarUser user={page.data.user!} />
   </Sidebar.Footer>
 </Sidebar.Root>

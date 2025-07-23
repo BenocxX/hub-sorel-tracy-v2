@@ -6,7 +6,7 @@
   import { useSidebar } from '$lib/components/ui/sidebar';
   import { enhance } from '$app/forms';
 
-  let { user }: { user: App.PageData['user'] } = $props();
+  let { user }: { user: NonNullable<App.PageData['user']> } = $props();
   const sidebar = useSidebar();
 
   let logoutForm: HTMLFormElement;

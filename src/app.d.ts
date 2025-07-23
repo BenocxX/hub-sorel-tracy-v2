@@ -11,7 +11,7 @@ declare global {
     }
 
     interface PageData {
-      user: NonNullable<App.Locals['user']>;
+      user: App.Locals['user'];
     }
   }
 }

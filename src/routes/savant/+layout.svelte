@@ -5,7 +5,7 @@
   import Footer from '$lib/components/structure/footer.svelte';
   import Button from '$lib/components/ui/button/button.svelte';
   import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-  import { Sun, LogOut, Moon, Home } from 'lucide-svelte';
+  import { Sun, LogOut, Moon, Home, Cog } from 'lucide-svelte';
   import { page } from '$app/state';
   import { cn } from '$lib/utils';
   import { ModeWatcher, resetMode, setMode } from 'mode-watcher';
@@ -45,6 +45,10 @@
             <DropdownMenu.Item onclick={() => resetMode()}>System</DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
+        <Button href="/savant/settings" variant="outline" size="icon-sm">
+          <span class="sr-only">Paramètres</span>
+          <Cog />
+        </Button>
         <Button href="/" variant="outline" size="icon-sm">
           <span class="sr-only">Accueil</span>
           <Home />
