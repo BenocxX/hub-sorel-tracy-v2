@@ -1,13 +1,13 @@
 <script lang="ts">
-  import * as Sidebar from '$lib/components/ui/sidebar';
-  import SavantSidebar from '$lib/components/structure/sidebar/savant-sidebar.svelte';
-  import Separator from '$lib/components/ui/separator/separator.svelte';
-  import Footer from '$lib/components/structure/footer.svelte';
-  import Button from '$lib/components/ui/button/button.svelte';
-  import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+  import * as Sidebar from '$lib/client/components/ui/sidebar';
+  import SavantSidebar from '$lib/client/components/structure/sidebar/savant-sidebar.svelte';
+  import Separator from '$lib/client/components/ui/separator/separator.svelte';
+  import Footer from '$lib/client/components/structure/footer.svelte';
+  import Button from '$lib/client/components/ui/button/button.svelte';
+  import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import { Sun, LogOut, Moon, Home, Cog } from 'lucide-svelte';
   import { page } from '$app/state';
-  import { cn } from '$lib/utils';
+  import { cn } from '$lib/client/utils';
   import { ModeWatcher, resetMode, setMode } from 'mode-watcher';
   import { enhance } from '$app/forms';
 

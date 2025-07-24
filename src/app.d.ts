@@ -1,6 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
-import type { Session, User } from '$lib/types/prisma-types';
+import type { Session, User } from '$lib/common/types/prisma-types';
 
 // for information about these interfaces
 declare global {

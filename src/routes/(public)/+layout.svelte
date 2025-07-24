@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Footer from '$lib/components/structure/footer.svelte';
-  import Navbar from '$lib/components/structure/navbar.svelte';
+  import Footer from '$lib/client/components/structure/footer.svelte';
+  import Navbar from '$lib/client/components/structure/navbar.svelte';
 
   // This is needed to remove Dark Mode on public pages since we don't have a dark mode for them
   // The current theme is still set in localstorage, it's just temporarily removed from the html tag

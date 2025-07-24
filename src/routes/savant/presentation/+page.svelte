@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Presentation, Slide } from '$lib/components/custom-ui/revealjs/index';
+  import { Presentation, Slide } from '$lib/client/components/custom-ui/revealjs/index';
 </script>
 
 <Presentation>

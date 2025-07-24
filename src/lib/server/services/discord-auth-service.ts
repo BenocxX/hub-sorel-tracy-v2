@@ -7,7 +7,7 @@ import {
 import { type Cookies } from '@sveltejs/kit';
 import * as arctic from 'arctic';
 import { db } from '../prisma';
-import type { User } from '$lib/types/prisma-types';
+import type { User } from '$lib/common/types/prisma-types';
 import type { Session } from '@prisma/client';
 
 const discord = new arctic.Discord(DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, DISCORD_REDIRECT_URI);

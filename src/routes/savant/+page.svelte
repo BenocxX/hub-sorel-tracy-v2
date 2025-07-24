@@ -1,5 +1,5 @@
 <script>
-  import Button from '$lib/components/ui/button/button.svelte';
+  import Button from '$lib/client/components/ui/button/button.svelte';
 </script>
 
 <h2>Savant</h2>

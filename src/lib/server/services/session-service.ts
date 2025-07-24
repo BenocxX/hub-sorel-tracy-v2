@@ -2,7 +2,7 @@
  * Lucia auth guide: https://lucia-auth.com/sessions/basic-api/prisma
  */
 import type { RequestEvent } from '@sveltejs/kit';
-import { TimeConstants } from '$lib/tools/time-constants';
+import { TimeConstants } from '$lib/common/tools/time-constants';
 import { db } from '../prisma';
 import { base64url, encodeHex } from 'oslo/encoding';
 import { sha256 } from 'oslo/crypto';

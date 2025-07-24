@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { cn } from '$lib/utils';
-  import * as Tabs from '$lib/components/ui/tabs';
-  import * as Dialog from '$lib/components/ui/dialog';
-  import { sessions } from '$lib/tools/sessions';
-  import Button from '$lib/components/ui/button/button.svelte';
+  import { cn } from '$lib/client/utils';
+  import * as Tabs from '$lib/client/components/ui/tabs';
+  import * as Dialog from '$lib/client/components/ui/dialog';
+  import { sessions } from '$lib/common/tools/sessions';
+  import Button from '$lib/client/components/ui/button/button.svelte';
   import { Eye, EyeOff } from 'lucide-svelte';
 
   let hideBaseClasses = $state(false);

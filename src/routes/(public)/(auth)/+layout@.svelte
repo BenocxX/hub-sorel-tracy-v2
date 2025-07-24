@@ -1,7 +1,7 @@
 <script lang="ts">
-  import EspritFamille from '$lib/assets/images/landing/esprit-famille.png';
-  import Footer from '$lib/components/structure/footer.svelte';
-  import Navbar from '$lib/components/structure/navbar.svelte';
+  import EspritFamille from '$lib/client/assets/images/landing/esprit-famille.png';
+  import Footer from '$lib/client/components/structure/footer.svelte';
+  import Navbar from '$lib/client/components/structure/navbar.svelte';
 
   const { children } = $props();
 </script>

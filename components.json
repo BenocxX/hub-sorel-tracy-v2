@@ -5,10 +5,10 @@
     "baseColor": "zinc"
   },
   "aliases": {
-    "components": "$lib/components",
-    "utils": "$lib/utils",
-    "ui": "$lib/components/ui",
-    "hooks": "$lib/hooks",
+    "components": "$lib/client/components",
+    "utils": "$lib/client/utils",
+    "ui": "$lib/client/components/ui",
+    "hooks": "$lib/server/hooks",
     "lib": "$lib"
   },
   "typescript": true,

@@ -5,7 +5,7 @@ import {
   resetPasswordSchema,
   setPasswordSchema,
   updateNamesSchema,
-} from '$lib/components/forms/settings/schema';
+} from '$lib/client/components/forms/settings/schema';
 import { AuthService } from '$lib/server/services/auth-service';
 
 export const load = async (event) => {
