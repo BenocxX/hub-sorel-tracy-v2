@@ -24,18 +24,18 @@
     <div>
       <h2 class="font-semibold">Mot de passe</h2>
       <p class="mt-1 text-sm/6 text-foreground-discreet">
-        {#if data.userHasNoPassword}
-          Pour associer un mot de passe à votre compte, veuillez entrer un nouveau mot de passe.
-        {:else}
+        {#if data.userHasPassword}
           Pour changer votre mot de passe, veuillez entrer votre mot de passe actuel et ensuite
           fournir un nouveau mot de passe.
+        {:else}
+          Pour associer un mot de passe à votre compte, veuillez entrer un nouveau mot de passe.
         {/if}
       </p>
     </div>
-    {#if data.userHasNoPassword}
-      <SetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.setPasswordForm} />
-    {:else}
+    {#if data.userHasPassword}
       <ResetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.resetPasswordForm} />
+    {:else}
+      <SetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.setPasswordForm} />
     {/if}
   </div>
   <SessionList

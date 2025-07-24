@@ -8,35 +8,23 @@ import {
   setPasswordSchema,
   updateNamesSchema,
 } from '$lib/common/schemas/settings-schemas';
+import { SessionService } from '$lib/server/services/session-service.js';
 
 export const load = async (event) => {
-  const { locals } = event;
-  const sessions = await db.session.findMany({
-    where: { userId: locals.user!.id },
-    select: {
-      createdAt: true,
-      expiresAt: true,
-      lastUsed: true,
-      publicId: true,
-      name: true,
-    },
-  });
+  const userId = event.locals.user!.id;
 
-  const sortedSessions = sessions.sort((a, b) => b.lastUsed.getTime() - a.lastUsed.getTime());
-
-  const { passwordHash } = await db.user.findFirstOrThrow({
-    where: { id: locals.user!.id },
-    omit: { passwordHash: false },
-  });
+  const authService = new AuthService();
+  const sessionService = new SessionService();
+  const sessions = await sessionService.getUserSessionsSortedByLastUsed(userId);
 
   return {
     updateNamesForm: await superValidate(zod(updateNamesSchema)),
     resetPasswordForm: await superValidate(zod(resetPasswordSchema)),
     setPasswordForm: await superValidate(zod(setPasswordSchema)),
     deleteSessionForm: await superValidate(zod(deleteSessionSchema)),
-    sessions: sortedSessions,
-    currentSessionPublicId: locals.session!.publicId,
-    userHasNoPassword: passwordHash === '' || passwordHash === null,
+    userHasPassword: await authService.doesUserHavePassword(userId),
+    currentSessionPublicId: event.locals.session!.publicId,
+    sessions,
   };
 };
 
@@ -71,14 +59,13 @@ export const actions = {
     }
 
     const authService = new AuthService();
-
     const user = await authService.login({
       username: event.locals.user!.username,
       password: form.data.oldPassword,
     });
 
     if (!user) {
-      return setError(form, 'oldPassword', 'Mot de passe est incorrect.');
+      return setError(form, 'oldPassword', 'Mot de passe incorrect.');
     }
 
     await authService.changePassword(user, form.data.newPassword);
@@ -93,6 +80,10 @@ export const actions = {
     }
 
     const authService = new AuthService();
+    if (await authService.doesUserHavePassword(event.locals.user!.id)) {
+      return fail(400, { form });
+    }
+
     await authService.changePassword(event.locals.user!, form.data.password);
 
     return { form };

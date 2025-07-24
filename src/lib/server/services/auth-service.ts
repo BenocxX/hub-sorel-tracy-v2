@@ -135,4 +135,13 @@ export class AuthService {
       },
     });
   }
+
+  public async doesUserHavePassword(id: string) {
+    const { passwordHash } = await db.user.findFirstOrThrow({
+      where: { id },
+      omit: { passwordHash: false },
+    });
+
+    return passwordHash !== '' && passwordHash !== null;
+  }
 }

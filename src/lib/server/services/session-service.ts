@@ -101,7 +101,8 @@ export class SessionService {
     }
 
     const user = await db.user.findFirstOrThrow({ where: { id: session.userId } });
-    await discordAuthService.updateLocalDiscordUserData(oauthToken.accessToken, user);
+    const discordUser = await discordAuthService.getDiscordUser(oauthToken.accessToken);
+    await discordAuthService.updateLocalDiscordUserData(discordUser, user);
   }
 
   /** Gets the session token from the cookies. */
@@ -122,6 +123,21 @@ export class SessionService {
       expires: expiresAt,
       path: '/',
     });
+  }
+
+  public async getUserSessionsSortedByLastUsed(userId: string) {
+    const sessions = await db.session.findMany({
+      where: { userId },
+      select: {
+        createdAt: true,
+        expiresAt: true,
+        lastUsed: true,
+        publicId: true,
+        name: true,
+      },
+    });
+
+    return sessions.sort((a, b) => b.lastUsed.getTime() - a.lastUsed.getTime());
   }
 
   private isExpired(session: Session) {
