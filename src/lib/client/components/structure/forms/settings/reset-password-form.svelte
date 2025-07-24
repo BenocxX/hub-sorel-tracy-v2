@@ -3,8 +3,11 @@
   import { Input } from '$lib/client/components/ui/input';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { resetPasswordSchema, type ResetPasswordSchema } from './schema';
   import FormErrors from '$lib/client/components/ui-custom/form/form-errors.svelte';
+  import {
+    resetPasswordSchema,
+    type ResetPasswordSchema,
+  } from '$lib/common/schemas/settings-schemas';
 
   type Props = {
     class?: string;

@@ -3,9 +3,9 @@
   import { Input } from '$lib/client/components/ui/input';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import { registerSchema, type RegisterSchema } from './schema';
   import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
   import { Separator } from '$lib/client/components/ui/separator';
+  import { registerSchema, type RegisterSchema } from '$lib/common/schemas/auth-schemas';
 
   export let data: SuperValidated<Infer<RegisterSchema>>;
 

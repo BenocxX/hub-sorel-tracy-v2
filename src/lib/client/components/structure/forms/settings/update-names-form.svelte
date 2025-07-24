@@ -2,7 +2,7 @@
   import { page } from '$app/stores';
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
-  import { updateNamesSchema, type UpdateNamesSchema } from './schema';
+  import { updateNamesSchema, type UpdateNamesSchema } from '$lib/common/schemas/settings-schemas';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 

@@ -3,7 +3,7 @@
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
   import Separator from '$lib/client/components/ui/separator/separator.svelte';
-  import { loginSchema, type LoginSchema } from './schema';
+  import { loginSchema, type LoginSchema } from '$lib/common/schemas/auth-schemas';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 

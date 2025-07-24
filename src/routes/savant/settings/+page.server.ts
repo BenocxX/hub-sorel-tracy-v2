@@ -6,7 +6,7 @@ import {
   resetPasswordSchema,
   setPasswordSchema,
   updateNamesSchema,
-} from '$lib/client/components/structure/forms/settings/schema';
+} from '$lib/common/schemas/settings-schemas';
 
 export const load = async (event) => {
   const { locals } = event;

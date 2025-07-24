@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { AuthService } from '$lib/server/services/auth-service';
-import { registerSchema } from '$lib/client/components/structure/forms/auth/schema';
+import { registerSchema } from '$lib/common/schemas/auth-schemas';
 
 export const load = async () => {
   return {
