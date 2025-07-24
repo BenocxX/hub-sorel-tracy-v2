@@ -1,9 +1,9 @@
-import FacebookIcon from '$lib/client/components/custom-ui/icons/socials/facebook-icon.svelte';
-import GithubIcon from '$lib/client/components/custom-ui/icons/socials/github-icon.svelte';
-import InstagramIcon from '$lib/client/components/custom-ui/icons/socials/instagram-icon.svelte';
-import LinkedinIcon from '$lib/client/components/custom-ui/icons/socials/linkedin-icon.svelte';
-import YoutubeIcon from '$lib/client/components/custom-ui/icons/socials/youtube-icon.svelte';
-import XIcon from '$lib/client/components/custom-ui/icons/socials/x-icon.svelte';
+import FacebookIcon from '$lib/client/components/ui-custom/icons/socials/facebook-icon.svelte';
+import GithubIcon from '$lib/client/components/ui-custom/icons/socials/github-icon.svelte';
+import InstagramIcon from '$lib/client/components/ui-custom/icons/socials/instagram-icon.svelte';
+import LinkedinIcon from '$lib/client/components/ui-custom/icons/socials/linkedin-icon.svelte';
+import YoutubeIcon from '$lib/client/components/ui-custom/icons/socials/youtube-icon.svelte';
+import XIcon from '$lib/client/components/ui-custom/icons/socials/x-icon.svelte';
 
 export const socials = [
   {

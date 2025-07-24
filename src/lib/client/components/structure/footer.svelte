@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Button } from '../ui/button';
-  import Logo from '../custom-ui/logo.svelte';
+  import Logo from '../ui-custom/icons/logo.svelte';
   import { cn } from '$lib/client/utils';
   import { socials } from '$lib/common/tools/socials';
 

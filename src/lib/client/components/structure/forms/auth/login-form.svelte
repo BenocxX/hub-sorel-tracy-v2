@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DiscordButton from '$lib/client/components/custom-ui/ui/buttons/discord-button.svelte';
+  import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
   import Separator from '$lib/client/components/ui/separator/separator.svelte';

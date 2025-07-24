@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Logo from '../custom-ui/logo.svelte';
+  import Logo from '../ui-custom/icons/logo.svelte';
 
   import { page } from '$app/state';
   import { Button } from '../ui/button';

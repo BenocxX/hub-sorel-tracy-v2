@@ -1,12 +1,12 @@
 import { fail, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/server/prisma';
+import { AuthService } from '$lib/server/services/auth-service';
 import {
   resetPasswordSchema,
   setPasswordSchema,
   updateNamesSchema,
-} from '$lib/client/components/forms/settings/schema';
-import { AuthService } from '$lib/server/services/auth-service';
+} from '$lib/client/components/structure/forms/settings/schema';
 
 export const load = async (event) => {
   const { locals } = event;

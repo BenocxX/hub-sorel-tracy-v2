@@ -4,7 +4,7 @@
   import EspritFamille from '$lib/client/assets/images/landing/esprit-famille.png';
   import EtudiantsHackthon from '$lib/client/assets/images/landing/etudiants-hackthon.png';
   import EtudiantsSalleServeur from '$lib/client/assets/images/landing/etudiants-salle-serveur.png';
-  import * as BentoGrid from '$lib/client/components/custom-ui/bento-grid';
+  import * as BentoGrid from '$lib/client/components/ui-custom/bento-grid';
 </script>
 
 <div class="bg-white">

@@ -1,7 +1,7 @@
 <script>
-  import ResetPasswordForm from '$lib/client/components/forms/settings/reset-password-form.svelte';
-  import SetPasswordForm from '$lib/client/components/forms/settings/set-password-form.svelte';
-  import UpdateNamesForm from '$lib/client/components/forms/settings/update-names-form.svelte';
+  import ResetPasswordForm from '$lib/client/components/structure/forms/settings/reset-password-form.svelte';
+  import SetPasswordForm from '$lib/client/components/structure/forms/settings/set-password-form.svelte';
+  import UpdateNamesForm from '$lib/client/components/structure/forms/settings/update-names-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
 
   const { data } = $props();
