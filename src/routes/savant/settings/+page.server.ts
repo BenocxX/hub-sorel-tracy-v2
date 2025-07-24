@@ -3,6 +3,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/server/prisma';
 import { AuthService } from '$lib/server/services/auth-service';
 import {
+  deleteSessionSchema,
   resetPasswordSchema,
   setPasswordSchema,
   updateNamesSchema,
@@ -32,6 +33,7 @@ export const load = async (event) => {
     updateNamesForm: await superValidate(zod(updateNamesSchema)),
     resetPasswordForm: await superValidate(zod(resetPasswordSchema)),
     setPasswordForm: await superValidate(zod(setPasswordSchema)),
+    deleteSessionForm: await superValidate(zod(deleteSessionSchema)),
     sessions: sortedSessions,
     currentSessionPublicId: locals.session!.publicId,
     userHasNoPassword: passwordHash === '' || passwordHash === null,
@@ -95,20 +97,20 @@ export const actions = {
 
     return { form };
   },
-  // deleteSession: async (event) => {
-  //   const form = await superValidate(event, zod(deleteSessionSchema));
+  deleteSession: async (event) => {
+    const form = await superValidate(event, zod(deleteSessionSchema));
 
-  //   if (!form.valid) {
-  //     return fail(400, { form });
-  //   }
+    if (!form.valid) {
+      return fail(400, { form });
+    }
 
-  //   await db.session.delete({
-  //     where: {
-  //       publicId: form.data.publicId,
-  //       userId: event.locals.user!.id,
-  //     },
-  //   });
+    await db.session.delete({
+      where: {
+        publicId: form.data.publicId,
+        userId: event.locals.user!.id,
+      },
+    });
 
-  //   return { form };
-  // },
+    return { form };
+  },
 };

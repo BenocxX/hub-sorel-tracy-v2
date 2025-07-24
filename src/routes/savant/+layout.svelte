@@ -19,7 +19,7 @@
 <ModeWatcher />
 <Sidebar.Provider>
   <SavantSidebar />
-  <main class="flex h-screen w-full flex-col gap-8 overflow-y-auto py-2">
+  <main class="flex w-full flex-col gap-8 overflow-y-auto py-2">
     <header class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
         <Sidebar.Trigger />

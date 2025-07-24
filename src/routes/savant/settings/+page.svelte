@@ -3,6 +3,7 @@
   import SetPasswordForm from '$lib/client/components/structure/forms/settings/set-password-form.svelte';
   import UpdateNamesForm from '$lib/client/components/structure/forms/settings/update-names-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
+  import SessionList from '$lib/client/components/structure/pages/settings/session-list.svelte';
 
   const { data } = $props();
 </script>
@@ -37,9 +38,9 @@
       <ResetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.resetPasswordForm} />
     {/if}
   </div>
-  <!-- <SessionsList
+  <SessionList
     sessions={data.sessions}
     currentSessionPublicId={data.currentSessionPublicId}
     deleteForm={data.deleteSessionForm}
-  /> -->
+  />
 </div>
