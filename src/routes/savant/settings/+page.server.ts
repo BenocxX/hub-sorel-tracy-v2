@@ -9,6 +9,7 @@ import {
   updateNamesSchema,
 } from '$lib/common/schemas/settings-schemas';
 import { SessionService } from '$lib/server/services/session-service.js';
+import { redirect } from '@sveltejs/kit';
 
 export const load = async (event) => {
   const userId = event.locals.user!.id;
@@ -69,8 +70,9 @@ export const actions = {
     }
 
     await authService.changePassword(user, form.data.newPassword);
+    await authService.fullLogout(event);
 
-    return { form };
+    return redirect(300, '/login');
   },
   setPassword: async (event) => {
     const form = await superValidate(event, zod(setPasswordSchema));
@@ -85,8 +87,9 @@ export const actions = {
     }
 
     await authService.changePassword(event.locals.user!, form.data.password);
+    await authService.fullLogout(event);
 
-    return { form };
+    return redirect(300, '/login');
   },
   deleteSession: async (event) => {
     const form = await superValidate(event, zod(deleteSessionSchema));

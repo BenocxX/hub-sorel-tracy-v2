@@ -113,6 +113,16 @@ export class AuthService {
     this.sessionService.deleteCookie(event);
   }
 
+  /** Logs out the user by invalidating all of their sessions. */
+  public async fullLogout(event: RequestEvent) {
+    const sessions = await db.session.findMany({ where: { userId: event.locals.user!.id } });
+    for (const session of sessions) {
+      await this.sessionService.invalidate(session.id);
+    }
+
+    this.sessionService.deleteCookie(event);
+  }
+
   public async changePassword(user: User, newPassword: string) {
     const passwordHash = await this.argon2id.hash(newPassword);
 
