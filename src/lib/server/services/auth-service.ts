@@ -54,16 +54,8 @@ export class AuthService {
       },
     });
 
-    await db.discordUser.create({
-      data: {
-        discordId: discordUser.id,
-        username: discordUser.username,
-        avatar: discordUser.avatar,
-        user: {
-          connect: newUser,
-        },
-      },
-    });
+    const discordAuthService = new DiscordAuthService();
+    await discordAuthService.updateLocalDiscordUserData(discordUser, newUser);
 
     return newUser;
   }
@@ -99,7 +91,9 @@ export class AuthService {
     if (tokens) {
       const discordAuthService = new DiscordAuthService();
       await discordAuthService.insertOAuthToken(tokens, session);
-      await discordAuthService.updateLocalDiscordUserData(tokens.accessToken(), user);
+
+      const discordUser = await discordAuthService.getDiscordUser(tokens.accessToken());
+      await discordAuthService.updateLocalDiscordUserData(discordUser, user);
     }
 
     sessionService.setCookie(event, sessionToken, session.expiresAt);

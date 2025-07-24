@@ -109,21 +109,21 @@ export class DiscordAuthService {
     });
   }
 
-  public async updateLocalDiscordUserData(accessToken: string, user: User) {
-    const discordUser = await this.getDiscordUser(accessToken);
-
+  public async updateLocalDiscordUserData(discordUser: DiscordUser, user: User) {
     await db.discordUser.upsert({
       where: { userId: user.id },
-      create: {
-        userId: user.id,
-        discordId: discordUser.id,
-        username: discordUser.username,
-        avatar: discordUser.avatar,
-      },
       update: {
         discordId: discordUser.id,
         username: discordUser.username,
         avatar: discordUser.avatar,
+      },
+      create: {
+        discordId: discordUser.id,
+        username: discordUser.username,
+        avatar: discordUser.avatar,
+        user: {
+          connect: user,
+        },
       },
     });
   }
