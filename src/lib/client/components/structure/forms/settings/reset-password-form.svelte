@@ -23,7 +23,7 @@
 
 <form method="POST" action="?/resetPassword" class={className} use:enhance>
   <FormErrors {form} />
-  <div class="flex w-full flex-col gap-2 sm:flex-row [&>*]:flex-1">
+  <div class="flex w-full flex-col gap-2 *:flex-1 sm:flex-row">
     <Form.Field {form} name="oldPassword">
       <Form.Control>
         {#snippet children({ props })}

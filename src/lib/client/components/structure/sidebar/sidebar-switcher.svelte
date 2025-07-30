@@ -4,10 +4,21 @@
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
 
-  let { classes }: { classes: { name: string; icon: string; plan: string }[] } = $props();
+  type SidebarSection = {
+    name: string;
+    sidebars: Sidebar[];
+  };
+
+  type Sidebar = {
+    name: string;
+    subName: string;
+    icon: string;
+  };
+
+  let { sidebarsSections }: { sidebarsSections: SidebarSection[] } = $props();
   const sidebar = useSidebar();
 
-  let activeClass = $state(classes[0]);
+  let activeSidebar = $state(sidebarsSections[0].sidebars[0]);
 </script>
 
 <Sidebar.Menu>
@@ -23,16 +34,16 @@
             <div
               class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
             >
-              <div class="size-4">
+              <div class="*:size-5">
                 <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                {@html activeClass.icon}
+                {@html activeSidebar.icon}
               </div>
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">
               <span class="truncate font-semibold">
-                {activeClass.name}
+                {activeSidebar.name}
               </span>
-              <span class="truncate text-xs">{activeClass.plan}</span>
+              <span class="truncate text-xs">{activeSidebar.subName}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </Sidebar.MenuButton>
@@ -44,26 +55,25 @@
         side={sidebar.isMobile ? 'bottom' : 'right'}
         sideOffset={4}
       >
-        <DropdownMenu.Label class="text-xs text-muted-foreground">Cours</DropdownMenu.Label>
-        {#each classes as course, index (course.name)}
-          <DropdownMenu.Item onSelect={() => (activeClass = course)} class="gap-2 p-2">
-            <div class="flex size-6 items-center justify-center rounded-sm border">
-              <div class="size-4 shrink">
-                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                {@html course.icon}
+        {#each sidebarsSections as sidebarSection, index (sidebarSection)}
+          <DropdownMenu.Label class="text-xs text-muted-foreground">
+            {sidebarSection.name}
+          </DropdownMenu.Label>
+          {#each sidebarSection.sidebars as sidebar (sidebar.name)}
+            <DropdownMenu.Item onSelect={() => (activeSidebar = sidebar)} class="gap-2 p-2">
+              <div class="flex size-6 items-center justify-center rounded-sm border">
+                <div class="size-4 shrink">
+                  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+                  {@html sidebar.icon}
+                </div>
               </div>
-            </div>
-            {course.name}
-            <DropdownMenu.Shortcut>⌘{index + 1}</DropdownMenu.Shortcut>
-          </DropdownMenu.Item>
+              {sidebar.name}
+            </DropdownMenu.Item>
+          {/each}
+          {#if index < sidebarsSections.length - 1}
+            <DropdownMenu.Separator />
+          {/if}
         {/each}
-        <DropdownMenu.Separator />
-        <!-- <DropdownMenu.Item class="gap-2 p-2">
-          <div class="flex size-6 items-center justify-center rounded-md border bg-background">
-            <Plus class="size-4" />
-          </div>
-          <div class="font-medium text-muted-foreground">Add team</div>
-        </DropdownMenu.Item> -->
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   </Sidebar.MenuItem>

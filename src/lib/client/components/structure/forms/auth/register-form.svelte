@@ -24,7 +24,7 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <div class="flex flex-col gap-2 sm:flex-row lg:flex-col xl:flex-row [&>*]:flex-1">
+  <div class="flex flex-col gap-2 *:flex-1 sm:flex-row lg:flex-col xl:flex-row">
     <Form.Field {form} name="firstname">
       <Form.Control>
         {#snippet children({ props })}
@@ -44,7 +44,7 @@
       <Form.FieldErrors />
     </Form.Field>
   </div>
-  <div class="flex flex-col gap-2 sm:flex-row lg:flex-col xl:flex-row [&>*]:flex-1">
+  <div class="flex flex-col gap-2 *:flex-1 sm:flex-row lg:flex-col xl:flex-row">
     <Form.Field {form} name="password">
       <Form.Control>
         {#snippet children({ props })}

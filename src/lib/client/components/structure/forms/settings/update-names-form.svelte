@@ -19,7 +19,7 @@
 </script>
 
 <form method="POST" action="?/updateNames" class={className} use:enhance>
-  <div class="flex w-full flex-col gap-2 sm:flex-row [&>*]:flex-1">
+  <div class="flex w-full flex-col gap-2 *:flex-1 sm:flex-row">
     <Form.Field {form} name="username">
       <Form.Control>
         {#snippet children({ props })}

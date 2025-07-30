@@ -59,7 +59,7 @@
     <DiscordButton class="flex-1">Se connecter avec Discord</DiscordButton>
   </div>
   {#if dev}
-    <div class="mt-4 flex gap-2 [&>*]:flex-1">
+    <div class="mt-4 flex gap-2 *:flex-1">
       <Form.Button
         onclick={submitFormAs({ username: 'Student', password: 'Omega123*' })}
         variant="secondary"
