@@ -16,8 +16,21 @@ model User {
   passwordHash String?
   role         String  @default("user")
 
+  student     Student?
+  teacher     Teacher?
   discordUser DiscordUser?
   sessions    Session[]
+}
+
+model Student {
+  id   String @id
+  user User   @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model Teacher {
+  id      String  @id
+  isAdmin Boolean @default(false)
+  user    User    @relation(fields: [id], references: [id], onDelete: Cascade)
 }
 
 model Session {
