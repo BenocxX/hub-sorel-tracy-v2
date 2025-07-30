@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { dev } from '$app/environment';
   import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
@@ -12,6 +13,16 @@
   const form = superForm(data, { validators: zodClient(loginSchema) });
 
   const { form: formData, delayed, enhance } = form;
+
+  function submitFormAs(data: { username: string; password: string }) {
+    return () => {
+      if (!dev) {
+        return;
+      }
+
+      form.form.set(data);
+    };
+  }
 </script>
 
 <form method="POST" class="flex flex-col gap-2" use:enhance>
@@ -47,4 +58,26 @@
     </div>
     <DiscordButton class="flex-1">Se connecter avec Discord</DiscordButton>
   </div>
+  {#if dev}
+    <div class="mt-4 flex gap-2 [&>*]:flex-1">
+      <Form.Button
+        onclick={submitFormAs({ username: 'Student', password: 'Omega123*' })}
+        variant="secondary"
+      >
+        Login as student
+      </Form.Button>
+      <Form.Button
+        onclick={submitFormAs({ username: 'Teacher', password: 'Omega123*' })}
+        variant="secondary"
+      >
+        Login as teacher
+      </Form.Button>
+      <Form.Button
+        onclick={submitFormAs({ username: 'Admin', password: 'Omega123*' })}
+        variant="secondary"
+      >
+        Login as admin
+      </Form.Button>
+    </div>
+  {/if}
 </form>

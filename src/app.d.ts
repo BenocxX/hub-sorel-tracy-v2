@@ -6,8 +6,8 @@ import type { Session, User } from '$lib/common/types/prisma-types';
 declare global {
   namespace App {
     interface Locals {
-      user?: User<{ discordUser: true }> | null;
-      session?: Session<{ oauthToken: true; user: { include: { discordUser: true } } }> | null;
+      user?: User<{ discordUser: true; student: true; teacher: true }> | null;
+      session?: Session<{ oauthToken: true; user: NonNullable<Locals['user']> }> | null;
     }
 
     interface PageData {

@@ -14,7 +14,7 @@ model User {
   firstname    String?
   lastname     String?
   passwordHash String?
-  role         String  @default("user")
+  role         Role    @default(Student)
 
   student     Student?
   teacher     Teacher?
@@ -63,4 +63,10 @@ model DiscordUser {
   avatar    String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  Student
+  Teacher
+  Admin
 }

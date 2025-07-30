@@ -2,7 +2,7 @@
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import * as Avatar from '$lib/client/components/ui/avatar';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
-  import { ChevronsUpDownIcon, Cog, LogOut } from 'lucide-svelte';
+  import { ChevronsUpDownIcon, Cog, LogOut, Shield } from 'lucide-svelte';
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import { enhance } from '$app/forms';
 
@@ -71,6 +71,16 @@
           </div>
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
+        {#if user.role === 'Admin'}
+          <DropdownMenu.Group>
+            <a href="/savant/admin">
+              <DropdownMenu.Item>
+                <Shield />
+                Admin
+              </DropdownMenu.Item>
+            </a>
+          </DropdownMenu.Group>
+        {/if}
         <DropdownMenu.Group>
           <a href="/savant/settings">
             <DropdownMenu.Item>

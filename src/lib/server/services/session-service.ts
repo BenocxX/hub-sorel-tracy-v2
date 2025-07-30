@@ -164,6 +164,8 @@ export class SessionService {
         user: {
           include: {
             discordUser: true,
+            student: true,
+            teacher: true,
           },
         },
         oauthToken: true,

@@ -6,6 +6,7 @@ import { Argon2id } from 'oslo/password';
 import { DiscordAuthService, type DiscordUser } from './discord-auth-service';
 import type { OAuth2Tokens } from 'arctic';
 import type { User } from '$lib/common/types/prisma-types';
+import { Role } from '@prisma/client';
 
 type LoginData = {
   username: string;
@@ -41,6 +42,9 @@ export class AuthService {
         firstname,
         lastname,
         passwordHash,
+        student: {
+          create: {},
+        },
       },
     });
   }
