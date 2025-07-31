@@ -1,15 +1,20 @@
 <script lang="ts" generics="TData, TValue">
   import {
     type ColumnDef,
-    getCoreRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
+    type ColumnFiltersState,
     type PaginationState,
     type SortingState,
+    type VisibilityState,
+    getCoreRowModel,
+    getFilteredRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
   } from '@tanstack/table-core';
   import { createSvelteTable, FlexRender } from '$lib/client/components/ui/data-table/index.js';
   import * as Table from '$lib/client/components/ui/table/index.js';
+  import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import { Button } from '$lib/client/components/ui/button';
+  import { Input } from '$lib/client/components/ui/input';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
@@ -20,6 +25,8 @@
 
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
   let sorting = $state<SortingState>([]);
+  let columnFilters = $state<ColumnFiltersState>([]);
+  let columnVisibility = $state<VisibilityState>({});
 
   const table = createSvelteTable({
     get data() {
@@ -31,6 +38,12 @@
       },
       get sorting() {
         return sorting;
+      },
+      get columnFilters() {
+        return columnFilters;
+      },
+      get columnVisibility() {
+        return columnVisibility;
       },
     },
     columns,
@@ -48,13 +61,58 @@
         sorting = updater;
       }
     },
+    onColumnFiltersChange: (updater) => {
+      if (typeof updater === 'function') {
+        columnFilters = updater(columnFilters);
+      } else {
+        columnFilters = updater;
+      }
+    },
+    onColumnVisibilityChange: (updater) => {
+      if (typeof updater === 'function') {
+        columnVisibility = updater(columnVisibility);
+      } else {
+        columnVisibility = updater;
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 </script>
 
 <div>
+  <div class="flex items-center py-4">
+    <Input
+      placeholder="Filtre par nom d'utilisateur..."
+      value={(table.getColumn('username')?.getFilterValue() as string) ?? ''}
+      onchange={(e) => {
+        table.getColumn('username')?.setFilterValue(e.currentTarget.value);
+      }}
+      oninput={(e) => {
+        table.getColumn('username')?.setFilterValue(e.currentTarget.value);
+      }}
+      class="max-w-sm"
+    />
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        {#snippet child({ props })}
+          <Button {...props} variant="outline" class="ml-auto">Colonnes</Button>
+        {/snippet}
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content align="end">
+        {#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
+          <DropdownMenu.CheckboxItem
+            class="capitalize"
+            bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
+          >
+            {column.id}
+          </DropdownMenu.CheckboxItem>
+        {/each}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  </div>
   <div class="rounded-md border">
     <Table.Root>
       <Table.Header>

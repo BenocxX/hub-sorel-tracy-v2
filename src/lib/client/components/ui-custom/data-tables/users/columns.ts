@@ -8,10 +8,18 @@ import DataTableUsernameButton from './data-table-username-button.svelte';
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'username',
-    header: ({ column }) =>
-      renderComponent(DataTableUsernameButton, {
+    header: ({ column }) => {
+      return renderComponent(DataTableUsernameButton, {
+        isSorted: column.getIsSorted(),
         onclick: column.getToggleSortingHandler(),
-      }),
+      });
+    },
+    cell: ({ row }) => {
+      const actionsHeaderSnippet = createRawSnippet(() => ({
+        render: () => `<div class="ml-4">${row.original.username}</div>`,
+      }));
+      return renderSnippet(actionsHeaderSnippet, '');
+    },
   },
   {
     accessorKey: 'firstname',
