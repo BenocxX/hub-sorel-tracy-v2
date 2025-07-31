@@ -1,24 +1,32 @@
+<script lang="ts" module>
+  export type SidebarChoice = {
+    name: string;
+    subName: string;
+    contentKey: 'course' | 'admin';
+    icon: string;
+  };
+
+  export type HeaderSection = {
+    name: string;
+    headerSidebarChoice: SidebarChoice[];
+  };
+</script>
+
 <script lang="ts">
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
 
-  type SidebarSection = {
-    name: string;
-    sidebars: Sidebar[];
+  type Props = {
+    onSidebarChange: (sidebarContentKey: SidebarChoice['contentKey']) => void;
+    sections: HeaderSection[];
   };
 
-  type Sidebar = {
-    name: string;
-    subName: string;
-    icon: string;
-  };
-
-  let { sidebarsSections }: { sidebarsSections: SidebarSection[] } = $props();
+  let { onSidebarChange, sections }: Props = $props();
   const sidebar = useSidebar();
 
-  let activeSidebar = $state(sidebarsSections[0].sidebars[0]);
+  let activeSidebar = $state(sections[0].headerSidebarChoice[0]);
 </script>
 
 <Sidebar.Menu>
@@ -55,12 +63,18 @@
         side={sidebar.isMobile ? 'bottom' : 'right'}
         sideOffset={4}
       >
-        {#each sidebarsSections as sidebarSection, index (sidebarSection)}
+        {#each sections as section, index (section)}
           <DropdownMenu.Label class="text-xs text-muted-foreground">
-            {sidebarSection.name}
+            {section.name}
           </DropdownMenu.Label>
-          {#each sidebarSection.sidebars as sidebar (sidebar.name)}
-            <DropdownMenu.Item onSelect={() => (activeSidebar = sidebar)} class="gap-2 p-2">
+          {#each section.headerSidebarChoice as sidebar (sidebar.name)}
+            <DropdownMenu.Item
+              onSelect={() => {
+                activeSidebar = sidebar;
+                onSidebarChange(sidebar.contentKey);
+              }}
+              class="gap-2 p-2"
+            >
               <div class="flex size-6 items-center justify-center rounded-sm border">
                 <div class="size-4 shrink">
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -70,7 +84,7 @@
               {sidebar.name}
             </DropdownMenu.Item>
           {/each}
-          {#if index < sidebarsSections.length - 1}
+          {#if index < sections.length - 1}
             <DropdownMenu.Separator />
           {/if}
         {/each}
