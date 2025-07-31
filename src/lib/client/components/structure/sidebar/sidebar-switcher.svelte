@@ -1,15 +1,4 @@
 <script lang="ts" module>
-  export type SidebarChoice = {
-    name: string;
-    subName: string;
-    contentKey: 'course' | 'admin';
-    icon: string;
-  };
-
-  export type HeaderSection = {
-    name: string;
-    headerSidebarChoice: SidebarChoice[];
-  };
 </script>
 
 <script lang="ts">
@@ -17,6 +6,7 @@
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
+  import type { HeaderSection, SidebarChoice } from './sidebar-data.svelte';
 
   type Props = {
     onSidebarChange: (sidebarContentKey: SidebarChoice['contentKey']) => void;

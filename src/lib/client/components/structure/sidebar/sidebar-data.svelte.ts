@@ -1,5 +1,16 @@
-import { BookOpenIcon, BotIcon, Settings2Icon, SquareTerminalIcon } from 'lucide-svelte';
-import type { HeaderSection } from './sidebar-switcher.svelte';
+import { Presentation, Users } from 'lucide-svelte';
+
+export type SidebarChoice = {
+  name: string;
+  subName: string;
+  contentKey: 'course' | 'admin';
+  icon: string;
+};
+
+export type HeaderSection = {
+  name: string;
+  headerSidebarChoice: SidebarChoice[];
+};
 
 type SidebarSubItem = {
   title: string;
@@ -63,88 +74,22 @@ export function makeSidebarData(user: App.PageData['user']): SidebarData {
     ],
     adminSidebar: [
       {
-        title: 'Playground',
+        title: 'Utilisateurs',
         url: '#',
-        icon: SquareTerminalIcon,
+        icon: Users,
         isActive: true,
         items: [
-          {
-            title: 'History',
-            url: '#',
-          },
-          {
-            title: 'Starred',
-            url: '#',
-          },
-          {
-            title: 'Settings',
-            url: '#',
-          },
+          { title: 'Étudiants', url: '/savant/admin/usersrole=student' },
+          { title: 'Enseignants', url: '/savant/admin/user?role=teacher' },
         ],
       },
       {
-        title: 'Models',
+        title: 'Contenu',
         url: '#',
-        icon: BotIcon,
+        icon: Presentation,
         items: [
-          {
-            title: 'Genesis',
-            url: '#',
-          },
-          {
-            title: 'Explorer',
-            url: '#',
-          },
-          {
-            title: 'Quantum',
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: 'Documentation',
-        url: '#',
-        icon: BookOpenIcon,
-        items: [
-          {
-            title: 'Introduction',
-            url: '#',
-          },
-          {
-            title: 'Get Started',
-            url: '#',
-          },
-          {
-            title: 'Tutorials',
-            url: '#',
-          },
-          {
-            title: 'Changelog',
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: 'Settings',
-        url: '#',
-        icon: Settings2Icon,
-        items: [
-          {
-            title: 'General',
-            url: '#',
-          },
-          {
-            title: 'Team',
-            url: '#',
-          },
-          {
-            title: 'Billing',
-            url: '#',
-          },
-          {
-            title: 'Limits',
-            url: '#',
-          },
+          { title: 'Cours', url: '/savant/admin/course' },
+          { title: 'Sessions', url: '/savant/admin/session' },
         ],
       },
     ],

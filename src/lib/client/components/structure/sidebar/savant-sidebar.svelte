@@ -7,9 +7,11 @@
   import SidebarContentCourse from './sidebar-content-course.svelte';
   import { makeSidebarData } from './sidebar-data.svelte';
 
-  let selectedContentKey = $state<'course' | 'admin'>('course');
+  const user = page.data.user;
 
-  const sidebarData = makeSidebarData(page.data.user);
+  let selectedContentKey = $state<'course' | 'admin'>(user?.role === 'Admin' ? 'admin' : 'course');
+
+  const sidebarData = makeSidebarData(user);
 </script>
 
 <Sidebar.Root collapsible="icon">
@@ -27,6 +29,6 @@
     {/if}
   </Sidebar.Content>
   <Sidebar.Footer>
-    <SidebarUser user={page.data.user!} />
+    <SidebarUser user={user!} />
   </Sidebar.Footer>
 </Sidebar.Root>
