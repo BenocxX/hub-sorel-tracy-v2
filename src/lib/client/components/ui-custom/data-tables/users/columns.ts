@@ -3,11 +3,15 @@ import type { User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
 import DataTableActions from './data-table-actions.svelte';
 import { createRawSnippet } from 'svelte';
+import DataTableUsernameButton from './data-table-username-button.svelte';
 
 export const columns: ColumnDef<User>[] = [
   {
     accessorKey: 'username',
-    header: "Nom d'utilisateur",
+    header: ({ column }) =>
+      renderComponent(DataTableUsernameButton, {
+        onclick: column.getToggleSortingHandler(),
+      }),
   },
   {
     accessorKey: 'firstname',
