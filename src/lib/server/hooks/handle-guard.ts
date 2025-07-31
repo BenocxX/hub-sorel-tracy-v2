@@ -36,7 +36,7 @@ function dashboardGuard(route: string, user?: App.Locals['user']) {
  * Guard admin routes from non-admin users
  */
 function adminGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes('/savant/admin') && (!user || user.role !== 'admin')) {
+  if (route.includes('/savant/admin') && (!user || user.role !== 'Admin')) {
     throw redirect(303, '/savant');
   }
 }

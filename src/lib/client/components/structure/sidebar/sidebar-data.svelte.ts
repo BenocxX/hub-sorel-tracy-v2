@@ -79,8 +79,8 @@ export function makeSidebarData(user: App.PageData['user']): SidebarData {
         icon: Users,
         isActive: true,
         items: [
-          { title: 'Étudiants', url: '/savant/admin/usersrole=student' },
-          { title: 'Enseignants', url: '/savant/admin/user?role=teacher' },
+          { title: 'Étudiants', url: '/savant/admin/user?role=Student' },
+          { title: 'Enseignants', url: '/savant/admin/user?role=Teacher' },
         ],
       },
       {
