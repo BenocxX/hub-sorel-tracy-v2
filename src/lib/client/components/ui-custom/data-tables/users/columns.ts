@@ -1,5 +1,8 @@
+import { renderComponent, renderSnippet } from '$lib/client/components/ui/data-table';
 import type { User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
+import DataTableActions from './data-table-actions.svelte';
+import { createRawSnippet } from 'svelte';
 
 export const columns: ColumnDef<User>[] = [
   {
@@ -16,6 +19,18 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'role',
-    header: 'Role',
+    header: 'Rôle',
+  },
+  {
+    id: 'actions',
+    header: () => {
+      const actionsHeaderSnippet = createRawSnippet(() => ({
+        render: () => `<div class="text-right">Actions</div>`,
+      }));
+      return renderSnippet(actionsHeaderSnippet, '');
+    },
+    cell: ({ row }) => {
+      return renderComponent(DataTableActions, row.original);
+    },
   },
 ];
