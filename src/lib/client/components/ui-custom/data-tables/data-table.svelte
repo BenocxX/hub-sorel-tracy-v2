@@ -14,9 +14,10 @@
   import { createSvelteTable, FlexRender } from '$lib/client/components/ui/data-table/index.js';
   import * as Table from '$lib/client/components/ui/table/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
+  import * as Select from '$lib/client/components/ui/select';
   import { Button } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
-  import { Settings2 } from 'lucide-svelte';
+  import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Settings2 } from 'lucide-svelte';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
@@ -106,9 +107,10 @@
 </script>
 
 <div>
-  <div class="flex items-center py-4">
+  <div class="flex items-center justify-between gap-2 py-4">
     <Input
-      placeholder="Recherche"
+      id="search"
+      placeholder="Recherche..."
       onchange={(e) => {
         table.setGlobalFilter(String(e.currentTarget.value));
       }}
@@ -121,7 +123,7 @@
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           {#snippet child({ props })}
-            <Button {...props} variant="outline" size="xs" class="ml-auto">
+            <Button {...props} variant="outline">
               <Settings2 />
               Affichage
             </Button>
@@ -177,23 +179,61 @@
     </Table.Root>
   </div>
   {#if !paginationConfig?.disabled}
-    <div class="flex items-center justify-end space-x-2 py-4">
-      <Button
-        variant="outline"
-        size="sm"
-        onclick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
-      >
-        Précédent
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        onclick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      >
-        Suivant
-      </Button>
+    <div
+      class=" flex flex-col-reverse items-end justify-end sm:flex-row sm:items-center sm:gap-10 md:flex-col-reverse md:items-end md:gap-0 lg:flex-row lg:items-center lg:gap-10"
+    >
+      <div class="flex items-center gap-2">
+        <span class="text-sm">Rangées par page</span>
+        <Select.Root
+          type="single"
+          value={pagination.pageSize.toString()}
+          onValueChange={(value) => table.setPageSize(+value)}
+        >
+          <Select.Trigger class="h-8 w-max gap-2">{pagination.pageSize}</Select.Trigger>
+          <Select.Content>
+            {#each Array.of(10, 20, 30, 40, 50) as itemPerPage (itemPerPage)}
+              <Select.Item value={itemPerPage.toString()}>{itemPerPage}</Select.Item>
+            {/each}
+          </Select.Content>
+        </Select.Root>
+      </div>
+      <div class="flex items-center gap-4">
+        <div class="text-sm">Page {pagination.pageIndex + 1} sur {table.getPageCount()}</div>
+        <div class="flex items-center justify-end space-x-2 py-4">
+          <Button
+            variant="outline"
+            size="icon-sm"
+            onclick={() => table.firstPage()}
+            disabled={pagination.pageIndex === 0}
+          >
+            <ChevronsLeft />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            onclick={() => table.previousPage()}
+            disabled={pagination.pageIndex === 0}
+          >
+            <ChevronLeft />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            onclick={() => table.nextPage()}
+            disabled={table.getPageCount() === pagination.pageIndex + 1}
+          >
+            <ChevronRight />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon-sm"
+            onclick={() => table.lastPage()}
+            disabled={table.getPageCount() === pagination.pageIndex + 1}
+          >
+            <ChevronsRight />
+          </Button>
+        </div>
+      </div>
     </div>
   {/if}
 </div>
