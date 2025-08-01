@@ -5,6 +5,7 @@
   import type { User } from '$lib/common/types/prisma-types';
   import DeleteUserForm from '$lib/client/components/structure/forms/admin/users/delete-user-form.svelte';
   import { page } from '$app/state';
+  import ChangeRoleForm from '$lib/client/components/structure/forms/admin/users/change-role-form.svelte';
 
   const user: User = $props();
 </script>
@@ -23,13 +24,25 @@
       <DropdownMenu.Group>
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
         {#if user.role !== 'Student'}
-          <DropdownMenu.Item>Rôle -&gt; étudiant</DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <ChangeRoleForm {user} role="Student" data={page.data.changeRoleForm}>
+              Rôle -&gt; étudiant
+            </ChangeRoleForm>
+          </DropdownMenu.Item>
         {/if}
         {#if user.role !== 'Teacher'}
-          <DropdownMenu.Item>Rôle -&gt; enseignant</DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <ChangeRoleForm {user} role="Teacher" data={page.data.changeRoleForm}>
+              Rôle -&gt; enseignant
+            </ChangeRoleForm>
+          </DropdownMenu.Item>
         {/if}
         {#if user.role !== 'Admin'}
-          <DropdownMenu.Item>Rôle -&gt; admin</DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <ChangeRoleForm {user} role="Admin" data={page.data.changeRoleForm}>
+              Rôle -&gt; admin
+            </ChangeRoleForm>
+          </DropdownMenu.Item>
         {/if}
       </DropdownMenu.Group>
       <DropdownMenu.Separator />

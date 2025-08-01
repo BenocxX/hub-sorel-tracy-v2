@@ -1,5 +1,5 @@
 import { roleSchema } from '$lib/common/schemas/prisma-schema.js';
-import { deleteUserSchema } from '$lib/common/schemas/user-schemas.js';
+import { changeRoleSchema, deleteUserSchema } from '$lib/common/schemas/user-schemas.js';
 import { db } from '$lib/server/prisma';
 import { fail, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -9,11 +9,50 @@ export const load = async ({ url }) => {
 
   return {
     users,
+    changeRoleForm: await superValidate(zod(changeRoleSchema)),
     deleteUserForm: await superValidate(zod(deleteUserSchema)),
   };
 };
 
 export const actions = {
+  changeRole: async (event) => {
+    const form = await superValidate(event, zod(changeRoleSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    const { id, role } = form.data;
+    const user = await db.user.findFirst({ where: { id } });
+    if (!user) {
+      return fail(400, { form });
+    }
+
+    if (user.role === 'Student') {
+      // Is a promotion from student to teacher/admin
+      await db.student.delete({ where: { id } });
+      await db.teacher.create({
+        data: {
+          isAdmin: role === 'Admin',
+          user: { connect: user },
+        },
+      });
+    } else if (role === 'Student') {
+      // Is a demotion from teacher/admin to student
+      await db.teacher.delete({ where: { id } });
+      await db.student.create({ data: { user: { connect: user } } });
+    } else {
+      // Is a promotion or demotion from teacher/admin to teacher/admin
+      await db.teacher.update({
+        where: { id },
+        data: { isAdmin: role === 'Admin' },
+      });
+    }
+
+    await db.user.update({ where: { id }, data: { role } });
+
+    return { form };
+  },
   deleteUser: async (event) => {
     const form = await superValidate(event, zod(deleteUserSchema));
 
