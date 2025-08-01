@@ -4,10 +4,17 @@
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu/index.js';
   import type { User } from '$lib/common/types/prisma-types';
   import DeleteUserForm from '$lib/client/components/structure/forms/admin/users/delete-user-form.svelte';
-  import { page } from '$app/state';
   import ChangeRoleForm from '$lib/client/components/structure/forms/admin/users/change-role-form.svelte';
+  import type { Infer, SuperValidated } from 'sveltekit-superforms';
+  import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/user-schemas';
 
-  const user: User = $props();
+  type Props = {
+    user: User;
+    deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
+    changeRoleForm: SuperValidated<Infer<ChangeRoleSchema>>;
+  };
+
+  const { user, deleteUserForm, changeRoleForm }: Props = $props();
 </script>
 
 <div class="text-right">
@@ -25,21 +32,21 @@
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
         {#if user.role !== 'Student'}
           <DropdownMenu.Item>
-            <ChangeRoleForm {user} role="Student" data={page.data.changeRoleForm}>
+            <ChangeRoleForm {user} role="Student" data={changeRoleForm}>
               Rôle -&gt; étudiant
             </ChangeRoleForm>
           </DropdownMenu.Item>
         {/if}
         {#if user.role !== 'Teacher'}
           <DropdownMenu.Item>
-            <ChangeRoleForm {user} role="Teacher" data={page.data.changeRoleForm}>
+            <ChangeRoleForm {user} role="Teacher" data={changeRoleForm}>
               Rôle -&gt; enseignant
             </ChangeRoleForm>
           </DropdownMenu.Item>
         {/if}
         {#if user.role !== 'Admin'}
           <DropdownMenu.Item>
-            <ChangeRoleForm {user} role="Admin" data={page.data.changeRoleForm}>
+            <ChangeRoleForm {user} role="Admin" data={changeRoleForm}>
               Rôle -&gt; admin
             </ChangeRoleForm>
           </DropdownMenu.Item>
@@ -47,7 +54,7 @@
       </DropdownMenu.Group>
       <DropdownMenu.Separator />
       <DropdownMenu.Item>
-        <DeleteUserForm {user} data={page.data.deleteUserForm} />
+        <DeleteUserForm {user} data={deleteUserForm} />
       </DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>

@@ -6,14 +6,16 @@
   let {
     variant = 'ghost',
     isSorted,
+    text,
     ...restProps
   }: ComponentProps<typeof Button> & {
     isSorted: false | 'asc' | 'desc';
+    text: string;
   } = $props();
 </script>
 
 <Button {variant} {...restProps}>
-  Nom d'utilisateur
+  {text}
   {#if !isSorted}
     <ArrowUpDownIcon class="ml-2" />
   {:else if isSorted === 'asc'}

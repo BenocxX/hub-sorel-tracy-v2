@@ -80,10 +80,13 @@ async function getUsersByRole(role: string | null) {
   }
 
   if (result.data === 'Student') {
-    return await db.user.findMany({ where: { role: 'Student' } });
+    return await db.user.findMany({ where: { role: 'Student' }, orderBy: { username: 'asc' } });
   } else if (result.data === 'Teacher') {
-    return await db.user.findMany({ where: { OR: [{ role: 'Teacher' }, { role: 'Admin' }] } });
+    return await db.user.findMany({
+      where: { OR: [{ role: 'Teacher' }, { role: 'Admin' }] },
+      orderBy: { username: 'asc' },
+    });
   }
 
-  return await db.user.findMany({ where: { role: 'Admin' } });
+  return await db.user.findMany({ where: { role: 'Admin' }, orderBy: { username: 'asc' } });
 }
