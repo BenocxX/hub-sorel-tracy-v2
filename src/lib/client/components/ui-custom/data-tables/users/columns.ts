@@ -7,6 +7,7 @@ import DataTableUsernameButton from './data-table-username-button.svelte';
 
 export const columns: ColumnDef<User>[] = [
   {
+    meta: { frenchName: "Nom d'utilisateur" },
     accessorKey: 'username',
     header: ({ column }) => {
       return renderComponent(DataTableUsernameButton, {
@@ -22,18 +23,22 @@ export const columns: ColumnDef<User>[] = [
     },
   },
   {
+    meta: { frenchName: 'Prénom' },
     accessorKey: 'firstname',
     header: 'Prénom',
   },
   {
+    meta: { frenchName: 'Nom' },
     accessorKey: 'lastname',
     header: 'Nom',
   },
   {
+    meta: { frenchName: 'Rôle' },
     accessorKey: 'role',
     header: 'Rôle',
   },
   {
+    meta: { frenchName: 'Actions' },
     id: 'actions',
     header: () => {
       const actionsHeaderSnippet = createRawSnippet(() => ({

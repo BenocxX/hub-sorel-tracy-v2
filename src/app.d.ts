@@ -16,4 +16,10 @@ declare global {
   }
 }
 
+declare module '@tanstack/table-core' {
+  interface ColumnMeta<TData extends RowData, TValue> {
+    frenchName: string;
+  }
+}
+
 export {};
