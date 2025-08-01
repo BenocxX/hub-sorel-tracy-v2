@@ -3,6 +3,8 @@
   import { Button } from '$lib/client/components/ui/button/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu/index.js';
   import type { User } from '$lib/common/types/prisma-types';
+  import DeleteUserForm from '$lib/client/components/structure/forms/admin/users/delete-user-form.svelte';
+  import { page } from '$app/state';
 
   const user: User = $props();
 </script>
@@ -31,7 +33,9 @@
         {/if}
       </DropdownMenu.Group>
       <DropdownMenu.Separator />
-      <DropdownMenu.Item>Supprimer</DropdownMenu.Item>
+      <DropdownMenu.Item>
+        <DeleteUserForm {user} data={page.data.deleteUserForm} />
+      </DropdownMenu.Item>
     </DropdownMenu.Content>
   </DropdownMenu.Root>
 </div>
