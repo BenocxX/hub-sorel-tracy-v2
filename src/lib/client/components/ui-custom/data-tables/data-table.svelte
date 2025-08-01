@@ -15,15 +15,32 @@
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import { Button } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
+  import type { AccessorKey } from '$lib/common/types/utils';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    pagination?: { disabled?: boolean; index?: number; size?: number };
+    searchBar?: {
+      disable?: boolean;
+      placeholder: string;
+      column: AccessorKey<TData, ColumnDef<TData>[]>;
+    };
+    visibility?: boolean;
   };
 
-  let { data, columns }: DataTableProps<TData, TValue> = $props();
+  const {
+    data,
+    columns,
+    pagination: paginationConfig,
+    searchBar,
+    visibility = true,
+  }: DataTableProps<TData, TValue> = $props();
 
-  let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 });
+  let pagination = $state<PaginationState>({
+    pageIndex: paginationConfig?.index ?? 0,
+    pageSize: paginationConfig?.size ?? 10,
+  });
   let sorting = $state<SortingState>([]);
   let columnFilters = $state<ColumnFiltersState>([]);
   let columnVisibility = $state<VisibilityState>({});
@@ -84,34 +101,38 @@
 
 <div>
   <div class="flex items-center py-4">
-    <Input
-      placeholder="Filtre par nom d'utilisateur..."
-      value={(table.getColumn('username')?.getFilterValue() as string) ?? ''}
-      onchange={(e) => {
-        table.getColumn('username')?.setFilterValue(e.currentTarget.value);
-      }}
-      oninput={(e) => {
-        table.getColumn('username')?.setFilterValue(e.currentTarget.value);
-      }}
-      class="max-w-sm"
-    />
-    <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        {#snippet child({ props })}
-          <Button {...props} variant="outline" class="ml-auto">Colonnes</Button>
-        {/snippet}
-      </DropdownMenu.Trigger>
-      <DropdownMenu.Content align="end">
-        {#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
-          <DropdownMenu.CheckboxItem
-            class="capitalize"
-            bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
-          >
-            {column.id}
-          </DropdownMenu.CheckboxItem>
-        {/each}
-      </DropdownMenu.Content>
-    </DropdownMenu.Root>
+    {#if searchBar && !searchBar.disable}
+      <Input
+        placeholder={searchBar.placeholder}
+        value={(table.getColumn(searchBar.column)?.getFilterValue() as string) ?? ''}
+        onchange={(e) => {
+          table.getColumn(searchBar.column)?.setFilterValue(e.currentTarget.value);
+        }}
+        oninput={(e) => {
+          table.getColumn(searchBar.column)?.setFilterValue(e.currentTarget.value);
+        }}
+        class="max-w-sm"
+      />
+    {/if}
+    {#if visibility}
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          {#snippet child({ props })}
+            <Button {...props} variant="outline" class="ml-auto">Colonnes</Button>
+          {/snippet}
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content align="end">
+          {#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
+            <DropdownMenu.CheckboxItem
+              class="capitalize"
+              bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
+            >
+              {column.id}
+            </DropdownMenu.CheckboxItem>
+          {/each}
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    {/if}
   </div>
   <div class="rounded-md border">
     <Table.Root>
@@ -142,30 +163,32 @@
           </Table.Row>
         {:else}
           <Table.Row>
-            <Table.Cell colspan={columns.length} class="h-24 text-center"
-              >Aucun résultat.</Table.Cell
-            >
+            <Table.Cell colspan={columns.length} class="h-24 text-center">
+              Aucun résultat.
+            </Table.Cell>
           </Table.Row>
         {/each}
       </Table.Body>
     </Table.Root>
   </div>
-  <div class="flex items-center justify-end space-x-2 py-4">
-    <Button
-      variant="outline"
-      size="sm"
-      onclick={() => table.previousPage()}
-      disabled={!table.getCanPreviousPage()}
-    >
-      Précédent
-    </Button>
-    <Button
-      variant="outline"
-      size="sm"
-      onclick={() => table.nextPage()}
-      disabled={!table.getCanNextPage()}
-    >
-      Suivant
-    </Button>
-  </div>
+  {#if !paginationConfig?.disabled}
+    <div class="flex items-center justify-end space-x-2 py-4">
+      <Button
+        variant="outline"
+        size="sm"
+        onclick={() => table.previousPage()}
+        disabled={!table.getCanPreviousPage()}
+      >
+        Précédent
+      </Button>
+      <Button
+        variant="outline"
+        size="sm"
+        onclick={() => table.nextPage()}
+        disabled={!table.getCanNextPage()}
+      >
+        Suivant
+      </Button>
+    </div>
+  {/if}
 </div>
