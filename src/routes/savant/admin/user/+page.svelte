@@ -9,8 +9,4 @@
   });
 </script>
 
-<DataTable
-  {columns}
-  data={data.users}
-  searchBar={{ placeholder: "Filtre par nom d'utilisateur...", column: 'username' }}
-/>
+<DataTable {columns} data={data.users} />

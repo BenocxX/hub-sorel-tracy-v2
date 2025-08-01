@@ -2,6 +2,7 @@
   import {
     type ColumnDef,
     type ColumnFiltersState,
+    type GlobalFilterTableState,
     type PaginationState,
     type SortingState,
     type VisibilityState,
@@ -15,17 +16,12 @@
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import { Button } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
-  import type { AccessorKey } from '$lib/common/types/utils';
+  import { Settings2 } from 'lucide-svelte';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     pagination?: { disabled?: boolean; index?: number; size?: number };
-    searchBar?: {
-      disable?: boolean;
-      placeholder: string;
-      column: AccessorKey<TData, ColumnDef<TData>[]>;
-    };
     visibility?: boolean;
   };
 
@@ -33,7 +29,6 @@
     data,
     columns,
     pagination: paginationConfig,
-    searchBar,
     visibility = true,
   }: DataTableProps<TData, TValue> = $props();
 
@@ -44,6 +39,7 @@
   let sorting = $state<SortingState>([]);
   let columnFilters = $state<ColumnFiltersState>([]);
   let columnVisibility = $state<VisibilityState>({});
+  let globalFilter = $state<GlobalFilterTableState>();
 
   const table = createSvelteTable({
     get data() {
@@ -61,6 +57,9 @@
       },
       get columnVisibility() {
         return columnVisibility;
+      },
+      get globalFilter() {
+        return globalFilter;
       },
     },
     columns,
@@ -92,6 +91,13 @@
         columnVisibility = updater;
       }
     },
+    onGlobalFilterChange: (updater) => {
+      if (typeof updater === 'function') {
+        globalFilter = updater(globalFilter);
+      } else {
+        globalFilter = updater;
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -101,24 +107,24 @@
 
 <div>
   <div class="flex items-center py-4">
-    {#if searchBar && !searchBar.disable}
-      <Input
-        placeholder={searchBar.placeholder}
-        value={(table.getColumn(searchBar.column)?.getFilterValue() as string) ?? ''}
-        onchange={(e) => {
-          table.getColumn(searchBar.column)?.setFilterValue(e.currentTarget.value);
-        }}
-        oninput={(e) => {
-          table.getColumn(searchBar.column)?.setFilterValue(e.currentTarget.value);
-        }}
-        class="max-w-sm"
-      />
-    {/if}
+    <Input
+      placeholder="Recherche"
+      onchange={(e) => {
+        table.setGlobalFilter(String(e.currentTarget.value));
+      }}
+      oninput={(e) => {
+        table.setGlobalFilter(String(e.currentTarget.value));
+      }}
+      class="max-w-sm"
+    />
     {#if visibility}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           {#snippet child({ props })}
-            <Button {...props} variant="outline" class="ml-auto">Colonnes</Button>
+            <Button {...props} variant="outline" size="xs" class="ml-auto">
+              <Settings2 />
+              Affichage
+            </Button>
           {/snippet}
         </DropdownMenu.Trigger>
         <DropdownMenu.Content align="end">
