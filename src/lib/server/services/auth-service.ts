@@ -55,6 +55,9 @@ export class AuthService {
       data: {
         id: generateUserId(),
         username: discordUser.username,
+        student: {
+          create: {},
+        },
       },
     });
 
