@@ -30,7 +30,28 @@ model Student {
 model Teacher {
   id      String  @id
   isAdmin Boolean @default(false)
-  user    User    @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  courses Course[]
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
+}
+
+model Course {
+  id   Int    @id @default(autoincrement())
+  name String
+  icon String
+
+  schoolSessionId Int
+  teachers        Teacher[]
+
+  schoolSession SchoolSession @relation(fields: [schoolSessionId], references: [id])
+}
+
+model SchoolSession {
+  id      Int      @id @default(autoincrement())
+  year    Int
+  season  Season
+  courses Course[]
 }
 
 model Session {
@@ -69,4 +90,10 @@ enum Role {
   Student
   Teacher
   Admin
+}
+
+enum Season {
+  Fall
+  Winter
+  Summer
 }
