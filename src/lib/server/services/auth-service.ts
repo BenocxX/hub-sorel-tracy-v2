@@ -6,7 +6,7 @@ import { Argon2id } from 'oslo/password';
 import { DiscordAuthService, type DiscordUser } from './discord-auth-service';
 import type { OAuth2Tokens } from 'arctic';
 import type { User } from '$lib/common/types/prisma-types';
-import { Role } from '@prisma/client';
+import type { Role } from '@prisma/client';
 
 type LoginData = {
   username: string;
@@ -26,8 +26,6 @@ function generateUserId() {
 }
 
 export class AuthService {
-  public static readonly EMAIL_PASSWORD_PROVIDER = 'email-password';
-
   private readonly argon2id = new Argon2id();
   private readonly sessionService = new SessionService();
 
@@ -35,31 +33,12 @@ export class AuthService {
   public async signup({ username, firstname, lastname, password }: SignupData) {
     const passwordHash = await this.argon2id.hash(password);
 
-    return await db.user.create({
-      data: {
-        id: generateUserId(),
-        username,
-        firstname,
-        lastname,
-        passwordHash,
-        student: {
-          create: {},
-        },
-      },
-    });
+    return await this.createNewUser({ username, firstname, lastname, passwordHash });
   }
 
   /** Creates a new user in the database, with the given discord user data. */
   public async signupWithDiscord(discordUser: DiscordUser) {
-    const newUser = await db.user.create({
-      data: {
-        id: generateUserId(),
-        username: discordUser.username,
-        student: {
-          create: {},
-        },
-      },
-    });
+    const newUser = await this.createNewUser({ username: discordUser.username });
 
     const discordAuthService = new DiscordAuthService();
     await discordAuthService.updateLocalDiscordUserData(discordUser, newUser);
@@ -160,5 +139,40 @@ export class AuthService {
     });
 
     return passwordHash !== '' && passwordHash !== null;
+  }
+
+  private async createNewUser({
+    username,
+    firstname,
+    lastname,
+    passwordHash,
+  }: {
+    username: string;
+    firstname?: string;
+    lastname?: string;
+    passwordHash?: string;
+  }) {
+    // The first user to create an account is the admin
+    const userCount = await db.user.count();
+    const role: Role = userCount === 0 ? 'Admin' : 'Student';
+
+    const newUser = await db.user.create({
+      data: {
+        id: generateUserId(),
+        username,
+        firstname,
+        lastname,
+        passwordHash,
+        role,
+      },
+    });
+
+    if (role === 'Student') {
+      await db.student.create({ data: { user: { connect: newUser } } });
+    } else {
+      await db.teacher.create({ data: { user: { connect: newUser }, isAdmin: role === 'Admin' } });
+    }
+
+    return newUser;
   }
 }
