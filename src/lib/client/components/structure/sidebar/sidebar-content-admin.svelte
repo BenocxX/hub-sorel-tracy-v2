@@ -3,6 +3,7 @@
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import * as Collapsible from '$lib/client/components/ui/collapsible';
   import type { SidebarItem } from './sidebar-data.svelte';
+  import { page } from '$app/state';
 
   let { items }: { items: SidebarItem[] } = $props();
 </script>
@@ -11,7 +12,7 @@
   <Sidebar.GroupLabel>Gestion</Sidebar.GroupLabel>
   <Sidebar.Menu>
     {#each items as item (item.title)}
-      <Collapsible.Root open={item.isActive} class="group/collapsible">
+      <Collapsible.Root open={item.isOpen} class="group/collapsible">
         {#snippet child({ props })}
           <Sidebar.MenuItem {...props}>
             <Collapsible.Trigger>
@@ -34,7 +35,9 @@
               <Sidebar.MenuSub>
                 {#each item.items ?? [] as subItem (subItem.title)}
                   <Sidebar.MenuSubItem>
-                    <Sidebar.MenuSubButton>
+                    <Sidebar.MenuSubButton
+                      isActive={subItem.url === subItem.getUrlToCompare(page.url)}
+                    >
                       {#snippet child({ props })}
                         <a href={subItem.url} {...props}>
                           <span>{subItem.title}</span>

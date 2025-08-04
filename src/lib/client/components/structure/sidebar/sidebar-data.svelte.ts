@@ -16,12 +16,13 @@ export type HeaderSection = {
 type SidebarSubItem = {
   title: string;
   url: string;
+  getUrlToCompare: (url: URL) => string;
 };
 
 export type SidebarItem = {
   title: string;
   url: string;
-  isActive?: boolean;
+  isOpen: boolean;
   // this should be `Component` after @lucide/svelte updates types
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
@@ -79,20 +80,36 @@ export function makeSidebarData(user: App.PageData['user']): SidebarData {
         title: 'Utilisateurs',
         url: '#',
         icon: Users,
-        isActive: true,
+        isOpen: true,
         items: [
-          { title: 'Étudiants', url: '/savant/admin/user?role=Student' },
-          { title: 'Enseignants', url: '/savant/admin/user?role=Teacher' },
+          {
+            title: 'Étudiants',
+            url: '/savant/admin/user?role=Student',
+            getUrlToCompare: (url) => url.pathname + url.search,
+          },
+          {
+            title: 'Enseignants',
+            url: '/savant/admin/user?role=Teacher',
+            getUrlToCompare: (url) => url.pathname + url.search,
+          },
         ],
       },
       {
         title: 'Contenu',
         url: '#',
         icon: Presentation,
-        isActive: true,
+        isOpen: true,
         items: [
-          { title: 'Cours', url: '/savant/admin/course' },
-          { title: 'Sessions', url: '/savant/admin/session' },
+          {
+            title: 'Cours',
+            url: '/savant/admin/course',
+            getUrlToCompare: (url) => url.pathname,
+          },
+          {
+            title: 'Sessions',
+            url: '/savant/admin/session',
+            getUrlToCompare: (url) => url.pathname,
+          },
         ],
       },
     ],
