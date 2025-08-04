@@ -3,11 +3,17 @@
   import { makeColumns } from './columns.js';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import CreateCourseForm from '$lib/client/components/structure/forms/admin/course/create-course-form.svelte';
+  import PageTitle from '$lib/client/components/structure/page-title.svelte';
 
   const { data } = $props();
   const columns = makeColumns({ deleteCourseForm: data.deleteCourseForm });
 </script>
 
+<PageTitle
+  title="Liste des cours"
+  subtitle="Gérez les différents cours."
+  class="mb-4 border-b-0 pb-0"
+/>
 <DataTable {columns} data={data.courses}>
   {#snippet createDialogFormSnippet()}
     <Dialog.Header>
