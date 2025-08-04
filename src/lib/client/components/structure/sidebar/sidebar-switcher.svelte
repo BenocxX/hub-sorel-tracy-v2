@@ -1,6 +1,3 @@
-<script lang="ts" module>
-</script>
-
 <script lang="ts">
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import * as Sidebar from '$lib/client/components/ui/sidebar';
@@ -10,13 +7,18 @@
 
   type Props = {
     onSidebarChange: (sidebarContentKey: SidebarChoice['contentKey']) => void;
+    defaultContentKey: SidebarChoice['contentKey'];
     sections: HeaderSection[];
   };
 
-  let { onSidebarChange, sections }: Props = $props();
+  let { onSidebarChange, defaultContentKey, sections }: Props = $props();
   const sidebar = useSidebar();
 
-  let activeSidebar = $state(sections[0].headerSidebarChoice[0]);
+  const defaultSidebar = sections
+    .flatMap((section) => section.headerSidebarChoice)
+    .find((choice) => choice.contentKey === defaultContentKey);
+
+  let activeSidebar = $state(defaultSidebar ?? sections[0].headerSidebarChoice[0]);
 </script>
 
 <Sidebar.Menu>

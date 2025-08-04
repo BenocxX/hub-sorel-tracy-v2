@@ -9,7 +9,8 @@
 
   const user = page.data.user;
 
-  let selectedContentKey = $state<'course' | 'admin'>(user?.role === 'Admin' ? 'admin' : 'course');
+  const defaultContentKey = user?.role === 'Admin' ? 'admin' : 'course';
+  let selectedContentKey = $state<'course' | 'admin'>(defaultContentKey);
 
   const sidebarData = makeSidebarData(user);
 </script>
@@ -17,7 +18,8 @@
 <Sidebar.Root collapsible="icon">
   <Sidebar.Header>
     <SidebarSwitcher
-      sections={sidebarData.headerSections}
+      {defaultContentKey}
+      sections={sidebarData.headerSections.filter((section) => !section.isHidden)}
       onSidebarChange={(contentKey) => (selectedContentKey = contentKey)}
     />
   </Sidebar.Header>

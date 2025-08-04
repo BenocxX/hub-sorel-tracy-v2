@@ -9,6 +9,7 @@ export type SidebarChoice = {
 
 export type HeaderSection = {
   name: string;
+  isHidden?: boolean;
   headerSidebarChoice: SidebarChoice[];
 };
 
@@ -62,6 +63,7 @@ export function makeSidebarData(user: App.PageData['user']): SidebarData {
       },
       {
         name: 'Autres',
+        isHidden: user?.role !== 'Admin',
         headerSidebarChoice: [
           {
             name: 'Admin',
