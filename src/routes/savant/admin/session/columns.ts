@@ -5,6 +5,7 @@ import DataTableActions from './data-table-actions.svelte';
 import type { SchoolSession } from '@prisma/client';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { DeleteSessionSchema } from '$lib/common/schemas/school-session-schemas';
+import { localizeSeason } from '$lib/common/tools/localizer';
 
 export function makeColumns({
   deleteSessionForm,
@@ -19,7 +20,7 @@ export function makeColumns({
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
           render: () =>
-            `<div>${localizedSeasonObject[row.original.season].charAt(0) + row.original.year}</div>`,
+            `<div>${localizeSeason(row.original.season).charAt(0) + row.original.year}</div>`,
         }));
         return renderSnippet(cellSnippet, '');
       },
@@ -30,7 +31,7 @@ export function makeColumns({
       header: 'Saison',
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
-          render: () => `<div>${localizedSeasonObject[row.original.season]}</div>`,
+          render: () => `<div>${localizeSeason(row.original.season)}</div>`,
         }));
         return renderSnippet(cellSnippet, '');
       },
@@ -58,9 +59,3 @@ export function makeColumns({
     },
   ];
 }
-
-const localizedSeasonObject = {
-  Fall: 'Automne',
-  Winter: 'Hiver',
-  Summer: 'Été',
-};

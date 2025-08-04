@@ -15,15 +15,25 @@
   import * as Table from '$lib/client/components/ui/table/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import * as Select from '$lib/client/components/ui/select';
+  import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import { Button } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
-  import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Settings2 } from 'lucide-svelte';
+  import {
+    ChevronLeft,
+    ChevronRight,
+    ChevronsLeft,
+    ChevronsRight,
+    Plus,
+    Settings2,
+  } from 'lucide-svelte';
+  import type { Snippet } from 'svelte';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     pagination?: { disabled?: boolean; index?: number; size?: number };
     visibility?: boolean;
+    createDialogFormSnippet?: Snippet;
   };
 
   const {
@@ -31,6 +41,7 @@
     columns,
     pagination: paginationConfig,
     visibility = true,
+    createDialogFormSnippet,
   }: DataTableProps<TData, TValue> = $props();
 
   let pagination = $state<PaginationState>({
@@ -108,17 +119,33 @@
 
 <div>
   <div class="flex items-center justify-between gap-2 py-4">
-    <Input
-      id="search"
-      placeholder="Recherche..."
-      onchange={(e) => {
-        table.setGlobalFilter(String(e.currentTarget.value));
-      }}
-      oninput={(e) => {
-        table.setGlobalFilter(String(e.currentTarget.value));
-      }}
-      class="max-w-sm"
-    />
+    <div class="flex w-full items-center gap-2">
+      {#if createDialogFormSnippet}
+        <Dialog.Root>
+          <Dialog.Trigger>
+            {#snippet child({ props })}
+              <Button variant="outline" size="icon" class="aspect-square" {...props}>
+                <Plus />
+              </Button>
+            {/snippet}
+          </Dialog.Trigger>
+          <Dialog.Content>
+            {@render createDialogFormSnippet()}
+          </Dialog.Content>
+        </Dialog.Root>
+      {/if}
+      <Input
+        id="search"
+        placeholder="Recherche..."
+        onchange={(e) => {
+          table.setGlobalFilter(String(e.currentTarget.value));
+        }}
+        oninput={(e) => {
+          table.setGlobalFilter(String(e.currentTarget.value));
+        }}
+        class="max-w-sm"
+      />
+    </div>
     {#if visibility}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
