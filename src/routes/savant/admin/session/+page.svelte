@@ -3,11 +3,17 @@
   import { makeColumns } from './columns.js';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import CreateSessionForm from '$lib/client/components/structure/forms/admin/session/create-session-form.svelte';
+  import PageTitle from '$lib/client/components/structure/page-title.svelte';
 
   const { data } = $props();
   const columns = makeColumns({ deleteSessionForm: data.deleteSessionForm });
 </script>
 
+<PageTitle
+  title="Liste des sessions"
+  subtitle="Gérez les différentes sessions."
+  class="mb-4 border-b-0 pb-0"
+/>
 <DataTable {columns} data={data.sessions}>
   {#snippet createDialogFormSnippet()}
     <Dialog.Header>
