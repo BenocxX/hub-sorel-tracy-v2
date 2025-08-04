@@ -20,3 +20,10 @@ export type Session<T extends Prisma.SessionInclude = object> = UserSanitizer<
 export type User<T extends Prisma.UserInclude = object> = UserSanitizer<
   Prisma.UserGetPayload<{ include: T }>
 >;
+
+export type Course<T extends Prisma.CourseInclude = object> = Prisma.CourseGetPayload<{
+  include: T;
+}>;
+
+export type SchoolSession<T extends Prisma.SchoolSessionInclude = object> =
+  Prisma.SchoolSessionGetPayload<{ include: T }>;
