@@ -1,11 +1,11 @@
 import { renderComponent, renderSnippet } from '$lib/client/components/ui/data-table';
 import type { User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
-import DataTableActions from './data-table-actions.svelte';
 import { createRawSnippet } from 'svelte';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/user-schemas';
-import DataTableSortHeaderButton from '../data-table-sort-header-button.svelte';
+import DataTableActions from './data-table-actions.svelte';
+import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 
 export function makeColumns({
   deleteUserForm,

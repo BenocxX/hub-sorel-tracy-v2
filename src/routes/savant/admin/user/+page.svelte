@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { makeColumns } from '$lib/client/components/ui-custom/data-tables/users/columns.js';
+  import { makeColumns } from './columns.js';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import { page } from '$app/state';
