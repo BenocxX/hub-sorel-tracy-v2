@@ -14,9 +14,16 @@ export function makeColumns({
 }): ColumnDef<Course<{ schoolSession: true }>>[] {
   return [
     {
-      meta: { frenchName: 'Nom' },
+      meta: { frenchName: 'Cours' },
       accessorKey: 'name',
-      header: 'Nom',
+      header: 'Cours',
+      cell: ({ row }) => {
+        const snippet = createRawSnippet(() => ({
+          render: () =>
+            `<div class="flex items-center gap-3 [&>svg]:size-5">${row.original.icon}<div>${row.original.name}</div></div>`,
+        }));
+        return renderSnippet(snippet, '');
+      },
     },
     {
       meta: { frenchName: 'Session' },
