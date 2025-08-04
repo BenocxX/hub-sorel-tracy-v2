@@ -89,6 +89,7 @@ export function makeSidebarData(user: App.PageData['user']): SidebarData {
         title: 'Contenu',
         url: '#',
         icon: Presentation,
+        isActive: true,
         items: [
           { title: 'Cours', url: '/savant/admin/course' },
           { title: 'Sessions', url: '/savant/admin/session' },
