@@ -1,5 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 
+const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
+
 export const handleGuard: Handle = async ({ event, resolve }) => {
   const routeId = event.route.id;
 
@@ -7,9 +9,7 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
     return resolve(event);
   }
 
-  publicGuard(routeId, event.locals.user);
-  dashboardGuard(routeId, event.locals.user);
-  adminGuard(routeId, event.locals.user);
+  guards.forEach((guard) => guard(routeId, event.locals.user));
 
   return resolve(event);
 };
@@ -29,6 +29,15 @@ function publicGuard(route: string, user?: App.Locals['user']) {
 function dashboardGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/savant') && !user) {
     throw redirect(303, '/login');
+  }
+}
+
+/**
+ * Guard private routes from non-teacher users
+ */
+function teacherGuard(route: string, user?: App.Locals['user']) {
+  if (route.includes('/savant/teacher') && (!user || user.role === 'Student')) {
+    throw redirect(303, '/savant');
   }
 }
 
