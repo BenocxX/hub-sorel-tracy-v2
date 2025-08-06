@@ -18,8 +18,16 @@ export const load = async (event) => {
   const sessionService = new SessionService();
   const sessions = await sessionService.getUserSessionsSortedByLastUsed(userId);
 
+  const updateNamesForm = await superValidate(zod(updateNamesSchema), {
+    defaults: {
+      username: event.locals.user!.username,
+      firstname: event.locals.user!.firstname ?? undefined,
+      lastname: event.locals.user!.lastname ?? undefined,
+    },
+  });
+
   return {
-    updateNamesForm: await superValidate(zod(updateNamesSchema)),
+    updateNamesForm,
     resetPasswordForm: await superValidate(zod(resetPasswordSchema)),
     setPasswordForm: await superValidate(zod(setPasswordSchema)),
     deleteSessionForm: await superValidate(zod(deleteSessionSchema)),

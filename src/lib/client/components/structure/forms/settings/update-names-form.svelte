@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/stores';
+  import { invalidateAll } from '$app/navigation';
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
   import { updateNamesSchema, type UpdateNamesSchema } from '$lib/common/schemas/settings-schemas';
@@ -13,9 +13,16 @@
 
   const { class: className, data }: Props = $props();
 
-  const form = superForm(data, { validators: zodClient(updateNamesSchema) });
+  const form = superForm(data, {
+    validators: zodClient(updateNamesSchema),
+    onUpdated: ({ form }) => {
+      if (form.valid) {
+        invalidateAll();
+      }
+    },
+  });
 
-  const { delayed, enhance } = form;
+  const { form: formData, delayed, enhance } = form;
 </script>
 
 <form method="POST" action="?/updateNames" class={className} use:enhance>
@@ -24,7 +31,7 @@
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Nom d'utilisateur</Form.Label>
-          <Input {...props} bind:value={$page.data.user!.username} />
+          <Input {...props} bind:value={$formData.username} />
         {/snippet}
       </Form.Control>
       <Form.FieldErrors />
@@ -33,7 +40,7 @@
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Prénom</Form.Label>
-          <Input {...props} bind:value={$page.data.user!.firstname} />
+          <Input {...props} bind:value={$formData.firstname} />
         {/snippet}
       </Form.Control>
       <Form.FieldErrors />
@@ -42,7 +49,7 @@
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Nom</Form.Label>
-          <Input {...props} bind:value={$page.data.user!.lastname} />
+          <Input {...props} bind:value={$formData.lastname} />
         {/snippet}
       </Form.Control>
       <Form.FieldErrors />
