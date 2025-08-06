@@ -1,11 +1,19 @@
 import { renderComponent, renderSnippet } from '$lib/client/components/ui/data-table';
-import type { User } from '$lib/common/types/prisma-types';
+import type { Course, User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
 import { createRawSnippet } from 'svelte';
 import DataTableActions from './data-table-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
+import type { Infer, SuperValidated } from 'sveltekit-superforms';
+import type { RemoveUserFromCourseSchema } from '$lib/common/schemas/course-schemas';
 
-export function makeColumns(): ColumnDef<User>[] {
+export function makeColumns({
+  course,
+  removeUserFromCourse,
+}: {
+  course: Course;
+  removeUserFromCourse: SuperValidated<Infer<RemoveUserFromCourseSchema>>;
+}): ColumnDef<User>[] {
   return [
     {
       meta: { frenchName: "Nom d'utilisateur" },
@@ -87,6 +95,8 @@ export function makeColumns(): ColumnDef<User>[] {
       cell: ({ row }) => {
         return renderComponent(DataTableActions, {
           user: row.original,
+          course,
+          removeUserFromCourse,
         });
       },
     },

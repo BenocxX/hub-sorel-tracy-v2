@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AddUserToCourseForm from '$lib/client/components/structure/forms/teacher/add-user-to-course-form.svelte';
+  import AddUserToCourseForm from '$lib/client/components/structure/forms/teacher/course/add-user-to-course-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
@@ -7,7 +7,10 @@
   import { makeColumns } from './columns.js';
 
   const { data } = $props();
-  const columns = makeColumns();
+  const columns = makeColumns({
+    course: data.course,
+    removeUserFromCourse: data.removeUserFromCourse,
+  });
 </script>
 
 <PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />

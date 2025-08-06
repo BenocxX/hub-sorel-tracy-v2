@@ -16,6 +16,12 @@ export const addUserToCourseSchema = z.object({
   userId: z.string().min(1),
 });
 
+export const removeUserFromCourseSchema = z.object({
+  courseId: z.number(),
+  userId: z.string().min(1),
+});
+
 export type CreateCourseSchema = typeof createCourseSchema;
 export type DeleteCourseSchema = typeof deleteCourseSchema;
 export type AddUserToCourseSchema = typeof addUserToCourseSchema;
+export type RemoveUserFromCourseSchema = typeof removeUserFromCourseSchema;

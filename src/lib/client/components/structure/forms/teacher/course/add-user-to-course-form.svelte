@@ -16,7 +16,6 @@
   import { buttonVariants } from '$lib/client/components/ui/button';
   import { CheckIcon, ChevronsUpDownIcon } from 'lucide-svelte';
   import type { User } from '$lib/common/types/prisma-types';
-  import Badge from '$lib/client/components/ui/badge/badge.svelte';
 
   type Props = {
     course: Course;

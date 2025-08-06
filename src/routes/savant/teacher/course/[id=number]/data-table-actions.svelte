@@ -3,14 +3,18 @@
   import { Button } from '$lib/client/components/ui/button/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu/index.js';
   import type { User } from '$lib/common/types/prisma-types';
-  import DeleteUserForm from '$lib/client/components/structure/forms/admin/users/delete-user-form.svelte';
-  import ChangeRoleForm from '$lib/client/components/structure/forms/admin/users/change-role-form.svelte';
+  import RemoveUserFromCourseForm from '$lib/client/components/structure/forms/teacher/course/remove-user-from-course-form.svelte';
+  import type { Course } from '@prisma/client';
+  import type { Infer, SuperValidated } from 'sveltekit-superforms';
+  import type { RemoveUserFromCourseSchema } from '$lib/common/schemas/course-schemas';
 
   type Props = {
     user: User;
+    course: Course;
+    removeUserFromCourse: SuperValidated<Infer<RemoveUserFromCourseSchema>>;
   };
 
-  const { user }: Props = $props();
+  const { user, course, removeUserFromCourse }: Props = $props();
 </script>
 
 <div class="text-right">
@@ -26,8 +30,10 @@
     <DropdownMenu.Content>
       <DropdownMenu.Group>
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
+        <DropdownMenu.Item>
+          <RemoveUserFromCourseForm {course} {user} data={removeUserFromCourse} />
+        </DropdownMenu.Item>
       </DropdownMenu.Group>
-      <DropdownMenu.Separator />
     </DropdownMenu.Content>
   </DropdownMenu.Root>
 </div>

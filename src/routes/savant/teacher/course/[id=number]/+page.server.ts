@@ -1,4 +1,7 @@
-import { addUserToCourseSchema } from '$lib/common/schemas/course-schemas.js';
+import {
+  addUserToCourseSchema,
+  removeUserFromCourseSchema,
+} from '$lib/common/schemas/course-schemas.js';
 import { db } from '$lib/server/prisma/index.js';
 import { error, fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
@@ -35,6 +38,7 @@ export const load = async (event) => {
     courseUsers,
     users,
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
+    removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),
   };
 };
 
@@ -46,16 +50,40 @@ export const actions = {
       return fail(400, { form });
     }
 
+    const course = await db.course.findFirst({ where: { id: form.data.courseId } });
     const user = await db.user.findFirst({ where: { id: form.data.userId } });
-    if (!user) {
+    if (!user || !course) {
       return fail(400, { form });
     }
 
     await db.course.update({
-      where: { id: form.data.courseId },
+      where: { id: course.id },
       data: {
         students: user.role === 'Student' ? { connect: { id: user.id } } : undefined,
         teachers: user.role !== 'Student' ? { connect: { id: user.id } } : undefined,
+      },
+    });
+
+    return { form };
+  },
+  removeUserFromCourse: async (event) => {
+    const form = await superValidate(event, zod(removeUserFromCourseSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    const course = await db.course.findFirst({ where: { id: form.data.courseId } });
+    const user = await db.user.findFirst({ where: { id: form.data.userId } });
+    if (!user || !course) {
+      return fail(400, { form });
+    }
+
+    await db.course.update({
+      where: { id: course.id },
+      data: {
+        students: user.role === 'Student' ? { disconnect: { id: user.id } } : undefined,
+        teachers: user.role !== 'Student' ? { disconnect: { id: user.id } } : undefined,
       },
     });
 
