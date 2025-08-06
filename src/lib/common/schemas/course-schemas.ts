@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { seasonSchema } from './prisma-schema';
 
 export const createCourseSchema = z.object({
   name: z.string().min(1),
@@ -12,5 +11,11 @@ export const deleteCourseSchema = z.object({
   id: z.number(),
 });
 
+export const addUserToCourseSchema = z.object({
+  courseId: z.number(),
+  userId: z.string().min(1),
+});
+
 export type CreateCourseSchema = typeof createCourseSchema;
 export type DeleteCourseSchema = typeof deleteCourseSchema;
+export type AddUserToCourseSchema = typeof addUserToCourseSchema;
