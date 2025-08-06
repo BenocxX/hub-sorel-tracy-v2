@@ -29,6 +29,11 @@
       <DropdownMenu.Group>
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
         <DropdownMenu.Item>
+          {#snippet child({ props })}
+            <a href={`/savant/course/${course.id}`} {...props}>Détails</a>
+          {/snippet}
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
           <DeleteCourseForm {course} data={deleteCourseForm} />
         </DropdownMenu.Item>
       </DropdownMenu.Group>
