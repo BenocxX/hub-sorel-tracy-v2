@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { page } from '$app/state';
   import AddUserToCourseForm from '$lib/client/components/structure/forms/teacher/course/add-user-to-course-form.svelte';
   import CreatePresentationForm from '$lib/client/components/structure/forms/teacher/presentation/create-presentation-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
@@ -27,7 +29,10 @@
 </script>
 
 <PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />
-<Tabs.Root value="students" class="">
+<Tabs.Root
+  value={page.url.searchParams.get('tab') ?? 'students'}
+  onValueChange={(value) => goto(`?tab=${value}`)}
+>
   <Tabs.List>
     <Tabs.Trigger value="students">Étudiants</Tabs.Trigger>
     <Tabs.Trigger value="teachers">Enseignants</Tabs.Trigger>
