@@ -2,7 +2,10 @@ import {
   addUserToCourseSchema,
   removeUserFromCourseSchema,
 } from '$lib/common/schemas/course-schemas.js';
-import { deletePresentationSchema } from '$lib/common/schemas/presentation-schemas.js';
+import {
+  createPresentationSchema,
+  deletePresentationSchema,
+} from '$lib/common/schemas/presentation-schemas.js';
 import { db } from '$lib/server/prisma/index.js';
 import { error, fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
@@ -41,7 +44,8 @@ export const load = async (event) => {
     users,
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
     removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),
-    deletePresentationFromCourse: await superValidate(zod(deletePresentationSchema)),
+    createPresentation: await superValidate(zod(createPresentationSchema)),
+    deletePresentation: await superValidate(zod(deletePresentationSchema)),
   };
 };
 

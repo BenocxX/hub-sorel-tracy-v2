@@ -1,5 +1,6 @@
 <script lang="ts">
   import AddUserToCourseForm from '$lib/client/components/structure/forms/teacher/course/add-user-to-course-form.svelte';
+  import CreatePresentationForm from '$lib/client/components/structure/forms/teacher/presentation/create-presentation-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
@@ -15,7 +16,7 @@
 
   const presentationColumns = makePresentationColumns({
     course: data.course,
-    deletePresentation: data.deletePresentationFromCourse,
+    deletePresentation: data.deletePresentation,
   });
 
   function getUsersNotInCourse() {
@@ -73,7 +74,7 @@
             La soumission de ce formulaire va ajouter une nouvelle présentation à ce cours.
           </Dialog.Description>
         </Dialog.Header>
-        <!-- <AddUserToCourseForm users={getUsersNotInCourse()} data={data.addUserToCourseForm} /> -->
+        <CreatePresentationForm data={data.createPresentation} />
       {/snippet}
     </DataTable>
   </Tabs.Content>

@@ -2,10 +2,8 @@
   import * as Form from '$lib/client/components/ui/form/index.js';
   import * as Popover from '$lib/client/components/ui/popover/index.js';
   import * as Command from '$lib/client/components/ui/command/index.js';
-  import { Input } from '$lib/client/components/ui/input';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
-  import type { Course } from '@prisma/client';
   import {
     addUserToCourseSchema,
     type AddUserToCourseSchema,
