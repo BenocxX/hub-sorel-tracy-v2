@@ -18,22 +18,15 @@
   import type { User } from '$lib/common/types/prisma-types';
 
   type Props = {
-    course: Course;
     users: User[];
     data: SuperValidated<Infer<AddUserToCourseSchema>>;
   };
 
-  const { course, users, data }: Props = $props();
+  const { users, data }: Props = $props();
 
-  const form = superForm(data, {
-    validators: zodClient(addUserToCourseSchema),
-    onUpdated: () => {
-      $formData.courseId = course.id;
-    },
-  });
+  const form = superForm(data, { validators: zodClient(addUserToCourseSchema) });
 
   const { form: formData, delayed, enhance } = form;
-  $formData.courseId = course.id;
 
   let open = $state(false);
 
@@ -50,14 +43,6 @@
 </script>
 
 <form method="POST" action="?/addUserToCourse" class="flex flex-col" use:enhance>
-  <Form.Field {form} name="courseId">
-    <Form.Control>
-      {#snippet children({ props })}
-        <Input {...props} type="hidden" placeholder="Web 1" bind:value={$formData.courseId} />
-      {/snippet}
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
   <Form.Field {form} name="userId" class="flex flex-col">
     <Popover.Root bind:open>
       <Form.Control id={triggerId}>

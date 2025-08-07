@@ -25,18 +25,10 @@
 
   const { form: formData, delayed, enhance } = form;
 
-  $formData.courseId = course.id;
   $formData.userId = user.id;
 </script>
 
 <form method="POST" action="?/removeUserFromCourse" class="w-full sm:w-max" use:enhance>
-  <Form.Field {form} name="courseId">
-    <Form.Control>
-      {#snippet children({ props })}
-        <Input type="hidden" {...props} bind:value={$formData.courseId} />
-      {/snippet}
-    </Form.Control>
-  </Form.Field>
   <Form.Field {form} name="userId">
     <Form.Control>
       {#snippet children({ props })}

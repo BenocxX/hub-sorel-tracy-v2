@@ -2,12 +2,12 @@ import { renderComponent, renderSnippet } from '$lib/client/components/ui/data-t
 import type { Course, User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
 import { createRawSnippet } from 'svelte';
-import DataTableActions from './data-table-actions.svelte';
+import DataTableUsersActions from './data-table-users-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { RemoveUserFromCourseSchema } from '$lib/common/schemas/course-schemas';
 
-export function makeColumns({
+export function makeUserColumns({
   course,
   removeUserFromCourse,
 }: {
@@ -93,7 +93,7 @@ export function makeColumns({
         return renderSnippet(actionsHeaderSnippet, '');
       },
       cell: ({ row }) => {
-        return renderComponent(DataTableActions, {
+        return renderComponent(DataTableUsersActions, {
           user: row.original,
           course,
           removeUserFromCourse,

@@ -3,25 +3,61 @@
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
+  import * as Tabs from '$lib/client/components/ui/tabs/index.js';
   import { displaySession } from '$lib/common/tools/localizer.js';
-  import { makeColumns } from './columns.js';
+  import { makeUserColumns } from './columns.js';
 
   const { data } = $props();
-  const columns = makeColumns({
+  const userColumns = makeUserColumns({
     course: data.course,
     removeUserFromCourse: data.removeUserFromCourse,
   });
+
+  function getUsersNotInCourse() {
+    return data.users.filter(
+      (user) => !data.courseUsers.some((courseUser) => courseUser.id === user.id)
+    );
+  }
 </script>
 
 <PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />
-<DataTable {columns} data={data.courseUsers}>
-  {#snippet createDialogFormSnippet()}
-    <Dialog.Header>
-      <Dialog.Title>Ajouter un utilisateur au cours</Dialog.Title>
-      <Dialog.Description class="text-foreground-discreet">
-        La soumission de ce formulaire va ajouter un utilisateur à ce cours.
-      </Dialog.Description>
-    </Dialog.Header>
-    <AddUserToCourseForm course={data.course} users={data.users} data={data.addUserToCourseForm} />
-  {/snippet}
-</DataTable>
+<Tabs.Root value="students" class="">
+  <Tabs.List>
+    <Tabs.Trigger value="students">Étudiants</Tabs.Trigger>
+    <Tabs.Trigger value="teachers">Enseignants</Tabs.Trigger>
+    <Tabs.Trigger value="presentations">Présentations</Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="students">
+    <DataTable
+      columns={userColumns}
+      data={data.courseUsers.filter((user) => user.role === 'Student')}
+    >
+      {#snippet createDialogFormSnippet()}
+        <Dialog.Header>
+          <Dialog.Title>Ajouter un utilisateur au cours</Dialog.Title>
+          <Dialog.Description class="text-foreground-discreet">
+            La soumission de ce formulaire va ajouter un utilisateur à ce cours.
+          </Dialog.Description>
+        </Dialog.Header>
+        <AddUserToCourseForm users={getUsersNotInCourse()} data={data.addUserToCourseForm} />
+      {/snippet}
+    </DataTable>
+  </Tabs.Content>
+  <Tabs.Content value="teachers">
+    <DataTable
+      columns={userColumns}
+      data={data.courseUsers.filter((user) => user.role !== 'Student')}
+    >
+      {#snippet createDialogFormSnippet()}
+        <Dialog.Header>
+          <Dialog.Title>Ajouter un utilisateur au cours</Dialog.Title>
+          <Dialog.Description class="text-foreground-discreet">
+            La soumission de ce formulaire va ajouter un utilisateur à ce cours.
+          </Dialog.Description>
+        </Dialog.Header>
+        <AddUserToCourseForm users={getUsersNotInCourse()} data={data.addUserToCourseForm} />
+      {/snippet}
+    </DataTable>
+  </Tabs.Content>
+  <Tabs.Content value="presentations">Presentations</Tabs.Content>
+</Tabs.Root>

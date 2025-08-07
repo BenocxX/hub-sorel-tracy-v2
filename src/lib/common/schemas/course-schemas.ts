@@ -12,12 +12,10 @@ export const deleteCourseSchema = z.object({
 });
 
 export const addUserToCourseSchema = z.object({
-  courseId: z.number(),
   userId: z.string().min(1),
 });
 
 export const removeUserFromCourseSchema = z.object({
-  courseId: z.number(),
   userId: z.string().min(1),
 });
 

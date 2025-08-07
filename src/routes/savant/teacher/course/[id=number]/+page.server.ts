@@ -50,14 +50,13 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const course = await db.course.findFirst({ where: { id: form.data.courseId } });
     const user = await db.user.findFirst({ where: { id: form.data.userId } });
-    if (!user || !course) {
+    if (!user) {
       return fail(400, { form });
     }
 
     await db.course.update({
-      where: { id: course.id },
+      where: { id: Number(event.params.id) },
       data: {
         students: user.role === 'Student' ? { connect: { id: user.id } } : undefined,
         teachers: user.role !== 'Student' ? { connect: { id: user.id } } : undefined,
@@ -73,14 +72,13 @@ export const actions = {
       return fail(400, { form });
     }
 
-    const course = await db.course.findFirst({ where: { id: form.data.courseId } });
     const user = await db.user.findFirst({ where: { id: form.data.userId } });
-    if (!user || !course) {
+    if (!user) {
       return fail(400, { form });
     }
 
     await db.course.update({
-      where: { id: course.id },
+      where: { id: Number(event.params.id) },
       data: {
         students: user.role === 'Student' ? { disconnect: { id: user.id } } : undefined,
         teachers: user.role !== 'Student' ? { disconnect: { id: user.id } } : undefined,
