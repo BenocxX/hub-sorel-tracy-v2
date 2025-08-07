@@ -4,7 +4,7 @@ export const createPresentationSchema = z.object({
   url: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
-  chapter: z.number(),
+  chapter: z.number().min(1).default(1),
   isExternal: z.boolean().default(false),
 });
 

@@ -94,6 +94,22 @@ export const actions = {
 
     return { form };
   },
+  createPresentation: async (event) => {
+    const form = await superValidate(event, zod(createPresentationSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    await db.presentation.create({
+      data: {
+        ...form.data,
+        course: { connect: { id: Number(event.params.id) } },
+      },
+    });
+
+    return { form };
+  },
   deletePresentation: async (event) => {
     const form = await superValidate(event, zod(deletePresentationSchema));
 
