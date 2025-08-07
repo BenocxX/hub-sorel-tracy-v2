@@ -6,6 +6,9 @@ import DataTableUsersActions from './data-table-users-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { RemoveUserFromCourseSchema } from '$lib/common/schemas/course-schemas';
+import type { Presentation } from '@prisma/client';
+import DataTablePresentationsActions from './data-table-presentations-actions.svelte';
+import type { DeletePresentationSchema } from '$lib/common/schemas/presentation-schemas';
 
 export function makeUserColumns({
   course,
@@ -97,6 +100,59 @@ export function makeUserColumns({
           user: row.original,
           course,
           removeUserFromCourse,
+        });
+      },
+    },
+  ];
+}
+
+export function makePresentationColumns({
+  course,
+  deletePresentation,
+}: {
+  course: Course;
+  deletePresentation: SuperValidated<Infer<DeletePresentationSchema>>;
+}): ColumnDef<Presentation>[] {
+  return [
+    {
+      meta: { frenchName: 'Titre' },
+      accessorKey: 'title',
+      header: ({ column }) => {
+        return renderComponent(DataTableSortHeaderButton, {
+          isSorted: column.getIsSorted(),
+          text: 'Titre',
+          onclick: column.getToggleSortingHandler(),
+        });
+      },
+      cell: ({ row }) => {
+        const cellSnippet = createRawSnippet(() => ({
+          render: () => {
+            const target = row.original.isExternal ? '_blank' : '_self';
+            return `<a href="${row.original.url}" target="${target}" class="ml-4 link text-foreground">${row.original.title}</a>`;
+          },
+        }));
+        return renderSnippet(cellSnippet, '');
+      },
+    },
+    {
+      meta: { frenchName: 'Description' },
+      accessorKey: 'description',
+      header: 'Description',
+    },
+    {
+      meta: { frenchName: 'Actions' },
+      id: 'actions',
+      header: () => {
+        const actionsHeaderSnippet = createRawSnippet(() => ({
+          render: () => `<div class="text-right">Actions</div>`,
+        }));
+        return renderSnippet(actionsHeaderSnippet, '');
+      },
+      cell: ({ row }) => {
+        return renderComponent(DataTablePresentationsActions, {
+          course,
+          presentation: row.original,
+          deletePresentation,
         });
       },
     },

@@ -5,12 +5,17 @@
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import * as Tabs from '$lib/client/components/ui/tabs/index.js';
   import { displaySession } from '$lib/common/tools/localizer.js';
-  import { makeUserColumns } from './columns.js';
+  import { makePresentationColumns, makeUserColumns } from './columns.js';
 
   const { data } = $props();
   const userColumns = makeUserColumns({
     course: data.course,
     removeUserFromCourse: data.removeUserFromCourse,
+  });
+
+  const presentationColumns = makePresentationColumns({
+    course: data.course,
+    deletePresentation: data.deletePresentationFromCourse,
   });
 
   function getUsersNotInCourse() {
@@ -59,5 +64,17 @@
       {/snippet}
     </DataTable>
   </Tabs.Content>
-  <Tabs.Content value="presentations">Presentations</Tabs.Content>
+  <Tabs.Content value="presentations">
+    <DataTable columns={presentationColumns} data={data.course.presentations}>
+      {#snippet createDialogFormSnippet()}
+        <Dialog.Header>
+          <Dialog.Title>Ajouter une présentation au cours</Dialog.Title>
+          <Dialog.Description class="text-foreground-discreet">
+            La soumission de ce formulaire va ajouter une nouvelle présentation à ce cours.
+          </Dialog.Description>
+        </Dialog.Header>
+        <!-- <AddUserToCourseForm users={getUsersNotInCourse()} data={data.addUserToCourseForm} /> -->
+      {/snippet}
+    </DataTable>
+  </Tabs.Content>
 </Tabs.Root>
