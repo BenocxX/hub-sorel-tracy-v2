@@ -2,6 +2,7 @@ import type { Course } from '$lib/common/types/prisma-types';
 import { Presentation, Users } from 'lucide-svelte';
 
 export type SidebarChoice = {
+  id: string;
   name: string;
   subName: string;
   contentKey: 'course' | 'admin';
@@ -40,6 +41,7 @@ type SidebarData = {
 export function makeSidebarData(user: App.PageData['user'], courses: Course[]): SidebarData {
   const headerSidebarChoiceCourses: SidebarChoice[] = courses.map((course) => {
     return {
+      id: `course-${course.id}`,
       name: course.name,
       subName: '',
       contentKey: 'course',
@@ -60,6 +62,7 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
         isHidden: user?.role !== 'Admin',
         headerSidebarChoice: [
           {
+            id: 'admin',
             name: 'Admin',
             subName: 'Administration',
             contentKey: 'admin',

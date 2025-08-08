@@ -4,21 +4,28 @@
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
   import type { HeaderSection, SidebarChoice } from './sidebar-data.svelte';
+  import { useUserPreferences } from '$lib/client/local-storage.svelte';
 
   type Props = {
     onSidebarChange: (sidebarChoice: SidebarChoice) => void;
-    defaultContentKey: SidebarChoice['contentKey'];
     sections: HeaderSection[];
   };
 
-  let { onSidebarChange, defaultContentKey, sections }: Props = $props();
+  let { onSidebarChange, sections }: Props = $props();
   const sidebar = useSidebar();
 
-  const defaultSidebar = sections
-    .flatMap((section) => section.headerSidebarChoice)
-    .find((choice) => choice.contentKey === defaultContentKey);
+  const preferences = useUserPreferences();
 
-  let activeSidebar = $state(defaultSidebar ?? sections[0].headerSidebarChoice[0]);
+  let activeSidebar = $derived(
+    sections
+      .flatMap((section) => section.headerSidebarChoice)
+      .find((choice) => choice.id === preferences.lastSelectedSidebarId) ??
+      sections[0].headerSidebarChoice[0]
+  );
+
+  // Quick work around, we should actually use a svelte bind:value to bind the current acitive sidebar from the parent.
+  // svelte-ignore state_referenced_locally
+  onSidebarChange(activeSidebar);
 </script>
 
 <Sidebar.Menu>
@@ -62,6 +69,7 @@
           {#each section.headerSidebarChoice as sidebar (sidebar.name)}
             <DropdownMenu.Item
               onSelect={() => {
+                preferences.lastSelectedSidebarId = sidebar.id;
                 activeSidebar = sidebar;
                 onSidebarChange(sidebar);
               }}

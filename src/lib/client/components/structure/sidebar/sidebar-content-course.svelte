@@ -13,7 +13,7 @@
 </script>
 
 <Sidebar.Group>
-  <Sidebar.GroupLabel>Présentations</Sidebar.GroupLabel>
+  <Sidebar.GroupLabel>Informations</Sidebar.GroupLabel>
   <Sidebar.Menu>
     <Collapsible.Root open={true} class="group/collapsible">
       {#snippet child({ props })}

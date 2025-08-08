@@ -16,16 +16,12 @@
 
   const { user, courses }: Props = $props();
 
-  const defaultContentKey = user?.role === 'Admin' ? 'admin' : 'course';
-  let selectedContentKey = $state<'course' | 'admin'>(defaultContentKey);
-  let selectedCourse = $state<CourseWithIncludes | null>(null);
-
   const sidebarData = makeSidebarData(user, courses);
 
-  function onSidebarChange(sidebarChoice: SidebarChoice) {
-    selectedContentKey = sidebarChoice.contentKey;
+  let selectedCourse = $state<CourseWithIncludes | null>(null);
 
-    if (selectedContentKey === 'course') {
+  function onSidebarChange(sidebarChoice: SidebarChoice) {
+    if (sidebarChoice.contentKey === 'course') {
       selectedCourse = sidebarChoice.meta as CourseWithIncludes;
     } else {
       selectedCourse = null;
@@ -36,16 +32,15 @@
 <Sidebar.Root collapsible="icon">
   <Sidebar.Header>
     <SidebarSwitcher
-      {defaultContentKey}
       sections={sidebarData.headerSections.filter((section) => !section.isHidden)}
       {onSidebarChange}
     />
   </Sidebar.Header>
   <Sidebar.Content>
-    {#if selectedContentKey === 'admin'}
-      <SidebarContentAdmin items={sidebarData.adminSidebar} />
-    {:else if selectedContentKey === 'course' && selectedCourse}
+    {#if selectedCourse}
       <SidebarContentCourse course={selectedCourse} />
+    {:else}
+      <SidebarContentAdmin items={sidebarData.adminSidebar} />
     {/if}
   </Sidebar.Content>
   <Sidebar.Footer>
