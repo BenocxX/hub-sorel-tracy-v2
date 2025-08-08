@@ -1,3 +1,4 @@
+import type { Course } from '$lib/common/types/prisma-types';
 import { Presentation, Users } from 'lucide-svelte';
 
 export type SidebarChoice = {
@@ -5,6 +6,7 @@ export type SidebarChoice = {
   subName: string;
   contentKey: 'course' | 'admin';
   icon: string;
+  meta?: unknown;
 };
 
 export type HeaderSection = {
@@ -35,32 +37,23 @@ type SidebarData = {
   adminSidebar: SidebarItem[];
 };
 
-export function makeSidebarData(user: App.PageData['user']): SidebarData {
+export function makeSidebarData(user: App.PageData['user'], courses: Course[]): SidebarData {
+  const headerSidebarChoiceCourses: SidebarChoice[] = courses.map((course) => {
+    return {
+      name: course.name,
+      subName: '',
+      contentKey: 'course',
+      icon: course.icon,
+      meta: course,
+    };
+  });
+
   return {
     user,
     headerSections: [
       {
         name: 'Cours',
-        headerSidebarChoice: [
-          {
-            name: 'Web 1',
-            subName: 'Développement web #1',
-            contentKey: 'course',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
-          },
-          {
-            name: 'Web 3',
-            subName: 'Développement web #2',
-            contentKey: 'course',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe-icon lucide-globe"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>',
-          },
-          {
-            name: 'POO 2',
-            subName: 'Programmation orienté objet 2',
-            contentKey: 'course',
-            icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-json-icon lucide-file-json"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 12a1 1 0 0 0-1 1v1a1 1 0 0 1-1 1 1 1 0 0 1 1 1v1a1 1 0 0 0 1 1"/><path d="M14 18a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1 1 1 0 0 1-1-1v-1a1 1 0 0 0-1-1"/></svg>',
-          },
-        ],
+        headerSidebarChoice: headerSidebarChoiceCourses,
       },
       {
         name: 'Autres',

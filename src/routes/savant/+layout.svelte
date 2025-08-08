@@ -11,14 +11,14 @@
   import { ModeWatcher, resetMode, setMode } from 'mode-watcher';
   import { enhance } from '$app/forms';
 
-  const { children } = $props();
+  const { children, data } = $props();
 
   let isPresentation = $derived(page.route.id?.startsWith('/savant/presentation'));
 </script>
 
 <ModeWatcher />
 <Sidebar.Provider>
-  <SavantSidebar />
+  <SavantSidebar user={data.user} courses={data.courses} />
   <main class="flex w-full flex-col gap-8 overflow-y-auto py-2">
     <header class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">

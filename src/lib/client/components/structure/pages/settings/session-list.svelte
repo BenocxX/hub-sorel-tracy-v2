@@ -37,7 +37,7 @@
         {/each}
       </ul>
     {:else}
-      <p class="text-center text-muted-foreground">Aucune session n'a été trouvée.</p>
+      <p class="text-center text-foreground-discreet">Aucune session n'a été trouvée.</p>
     {/if}
   </div>
 </div>

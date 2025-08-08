@@ -6,7 +6,7 @@
   import type { HeaderSection, SidebarChoice } from './sidebar-data.svelte';
 
   type Props = {
-    onSidebarChange: (sidebarContentKey: SidebarChoice['contentKey']) => void;
+    onSidebarChange: (sidebarChoice: SidebarChoice) => void;
     defaultContentKey: SidebarChoice['contentKey'];
     sections: HeaderSection[];
   };
@@ -56,18 +56,18 @@
         sideOffset={4}
       >
         {#each sections as section, index (section)}
-          <DropdownMenu.Label class="text-xs text-muted-foreground">
+          <DropdownMenu.Label class="text-xs text-foreground-discreet">
             {section.name}
           </DropdownMenu.Label>
           {#each section.headerSidebarChoice as sidebar (sidebar.name)}
             <DropdownMenu.Item
               onSelect={() => {
                 activeSidebar = sidebar;
-                onSidebarChange(sidebar.contentKey);
+                onSidebarChange(sidebar);
               }}
-              class="gap-2 p-2"
+              class="gap-3 p-2"
             >
-              <div class="flex size-6 items-center justify-center rounded-sm border">
+              <div class="flex size-6 items-center justify-center rounded border">
                 <div class="size-4 shrink">
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                   {@html sidebar.icon}
