@@ -21,7 +21,8 @@
     sections
       .flatMap((section) => section.headerSidebarChoice)
       .find((choice) => choice.id === lastSelectedSidebarId.value) ??
-      sections[0].headerSidebarChoice[0]
+      sections[0].headerSidebarChoice[0] ??
+      sections[1].headerSidebarChoice[0]
   );
 
   // Quick work around, we should actually use a svelte bind:value to bind the current active sidebar from the parent.
