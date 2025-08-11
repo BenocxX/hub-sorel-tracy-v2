@@ -24,9 +24,12 @@
       sections[0].headerSidebarChoice[0]
   );
 
-  // Quick work around, we should actually use a svelte bind:value to bind the current acitive sidebar from the parent.
-  // svelte-ignore state_referenced_locally
-  onSidebarChange(activeSidebar);
+  if (browser) {
+    // Quick work around, we should actually use a svelte bind:value to bind the current active sidebar from the parent.
+    // eslint-disable-next-line svelte/no-unused-svelte-ignore
+    // svelte-ignore state_referenced_locally
+    onSidebarChange(activeSidebar);
+  }
 </script>
 
 <Sidebar.Menu>
