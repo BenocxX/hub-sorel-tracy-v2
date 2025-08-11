@@ -127,11 +127,13 @@ export function makePresentationColumns({
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
           render: () => {
-            const externalLinkIcon = row.original.isExternal
+            const isExternal = row.original.isExternal;
+            const externalLinkIcon = isExternal
               ? `<svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link-icon lucide-external-link"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>`
               : '';
-            const target = row.original.isExternal ? '_blank' : '_self';
-            return `<a href="${row.original.url}" target="${target}" class="ml-4 flex items-center gap-2 link text-foreground">${row.original.title}${externalLinkIcon}</a>`;
+            const target = isExternal ? '_blank' : '_self';
+            const href = isExternal ? row.original.url : `/savant/presentation${row.original.url}`;
+            return `<a href="${href}" target="${target}" class="ml-4 flex items-center gap-2 link text-foreground">${row.original.title}${externalLinkIcon}</a>`;
           },
         }));
         return renderSnippet(cellSnippet, '');

@@ -19,3 +19,14 @@ export function formatCurrency(value: number) {
     currency: 'CAD',
   }).format(value);
 }
+
+/**
+ * Parse a string to a valid id. Remove accents, spaces and convert to lowercase.
+ */
+export function formatToId(section: string) {
+  return section
+    .replace(/ /g, '-')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
+}

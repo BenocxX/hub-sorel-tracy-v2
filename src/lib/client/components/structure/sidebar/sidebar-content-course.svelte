@@ -4,6 +4,7 @@
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import * as Collapsible from '$lib/client/components/ui/collapsible';
   import { page } from '$app/state';
+  import { Presentation } from 'lucide-svelte';
 
   type Props = {
     course: Course<{ presentations: true }>;
@@ -24,6 +25,7 @@
                 {#snippet tooltipContent()}
                   Présentations
                 {/snippet}
+                <Presentation />
                 <span>Présentations</span>
                 <ChevronRightIcon
                   class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
@@ -38,7 +40,9 @@
                   <Sidebar.MenuSubButton isActive={presentation.url === page.url.pathname}>
                     {#snippet child({ props })}
                       <a
-                        href={presentation.url}
+                        href={presentation.isExternal
+                          ? presentation.url
+                          : `/savant/presentation${presentation.url}`}
                         target={presentation.isExternal ? '_blank' : '_self'}
                         {...props}
                       >

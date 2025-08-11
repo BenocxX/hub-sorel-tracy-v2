@@ -1,8 +1,6 @@
-<script lang="ts">
-  import type { Snippet } from 'svelte';
-
-  type SlideProps = {
-    children?: Snippet;
+<script module lang="ts">
+  export type SlideProps = {
+    children: Snippet;
     in?: () => void;
     out?: () => void;
     animate?: boolean;
@@ -19,7 +17,12 @@
     interactive?: boolean;
     transition?: 'none' | 'fade' | 'slide' | 'convex' | 'concave' | 'zoom';
     class?: string;
+    id?: string;
   };
+</script>
+
+<script lang="ts">
+  import type { Snippet } from 'svelte';
 
   let { children, ...props }: SlideProps = $props();
 
@@ -45,6 +48,7 @@
   data-background-interactive={props.interactive}
   data-transition={props.transition}
   class={props.class}
+  id={props.id}
 >
   {#if children}
     {@render children()}

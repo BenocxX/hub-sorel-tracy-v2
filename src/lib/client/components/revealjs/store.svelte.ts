@@ -13,3 +13,8 @@ export function getPresentation() {
     },
   };
 }
+
+export const currentPresentation = $state({
+  title: '',
+  subTitle: '',
+});
