@@ -21,6 +21,10 @@
   let selectedCourse = $state<CourseWithIncludes | null>(null);
 
   function onSidebarChange(sidebarChoice: SidebarChoice) {
+    if (sidebarChoice === undefined) {
+      return;
+    }
+
     if (sidebarChoice.contentKey === 'course') {
       selectedCourse = sidebarChoice.meta as CourseWithIncludes;
     } else {
