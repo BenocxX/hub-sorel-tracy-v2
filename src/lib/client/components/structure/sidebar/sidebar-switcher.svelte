@@ -48,15 +48,15 @@
               <div class="*:size-5">
                 {#if browser}
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                  {@html activeSidebar.icon}
+                  {@html activeSidebar?.icon}
                 {/if}
               </div>
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">
               <span class="truncate font-semibold">
-                {activeSidebar.name}
+                {activeSidebar?.name}
               </span>
-              <span class="truncate text-xs">{activeSidebar.subName}</span>
+              <span class="truncate text-xs">{activeSidebar?.subName}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </Sidebar.MenuButton>
