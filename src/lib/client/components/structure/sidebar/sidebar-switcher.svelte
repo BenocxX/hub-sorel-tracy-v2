@@ -24,12 +24,9 @@
       sections[0].headerSidebarChoice[0]
   );
 
-  if (browser) {
-    // Quick work around, we should actually use a svelte bind:value to bind the current active sidebar from the parent.
-    // eslint-disable-next-line svelte/no-unused-svelte-ignore
-    // svelte-ignore state_referenced_locally
-    onSidebarChange(activeSidebar);
-  }
+  // Quick work around, we should actually use a svelte bind:value to bind the current active sidebar from the parent.
+  // svelte-ignore state_referenced_locally
+  onSidebarChange(activeSidebar);
 </script>
 
 <Sidebar.Menu>
@@ -48,15 +45,15 @@
               <div class="*:size-5">
                 {#if browser}
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                  {@html activeSidebar?.icon}
+                  {@html activeSidebar.icon}
                 {/if}
               </div>
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">
               <span class="truncate font-semibold">
-                {activeSidebar?.name}
+                {activeSidebar.name}
               </span>
-              <span class="truncate text-xs">{activeSidebar?.subName}</span>
+              <span class="truncate text-xs">{activeSidebar.subName}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </Sidebar.MenuButton>

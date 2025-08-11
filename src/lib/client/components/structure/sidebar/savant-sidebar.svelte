@@ -31,15 +31,17 @@
 
 <Sidebar.Root collapsible="icon">
   <Sidebar.Header>
-    <SidebarSwitcher
-      sections={sidebarData.headerSections.filter((section) => !section.isHidden)}
-      {onSidebarChange}
-    />
+    {#if user?.role === 'Admin' || courses.length > 0}
+      <SidebarSwitcher
+        sections={sidebarData.headerSections.filter((section) => !section.isHidden)}
+        {onSidebarChange}
+      />
+    {/if}
   </Sidebar.Header>
   <Sidebar.Content>
     {#if selectedCourse}
       <SidebarContentCourse course={selectedCourse} />
-    {:else}
+    {:else if user?.role === 'Admin'}
       <SidebarContentAdmin items={sidebarData.adminSidebar} />
     {/if}
   </Sidebar.Content>
