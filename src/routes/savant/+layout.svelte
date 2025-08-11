@@ -10,14 +10,17 @@
   import { cn } from '$lib/client/utils';
   import { ModeWatcher, resetMode, setMode } from 'mode-watcher';
   import { enhance } from '$app/forms';
+  import { preferences } from '$lib/client/local-storage.svelte.js';
 
   const { children, data } = $props();
 
   let isPresentation = $derived(page.route.id?.startsWith('/savant/presentation'));
+
+  const sidebarOpen = preferences.sidebarOpen();
 </script>
 
 <ModeWatcher />
-<Sidebar.Provider>
+<Sidebar.Provider open={sidebarOpen.value}>
   <SavantSidebar user={data.user} courses={data.courses} />
   <main class="flex w-full flex-col gap-8 overflow-y-auto py-2">
     <header class="container mx-auto flex items-center justify-between">

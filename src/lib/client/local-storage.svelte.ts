@@ -24,14 +24,19 @@ export function useLocalStorage<T>(key: string, value: T) {
   return storage;
 }
 
-export type UserPreferences = {
-  lastSelectedSidebarId?: string;
-};
-
-export function useUserPreferences() {
-  const preferencesStorage = useLocalStorage<UserPreferences>(
-    `${page.data.user!.id}-preferences`,
-    {}
-  );
-  return preferencesStorage.value;
+function makeUserKey(value: string) {
+  return `${value}-${page.data.user!.id}`;
 }
+
+function getLastSelectedSidebarIdPreference() {
+  return useLocalStorage<string>(makeUserKey('last-selected-sidebar-id'), '');
+}
+
+function getSidebarOpenPreference() {
+  return useLocalStorage<boolean>(makeUserKey('sidebar-open'), false);
+}
+
+export const preferences = {
+  lastSelectedSidebarId: getLastSelectedSidebarIdPreference,
+  sidebarOpen: getSidebarOpenPreference,
+};

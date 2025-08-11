@@ -4,7 +4,8 @@
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
   import type { HeaderSection, SidebarChoice } from './sidebar-data.svelte';
-  import { useUserPreferences } from '$lib/client/local-storage.svelte';
+  import { preferences } from '$lib/client/local-storage.svelte';
+  import { browser } from '$app/environment';
 
   type Props = {
     onSidebarChange: (sidebarChoice: SidebarChoice) => void;
@@ -14,12 +15,12 @@
   let { onSidebarChange, sections }: Props = $props();
   const sidebar = useSidebar();
 
-  const preferences = useUserPreferences();
+  const lastSelectedSidebarId = preferences.lastSelectedSidebarId();
 
   let activeSidebar = $derived(
     sections
       .flatMap((section) => section.headerSidebarChoice)
-      .find((choice) => choice.id === preferences.lastSelectedSidebarId) ??
+      .find((choice) => choice.id === lastSelectedSidebarId.value) ??
       sections[0].headerSidebarChoice[0]
   );
 
@@ -42,8 +43,10 @@
               class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
             >
               <div class="*:size-5">
-                <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-                {@html activeSidebar.icon}
+                {#if browser}
+                  <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+                  {@html activeSidebar.icon}
+                {/if}
               </div>
             </div>
             <div class="grid flex-1 text-left text-sm leading-tight">
@@ -69,7 +72,7 @@
           {#each section.headerSidebarChoice as sidebar (sidebar.name)}
             <DropdownMenu.Item
               onSelect={() => {
-                preferences.lastSelectedSidebarId = sidebar.id;
+                lastSelectedSidebarId.value = sidebar.id;
                 activeSidebar = sidebar;
                 onSidebarChange(sidebar);
               }}

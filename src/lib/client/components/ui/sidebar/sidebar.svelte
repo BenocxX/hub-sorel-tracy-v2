@@ -5,6 +5,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import { SIDEBAR_WIDTH_MOBILE } from './constants.js';
   import { useSidebar } from './context.svelte.js';
+  import { preferences } from '$lib/client/local-storage.svelte.js';
 
   let {
     ref = $bindable(null),
@@ -21,6 +22,12 @@
   } = $props();
 
   const sidebar = useSidebar();
+
+  let sidebarOpen = preferences.sidebarOpen();
+
+  $effect(() => {
+    sidebarOpen.value = sidebar.open;
+  });
 </script>
 
 {#if collapsible === 'none'}
