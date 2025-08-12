@@ -1,0 +1,205 @@
+/*
+ * Visual Studio 2015 dark style
+ * Author: Nicolas LLOBERA <nllobera@gmail.com>
+ * url: https://github.com/highlightjs/highlight.js/blob/main/src/styles/vs2015.css
+ */
+
+.dark .hljs {
+  /* background: #1e1e1e; */ /* original vscode dark background */
+  background: hsl(var(--background-300)) !important;
+  @apply !bg-background-100/50;
+  color: #dcdcdc !important;
+}
+
+.dark .hljs-keyword,
+.dark .hljs-literal,
+.dark .hljs-symbol,
+.dark .hljs-name {
+  color: #569cd6 !important;
+}
+.dark .hljs-link {
+  color: #569cd6 !important;
+  text-decoration: underline !important;
+}
+
+.dark .hljs-built_in,
+.dark .hljs-type {
+  color: #4ec9b0 !important;
+}
+
+.dark .hljs-number,
+.dark .hljs-class {
+  color: #b8d7a3 !important;
+}
+
+.dark .hljs-string,
+.dark .hljs-meta .hljs-string {
+  color: #d69d85 !important;
+}
+
+.dark .hljs-regexp,
+.dark .hljs-template-tag {
+  color: #9a5334 !important;
+}
+
+.dark .hljs-subst,
+.dark .hljs-function,
+.dark .hljs-title,
+.dark .hljs-params,
+.dark .hljs-formula {
+  color: #dcdcdc !important;
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #57a64a !important;
+  font-style: italic !important;
+}
+
+.dark .hljs-doctag {
+  color: #608b4e !important;
+}
+
+.dark .hljs-meta,
+.dark .hljs-meta .hljs-keyword,
+.dark .hljs-tag {
+  color: #9b9b9b !important;
+}
+
+.dark .hljs-variable,
+.dark .hljs-template-variable {
+  color: #bd63c5 !important;
+}
+
+.dark .hljs-attr,
+.dark .hljs-attribute {
+  color: #9cdcfe !important;
+}
+
+.dark .hljs-section {
+  color: gold !important;
+}
+
+.dark .hljs-emphasis {
+  font-style: italic !important;
+}
+
+.dark .hljs-strong {
+  font-weight: bold !important;
+}
+
+.dark .hljs-bullet,
+.dark .hljs-selector-tag,
+.dark .hljs-selector-id,
+.dark .hljs-selector-class,
+.dark .hljs-selector-attr,
+.dark .hljs-selector-pseudo {
+  color: #d7ba7d !important;
+}
+
+.dark .hljs-addition {
+  background-color: #144212 !important;
+  display: inline-block !important;
+  width: 100% !important;
+}
+
+.dark .hljs-deletion {
+  background-color: #600 !important;
+  display: inline-block !important;
+  width: 100% !important;
+}
+
+/*
+
+Atom One Dark by Daniel Gamage
+Original One Dark Syntax theme from https://github.com/atom/one-dark-syntax
+
+base:    #282c34
+mono-1:  #abb2bf
+mono-2:  #818896
+mono-3:  #5c6370
+hue-1:   #56b6c2
+hue-2:   #61aeee
+hue-3:   #c678dd
+hue-4:   #98c379
+hue-5:   #e06c75
+hue-5-2: #be5046
+hue-6:   #d19a66
+hue-6-2: #e6c07b
+
+*/
+
+/* .dark .hljs {
+  color: #abb2bf;
+  background: hsl(var(--background-300));
+}
+
+.dark .hljs-comment,
+.dark .hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.dark .hljs-doctag,
+.dark .hljs-keyword,
+.dark .hljs-formula {
+  color: #c678dd;
+}
+
+.dark .hljs-section,
+.dark .hljs-name,
+.dark .hljs-selector-tag,
+.dark .hljs-deletion,
+.dark .hljs-subst {
+  color: #e06c75;
+}
+
+.dark .hljs-literal {
+  color: #56b6c2;
+}
+
+.dark .hljs-string,
+.dark .hljs-regexp,
+.dark .hljs-addition,
+.dark .hljs-attribute,
+.dark .hljs-meta .hljs-string {
+  color: #98c379;
+}
+
+.dark .hljs-attr,
+.dark .hljs-variable,
+.dark .hljs-template-variable,
+.dark .hljs-type,
+.dark .hljs-selector-class,
+.dark .hljs-selector-attr,
+.dark .hljs-selector-pseudo,
+.dark .hljs-number {
+  color: #d19a66;
+}
+
+.dark .hljs-symbol,
+.dark .hljs-bullet,
+.dark .hljs-link,
+.dark .hljs-meta,
+.dark .hljs-selector-id,
+.dark .hljs-title {
+  color: #61aeee;
+}
+
+.dark .hljs-built_in,
+.dark .hljs-title.class_,
+.dark .hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.dark .hljs-emphasis {
+  font-style: italic;
+}
+
+.dark .hljs-strong {
+  font-weight: bold;
+}
+
+.dark .hljs-link {
+  text-decoration: underline;
+} */

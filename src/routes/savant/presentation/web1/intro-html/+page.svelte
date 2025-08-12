@@ -1,6 +1,7 @@
 <script lang="ts">
   import PresentationRoot from '$lib/client/components/revealjs/custom/presentation-root.svelte';
   import { currentPresentation } from '$lib/client/components/revealjs/store.svelte';
+  import Balise from './balise.svelte';
   import Intro from './intro.svelte';
 
   const sections = {
@@ -17,4 +18,5 @@
 
 <PresentationRoot {sections}>
   <Intro section={sections.intro} />
+  <Balise section={sections.balise} />
 </PresentationRoot>

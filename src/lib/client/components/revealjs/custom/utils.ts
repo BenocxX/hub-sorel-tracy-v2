@@ -9,3 +9,19 @@ export function setSlideSection(section: string) {
 export function getSlideSection() {
   return getContext<string | undefined>(slideSectionSymbol);
 }
+
+export type SlideSectionProps = {
+  section: string;
+};
+
+export type CodeLanguage =
+  | 'html'
+  | 'css'
+  | 'xml'
+  | 'js'
+  | 'bash'
+  | 'ts'
+  | 'json'
+  | 'scss'
+  | 'sass'
+  | 'java';

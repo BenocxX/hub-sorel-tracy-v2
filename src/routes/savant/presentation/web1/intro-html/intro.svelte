@@ -1,15 +1,14 @@
 <script lang="ts">
-  import BasicSlide from '$lib/client/components/revealjs/custom/basic-slide.svelte';
-  import Bold from '$lib/client/components/revealjs/custom/bold.svelte';
-  import InlineCodeBlock from '$lib/client/components/revealjs/custom/inline-code-block.svelte';
-  import Italic from '$lib/client/components/revealjs/custom/italic.svelte';
-  import { setSlideSection } from '$lib/client/components/revealjs/custom/utils';
+  import {
+    BasicSlide,
+    Bold,
+    InlineCodeBlock,
+    Italic,
+    setSlideSection,
+    type SlideSectionProps,
+  } from '$lib/client/components/revealjs/custom';
 
-  type Props = {
-    section: string;
-  };
-
-  const { section }: Props = $props();
+  const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
 </script>
