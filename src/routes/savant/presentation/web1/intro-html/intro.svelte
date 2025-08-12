@@ -1,5 +1,8 @@
 <script lang="ts">
   import BasicSlide from '$lib/client/components/revealjs/custom/basic-slide.svelte';
+  import Bold from '$lib/client/components/revealjs/custom/bold.svelte';
+  import InlineCodeBlock from '$lib/client/components/revealjs/custom/inline-code-block.svelte';
+  import Italic from '$lib/client/components/revealjs/custom/italic.svelte';
   import { setSlideSection } from '$lib/client/components/revealjs/custom/utils';
 
   type Props = {
@@ -12,7 +15,7 @@
 </script>
 
 <BasicSlide>
-  <!-- <p>
+  <p>
     Un <Bold>site Web</Bold> est un ensemble de pages reliées. Il est hébergé sur un serveur et accessible
     depuis un réseau (Internet ou local).
   </p>
@@ -21,8 +24,9 @@
     Une adresse est souvent représentée par un nom de domaine (
     <Italic>youtube.com, facebook.com, google.com</Italic>, etc.) suivi d'un chemin vers la page
     ciblée (index.html) tout en étant préfixé par le protocole HTTP ou HTTPS. Par exemple, <InlineCodeBlock
-      allowCopy>https://monsite.com/index.html</InlineCodeBlock
-    >.
-  </p> -->
+      allowCopy
+      >https://monsite.com/index.html
+    </InlineCodeBlock>.
+  </p>
   <p>Tous les sites accessibles publiquement constituent le World Wide Web.</p>
 </BasicSlide>

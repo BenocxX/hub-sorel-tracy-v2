@@ -13,3 +13,10 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
   ref?: U | null;
 };
+
+export function copyToClipboard(content: string) {
+  navigator.clipboard.writeText(content).catch((error) => {
+    // toast.error('Erreur lors de la copie du contenu...');
+    console.error('Error copying to clipboard:', error);
+  });
+}
