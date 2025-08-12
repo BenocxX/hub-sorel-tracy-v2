@@ -1,7 +1,7 @@
 <script lang="ts">
   import PresentationRoot from '$lib/client/components/revealjs/custom/presentation-root.svelte';
-  import { Slide } from '$lib/client/components/revealjs/index';
   import { currentPresentation } from '$lib/client/components/revealjs/store.svelte';
+  import Intro from './intro.svelte';
 
   const sections = {
     intro: 'Introduction',
@@ -12,10 +12,12 @@
   };
 
   currentPresentation.title = 'Introduction au langage HTML';
+  currentPresentation.subTitle = "La structure d'une page web";
 </script>
 
 <PresentationRoot {sections}>
-  <Slide class="h-full place-content-center place-items-center">
+  <Intro section={sections.intro} />
+  <!-- <Slide class="h-full place-content-center place-items-center">
     <p>test</p>
-  </Slide>
+  </Slide> -->
 </PresentationRoot>

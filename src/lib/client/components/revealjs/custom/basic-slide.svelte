@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import { cn } from '$lib/client/utils';
-  import type { Snippet } from 'svelte';
+  import { getContext, type Snippet } from 'svelte';
   import Slide, { type SlideProps } from '../slide.svelte';
   import { currentPresentation } from '../store.svelte';
   import { ArrowLeft, Link } from 'lucide-svelte';
@@ -32,8 +32,8 @@
     ...props
   }: BasicSlideProps = $props();
 
-  // TODO: Replace "SECTION" with current section name
-  const id = formatToId('SECTION');
+  const section = getContext<string | undefined>('slide-section');
+  const id = section ? formatToId(section) : undefined;
 </script>
 
 <Slide
@@ -83,7 +83,7 @@
         </div>
         <h1 class="text-xl font-light opacity-75 sm:text-3xl">{currentPresentation.title}</h1>
       </div>
-      <h1 class="text-4xl font-medium sm:text-6xl">{title}</h1>
+      <h1 class="text-4xl font-medium sm:text-6xl">{title || section}</h1>
       {#if subTitleComponent}
         {@render subTitleComponent()}
       {/if}
