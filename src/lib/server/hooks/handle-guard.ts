@@ -1,6 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit';
+import { db } from '../prisma';
 
-const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
+const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard, presentationGuard];
 
 export const handleGuard: Handle = async ({ event, resolve }) => {
   const routeId = event.route.id;
@@ -9,7 +10,9 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
     return resolve(event);
   }
 
-  guards.forEach((guard) => guard(routeId, event.locals.user));
+  for (const guard of guards) {
+    await guard(routeId, event.locals.user);
+  }
 
   return resolve(event);
 };
@@ -17,7 +20,7 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
 /**
  * Guard public auth routes from authenticated users
  */
-function publicGuard(route: string, user?: App.Locals['user']) {
+async function publicGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/(public)/(auth)') && user) {
     throw redirect(303, '/');
   }
@@ -26,7 +29,7 @@ function publicGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard private routes from unauthenticated users
  */
-function dashboardGuard(route: string, user?: App.Locals['user']) {
+async function dashboardGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/savant') && !user) {
     throw redirect(303, '/login');
   }
@@ -35,7 +38,7 @@ function dashboardGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard private routes from non-teacher users
  */
-function teacherGuard(route: string, user?: App.Locals['user']) {
+async function teacherGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/savant/teacher') && (!user || user.role === 'Student')) {
     throw redirect(303, '/savant');
   }
@@ -44,8 +47,31 @@ function teacherGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard admin routes from non-admin users
  */
-function adminGuard(route: string, user?: App.Locals['user']) {
+async function adminGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/savant/admin') && (!user || user.role !== 'Admin')) {
     throw redirect(303, '/savant');
   }
+}
+
+/**
+ * Guard presentations routes to allow only admin or user that have access to the course
+ */
+async function presentationGuard(route: string, user?: App.Locals['user']) {
+  // if (!route.includes('/savant/presentation') || user?.role === 'Admin') {
+  if (!route.includes('/savant/presentation')) {
+    return;
+  }
+
+  const segments = route.split('/');
+
+  // segments should be: [ '', 'savant', 'presentation', course, presentation ]
+  const courseSegment = segments[3];
+  const presentationSegment = segments[4];
+
+  const course = await db.course.findFirst({
+    where: { name: courseSegment },
+    include: { students: true, teachers: true },
+  });
+
+  throw redirect(303, '/savant');
 }

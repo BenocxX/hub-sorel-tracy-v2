@@ -5,7 +5,10 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = async (event) => {
-  const courses = await db.course.findMany({ include: { schoolSession: true } });
+  const courses = await db.course.findMany({
+    include: { schoolSession: true },
+    orderBy: [{ schoolSession: { year: 'asc' } }, { name: 'asc' }],
+  });
   const sessions = await db.schoolSession.findMany();
 
   return {
@@ -27,6 +30,7 @@ export const actions = {
     await db.course.create({
       data: {
         name: form.data.name,
+        abbreviation: form.data.abbreviation,
         icon: form.data.icon,
         schoolSession: {
           connect: { id: +form.data.sessionId },

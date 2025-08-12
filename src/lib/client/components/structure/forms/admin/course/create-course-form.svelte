@@ -7,6 +7,7 @@
   import { createCourseSchema, type CreateCourseSchema } from '$lib/common/schemas/course-schemas';
   import type { $Enums, SchoolSession } from '@prisma/client';
   import { displaySession } from '$lib/common/tools/localizer';
+  import { DialogClose } from '$lib/client/components/ui/dialog';
 
   type Props = {
     sessions: SchoolSession[];
@@ -26,8 +27,8 @@
 </script>
 
 <form method="POST" action="?/createCourse" class="flex flex-col" use:enhance>
-  <div class="flex w-full flex-col gap-2 *:flex-1 sm:flex-row">
-    <Form.Field {form} name="name">
+  <div class="flex w-full flex-col gap-2 sm:flex-row">
+    <Form.Field {form} name="name" class="w-2/3">
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Nom</Form.Label>
@@ -36,7 +37,18 @@
       </Form.Control>
       <Form.FieldErrors />
     </Form.Field>
-    <Form.Field {form} name="icon">
+    <Form.Field {form} name="abbreviation" class="flex-1">
+      <Form.Control>
+        {#snippet children({ props })}
+          <Form.Label>Abbréviation</Form.Label>
+          <Input {...props} placeholder="web1" bind:value={$formData.abbreviation} />
+        {/snippet}
+      </Form.Control>
+      <Form.FieldErrors />
+    </Form.Field>
+  </div>
+  <div class="flex w-full flex-col gap-2 sm:flex-row">
+    <Form.Field {form} name="icon" class="w-2/3">
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Icône</Form.Label>
@@ -45,7 +57,7 @@
       </Form.Control>
       <Form.FieldErrors />
     </Form.Field>
-    <Form.Field {form} name="sessionId">
+    <Form.Field {form} name="sessionId" class="flex-1">
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Session</Form.Label>
@@ -66,5 +78,9 @@
       <Form.FieldErrors />
     </Form.Field>
   </div>
-  <Form.Button {delayed} class="ml-auto mt-2 w-full sm:w-max">Soumettre</Form.Button>
+  <DialogClose>
+    {#snippet child({ props })}
+      <Form.Button {delayed} class="ml-auto mt-2 w-full sm:w-max" {...props}>Soumettre</Form.Button>
+    {/snippet}
+  </DialogClose>
 </form>

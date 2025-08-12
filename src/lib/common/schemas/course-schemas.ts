@@ -2,9 +2,17 @@ import { z } from 'zod';
 
 export const createCourseSchema = z.object({
   name: z.string().min(1),
+  abbreviation: z.string().min(1),
   /** should be an `<svg>...</svg>` tag. */
   icon: z.string().min(1),
   sessionId: z.string(),
+});
+
+export const modifyCourseSchema = z.object({
+  name: z.string().min(1),
+  abbreviation: z.string().min(1),
+  /** should be an `<svg>...</svg>` tag. */
+  icon: z.string().min(1),
 });
 
 export const deleteCourseSchema = z.object({
@@ -20,6 +28,7 @@ export const removeUserFromCourseSchema = z.object({
 });
 
 export type CreateCourseSchema = typeof createCourseSchema;
+export type ModifyCourseSchema = typeof modifyCourseSchema;
 export type DeleteCourseSchema = typeof deleteCourseSchema;
 export type AddUserToCourseSchema = typeof addUserToCourseSchema;
 export type RemoveUserFromCourseSchema = typeof removeUserFromCourseSchema;

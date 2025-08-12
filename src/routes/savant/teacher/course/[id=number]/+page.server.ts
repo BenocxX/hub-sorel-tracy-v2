@@ -1,5 +1,6 @@
 import {
   addUserToCourseSchema,
+  modifyCourseSchema,
   removeUserFromCourseSchema,
 } from '$lib/common/schemas/course-schemas.js';
 import {
@@ -38,10 +39,15 @@ export const load = async (event) => {
     },
   });
 
+  const modifyCourseForm = await superValidate(zod(modifyCourseSchema), {
+    defaults: course,
+  });
+
   return {
     course,
     courseUsers,
     users,
+    modifyCourseForm,
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
     removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),
     createPresentation: await superValidate(zod(createPresentationSchema)),
@@ -50,6 +56,20 @@ export const load = async (event) => {
 };
 
 export const actions = {
+  modifyCourse: async (event) => {
+    const form = await superValidate(event, zod(modifyCourseSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    await db.course.update({
+      where: { id: Number(event.params.id) },
+      data: form.data,
+    });
+
+    return { form };
+  },
   addUserToCourse: async (event) => {
     const form = await superValidate(event, zod(addUserToCourseSchema));
 

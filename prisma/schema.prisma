@@ -40,12 +40,14 @@ model Teacher {
 }
 
 model Presentation {
-  id          Int     @id @default(autoincrement())
-  url         String
-  title       String
-  description String
-  chapter     Int
-  isExternal  Boolean @default(false)
+  id           Int     @id @default(autoincrement())
+  url          String
+  title        String
+  description  String
+  chapter      Int
+  isExternal   Boolean @default(false)
+  isLocked     Boolean @default(true)
+  abbreviation String  @default("")
 
   courseId Int
 
@@ -53,9 +55,10 @@ model Presentation {
 }
 
 model Course {
-  id   Int    @id @default(autoincrement())
-  name String
-  icon String
+  id           Int    @id @default(autoincrement())
+  name         String
+  icon         String
+  abbreviation String @default("")
 
   schoolSessionId Int
   teachers        Teacher[]
