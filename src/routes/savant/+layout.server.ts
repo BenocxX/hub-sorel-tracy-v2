@@ -9,13 +9,9 @@ export const load = async (event) => {
       teachers:
         user?.role === 'Teacher' || user?.role === 'Admin' ? { some: { id: user?.id } } : undefined,
     },
-    include: {
-      presentations: true,
-    },
+    orderBy: { name: 'asc' },
+    include: { presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] } },
   });
 
-  return {
-    user,
-    courses,
-  };
+  return { user, courses };
 };
