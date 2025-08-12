@@ -19,7 +19,7 @@
   <svelte:element
     this={listType}
     class={cn(
-      'ml-6 space-y-4 [&>li]:pl-4',
+      'ml-10 mt-4 space-y-4 [&>li]:pl-4',
       listType === 'ul' ? 'list-disc' : 'list-decimal',
       className
     )}

@@ -201,7 +201,7 @@
 }
 
 .reveal-viewport .slide-number {
-  @apply !bg-background-300 !text-foreground !rounded-2xl !px-3 !py-2;
+  @apply !rounded-2xl !bg-background-300 !px-3 !py-2 !text-foreground;
 }
 
 .reveal-viewport .navigate-left,

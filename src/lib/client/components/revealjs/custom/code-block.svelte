@@ -49,22 +49,18 @@
   }
 </script>
 
-<div
-  class={cn(
-    'relative h-max w-full max-w-full overflow-x-auto rounded-lg border',
-    containerClassName
-  )}
->
+<div>
   {#if hasHeader}
     <div
-      class="absolute flex w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border-b bg-background-100 py-2 pl-4 pr-2"
+      class="flex max-h-[51px] w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border border-b-0 bg-background-100 py-2 pl-4 pr-2"
     >
       <div class="ouverflow-x-hidden flex max-w-[90%] flex-1 items-center gap-2">
         {#if language}
           <Button
             variant="secondary"
+            size="sm"
             class={cn(
-              'pointer-events-none !text-base hover:bg-secondary sm:!text-xl',
+              'pointer-events-none !text-base hover:bg-secondary sm:!text-lg',
               headerButtonClasses
             )}
           >
@@ -77,8 +73,9 @@
               copyToClipboard(fileName);
               toast.success('Nom du fichier copié dans le presse-papiers');
             }}
+            size="sm"
             variant="secondary"
-            class={cn('truncate !text-base sm:!text-xl', headerButtonClasses)}
+            class={cn('truncate !text-base sm:!text-lg', headerButtonClasses)}
           >
             {fileName}
           </Button>
@@ -91,8 +88,9 @@
               {#snippet child({ props })}
                 <Button
                   {...props}
+                  size="sm"
                   variant="secondary"
-                  class={cn('!text-base sm:!text-xl', headerButtonClasses)}
+                  class={cn('!text-base sm:!text-lg', headerButtonClasses)}
                 >
                   Démo
                 </Button>
@@ -116,47 +114,39 @@
               changeButtonIcon();
               copyToClipboard(code);
             }}
+            size="sm"
             variant="secondary"
             class={cn('aspect-square px-1.5', headerButtonClasses)}
             aria-label="Copier le code"
           >
             {#if isCheckIcon}
-              <Check class="size-5 sm:size-6" />
+              <Check class="!size-5 sm:!size-6" />
             {:else}
-              <Clipboard class="h-5 sm:h-6" />
+              <Clipboard class="!size-5 sm:!size-6" />
             {/if}
           </Button>
         {/if}
       </div>
     </div>
   {/if}
-  <CodeSource
-    {code}
-    {language}
-    {autoAnimateId}
-    {lines}
-    codeClassName={cn(
-      hasHeader ? '!mt-[52px]' : 'rounded-t-lg !px-4',
-      !hasHeader && !hideCopyButton ? '!pr-12' : '',
-      codeClassName
+  <div
+    class={cn(
+      'relative h-max w-full max-w-full overflow-x-auto rounded-lg border',
+      hasHeader && 'rounded-t-none',
+      containerClassName
     )}
-    {...props}
-  />
-  {#if !hasHeader && !hideCopyButton}
-    <Button
-      onclick={() => {
-        changeButtonIcon();
-        copyToClipboard(code);
-      }}
-      variant="ghost"
-      class="absolute right-2.5 top-2.5 aspect-square px-1.5"
-      aria-label="Copier le code"
-    >
-      {#if isCheckIcon}
-        <Check size="24px" />
-      {:else}
-        <Clipboard size="24px" />
-      {/if}
-    </Button>
-  {/if}
+  >
+    <CodeSource
+      {code}
+      {language}
+      {autoAnimateId}
+      lines={lines ?? ''}
+      codeClassName={cn(
+        '[&_table.hljs-ln]:!ml-[8px] [&_table.hljs-ln]:!mb-[-24px] [&.fragment_table.hljs-ln]:!ml-[-8px] [&.fragment_table.hljs-ln]:!mb-0 rounded-t-lg !px-4 [&_table.hljs-ln]:!mt-[-24px] [&.fragment_table.hljs-ln]:!mt-[12px]',
+        !hasHeader && !hideCopyButton ? '!pr-12' : '',
+        codeClassName
+      )}
+      {...props}
+    />
+  </div>
 </div>

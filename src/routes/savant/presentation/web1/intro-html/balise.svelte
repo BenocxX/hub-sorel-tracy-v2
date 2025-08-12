@@ -29,7 +29,6 @@
   <div class="fragment space-y-4">
     <p>Si j'écris cette structure en code, ça ressemblerait à:</p>
     <CodeBlock
-      hideCopyButton
       code={`<maison>
     <salon></salon>
     <cuisine></cuisine>
@@ -39,7 +38,7 @@
     />
   </div>
 </BasicSlide>
-<!-- <BasicSlide>
+<BasicSlide>
   <p>
     Une balise donne une <Bold>description</Bold> de son contenu.
   </p>
@@ -69,8 +68,6 @@
       Cela forme une relation parent / enfant que nous pouvons imaginer sous la forme d'un arbre.
     </p>
     <CodeBlock
-      hideCopyButton
-      codeClassName="language-xml"
       lines="|1,4|2,3|"
       code={`<repas>
     <boisson>Coca-Cola</boisson>
@@ -78,8 +75,8 @@
 </repas>`}
     />
     <p>
-      Dans cet exemple, le parent de la balise <Bold>boisson</Bold> sera la balise{' '}
-      <Bold>repas</Bold>. Inversement, la balise <Bold>repas</Bold> aura deux enfants:{' '}
+      Dans cet exemple, le parent de la balise <Bold>boisson</Bold> sera la balise
+      <Bold>repas</Bold>. Inversement, la balise <Bold>repas</Bold> aura deux enfants:
       <Bold>boisson</Bold> et <Bold>mets</Bold>.
     </p>
   </div>
@@ -128,10 +125,9 @@
 </BasicSlide>
 <BasicSlide>
   <p>
-    Le concept de balise est issu du langage <Bold>XML</Bold> (e<Bold>X</Bold>tensible{' '}
-    <Bold>M</Bold>
-    arkup <Bold>L</Bold>anguage). L'idée de ce langage est d'être assez général pour permettre de
-    représenter n'importe quel ensemble de données.
+    Le concept de balise est issu du langage <Bold>XML</Bold> (e<Bold>X</Bold>tensible
+    <Bold>M</Bold>arkup <Bold>L</Bold>anguage). L'idée de ce langage est d'être assez général pour
+    permettre de représenter n'importe quel ensemble de données.
   </p>
   <div class="fragment">
     <CodeBlock
@@ -139,12 +135,12 @@
       lines="|1,10|2,5,6,9|3,7|4,8|"
       code={`<steam>
     <jeu>
-        <titre>Half-Life 2</titre>
-        <annee>2004</annee>
+        <titre>Balatro</titre>
+        <annee>2024</annee>
     </jeu>
     <jeu>
-        <titre>Portal 2</titre>
-        <annee>2011</annee>
+        <titre>Battlefield 6</titre>
+        <annee>2025</annee>
     </jeu>
 </steam>`}
     />
@@ -153,8 +149,7 @@
 <BasicSlide subTitle="Règles XML">
   <p>
     Il existe quelques règles à respecter pour être conforme avec le langage XML. Si toutes les
-    règles dans un document sont respectés, on dira que le document est{' '}
-    <Italic>bien formé.</Italic>
+    règles dans un document sont respectés, on dira que le document est <Italic>bien formé.</Italic>
   </p>
   <div class="fragment space-y-6">
     <List>
@@ -200,16 +195,16 @@
         <span>Invalide:</span>
         <CodeBlock
           language="xml"
-          code={`<Titre>Le Parrain</titre>
-<titre>Eurotrip</TITRE>`}
+          code={`<Titre>Arcane</titre>
+<titre>The Bear</TITRE>`}
         />
       </div>
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
         <CodeBlock
           language="xml"
-          code={`<titre>Le Parrain</titre>
-<titre>Eurotrip</titre>`}
+          code={`<titre>Arcane</titre>
+<titre>The Bear</titre>`}
         />
       </div>
     </div>
@@ -265,9 +260,9 @@
         <span>Invalide:</span>
         <CodeBlock
           language="xml"
-          code={`<titre>Batman</titre>
-<titre>Forrest Gump</titre>
-<titre>Iron man</titre>`}
+          code={`<titre>The Batman</titre>
+<titre>Warfare</titre>
+<titre>Whiplash</titre>`}
         />
       </div>
       <div class="fragment flex-1 space-y-2 sm:w-1/2">
@@ -275,9 +270,9 @@
         <CodeBlock
           language="xml"
           code={`<films>
-    <titre>Batman</titre>
-    <titre>Forrest Gump</titre>
-    <titre>Iron man</titre>
+    <titre>The Batman</titre>
+    <titre>Warfare</titre>
+    <titre>Whiplash</titre>
 </films>`}
         />
       </div>
@@ -297,8 +292,7 @@
         <span>Invalide:</span>
         <CodeBlock
           language="xml"
-          code={`<paiement date=10/10/2014>
-    <montant>100.00</montant>
+          code={`<paiement date=10/10/2014 montant=100>
     <destinataire>Bob Lewis</destinataire>
 </paiement>`}
         />
@@ -307,12 +301,11 @@
         <span>Valide:</span>
         <CodeBlock
           language="xml"
-          code={`<paiement date="10/10/2014">
-    <montant>100.00</montant>
+          code={`<paiement date="10/10/2014" montant="100">
     <destinataire>Bob Lewis</destinataire>
 </paiement>`}
         />
       </div>
     </div>
   </div>
-</BasicSlide> -->
+</BasicSlide>

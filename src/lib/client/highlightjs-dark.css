@@ -6,9 +6,8 @@
 
 .dark .hljs {
   /* background: #1e1e1e; */ /* original vscode dark background */
-  background: hsl(var(--background-300)) !important;
-  @apply !bg-background-100/50;
   color: #dcdcdc !important;
+  @apply !bg-secondary;
 }
 
 .dark .hljs-keyword,

@@ -20,11 +20,20 @@
     code,
     ...props
   }: Props = $props();
+
+  let codeToDisplay = $state(code);
+
+  // This is a weird work around to correctly format multiline code. Without this, the first
+  // line was always indented for no reason.
+  const isMultiline = code.includes('\n');
+  if (isMultiline) {
+    codeToDisplay = '\n' + code;
+  }
 </script>
 
 <pre
   class={cn(
-    'w-full max-w-full overflow-x-auto text-left [&_*]:!text-lg sm:[&_*]:!text-3xl',
+    'w-full max-w-full overflow-x-auto bg-[#FAFAFA] text-left dark:bg-secondary [&_*]:!text-lg sm:[&_*]:!text-3xl',
     className
   )}
   data-id={autoAnimateId ? `${autoAnimateId}-pre` : undefined}>
@@ -34,6 +43,6 @@
     class={cn('rounded-b-lg', language ? `language-${language}` : '', codeClassName)}
     data-line-numbers={lines}
     {...props}>
-    {code}
+    {codeToDisplay}
   </code>
 </pre>
