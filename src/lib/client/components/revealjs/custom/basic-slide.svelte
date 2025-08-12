@@ -11,7 +11,7 @@
 
 <script lang="ts">
   import { cn } from '$lib/client/utils';
-  import { getContext, type Snippet } from 'svelte';
+  import { type Snippet } from 'svelte';
   import Slide, { type SlideProps } from '../slide.svelte';
   import { currentPresentation } from '../store.svelte';
   import { ArrowLeft, Link } from 'lucide-svelte';
@@ -19,6 +19,7 @@
   import { formatToId } from '$lib/common/tools/format';
   import * as Dialog from '../../ui/dialog';
   import List from './list.svelte';
+  import { getSlideSection } from './utils';
 
   const {
     title,
@@ -32,7 +33,7 @@
     ...props
   }: BasicSlideProps = $props();
 
-  const section = getContext<string | undefined>('slide-section');
+  const section = getSlideSection();
   const id = section ? formatToId(section) : undefined;
 </script>
 
