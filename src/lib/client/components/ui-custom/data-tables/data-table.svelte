@@ -27,6 +27,7 @@
     Settings2,
   } from 'lucide-svelte';
   import type { Snippet } from 'svelte';
+  import { cn } from '$lib/client/utils';
 
   type DataTableProps<TData, TValue> = {
     columns: ColumnDef<TData, TValue>[];
@@ -174,7 +175,11 @@
         {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
           <Table.Row>
             {#each headerGroup.headers as header (header.id)}
-              <Table.Head style={`width: ${header.column.getSize()}px;`} colspan={header.colSpan}>
+              <Table.Head
+                class={cn(header.column.columnDef.meta?.class)}
+                style={`width: ${header.column.columnDef.meta?.width || 'auto'};`}
+                colspan={header.colSpan}
+              >
                 {#if !header.isPlaceholder}
                   <FlexRender
                     content={header.column.columnDef.header}
@@ -190,7 +195,8 @@
         {#each table.getRowModel().rows as row (row.id)}
           <Table.Row data-state={row.getIsSelected() && 'selected'}>
             {#each row.getVisibleCells() as cell (cell.id)}
-              <Table.Cell>
+              {@const meta = cell.column.columnDef.meta}
+              <Table.Cell class={cn(meta?.class)} style={`width: ${meta?.width || 'auto'};`}>
                 <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
               </Table.Cell>
             {/each}

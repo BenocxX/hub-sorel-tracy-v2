@@ -5,6 +5,7 @@
   import * as Collapsible from '$lib/client/components/ui/collapsible';
   import { page } from '$app/state';
   import { ContactRound, Presentation } from 'lucide-svelte';
+  import { Button } from '../../ui/button';
 
   type Props = {
     course: Course<{ presentations: true }>;
@@ -19,20 +20,24 @@
     <Collapsible.Root open={true} class="group/collapsible">
       {#snippet child({ props })}
         <Sidebar.MenuItem {...props}>
-          <Collapsible.Trigger>
-            {#snippet child({ props })}
-              <Sidebar.MenuButton {...props}>
-                {#snippet tooltipContent()}
-                  Présentations
-                {/snippet}
-                <Presentation />
-                <span>Présentations</span>
-                <ChevronRightIcon
-                  class="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
-                />
-              </Sidebar.MenuButton>
+          <Sidebar.MenuButton {...props} class="pr-0">
+            <a href={`/savant/course/${course.id}`} class="flex flex-1 items-center gap-2">
+              <Presentation class="size-4" />
+              <span>Présentations</span>
+            </a>
+            {#snippet tooltipContent()}
+              Présentations
             {/snippet}
-          </Collapsible.Trigger>
+            <Collapsible.Trigger>
+              {#snippet child({ props })}
+                <Button variant="ghost" size="icon-sm" {...props}>
+                  <ChevronRightIcon
+                    class="size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
+                  />
+                </Button>
+              {/snippet}
+            </Collapsible.Trigger>
+          </Sidebar.MenuButton>
           <Collapsible.Content>
             <Sidebar.MenuSub>
               {#each course.presentations as presentation (presentation.id)}

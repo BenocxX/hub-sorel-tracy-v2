@@ -19,6 +19,10 @@ declare global {
 declare module '@tanstack/table-core' {
   interface ColumnMeta<TData extends RowData, TValue> {
     frenchName: string;
+    class?: string;
+
+    // Source: https://github.com/TanStack/table/discussions/3192#discussioncomment-8419949
+    width?: string;
   }
 }
 

@@ -57,6 +57,7 @@
           <DropdownMenu.Item>
             <TogglePresentationLockedForm {presentation} data={togglePresentationLocked} />
           </DropdownMenu.Item>
+          <DropdownMenu.Separator />
           <DropdownMenu.Item>
             <DeletePresentationFromCourseForm {course} {presentation} data={deletePresentation} />
           </DropdownMenu.Item>
