@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { cn } from '$lib/client/utils';
+  import { cn, copyToClipboard } from '$lib/client/utils';
   import type { HTMLAttributes } from 'svelte/elements';
   import CodeSource from './code-source.svelte';
   import type { Snippet } from 'svelte';
   import type { CodeLanguage } from './utils';
+  import { Button } from '../../ui/button';
+  import { toast } from 'svelte-sonner';
+  import * as Dialog from '../../ui/dialog';
+  import { Check, Clipboard } from 'lucide-svelte';
 
   type Props = HTMLAttributes<HTMLElement> & {
     code: string;
-    demonstration?: Snippet;
     fileName?: string;
     language?: CodeLanguage;
     hideCopyButton?: boolean;
@@ -24,13 +27,26 @@
     autoAnimateId,
     lines,
     fileName,
-    demonstration,
+    children,
     hideCopyButton,
     codeClassName,
     ...props
   }: Props = $props();
 
-  const hasHeader = !!fileName || !!language || !!demonstration;
+  const hasHeader = !!fileName || !!language || !!children;
+
+  const headerButtonClasses = 'hover:bg-background-300 rounded-[8px] bg-background-200';
+
+  let isCheckIcon = $state(false);
+
+  function changeButtonIcon() {
+    if (isCheckIcon) {
+      return;
+    }
+
+    isCheckIcon = true;
+    setTimeout(() => (isCheckIcon = false), 2000);
+  }
 </script>
 
 <div
@@ -39,76 +55,81 @@
     containerClassName
   )}
 >
-  <!-- {hasHeader && (
-        <div className="absolute flex w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border-b bg-background-100 py-2 pl-4 pr-2">
-          <div className="ouverflow-x-hidden flex max-w-[90%] flex-1 items-center gap-2">
-            {language && (
-              <Button
-                variant="secondary"
-                className={cn(
-                  'pointer-events-none !text-base hover:bg-secondary sm:!text-xl',
-                  headerButtonClasses
-                )}
+  {#if hasHeader}
+    <div
+      class="absolute flex w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border-b bg-background-100 py-2 pl-4 pr-2"
+    >
+      <div class="ouverflow-x-hidden flex max-w-[90%] flex-1 items-center gap-2">
+        {#if language}
+          <Button
+            variant="secondary"
+            class={cn(
+              'pointer-events-none !text-base hover:bg-secondary sm:!text-xl',
+              headerButtonClasses
+            )}
+          >
+            {language.toUpperCase()}
+          </Button>
+        {/if}
+        {#if fileName}
+          <Button
+            onclick={() => {
+              copyToClipboard(fileName);
+              toast.success('Nom du fichier copié dans le presse-papiers');
+            }}
+            variant="secondary"
+            class={cn('truncate !text-base sm:!text-xl', headerButtonClasses)}
+          >
+            {fileName}
+          </Button>
+        {/if}
+      </div>
+      <div class="flex items-center gap-2">
+        {#if children}
+          <Dialog.Root>
+            <Dialog.Trigger>
+              {#snippet child({ props })}
+                <Button
+                  {...props}
+                  variant="secondary"
+                  class={cn('!text-base sm:!text-xl', headerButtonClasses)}
+                >
+                  Démo
+                </Button>
+              {/snippet}
+            </Dialog.Trigger>
+            <Dialog.Content class="gap-0 p-0">
+              <Dialog.Header
+                class="rounded-t-lg border-b bg-background-200 p-4 dark:bg-background-100"
               >
-                {language.toUpperCase()}
-              </Button>
-            )}
-            {fileName && (
-              <Button
-                onClick={() => {
-                  copyToClipboard(fileName);
-                  toast.success('Nom du fichier copié dans le presse-papiers');
-                }}
-                variant="secondary"
-                className={cn('truncate !text-base sm:!text-xl', headerButtonClasses)}
-              >
-                {fileName}
-              </Button>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
-            {demonstration && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="secondary"
-                    className={cn('!text-base sm:!text-xl', headerButtonClasses)}
-                  >
-                    Démo
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="gap-0 p-0">
-                  <DialogHeader className="rounded-t-lg border-b bg-background-200 p-4 dark:bg-background-100">
-                    <DialogTitle>Démonstration</DialogTitle>
-                  </DialogHeader>
-                  <div
-                    className={cn('flex max-h-[50vh] flex-col overflow-y-auto rounded-b-lg p-4')}
-                  >
-                    {demonstration}
-                  </div>
-                </DialogContent>
-              </Dialog>
-            )}
-            {!hideCopyButton && (
-              <Button
-                onClick={() => {
-                  changeButtonIcon();
-                  copyToClipboard(code);
-                }}
-                variant="secondary"
-                className={cn('aspect-square px-1.5', headerButtonClasses)}
-                aria-label="Copier le code"
-              >
-                {isCheckIcon ? (
-                  <Check className="h-5 w-5 sm:h-6 sm:w-6" />
-                ) : (
-                  <Clipboard className="h-5 sm:h-6" />
-                )}
-              </Button>
-            )}
-          </div>
-        </div>
-      )} -->
+                <Dialog.Title>Démonstration</Dialog.Title>
+              </Dialog.Header>
+              <div class={cn('flex max-h-[50vh] flex-col overflow-y-auto rounded-b-lg p-4')}>
+                {@render children()}
+              </div>
+            </Dialog.Content>
+          </Dialog.Root>
+        {/if}
+        {#if !hideCopyButton}
+          <Button
+            onclick={() => {
+              changeButtonIcon();
+              copyToClipboard(code);
+            }}
+            variant="secondary"
+            class={cn('aspect-square px-1.5', headerButtonClasses)}
+            aria-label="Copier le code"
+          >
+            {#if isCheckIcon}
+              <Check class="size-5 sm:size-6" />
+            {:else}
+              <Clipboard class="h-5 sm:h-6" />
+            {/if}
+          </Button>
+        {/if}
+      </div>
+    </div>
+  {/if}
   <CodeSource
     {code}
     {language}
@@ -121,17 +142,21 @@
     )}
     {...props}
   />
-  <!-- {!hasHeader && !hideCopyButton && (
-        <Button
-          onClick={() => {
-            changeButtonIcon();
-            copyToClipboard(code);
-          }}
-          variant="ghost"
-          className="absolute right-2.5 top-2.5 aspect-square px-1.5"
-          aria-label="Copier le code"
-        >
-          {isCheckIcon ? <Check size="24px" /> : <Clipboard size="24px" />}
-        </Button>
-      )} -->
+  {#if !hasHeader && !hideCopyButton}
+    <Button
+      onclick={() => {
+        changeButtonIcon();
+        copyToClipboard(code);
+      }}
+      variant="ghost"
+      class="absolute right-2.5 top-2.5 aspect-square px-1.5"
+      aria-label="Copier le code"
+    >
+      {#if isCheckIcon}
+        <Check size="24px" />
+      {:else}
+        <Clipboard size="24px" />
+      {/if}
+    </Button>
+  {/if}
 </div>

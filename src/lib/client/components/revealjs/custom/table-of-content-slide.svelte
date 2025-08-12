@@ -11,7 +11,7 @@
   const { slideLinks, class: className, ...props }: Props = $props();
 </script>
 
-<BasicSlide id="table-of-content" title="Table des matières" {...props}>
+<BasicSlide disableAutoAnimate id="table-of-content" title="Table des matières" {...props}>
   <List class={className}>
     {#each slideLinks as slideLink (slideLink)}
       <li>

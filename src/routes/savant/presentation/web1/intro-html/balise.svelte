@@ -30,7 +30,6 @@
     <p>Si j'écris cette structure en code, ça ressemblerait à:</p>
     <CodeBlock
       hideCopyButton
-      language="xml"
       code={`<maison>
     <salon></salon>
     <cuisine></cuisine>
@@ -49,14 +48,14 @@
       Les balises sont des mots qui sont entourés entre des symboles plus petit (&lt;) et plus grand
       (&gt;).
     </p>
-    <CodeBlock hideCopyButton codeClassName="language-xml" code={`<animal>, <humain>`} />
+    <CodeBlock hideCopyButton codeClassName="language-xml" code="<animal>, <humain>" />
   </div>
   <div class="fragment space-y-4">
     <p>
-      Les balises proprement formées viennent en pair: une <Bold>balise ouvrante</Bold> et une{' '}
+      Les balises proprement formées viennent en pair: une <Bold>balise ouvrante</Bold> et une
       <Bold>balise fermante</Bold>. On symbolise la balise fermante avec un slash (/).
     </p>
-    <CodeBlock hideCopyButton codeClassName="language-xml" code={`<boisson>Coca-Cola</boisson>`} />
+    <CodeBlock hideCopyButton codeClassName="language-xml" code="<boisson>Coca-Cola</boisson>" />
   </div>
   <p class="fragment">
     Ce qui se trouve entre la balise ouvrante et la balise fermante est le contenu.
@@ -229,11 +228,11 @@
     <div class="flex flex-col gap-4 sm:w-full sm:flex-row sm:gap-12">
       <div class="fragment flex-1 space-y-2">
         <span>Invalide:</span>
-        <CodeBlock language="xml" code={`<p><b>test</p></b>`} />
+        <CodeBlock language="xml" code="<p><b>test</p></b>" />
       </div>
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
-        <CodeBlock language="xml" code={`<p><b>test</b></p>`} />
+        <CodeBlock language="xml" code="<p><b>test</b></p>" />
       </div>
     </div>
 

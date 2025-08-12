@@ -6,6 +6,7 @@
     slideClassName?: string;
     center?: boolean;
     links?: { label: Snippet; href: string; description?: string }[];
+    disableAutoAnimate?: boolean;
   };
 </script>
 
@@ -30,16 +31,17 @@
     center,
     children,
     class: className,
+    disableAutoAnimate,
     ...props
   }: BasicSlideProps = $props();
 
   const section = getSlideSection();
-  const id = section ? formatToId(section) : undefined;
+  const animateId = section ? formatToId(section) : undefined;
 </script>
 
 <Slide
-  {id}
-  animateId={id}
+  {disableAutoAnimate}
+  {animateId}
   class={cn('!h-full overflow-y-auto text-left', slideClassName)}
   {...props}
 >

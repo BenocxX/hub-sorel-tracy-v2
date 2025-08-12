@@ -24,7 +24,19 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  let { children, ...props }: SlideProps = $props();
+  let {
+    children,
+    background,
+    class: className,
+    disableAutoAnimate,
+    autoAnimateRestart,
+    instantUnmatched,
+    ...props
+  }: SlideProps & {
+    disableAutoAnimate?: boolean;
+    autoAnimateRestart?: boolean;
+    instantUnmatched?: boolean; // will not animate unmatched elements, removing the fade-in fade-out effect
+  } = $props();
 
   function listeners(el: HTMLElement) {
     const events = ['in', 'out'] as const;
@@ -34,21 +46,12 @@
 
 <section
   use:listeners
-  data-auto-animate={props.animate}
-  data-auto-animate-easing={props.animateEasing}
-  data-auto-animate-unmatched={props.animateUnmatched}
-  data-auto-animate-id={props.animateId}
-  data-auto-animate-restart={props.animateRestart}
-  data-autoslide={props.stepDuration}
-  data-background-color={props.background}
-  data-background-gradient={props.gradient}
-  data-background-image={props.image}
-  data-background-video={props.video}
-  data-background-iframe={props.iframe}
-  data-background-interactive={props.interactive}
-  data-transition={props.transition}
-  class={props.class}
-  id={props.id}
+  class={'slide-container ' + className}
+  data-background={background}
+  data-auto-animate={disableAutoAnimate ? undefined : true}
+  data-auto-animate-restart={autoAnimateRestart ? true : undefined}
+  data-auto-animate-unmatched={instantUnmatched ? false : undefined}
+  {...props}
 >
   {#if children}
     {@render children()}
