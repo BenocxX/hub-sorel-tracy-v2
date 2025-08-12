@@ -3,6 +3,7 @@
   import type { Snippet } from 'svelte';
   import type { Attachment } from 'svelte/attachments';
   import type { HTMLAttributes } from 'svelte/elements';
+  import { toast } from 'svelte-sonner';
 
   type Props = HTMLAttributes<HTMLSpanElement> & {
     allowCopy?: boolean;
@@ -25,7 +26,7 @@
     }
 
     copyToClipboard(content ?? '');
-    // toast.success('Contenu copié dans le presse-papiers');
+    toast.success('Contenu copié dans le presse-papiers');
   }}
   class={cn(
     'rounded bg-background-200 px-2 py-1 !text-lg text-rose-700 dark:bg-background-200 dark:text-blue-300 sm:!text-2xl',

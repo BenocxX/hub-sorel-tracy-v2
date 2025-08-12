@@ -17,7 +17,4 @@
 
 <PresentationRoot {sections}>
   <Intro section={sections.intro} />
-  <!-- <Slide class="h-full place-content-center place-items-center">
-    <p>test</p>
-  </Slide> -->
 </PresentationRoot>
