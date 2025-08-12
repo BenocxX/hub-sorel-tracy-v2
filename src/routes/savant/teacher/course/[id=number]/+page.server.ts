@@ -6,6 +6,7 @@ import {
 import {
   createPresentationSchema,
   deletePresentationSchema,
+  modifyPresentationSchema,
 } from '$lib/common/schemas/presentation-schemas.js';
 import { db } from '$lib/server/prisma/index.js';
 import { error, fail } from '@sveltejs/kit';
@@ -19,9 +20,15 @@ export const load = async (event) => {
     where: { id },
     include: {
       schoolSession: true,
-      presentations: true,
-      students: { include: { user: true } },
-      teachers: { include: { user: true } },
+      presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] },
+      students: {
+        include: { user: true },
+        orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
+      },
+      teachers: {
+        include: { user: true },
+        orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
+      },
     },
   });
 
@@ -33,21 +40,14 @@ export const load = async (event) => {
   const studentUsers = course.students.map((student) => student.user);
   const courseUsers = teacherUsers.concat(studentUsers);
 
-  const users = await db.user.findMany({
-    orderBy: {
-      role: 'desc',
-    },
-  });
-
-  const modifyCourseForm = await superValidate(zod(modifyCourseSchema), {
-    defaults: course,
-  });
+  const users = await db.user.findMany({ orderBy: { role: 'desc' } });
 
   return {
     course,
     courseUsers,
     users,
-    modifyCourseForm,
+    modifyCourseForm: await superValidate(zod(modifyCourseSchema), { defaults: course }),
+    modifyPresentationForm: await superValidate(zod(modifyPresentationSchema)),
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
     removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),
     createPresentation: await superValidate(zod(createPresentationSchema)),
@@ -126,6 +126,20 @@ export const actions = {
         ...form.data,
         course: { connect: { id: Number(event.params.id) } },
       },
+    });
+
+    return { form };
+  },
+  modifyPresentation: async (event) => {
+    const form = await superValidate(event, zod(modifyPresentationSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    await db.presentation.update({
+      where: { id: form.data.id, courseId: Number(event.params.id) },
+      data: form.data,
     });
 
     return { form };

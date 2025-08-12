@@ -36,6 +36,6 @@
     </Form.Control>
   </Form.Field>
   <Form.Button {delayed} class="h-max w-full p-0 font-normal" variant="ghost">
-    Supprimer du cours
+    Retirer du cours
   </Form.Button>
 </form>

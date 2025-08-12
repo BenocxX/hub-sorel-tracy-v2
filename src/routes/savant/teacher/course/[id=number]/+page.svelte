@@ -20,6 +20,7 @@
 
   const presentationColumns = makePresentationColumns({
     course: data.course,
+    modifyPresentation: data.modifyPresentationForm,
     deletePresentation: data.deletePresentation,
   });
 

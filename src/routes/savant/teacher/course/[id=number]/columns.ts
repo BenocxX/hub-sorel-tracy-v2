@@ -8,7 +8,10 @@ import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { RemoveUserFromCourseSchema } from '$lib/common/schemas/course-schemas';
 import type { Presentation } from '@prisma/client';
 import DataTablePresentationsActions from './data-table-presentations-actions.svelte';
-import type { DeletePresentationSchema } from '$lib/common/schemas/presentation-schemas';
+import type {
+  DeletePresentationSchema,
+  ModifyPresentationSchema,
+} from '$lib/common/schemas/presentation-schemas';
 
 export function makeUserColumns({
   course,
@@ -108,9 +111,11 @@ export function makeUserColumns({
 
 export function makePresentationColumns({
   course,
+  modifyPresentation,
   deletePresentation,
 }: {
   course: Course;
+  modifyPresentation: SuperValidated<Infer<ModifyPresentationSchema>>;
   deletePresentation: SuperValidated<Infer<DeletePresentationSchema>>;
 }): ColumnDef<Presentation>[] {
   return [
@@ -157,6 +162,7 @@ export function makePresentationColumns({
         return renderComponent(DataTablePresentationsActions, {
           course,
           presentation: row.original,
+          modifyPresentation,
           deletePresentation,
         });
       },

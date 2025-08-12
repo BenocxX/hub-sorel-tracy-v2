@@ -3,26 +3,42 @@
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import {
-    createPresentationSchema,
-    type CreatePresentationSchema,
+    modifyPresentationSchema,
+    type ModifyPresentationSchema,
   } from '$lib/common/schemas/presentation-schemas';
   import { Input } from '$lib/client/components/ui/input';
   import { Textarea } from '$lib/client/components/ui/textarea';
   import { Switch } from '$lib/client/components/ui/switch';
+  import type { Presentation } from '@prisma/client';
   import { DialogClose } from '$lib/client/components/ui/dialog';
 
   type Props = {
-    data: SuperValidated<Infer<CreatePresentationSchema>>;
+    presentation: Presentation;
+    data: SuperValidated<Infer<ModifyPresentationSchema>>;
   };
 
-  const { data }: Props = $props();
+  const { presentation, data }: Props = $props();
 
-  const form = superForm(data, { validators: zodClient(createPresentationSchema) });
+  const form = superForm(data, {
+    id: `modify-presentation-${presentation.id}`,
+    validators: zodClient(modifyPresentationSchema),
+  });
 
   const { form: formData, delayed, enhance } = form;
+
+  // Prefill the form for every presentation in the list
+  $formData = presentation;
 </script>
 
-<form method="POST" action="?/createPresentation" class="flex flex-col" use:enhance>
+<form method="POST" action="?/modifyPresentation" class="flex flex-col" use:enhance>
+  <Form.Field {form} name="id">
+    <Form.Control>
+      {#snippet children({ props })}
+        <Input type="hidden" {...props} bind:value={$formData.id} />
+      {/snippet}
+    </Form.Control>
+    <Form.FieldErrors />
+  </Form.Field>
   <Form.Field {form} name="title">
     <Form.Control>
       {#snippet children({ props })}
