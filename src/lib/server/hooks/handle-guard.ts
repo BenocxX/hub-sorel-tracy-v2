@@ -69,9 +69,29 @@ async function presentationGuard(route: string, user?: App.Locals['user']) {
   const presentationSegment = segments[4];
 
   const course = await db.course.findFirst({
-    where: { name: courseSegment },
-    include: { students: true, teachers: true },
+    where: { abbreviation: courseSegment },
+    include: {
+      students: true,
+      teachers: true,
+      presentations: { where: { abbreviation: presentationSegment } },
+    },
   });
+
+  if (!course || course.presentations[0] === undefined) {
+    throw redirect(303, '/savant');
+  }
+
+  if (
+    user!.role === 'Student' &&
+    course.students.some((student) => student.id === user!.id) &&
+    !course.presentations[0].isLocked
+  ) {
+    return;
+  }
+
+  if (user!.role !== 'Student' && course.teachers.some((teacher) => teacher.id === user!.id)) {
+    return;
+  }
 
   throw redirect(303, '/savant');
 }
