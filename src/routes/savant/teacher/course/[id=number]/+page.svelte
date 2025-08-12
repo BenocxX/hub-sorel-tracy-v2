@@ -21,6 +21,7 @@
   const presentationColumns = makePresentationColumns({
     course: data.course,
     modifyPresentation: data.modifyPresentationForm,
+    togglePresentationLocked: data.togglePresentationLockedForm,
     deletePresentation: data.deletePresentation,
   });
 

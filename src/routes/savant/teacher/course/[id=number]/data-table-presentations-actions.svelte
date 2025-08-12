@@ -9,17 +9,26 @@
   import type {
     DeletePresentationSchema,
     ModifyPresentationSchema,
+    TogglePresentationLockedSchema,
   } from '$lib/common/schemas/presentation-schemas';
   import ModifyPresentationForm from '$lib/client/components/structure/forms/teacher/presentation/modify-presentation-form.svelte';
+  import TogglePresentationLockedForm from '$lib/client/components/structure/forms/teacher/presentation/toggle-presentation-locked-form.svelte';
 
   type Props = {
     course: Course;
     presentation: Presentation;
     modifyPresentation: SuperValidated<Infer<ModifyPresentationSchema>>;
+    togglePresentationLocked: SuperValidated<Infer<TogglePresentationLockedSchema>>;
     deletePresentation: SuperValidated<Infer<DeletePresentationSchema>>;
   };
 
-  const { course, presentation, modifyPresentation, deletePresentation }: Props = $props();
+  const {
+    course,
+    presentation,
+    modifyPresentation,
+    togglePresentationLocked,
+    deletePresentation,
+  }: Props = $props();
 
   let currentDialog = $state<'modify' | undefined>(undefined);
 </script>
@@ -44,6 +53,9 @@
                 <button {...props}>Modifier</button>
               {/snippet}
             </Dialog.Trigger>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item>
+            <TogglePresentationLockedForm {presentation} data={togglePresentationLocked} />
           </DropdownMenu.Item>
           <DropdownMenu.Item>
             <DeletePresentationFromCourseForm {course} {presentation} data={deletePresentation} />

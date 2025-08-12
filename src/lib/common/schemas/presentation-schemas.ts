@@ -21,10 +21,16 @@ export const modifyPresentationSchema = z.object({
   abbreviation: z.string().min(1),
 });
 
+export const togglePresentationLockedSchema = z.object({
+  id: z.number(),
+  isLocked: z.boolean(),
+});
+
 export const deletePresentationSchema = z.object({
   presentationId: z.number(),
 });
 
 export type CreatePresentationSchema = typeof createPresentationSchema;
 export type ModifyPresentationSchema = typeof modifyPresentationSchema;
+export type TogglePresentationLockedSchema = typeof togglePresentationLockedSchema;
 export type DeletePresentationSchema = typeof deletePresentationSchema;

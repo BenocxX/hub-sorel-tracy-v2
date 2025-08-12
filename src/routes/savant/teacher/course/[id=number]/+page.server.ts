@@ -7,6 +7,7 @@ import {
   createPresentationSchema,
   deletePresentationSchema,
   modifyPresentationSchema,
+  togglePresentationLockedSchema,
 } from '$lib/common/schemas/presentation-schemas.js';
 import { db } from '$lib/server/prisma/index.js';
 import { error, fail } from '@sveltejs/kit';
@@ -47,10 +48,11 @@ export const load = async (event) => {
     courseUsers,
     users,
     modifyCourseForm: await superValidate(zod(modifyCourseSchema), { defaults: course }),
-    modifyPresentationForm: await superValidate(zod(modifyPresentationSchema)),
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
     removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),
     createPresentation: await superValidate(zod(createPresentationSchema)),
+    modifyPresentationForm: await superValidate(zod(modifyPresentationSchema)),
+    togglePresentationLockedForm: await superValidate(zod(togglePresentationLockedSchema)),
     deletePresentation: await superValidate(zod(deletePresentationSchema)),
   };
 };
@@ -140,6 +142,20 @@ export const actions = {
     await db.presentation.update({
       where: { id: form.data.id, courseId: Number(event.params.id) },
       data: form.data,
+    });
+
+    return { form };
+  },
+  togglePresentationLocked: async (event) => {
+    const form = await superValidate(event, zod(togglePresentationLockedSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    await db.presentation.update({
+      where: { id: form.data.id, course: { id: Number(event.params.id) } },
+      data: { isLocked: form.data.isLocked },
     });
 
     return { form };
