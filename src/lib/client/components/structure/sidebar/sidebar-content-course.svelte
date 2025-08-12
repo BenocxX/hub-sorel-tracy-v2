@@ -4,7 +4,7 @@
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import * as Collapsible from '$lib/client/components/ui/collapsible';
   import { page } from '$app/state';
-  import { Presentation } from 'lucide-svelte';
+  import { ContactRound, Presentation } from 'lucide-svelte';
 
   type Props = {
     course: Course<{ presentations: true }>;
@@ -59,3 +59,31 @@
     </Collapsible.Root>
   </Sidebar.Menu>
 </Sidebar.Group>
+
+{#if page.data.user?.role !== 'Student'}
+  <Sidebar.Group>
+    <Sidebar.GroupLabel>Administration</Sidebar.GroupLabel>
+    <Sidebar.Menu>
+      <Sidebar.MenuItem>
+        <Sidebar.MenuButton>
+          {#snippet child({ props })}
+            <a href={`/savant/teacher/course/${course.id}?tab=students`} {...props}>
+              <ContactRound />
+              Étudiants
+            </a>
+          {/snippet}
+        </Sidebar.MenuButton>
+      </Sidebar.MenuItem>
+      <Sidebar.MenuItem>
+        <Sidebar.MenuButton>
+          {#snippet child({ props })}
+            <a href={`/savant/teacher/course/${course.id}?tab=presentations`} {...props}>
+              <Presentation />
+              Présentations
+            </a>
+          {/snippet}
+        </Sidebar.MenuButton>
+      </Sidebar.MenuItem>
+    </Sidebar.Menu>
+  </Sidebar.Group>
+{/if}

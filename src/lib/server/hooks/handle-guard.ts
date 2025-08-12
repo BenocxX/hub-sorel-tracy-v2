@@ -54,11 +54,11 @@ async function adminGuard(route: string, user?: App.Locals['user']) {
 }
 
 /**
- * Guard presentations routes to allow only admin or user that have access to the course
+ * Guard presentations routes to allow only admin or user that have access to the course.
+ * Also, reject students if the presentation is locked.
  */
 async function presentationGuard(route: string, user?: App.Locals['user']) {
-  // if (!route.includes('/savant/presentation') || user?.role === 'Admin') {
-  if (!route.includes('/savant/presentation')) {
+  if (!route.includes('/savant/presentation') || user?.role === 'Admin') {
     return;
   }
 
@@ -89,7 +89,7 @@ async function presentationGuard(route: string, user?: App.Locals['user']) {
     return;
   }
 
-  if (user!.role !== 'Student' && course.teachers.some((teacher) => teacher.id === user!.id)) {
+  if (user!.role == 'Teacher' && course.teachers.some((teacher) => teacher.id === user!.id)) {
     return;
   }
 
