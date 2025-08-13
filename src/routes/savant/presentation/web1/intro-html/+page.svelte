@@ -6,6 +6,7 @@
   import Html from './html.svelte';
   import Intro from './intro.svelte';
   import LoremIpsum from './lorem-ipsum.svelte';
+  import { initializeSlideLinks } from '$lib/client/components/revealjs/custom/utils.svelte';
 
   const sections = {
     intro: 'Introduction',
@@ -17,9 +18,11 @@
 
   currentPresentation.title = 'Introduction au langage HTML';
   currentPresentation.subTitle = "La structure d'une page web";
+
+  initializeSlideLinks();
 </script>
 
-<PresentationRoot {sections}>
+<PresentationRoot>
   <Intro section={sections.intro} />
   <Balise section={sections.balise} />
   <Html section={sections.html} />

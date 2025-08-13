@@ -9,10 +9,12 @@
     setSlideSection,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
+  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
 
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
+  registerInTOC({ page: 3 });
 </script>
 
 <BasicSlide subTitle="Analogie">

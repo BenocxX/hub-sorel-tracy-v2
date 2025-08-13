@@ -5,7 +5,7 @@ import BoldItalic from './bold-italic.svelte';
 import InlineCodeBlock from './inline-code-block.svelte';
 import CodeBlock from './code-block.svelte';
 import List from './list.svelte';
-import { setSlideSection, type SlideSectionProps } from './utils';
+import { setSlideSection, type SlideSectionProps } from './utils.svelte';
 
 export {
   BasicSlide,

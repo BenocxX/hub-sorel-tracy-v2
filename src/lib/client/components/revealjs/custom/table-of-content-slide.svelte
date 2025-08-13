@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { formatToId } from '$lib/common/tools/format';
   import { buttonVariants } from '../../ui/button';
   import BasicSlide, { type BasicSlideProps } from './basic-slide.svelte';
   import List from './list.svelte';
+  import { getSlideLinks } from './utils.svelte';
 
-  type Props = Omit<BasicSlideProps, 'children'> & {
-    slideLinks: string[];
-  };
+  type Props = Omit<BasicSlideProps, 'children'>;
 
-  const { slideLinks, class: className, ...props }: Props = $props();
+  const { class: className, ...props }: Props = $props();
+
+  const slideLinks = getSlideLinks();
 </script>
 
 <BasicSlide disableAutoAnimate id="table-of-content" title="Table des matières" {...props}>
@@ -16,13 +16,13 @@
     {#each slideLinks as slideLink (slideLink)}
       <li>
         <a
-          href={`#/${formatToId(slideLink)}`}
+          href={`#/${slideLink.page}`}
           class={buttonVariants({
             variant: 'ghost',
             className: 'text-wrap !text-lg font-normal sm:!text-2xl',
           })}
         >
-          {slideLink}
+          {slideLink.title}
         </a>
       </li>
     {/each}

@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements';
   import CodeSource from './code-source.svelte';
   import type { Snippet } from 'svelte';
-  import type { CodeLanguage } from './utils';
+  import type { CodeLanguage } from './utils.svelte';
   import { Button } from '../../ui/button';
   import { toast } from 'svelte-sonner';
   import * as Dialog from '../../ui/dialog';

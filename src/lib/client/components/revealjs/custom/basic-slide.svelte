@@ -20,7 +20,7 @@
   import { formatToId } from '$lib/common/tools/format';
   import * as Dialog from '../../ui/dialog';
   import List from './list.svelte';
-  import { getSlideSection } from './utils';
+  import { getSlideSection } from './utils.svelte';
   import { OutsideLink } from '../../utils';
   import SnippetOrString from '../../utils/snippet-or-string.svelte';
 

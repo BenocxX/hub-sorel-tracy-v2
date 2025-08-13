@@ -1,7 +1,7 @@
 <script lang="ts">
   import { cn } from '$lib/client/utils';
   import type { HTMLAttributes } from 'svelte/elements';
-  import type { CodeLanguage } from './utils';
+  import type { CodeLanguage } from './utils.svelte';
 
   type Props = HTMLAttributes<HTMLElement> & {
     code: string;

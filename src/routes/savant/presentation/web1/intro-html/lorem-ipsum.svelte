@@ -8,11 +8,13 @@
     setSlideSection,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
+  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
   import { OutsideLink } from '$lib/client/components/utils';
 
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
+  registerInTOC({ page: 27 });
 </script>
 
 <BasicSlide>

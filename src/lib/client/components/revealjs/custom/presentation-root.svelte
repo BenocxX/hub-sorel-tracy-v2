@@ -5,15 +5,14 @@
   import TitleSlide from './title-slide.svelte';
 
   type Props = {
-    sections: Record<string, string>;
     children: Snippet;
   };
 
-  const { sections, children }: Props = $props();
+  const { children }: Props = $props();
 </script>
 
 <Presentation class="!w-[85%]">
   <TitleSlide />
-  <TableOfContentSlide slideLinks={Object.values(sections)} />
+  <TableOfContentSlide />
   {@render children()}
 </Presentation>
