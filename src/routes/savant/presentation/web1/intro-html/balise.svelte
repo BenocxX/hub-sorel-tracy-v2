@@ -29,6 +29,7 @@
   <div class="fragment space-y-4">
     <p>Si j'écris cette structure en code, ça ressemblerait à:</p>
     <CodeBlock
+      codeClassName="language-xml"
       code={`<maison>
     <salon></salon>
     <cuisine></cuisine>
@@ -129,11 +130,11 @@
     <Bold>M</Bold>arkup <Bold>L</Bold>anguage). L'idée de ce langage est d'être assez général pour
     permettre de représenter n'importe quel ensemble de données.
   </p>
-  <div class="fragment">
-    <CodeBlock
-      language="xml"
-      lines="|1,10|2,5,6,9|3,7|4,8|"
-      code={`<steam>
+  <CodeBlock
+    fragment
+    language="xml"
+    lines="|1,10|2,5,6,9|3,7|4,8|"
+    code={`<steam>
     <jeu>
         <titre>Balatro</titre>
         <annee>2024</annee>
@@ -143,8 +144,7 @@
         <annee>2025</annee>
     </jeu>
 </steam>`}
-    />
-  </div>
+  />
 </BasicSlide>
 <BasicSlide subTitle="Règles XML">
   <p>

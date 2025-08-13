@@ -31,6 +31,15 @@
     disableAutoAnimate,
     autoAnimateRestart,
     instantUnmatched,
+    transition,
+    animateEasing,
+    animateId,
+    stepDuration,
+    gradient,
+    image,
+    video,
+    iframe,
+    interactive,
     ...props
   }: SlideProps & {
     disableAutoAnimate?: boolean;
@@ -51,6 +60,15 @@
   data-auto-animate={disableAutoAnimate ? undefined : true}
   data-auto-animate-restart={autoAnimateRestart ? true : undefined}
   data-auto-animate-unmatched={instantUnmatched ? false : undefined}
+  data-auto-animate-easing={animateEasing}
+  data-auto-animate-id={animateId}
+  data-transition={transition}
+  data-autoslide={stepDuration}
+  data-background-gradient={gradient}
+  data-background-image={image}
+  data-background-video={video}
+  data-background-iframe={iframe}
+  data-background-interactive={interactive}
   {...props}
 >
   {#if children}

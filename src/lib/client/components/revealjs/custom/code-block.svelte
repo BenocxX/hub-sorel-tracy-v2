@@ -10,6 +10,7 @@
   import { Check, Clipboard } from 'lucide-svelte';
 
   type Props = HTMLAttributes<HTMLElement> & {
+    fragment?: boolean;
     code: string;
     fileName?: string;
     language?: CodeLanguage;
@@ -21,6 +22,7 @@
   };
 
   const {
+    fragment = false,
     containerClassName,
     code,
     language,
@@ -49,7 +51,7 @@
   }
 </script>
 
-<div>
+<div class={fragment ? 'fragment' : ''}>
   {#if hasHeader}
     <div
       class="flex max-h-[51px] w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border border-b-0 bg-background-100 py-2 pl-4 pr-2"

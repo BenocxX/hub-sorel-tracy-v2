@@ -5,7 +5,7 @@
     subTitleComponent?: Snippet;
     slideClassName?: string;
     center?: boolean;
-    links?: { label: Snippet; href: string; description?: string }[];
+    links?: { label: Snippet | string; href: string; description?: string }[];
     disableAutoAnimate?: boolean;
   };
 </script>
@@ -21,6 +21,8 @@
   import * as Dialog from '../../ui/dialog';
   import List from './list.svelte';
   import { getSlideSection } from './utils';
+  import { OutsideLink } from '../../utils';
+  import SnippetOrString from '../../utils/snippet-or-string.svelte';
 
   const {
     title,
@@ -73,7 +75,9 @@
                 <List class="ml-0 space-y-1 [&>li]:pl-0">
                   {#each links as link, index (link.href + index)}
                     <li class="flex flex-col space-y-1">
-                      <a href={link.href} target="_blank">{@render link.label()}</a>
+                      <OutsideLink href={link.href}>
+                        <SnippetOrString children={link.label} />
+                      </OutsideLink>
                       {#if link.description}
                         <span class="text-sm text-foreground-discreet">{link.description}</span>
                       {/if}

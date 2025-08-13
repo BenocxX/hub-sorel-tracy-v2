@@ -2,9 +2,10 @@
   import { cn } from '$lib/client/utils';
   import type { Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
+  import SnippetOrString from '../../utils/snippet-or-string.svelte';
 
   type Props = {
-    paragraph?: string;
+    paragraph?: Snippet | string;
     listType?: 'ul' | 'ol';
     children: Snippet;
   } & HTMLAttributes<HTMLUListElement>;
@@ -13,9 +14,7 @@
 </script>
 
 <div class="space-y-4 sm:space-y-6">
-  {#if paragraph}
-    {paragraph}
-  {/if}
+  <SnippetOrString children={paragraph} />
   <svelte:element
     this={listType}
     class={cn(
