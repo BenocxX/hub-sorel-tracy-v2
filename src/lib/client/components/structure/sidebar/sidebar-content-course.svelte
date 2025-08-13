@@ -21,7 +21,10 @@
       {#snippet child({ props })}
         <Sidebar.MenuItem {...props}>
           <Sidebar.MenuButton {...props} class="pr-0">
-            <a href={`/savant/course/${course.id}`} class="flex flex-1 items-center gap-2">
+            <a
+              href={`/savant/course/${course.abbreviation}`}
+              class="flex flex-1 items-center gap-2"
+            >
               <Presentation class="size-4" />
               <span>Présentations</span>
             </a>

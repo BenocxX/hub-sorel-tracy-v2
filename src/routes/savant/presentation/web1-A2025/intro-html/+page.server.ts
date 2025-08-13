@@ -1,9 +1,9 @@
 import { makeBreadcrumbs } from '$lib/client/components/structure/breadcrumb';
 
-export const load = (event) => {
+export const load = () => {
   return {
     breadcrumbs: makeBreadcrumbs(
-      { label: 'Web 1', href: '/savant/course/1' },
+      { label: 'Web 1', href: '/savant/course/web1-A2025' },
       { label: 'Intro HTML' }
     ),
   };
