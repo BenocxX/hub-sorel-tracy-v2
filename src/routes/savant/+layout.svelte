@@ -11,6 +11,7 @@
   import { ModeWatcher, resetMode, setMode } from 'mode-watcher';
   import { enhance } from '$app/forms';
   import { preferences } from '$lib/client/local-storage.svelte.js';
+  import BreadcrumbRenderer from '$lib/client/components/structure/breadcrumb/breadcrumb-renderer.svelte';
 
   const { children, data } = $props();
 
@@ -26,8 +27,10 @@
     <header class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
         <Sidebar.Trigger />
-        <Separator orientation="vertical" class="h-5" />
-        <span class="text-foreground-discreet">Breadcrumb</span>
+        {#if page.data.breadcrumbs && page.data.breadcrumbs.length > 0}
+          <Separator orientation="vertical" class="h-5" />
+          <BreadcrumbRenderer />
+        {/if}
       </div>
       <div class="itemsnter flex gap-3">
         <DropdownMenu.Root>

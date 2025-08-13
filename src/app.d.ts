@@ -1,5 +1,6 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 
+import type { Breadcrumb } from '$lib/client/components/structure/breadcrumb';
 import type { Session, User } from '$lib/common/types/prisma-types';
 
 // for information about these interfaces
@@ -12,6 +13,7 @@ declare global {
 
     interface PageData {
       user: App.Locals['user'];
+      breadcrumbs?: Breadcrumb[];
     }
   }
 }
