@@ -4,7 +4,7 @@ export const load = () => {
   return {
     breadcrumbs: makeBreadcrumbs(
       { label: 'Web 1', href: '/savant/course/web1-A2025' },
-      { label: 'Intro HTML' }
+      { label: 'Introuction au HTML' }
     ),
   };
 };
