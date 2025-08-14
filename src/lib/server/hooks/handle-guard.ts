@@ -62,11 +62,15 @@ async function presentationGuard(route: string, user?: App.Locals['user']) {
     return;
   }
 
+  console.log('======= Handle presentation guard =======');
+
   const segments = route.split('/');
 
   // segments should be: [ '', 'savant', 'presentation', course, presentation ]
   const courseSegment = segments[3];
   const presentationSegment = segments[4];
+
+  console.log(courseSegment, presentationSegment);
 
   const course = await db.course.findFirst({
     where: { abbreviation: courseSegment },
@@ -77,21 +81,30 @@ async function presentationGuard(route: string, user?: App.Locals['user']) {
     },
   });
 
-  if (!course || course.presentations[0] === undefined) {
+  const presentation = course?.presentations[0];
+
+  console.log('Course: ', course);
+  console.log('Presentation: ', presentation);
+
+  if (!course || !presentation) {
     throw redirect(303, '/savant');
   }
+
+  console.log(user);
 
   if (
     user!.role === 'Student' &&
     course.students.some((student) => student.id === user!.id) &&
-    !course.presentations[0].isLocked
+    !presentation.isLocked
   ) {
     return;
   }
 
-  if (user!.role == 'Teacher' && course.teachers.some((teacher) => teacher.id === user!.id)) {
+  if (user!.role === 'Teacher' && course.teachers.some((teacher) => teacher.id === user!.id)) {
     return;
   }
+
+  console.log('Final redirect');
 
   throw redirect(303, '/savant');
 }
