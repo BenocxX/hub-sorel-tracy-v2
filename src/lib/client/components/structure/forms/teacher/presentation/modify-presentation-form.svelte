@@ -87,7 +87,7 @@
       {#snippet children({ props })}
         <Form.Label>Adresse URL</Form.Label>
         <Input
-          placeholder="/[cours]/[presentation] ou https://site-web-externe.ca/..."
+          placeholder="/[presentation] ou https://site-web-externe.ca/..."
           {...props}
           bind:value={$formData.url}
         />

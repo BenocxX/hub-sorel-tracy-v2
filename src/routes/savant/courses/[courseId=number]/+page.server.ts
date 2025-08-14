@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 
 export const load = async (event) => {
   const course = await db.course.findFirst({
-    where: { abbreviation: event.params.abbreviation },
+    where: { id: Number(event.params.courseId) },
     include: {
       schoolSession: true,
       presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] },

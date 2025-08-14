@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { Presentation } from '@prisma/client';
 
-  const { title, url, isLocked, isExternal }: Presentation = $props();
+  const { id, title, url, isLocked, isExternal, courseId }: Presentation = $props();
 
   const target = isExternal ? '_blank' : '_self';
-  const href = isExternal ? url : `/savant/presentation${url}`;
+  const href = isExternal ? url : `/savant/courses/${courseId}/presentations/${id}`;
 </script>
 
 <a {href} {target} class="link ml-4 flex items-center gap-2 text-foreground">

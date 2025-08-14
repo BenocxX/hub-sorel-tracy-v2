@@ -15,7 +15,7 @@
 
   const { children, data } = $props();
 
-  let isPresentation = $derived(page.route.id?.startsWith('/savant/presentation'));
+  let isPresentation = $derived(page.route.id?.includes('/presentations'));
 
   const sidebarOpen = preferences.sidebarOpen();
 </script>
@@ -27,10 +27,12 @@
     <header class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
         <Sidebar.Trigger />
-        {#if page.data.breadcrumbs && page.data.breadcrumbs.length > 0}
-          <Separator orientation="vertical" class="h-5" />
-          <BreadcrumbRenderer />
-        {/if}
+        <div class="hidden items-center gap-4 lg:flex">
+          {#if page.data.breadcrumbs && page.data.breadcrumbs.length > 0}
+            <Separator orientation="vertical" class="h-5" />
+            <BreadcrumbRenderer />
+          {/if}
+        </div>
       </div>
       <div class="itemsnter flex gap-3">
         <DropdownMenu.Root>

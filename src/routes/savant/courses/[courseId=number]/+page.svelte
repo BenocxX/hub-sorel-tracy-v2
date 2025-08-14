@@ -9,6 +9,5 @@
   const columns = makeColumns();
 </script>
 
-<div class="overflow-hidden text-ellipsis text-nowrap"></div>
 <PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />
 <DataTable {columns} data={data.course.presentations} />

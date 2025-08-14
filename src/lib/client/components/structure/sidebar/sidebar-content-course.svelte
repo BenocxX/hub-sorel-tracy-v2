@@ -21,10 +21,7 @@
       {#snippet child({ props })}
         <Sidebar.MenuItem {...props}>
           <Sidebar.MenuButton {...props} class="pr-0">
-            <a
-              href={`/savant/course/${course.abbreviation}`}
-              class="flex flex-1 items-center gap-2"
-            >
+            <a href={`/savant/courses/${course.id}`} class="flex flex-1 items-center gap-2">
               <Presentation class="size-4" />
               <span>Présentations</span>
             </a>
@@ -50,7 +47,7 @@
                       <a
                         href={presentation.isExternal
                           ? presentation.url
-                          : `/savant/presentation${presentation.url}`}
+                          : `/savant/courses/${course.id}/presentations/${presentation.id}`}
                         target={presentation.isExternal ? '_blank' : '_self'}
                         {...props}
                       >
@@ -75,7 +72,7 @@
       <Sidebar.MenuItem>
         <Sidebar.MenuButton>
           {#snippet child({ props })}
-            <a href={`/savant/teacher/course/${course.id}?tab=students`} {...props}>
+            <a href={`/savant/teacher/courses/${course.id}?tab=students`} {...props}>
               <ContactRound />
               Étudiants
             </a>
@@ -85,7 +82,7 @@
       <Sidebar.MenuItem>
         <Sidebar.MenuButton>
           {#snippet child({ props })}
-            <a href={`/savant/teacher/course/${course.id}?tab=presentations`} {...props}>
+            <a href={`/savant/teacher/courses/${course.id}?tab=presentations`} {...props}>
               <Presentation />
               Présentations
             </a>
