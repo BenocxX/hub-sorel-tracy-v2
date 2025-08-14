@@ -29,6 +29,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # If a commit SHA is provided, check out that commit
+          ref: ${{ github.event.inputs.commit != '' && github.event.inputs.commit || github.sha }}
+
       - uses: oven-sh/setup-bun@v2
 
       - name: Install dependencies
