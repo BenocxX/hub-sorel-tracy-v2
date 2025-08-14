@@ -5,6 +5,7 @@ type Breadcrumb = {
   href?: string;
 };
 
+/** Simple helper function to provide typesafety when constructing breadcrumbs */
 function makeBreadcrumbs(...breadcrumbs: Breadcrumb[]) {
   return breadcrumbs;
 }
