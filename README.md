@@ -121,6 +121,50 @@ sudo apt install nginx
 
 In `/etc/nginx/nginx.conf`, comment the following line: `include /etc/nginx/sites-enabled/*;`, then reload nginx with `sudo nginx -s reload`.
 
+Create a new `conf` file for nginx.
+
+```bash
+vim /etc/nginx/conf.d/hub-sorel-tracy.conf
+```
+
+In the newly created file, add the following server blocks:
+
+```nginx
+server {
+    listen 80;
+    server_name hub-sorel-tracy.mathiscote.ca;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443;
+    server_name hub-sorel-tracy.mathiscote.ca;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+
+        # WebSocket support
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        # Pass real client info
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Disable buffering for SSE/WebSockets
+        proxy_buffering off;
+
+        # Augment buffer size to avoid nginx cutting down response, causing a 502 gateway error
+        proxy_buffers 16 16k;
+        proxy_buffer_size 32k;
+    }
+}
+```
+
 #### Setup certbot for https
 
 First, install certbot:
@@ -133,6 +177,58 @@ Then, request a free certificate:
 
 ```bash
 sudo certbot --nginx -d [DOMAIN]
+```
+
+When Certbot is done generating the certificates, you can open the nginx config file:
+
+```bash
+vim /etc/nginx/conf.d/hub-sorel-tracy.conf
+```
+
+You'll see that Certbot changed some stuff. Make sure the config file is like this (you'll need to delete some stuff and move stuff around):
+
+```nginx
+server {
+    if ($host = hub-sorel-tracy.mathiscote.ca) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    server_name hub-sorel-tracy.mathiscote.ca;
+    return 404; # managed by Certbot
+}
+
+server {
+    listen 443 ssl;
+    server_name hub-sorel-tracy.mathiscote.ca;
+
+    ssl_certificate /etc/letsencrypt/live/hub-sorel-tracy.mathiscote.ca/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/hub-sorel-tracy.mathiscote.ca/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+
+        # WebSocket support
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+
+        # Pass real client info
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Disable buffering for SSE/WebSockets
+        proxy_buffering off;
+
+        # Augment buffer size to avoid nginx cutting responses, causing 502 gateway error
+        proxy_buffers 16 16k;
+        proxy_buffer_size 32k;
+    }
+}
 ```
 
 To renew the certificates:
