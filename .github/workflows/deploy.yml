@@ -1,6 +1,13 @@
 name: Build and deploy website
 
 on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'Commit SHA1'
+        required: true
+        default: 'undefined'
+        type: string
   push:
     branches:
       - main
