@@ -39,21 +39,12 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <Form.Field {form} name="title">
-    <Form.Control>
-      {#snippet children({ props })}
-        <Form.Label>Titre</Form.Label>
-        <Input placeholder="Les balises HTML" {...props} bind:value={$formData.title} />
-      {/snippet}
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
-  <div class="flex items-center gap-2 *:flex-1">
-    <Form.Field {form} name="abbreviation">
+  <div class="flex items-center gap-2">
+    <Form.Field {form} name="title" class="flex-1">
       <Form.Control>
         {#snippet children({ props })}
-          <Form.Label>Abbréviation</Form.Label>
-          <Input placeholder="intro-html" {...props} bind:value={$formData.abbreviation} />
+          <Form.Label>Titre</Form.Label>
+          <Input placeholder="Les balises HTML" {...props} bind:value={$formData.title} />
         {/snippet}
       </Form.Control>
       <Form.FieldErrors />
@@ -82,31 +73,34 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <Form.Field {form} name="url">
-    <Form.Control>
-      {#snippet children({ props })}
-        <Form.Label>Adresse URL</Form.Label>
-        <Input
-          placeholder="/[presentation] ou https://site-web-externe.ca/..."
-          {...props}
-          bind:value={$formData.url}
-        />
-      {/snippet}
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
-  <Form.Field {form} name="isExternal" class="flex items-center justify-between">
-    <Form.Control>
-      {#snippet children({ props })}
-        <div class="space-y-0.5">
-          <Form.Label>Adresse URL externe</Form.Label>
-          <Form.Description>L'adresse URL fournit pointe vers un site web externe.</Form.Description
-          >
-        </div>
-        <Switch {...props} bind:checked={$formData.isExternal} />
-      {/snippet}
-    </Form.Control>
-  </Form.Field>
+  <div class="flex items-center gap-2 *:flex-1">
+    <Form.Field {form} name="url">
+      <Form.Control>
+        {#snippet children({ props })}
+          <Form.Label>Adresse URL</Form.Label>
+          <Input
+            placeholder="https://site-web-externe.ca/..."
+            {...props}
+            bind:value={$formData.url}
+          />
+        {/snippet}
+      </Form.Control>
+      <Form.FieldErrors />
+    </Form.Field>
+    <Form.Field {form} name="componentId">
+      <Form.Control>
+        {#snippet children({ props })}
+          <Form.Label>ID du composant</Form.Label>
+          <Input
+            placeholder="web1-A2025-intro-html"
+            {...props}
+            bind:value={$formData.componentId}
+          />
+        {/snippet}
+      </Form.Control>
+      <Form.FieldErrors />
+    </Form.Field>
+  </div>
   <Form.Field {form} name="isLocked" class="mt-2 flex items-center justify-between">
     <Form.Control>
       {#snippet children({ props })}

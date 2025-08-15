@@ -1,3 +1,4 @@
+import type { Presentation } from '@prisma/client';
 import { formatDate, formatDistance } from 'date-fns';
 import { frCA } from 'date-fns/locale';
 
@@ -29,4 +30,8 @@ export function formatToId(section: string) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .toLowerCase();
+}
+
+export function formatPresentationUrl({ id, courseId }: Presentation) {
+  return `/savant/courses/${courseId}/presentations/${id}`;
 }

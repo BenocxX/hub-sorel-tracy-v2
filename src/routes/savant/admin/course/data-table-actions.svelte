@@ -30,7 +30,7 @@
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
         <DropdownMenu.Item>
           {#snippet child({ props })}
-            <a href={`/savant/teacher/course/${course.id}`} {...props}>Détails</a>
+            <a href={`/savant/teacher/courses/${course.id}`} {...props}>Détails</a>
           {/snippet}
         </DropdownMenu.Item>
         <DropdownMenu.Item>

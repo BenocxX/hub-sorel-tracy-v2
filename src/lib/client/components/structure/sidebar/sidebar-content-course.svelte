@@ -6,6 +6,7 @@
   import { page } from '$app/state';
   import { ContactRound, Presentation } from 'lucide-svelte';
   import { Button } from '../../ui/button';
+  import { formatPresentationUrl } from '$lib/common/tools/format';
 
   type Props = {
     course: Course<{ presentations: true }>;
@@ -42,13 +43,15 @@
             <Sidebar.MenuSub>
               {#each course.presentations as presentation (presentation.id)}
                 <Sidebar.MenuSubItem>
-                  <Sidebar.MenuSubButton isActive={presentation.url === page.url.pathname}>
+                  <Sidebar.MenuSubButton
+                    isActive={page.url.pathname.includes(formatPresentationUrl(presentation))}
+                  >
                     {#snippet child({ props })}
                       <a
-                        href={presentation.isExternal
+                        href={presentation.url
                           ? presentation.url
-                          : `/savant/courses/${course.id}/presentations/${presentation.id}`}
-                        target={presentation.isExternal ? '_blank' : '_self'}
+                          : formatPresentationUrl(presentation)}
+                        target={presentation.url ? '_blank' : '_self'}
                         {...props}
                       >
                         <span>{presentation.title}</span>

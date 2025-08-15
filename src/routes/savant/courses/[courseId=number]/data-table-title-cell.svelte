@@ -1,22 +1,23 @@
 <script lang="ts">
   import { cn } from '$lib/client/utils';
+  import { formatPresentationUrl } from '$lib/common/tools/format';
   import type { Presentation } from '@prisma/client';
 
-  const { id, title, url, isLocked, isExternal, courseId }: Presentation = $props();
+  const presentation: Presentation = $props();
 
-  const target = isExternal ? '_blank' : '_self';
-  const href = isExternal ? url : `/savant/courses/${courseId}/presentations/${id}`;
+  const target = presentation.url ? '_blank' : '_self';
+  const href = presentation.url ? presentation.url : formatPresentationUrl(presentation);
 </script>
 
 <a
-  href={!isLocked ? href : undefined}
+  href={!presentation.isLocked ? href : undefined}
   {target}
   class={cn(
     'link ml-4 flex items-center gap-2 text-foreground',
-    isLocked && 'cursor-default text-foreground-discreet hover:no-underline'
+    presentation.isLocked && 'cursor-default text-foreground-discreet hover:no-underline'
   )}
 >
-  {#if isLocked}
+  {#if presentation.isLocked}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -33,8 +34,8 @@
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   {/if}
-  {title}
-  {#if isExternal}
+  {presentation.title}
+  {#if presentation.url}
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

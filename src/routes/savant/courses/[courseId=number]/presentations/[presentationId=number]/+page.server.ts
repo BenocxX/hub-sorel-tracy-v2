@@ -7,7 +7,11 @@ export const load = async ({ params }) => {
   });
 
   if (!presentation) {
-    throw redirect(303, `/savant`);
+    throw redirect(303, '/savant');
+  }
+
+  if (presentation.url) {
+    throw redirect(303, presentation.url);
   }
 
   return { presentation };
