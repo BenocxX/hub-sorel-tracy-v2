@@ -9,6 +9,7 @@ type PresentationComponent = {
 
 const presentationComponents: PresentationComponent[] = [
   { id: 'web1-a2025-intro-html', component: IntroHtml },
+  { id: 'web1-a2026-intro-html', component: IntroHtml },
 ];
 
 export function getPresentationComponent(presentation: Presentation) {
