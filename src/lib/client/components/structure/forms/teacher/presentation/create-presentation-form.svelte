@@ -1,5 +1,7 @@
 <script lang="ts">
   import * as Form from '$lib/client/components/ui/form/index.js';
+  import * as Popover from '$lib/client/components/ui/popover/index.js';
+  import * as Command from '$lib/client/components/ui/command/index.js';
   import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import {
@@ -10,6 +12,13 @@
   import { Textarea } from '$lib/client/components/ui/textarea';
   import { Switch } from '$lib/client/components/ui/switch';
   import { DialogClose } from '$lib/client/components/ui/dialog';
+  import { tick } from 'svelte';
+  import { useId } from 'bits-ui';
+  import { buttonVariants } from '$lib/client/components/ui/button';
+  import { cn } from '$lib/client/utils';
+  import { getAllPresentationComponents } from '../../../presentations';
+  import { CheckIcon, ChevronsUpDownIcon } from 'lucide-svelte';
+  import Separator from '$lib/client/components/ui/separator/separator.svelte';
 
   type Props = {
     data: SuperValidated<Infer<CreatePresentationSchema>>;
@@ -20,6 +29,21 @@
   const form = superForm(data, { validators: zodClient(createPresentationSchema) });
 
   const { form: formData, delayed, enhance } = form;
+
+  const presentationComponents = getAllPresentationComponents();
+
+  let open = $state(false);
+
+  // We want to refocus the trigger button when the user selects
+  // an item from the list so users can continue navigating the
+  // rest of the form with the keyboard.
+  function closeAndFocusTrigger(triggerId: string) {
+    open = false;
+    tick().then(() => {
+      document.getElementById(triggerId)?.focus();
+    });
+  }
+  const triggerId = useId();
 </script>
 
 <form method="POST" action="?/createPresentation" class="flex flex-col" use:enhance>
@@ -57,31 +81,7 @@
     </Form.Control>
     <Form.FieldErrors />
   </Form.Field>
-  <div class="flex items-center gap-2 *:flex-1">
-    <Form.Field {form} name="url">
-      <Form.Control>
-        {#snippet children({ props })}
-          <Form.Label>Adresse URL</Form.Label>
-          <Input placeholder="https://site-web-externe.ca/" {...props} bind:value={$formData.url} />
-        {/snippet}
-      </Form.Control>
-      <Form.FieldErrors />
-    </Form.Field>
-    <Form.Field {form} name="componentId">
-      <Form.Control>
-        {#snippet children({ props })}
-          <Form.Label>ID du composant</Form.Label>
-          <Input
-            placeholder="web1-A2025-intro-html"
-            {...props}
-            bind:value={$formData.componentId}
-          />
-        {/snippet}
-      </Form.Control>
-      <Form.FieldErrors />
-    </Form.Field>
-  </div>
-  <Form.Field {form} name="isLocked" class="mt-2 flex items-center justify-between">
+  <Form.Field {form} name="isLocked" class="flex items-center justify-between">
     <Form.Control>
       {#snippet children({ props })}
         <div class="space-y-0.5">
@@ -93,6 +93,73 @@
         <Switch {...props} bind:checked={$formData.isLocked} />
       {/snippet}
     </Form.Control>
+  </Form.Field>
+  <Separator class="my-6" />
+  <Form.Field {form} name="componentId" class="mt-2 flex flex-col">
+    <Popover.Root bind:open>
+      <Form.Control id={triggerId}>
+        {#snippet children({ props })}
+          <Form.Label class="mb-1">ID du composant</Form.Label>
+          <Popover.Trigger
+            class={cn(buttonVariants({ variant: 'outline' }), 'justify-between')}
+            role="combobox"
+            {...props}
+          >
+            {@const pc = presentationComponents.find((pc) => pc.id === $formData.componentId)}
+            {#if pc}
+              {pc.id}
+            {:else}
+              Sélectionner un ID de composant...
+            {/if}
+            <ChevronsUpDownIcon class="opacity-50" />
+          </Popover.Trigger>
+          <input hidden value={$formData.componentId} name={props.name} />
+        {/snippet}
+      </Form.Control>
+      <Popover.Content class=" w-[400px] overflow-y-auto p-0">
+        <Command.Root>
+          <Command.Input
+            autofocus
+            placeholder="Rechercher..."
+            class="h-9 placeholder:text-foreground-discreet"
+          />
+          <Command.Empty>Aucun résultat...</Command.Empty>
+          <div class="max-h-[300px] overflow-y-auto">
+            <Command.Group heading="ID de composants" value="componentIds">
+              {#each presentationComponents as pc (pc.id)}
+                <Command.Item
+                  value={`${pc.id}`}
+                  onSelect={() => {
+                    $formData.componentId = pc.id;
+                    closeAndFocusTrigger(triggerId);
+                  }}
+                >
+                  {pc.id}
+                  <CheckIcon
+                    class={cn('ml-auto', pc.id !== $formData.componentId && 'text-transparent')}
+                  />
+                </Command.Item>
+              {/each}
+            </Command.Group>
+          </div>
+        </Command.Root>
+      </Popover.Content>
+    </Popover.Root>
+    <Form.FieldErrors />
+  </Form.Field>
+  <div class="my-1 flex items-center justify-center gap-2">
+    <Separator class="flex-1" />
+    <span class="text-foreground-discreet">OU</span>
+    <Separator class="flex-1" />
+  </div>
+  <Form.Field {form} name="url">
+    <Form.Control>
+      {#snippet children({ props })}
+        <Form.Label>Adresse URL</Form.Label>
+        <Input placeholder="https://site-web-externe.ca/" {...props} bind:value={$formData.url} />
+      {/snippet}
+    </Form.Control>
+    <Form.FieldErrors />
   </Form.Field>
   <DialogClose>
     {#snippet child({ props })}
