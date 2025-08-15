@@ -54,10 +54,9 @@ model Presentation {
 }
 
 model Course {
-  id           Int    @id @default(autoincrement())
-  name         String
-  icon         String
-  abbreviation String @default("")
+  id   Int    @id @default(autoincrement())
+  name String
+  icon String
 
   schoolSessionId Int
   teachers        Teacher[]

@@ -30,7 +30,6 @@ export const actions = {
     await db.course.create({
       data: {
         name: form.data.name,
-        abbreviation: form.data.abbreviation,
         icon: form.data.icon,
         schoolSession: {
           connect: { id: +form.data.sessionId },

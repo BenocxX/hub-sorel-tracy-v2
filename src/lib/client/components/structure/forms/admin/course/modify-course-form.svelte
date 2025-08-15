@@ -18,26 +18,15 @@
 </script>
 
 <form method="POST" action="?/modifyCourse" class="flex flex-col" use:enhance>
-  <div class="flex w-full flex-col gap-2 sm:flex-row">
-    <Form.Field {form} name="name" class="w-3/4">
-      <Form.Control>
-        {#snippet children({ props })}
-          <Form.Label>Nom</Form.Label>
-          <Input {...props} placeholder="Web 1" bind:value={$formData.name} />
-        {/snippet}
-      </Form.Control>
-      <Form.FieldErrors />
-    </Form.Field>
-    <Form.Field {form} name="abbreviation">
-      <Form.Control>
-        {#snippet children({ props })}
-          <Form.Label>Abbréviation</Form.Label>
-          <Input {...props} placeholder="web1" bind:value={$formData.abbreviation} />
-        {/snippet}
-      </Form.Control>
-      <Form.FieldErrors />
-    </Form.Field>
-  </div>
+  <Form.Field {form} name="name">
+    <Form.Control>
+      {#snippet children({ props })}
+        <Form.Label>Nom</Form.Label>
+        <Input {...props} placeholder="Web 1" bind:value={$formData.name} />
+      {/snippet}
+    </Form.Control>
+    <Form.FieldErrors />
+  </Form.Field>
   <Form.Field {form} name="icon">
     <Form.Control>
       {#snippet children({ props })}

@@ -1,7 +1,7 @@
 import { redirect, type Handle } from '@sveltejs/kit';
 import { db } from '../prisma';
 
-const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard, presentationGuard];
+const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
 
 export const handleGuard: Handle = async ({ event, resolve }) => {
   const routeId = event.route.id;
@@ -51,49 +51,4 @@ async function adminGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/savant/admin') && (!user || user.role !== 'Admin')) {
     throw redirect(303, '/savant');
   }
-}
-
-/**
- * Guard presentations routes to allow only admin or user that have access to the course.
- * Also, reject students if the presentation is locked.
- */
-async function presentationGuard(route: string, user?: App.Locals['user']) {
-  if (!route.includes('/savant/presentation') || user?.role === 'Admin') {
-    return;
-  }
-
-  const segments = route.split('/');
-
-  // segments should be: [ '', 'savant', 'presentation', course, presentation ]
-  const courseSegment = segments[3];
-  const presentationSegment = segments[4];
-
-  const course = await db.course.findFirst({
-    where: { abbreviation: courseSegment },
-    include: {
-      students: true,
-      teachers: true,
-      presentations: { where: { abbreviation: presentationSegment } },
-    },
-  });
-
-  const presentation = course?.presentations[0];
-
-  if (!course || !presentation) {
-    throw redirect(303, '/savant');
-  }
-
-  if (
-    user!.role === 'Student' &&
-    course.students.some((student) => student.id === user!.id) &&
-    !presentation.isLocked
-  ) {
-    return;
-  }
-
-  if (user!.role === 'Teacher' && course.teachers.some((teacher) => teacher.id === user!.id)) {
-    return;
-  }
-
-  throw redirect(303, '/savant');
 }

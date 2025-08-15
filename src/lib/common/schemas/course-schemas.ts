@@ -2,7 +2,6 @@ import { z } from 'zod';
 
 export const createCourseSchema = z.object({
   name: z.string().min(1),
-  abbreviation: z.string().min(1),
   /** should be an `<svg>...</svg>` tag. */
   icon: z.string().min(1),
   sessionId: z.string(),
@@ -10,7 +9,6 @@ export const createCourseSchema = z.object({
 
 export const modifyCourseSchema = z.object({
   name: z.string().min(1),
-  abbreviation: z.string().min(1),
   /** should be an `<svg>...</svg>` tag. */
   icon: z.string().min(1),
 });
