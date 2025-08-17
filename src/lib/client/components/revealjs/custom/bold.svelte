@@ -1,5 +1,10 @@
 <script lang="ts">
-  const { children } = $props();
+  import { cn } from '$lib/client/utils';
+  import type { HTMLAttributes } from 'svelte/elements';
+
+  const { children, class: className, ...props }: HTMLAttributes<HTMLElement> = $props();
 </script>
 
-<strong class="font-medium dark:text-foreground-100">{@render children()}</strong>
+<strong class={cn('font-medium dark:text-foreground-100', className)} {...props}>
+  {@render children?.()}
+</strong>

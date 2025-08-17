@@ -14,7 +14,9 @@
 </script>
 
 <div class="space-y-4 sm:space-y-6">
-  <SnippetOrString children={paragraph} />
+  <p>
+    <SnippetOrString children={paragraph} />
+  </p>
   <svelte:element
     this={listType}
     class={cn(
