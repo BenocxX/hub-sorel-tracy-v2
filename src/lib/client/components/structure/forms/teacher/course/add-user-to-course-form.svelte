@@ -32,9 +32,10 @@
     >
       {#snippet itemDisplay(user)}
         {#if user.firstname && user.lastname}
-          {user.firstname} {user.lastname} -
+          {user.firstname} {user.lastname} ({user.username})
+        {:else}
+          {user.username}
         {/if}
-        {user.username}
       {/snippet}
       {#snippet content({ items, commandItemDisplay, onSelect })}
         <Command.Group heading="Administrateurs" value="admins">

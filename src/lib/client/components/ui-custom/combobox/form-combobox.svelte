@@ -14,6 +14,7 @@
     value?: any;
     label: string;
     emptyValue: string;
+    contentClass?: string;
     itemDisplay: Snippet<[T]>;
     content: Snippet<
       [
@@ -26,7 +27,15 @@
     >;
   };
 
-  let { items, value = $bindable(), label, emptyValue, itemDisplay, content }: Props = $props();
+  let {
+    items,
+    value = $bindable(),
+    label,
+    emptyValue,
+    contentClass,
+    itemDisplay,
+    content,
+  }: Props = $props();
 
   let open = $state(false);
 
@@ -67,7 +76,7 @@
       <input hidden {value} name={props.name} />
     {/snippet}
   </Form.Control>
-  <Popover.Content class="w-[400px] overflow-y-auto p-0">
+  <Popover.Content class={cn('w-[400px] overflow-y-auto p-0', contentClass)}>
     <Command.Root>
       <Command.Input
         autofocus
