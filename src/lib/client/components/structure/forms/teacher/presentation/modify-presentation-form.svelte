@@ -113,6 +113,7 @@
         </Command.Group>
       {/snippet}
     </FormCombobox>
+    <Form.FieldErrors />
   </Form.Field>
   <div class="my-1 flex items-center justify-center gap-2">
     <Separator class="flex-1" />

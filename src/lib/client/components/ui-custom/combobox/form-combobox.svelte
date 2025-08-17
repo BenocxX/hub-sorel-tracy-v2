@@ -42,7 +42,6 @@
   const triggerId = useId();
 
   function onSelect(item: T) {
-    console.log(item);
     value = item.id;
     closeAndFocusTrigger(triggerId);
   }

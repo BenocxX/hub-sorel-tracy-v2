@@ -1,4 +1,4 @@
-import type { SchoolSession, Season } from '@prisma/client';
+import type { Role, SchoolSession, Season } from '@prisma/client';
 
 const localizedSeasonObject = {
   Fall: 'Automne',
@@ -11,4 +11,15 @@ export function localizeSeason(season: Season) {
 
 export function displaySession(session: SchoolSession) {
   return `${localizeSeason(session.season)[0]}${session.year}`;
+}
+
+export function localizeRole(role: Role) {
+  switch (role) {
+    case 'Student':
+      return 'Étudiant';
+    case 'Teacher':
+      return 'Enseignant';
+    case 'Admin':
+      return 'Administrateur';
+  }
 }

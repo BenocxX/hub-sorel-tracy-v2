@@ -6,6 +6,7 @@ import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/user-schemas';
 import DataTableActions from './data-table-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
+import { localizeRole } from '$lib/common/tools/localizer';
 
 export function makeColumns({
   deleteUserForm,
@@ -78,7 +79,7 @@ export function makeColumns({
       },
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
-          render: () => `<div class="ml-4">${row.original.role}</div>`,
+          render: () => `<div class="ml-4">${localizeRole(row.original.role)}</div>`,
         }));
         return renderSnippet(cellSnippet, '');
       },

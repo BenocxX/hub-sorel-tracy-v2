@@ -14,6 +14,7 @@ import type {
   TogglePresentationLockedSchema,
 } from '$lib/common/schemas/presentation-schemas';
 import DataTableTitleCell from './data-table-title-cell.svelte';
+import { localizeRole } from '$lib/common/tools/localizer';
 
 export function makeUserColumns({
   course,
@@ -86,7 +87,7 @@ export function makeUserColumns({
       },
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
-          render: () => `<div class="ml-4">${row.original.role}</div>`,
+          render: () => `<div class="ml-4">${localizeRole(row.original.role)}</div>`,
         }));
         return renderSnippet(cellSnippet, '');
       },
