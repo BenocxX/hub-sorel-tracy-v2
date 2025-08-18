@@ -1,14 +1,11 @@
 <script lang="ts">
   import {
     BasicSlide,
-    Bold,
-    InlineCodeBlock,
-    Italic,
     List,
     setSlideSection,
+    registerInTOC,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
-  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
   import { OutsideLink } from '$lib/client/components/utils';
 
   const { section }: SlideSectionProps = $props();

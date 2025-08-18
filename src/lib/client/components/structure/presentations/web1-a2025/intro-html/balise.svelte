@@ -2,14 +2,13 @@
   import {
     BasicSlide,
     Bold,
-    CodeBlock,
-    InlineCodeBlock,
     Italic,
     List,
+    CodeBlock,
     setSlideSection,
+    registerInTOC,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
-  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
 
   const { section }: SlideSectionProps = $props();
 
@@ -134,7 +133,7 @@
   </p>
   <CodeBlock
     fragment
-    language="xml"
+    language="XML"
     lines="|1,10|2,5,6,9|3,7|4,8|"
     code={`<steam>
     <jeu>
@@ -166,7 +165,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Invalide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<personnes>
     <bob>`}
         />
@@ -174,7 +173,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<personnes>
     <bob />
 </personnes>`}
@@ -196,7 +195,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Invalide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<Titre>Arcane</titre>
 <titre>The Bear</TITRE>`}
         />
@@ -204,7 +203,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<titre>Arcane</titre>
 <titre>The Bear</titre>`}
         />
@@ -225,11 +224,11 @@
     <div class="flex flex-col gap-4 sm:w-full sm:flex-row sm:gap-12">
       <div class="fragment flex-1 space-y-2">
         <span>Invalide:</span>
-        <CodeBlock language="xml" code="<p><b>test</p></b>" />
+        <CodeBlock language="XML" code="<p><b>test</p></b>" />
       </div>
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
-        <CodeBlock language="xml" code="<p><b>test</b></p>" />
+        <CodeBlock language="XML" code="<p><b>test</b></p>" />
       </div>
     </div>
 
@@ -239,7 +238,7 @@
         indentons le code. Exemple:
       </p>
       <CodeBlock
-        language="xml"
+        language="XML"
         code={`<p>
   <b>test</b>
 </p>`}
@@ -261,7 +260,7 @@
       <div class="fragment flex-1 space-y-2 sm:w-1/2">
         <span>Invalide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<titre>The Batman</titre>
 <titre>Warfare</titre>
 <titre>Whiplash</titre>`}
@@ -270,7 +269,7 @@
       <div class="fragment flex-1 space-y-2 sm:w-1/2">
         <span>Valide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<films>
     <titre>The Batman</titre>
     <titre>Warfare</titre>
@@ -293,7 +292,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Invalide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<paiement date=10/10/2014 montant=100>
     <destinataire>Bob Lewis</destinataire>
 </paiement>`}
@@ -302,7 +301,7 @@
       <div class="fragment flex-1 space-y-2">
         <span>Valide:</span>
         <CodeBlock
-          language="xml"
+          language="XML"
           code={`<paiement date="10/10/2014" montant="100">
     <destinataire>Bob Lewis</destinataire>
 </paiement>`}

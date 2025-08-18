@@ -5,15 +5,23 @@
   import SnippetOrString from '../../utils/snippet-or-string.svelte';
 
   type Props = {
+    fragment?: boolean;
     paragraph?: Snippet | string;
     listType?: 'ul' | 'ol';
     children: Snippet;
   } & HTMLAttributes<HTMLUListElement>;
 
-  const { paragraph, listType = 'ul', children, class: className, ...props }: Props = $props();
+  const {
+    fragment = false,
+    paragraph,
+    listType = 'ul',
+    children,
+    class: className,
+    ...props
+  }: Props = $props();
 </script>
 
-<div class="space-y-4 sm:space-y-6">
+<div class={cn('space-y-4 sm:space-y-6', fragment && 'fragment')}>
   <p>
     <SnippetOrString children={paragraph} />
   </p>

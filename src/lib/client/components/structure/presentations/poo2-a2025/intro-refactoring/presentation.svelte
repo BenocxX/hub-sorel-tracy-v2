@@ -5,6 +5,11 @@
   import Intro from './intro.svelte';
   import PrincipesSolid from './principes-solid.svelte';
   import ResponsabiliteUnique from './responsabilite-unique.svelte';
+  import OuvertureFermeture from './ouverture-fermeture.svelte';
+  import SubstitutionLiskov from './substitution-liskov.svelte';
+  import SegregationInterfaces from './segregation-interfaces.svelte';
+  import InversionDependances from './inversion-dependances.svelte';
+  import LoiDemeter from './loi-demeter.svelte';
 
   const sections = {
     intro: 'Introduction au refactoring',
@@ -26,4 +31,9 @@
   <Intro section={sections.intro} />
   <PrincipesSolid section={sections.principesSolid} />
   <ResponsabiliteUnique section={sections.responsabiliteUnique} />
+  <OuvertureFermeture section={sections.ouvertureFermeture} />
+  <SubstitutionLiskov section={sections.substitutionLiskov} />
+  <SegregationInterfaces section={sections.segregationInterfaces} />
+  <InversionDependances section={sections.inversionDependances} />
+  <LoiDemeter section={sections.loiDemeter} />
 </PresentationRoot>

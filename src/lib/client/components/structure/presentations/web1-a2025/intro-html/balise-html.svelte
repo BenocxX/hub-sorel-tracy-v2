@@ -2,14 +2,14 @@
   import {
     BasicSlide,
     Bold,
-    InlineCodeBlock,
-    CodeBlock,
     Italic,
     List,
+    InlineCodeBlock,
+    CodeBlock,
     setSlideSection,
+    registerInTOC,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
-  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
   import { OutsideLink } from '$lib/client/components/utils';
 
   const { section }: SlideSectionProps = $props();
@@ -66,7 +66,7 @@
     On débute avec une partie pour indiquer au navigateur la version HTML qui sera utilisée pour
     l'interprétation du document (<Italic>doctype</Italic>).
   </p>
-  <CodeBlock code="<!doctype html>" language="html" />
+  <CodeBlock code="<!doctype html>" language="HTML" />
   <List>
     <li class="fragment">
       <p>
@@ -106,7 +106,7 @@
       seront inclues à l'intérieur de celle-ci sans exception.
     </p>
     <CodeBlock
-      language="html"
+      language="HTML"
       code={`<!doctype html>
 <html>
 
@@ -137,7 +137,7 @@
       C'est la balise <InlineCodeBlock>head</InlineCodeBlock>.
     </p>
     <CodeBlock
-      language="html"
+      language="HTML"
       code={`<!doctype html>
 <html>
   <head>
@@ -162,7 +162,7 @@
   </p>
   <CodeBlock
     fragment
-    language="html"
+    language="HTML"
     code={`<!doctype html>
 <html>
   <head>
@@ -246,7 +246,7 @@
   </p>
   <CodeBlock
     fragment
-    language="html"
+    language="HTML"
     code={`<p>
   Une très longue phrase que j'aimerais avoir <br />
   sur deux lignes si possible.
@@ -281,7 +281,7 @@
     </p>
     <CodeBlock
       fragment
-      language="html"
+      language="HTML"
       code={`<p>
     Je suis très vieux. J'ai <em>234</em> ans !
 </p>`}
@@ -298,7 +298,7 @@
     </p>
     <CodeBlock
       fragment
-      language="html"
+      language="HTML"
       code={`<p>
     Mon nom est <strong>Bob Lewis</strong> et je viens en paix.
 </p>`}
@@ -330,7 +330,7 @@
   </p>
   <CodeBlock
     fragment
-    language="html"
+    language="HTML"
     code={`<h1>Mon premier site Web</h1>
 <h3>Fait par moi-même</h3>
 <p>
@@ -359,7 +359,7 @@
   </p>
   <CodeBlock
     fragment
-    language="html"
+    language="HTML"
     lines="|5|"
     code={`<h1>Jour 1</h1>
 <p>

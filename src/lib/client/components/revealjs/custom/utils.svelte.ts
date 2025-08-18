@@ -47,13 +47,13 @@ export type SlideSectionProps = {
 };
 
 export type CodeLanguage =
-  | 'html'
-  | 'css'
-  | 'xml'
-  | 'js'
-  | 'bash'
-  | 'ts'
-  | 'json'
-  | 'scss'
-  | 'sass'
-  | 'java';
+  | 'HTML'
+  | 'CSS'
+  | 'XML'
+  | 'JS'
+  | 'TS'
+  | 'Bash'
+  | 'JSON'
+  | 'SCSS'
+  | 'SASS'
+  | 'Java';

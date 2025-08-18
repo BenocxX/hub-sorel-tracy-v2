@@ -1,18 +1,9 @@
-<script lang="ts">
-  import { cn, copyToClipboard } from '$lib/client/utils';
-  import type { HTMLAttributes } from 'svelte/elements';
-  import CodeSource from './code-source.svelte';
-  import type { Snippet } from 'svelte';
-  import type { CodeLanguage } from './utils.svelte';
-  import { Button } from '../../ui/button';
-  import { toast } from 'svelte-sonner';
-  import * as Dialog from '../../ui/dialog';
-  import { Check, Clipboard } from 'lucide-svelte';
-
-  type Props = HTMLAttributes<HTMLElement> & {
+<script lang="ts" module>
+  export type CodeBlockProps = Omit<HTMLAttributes<HTMLElement>, 'lang'> & {
     fragment?: boolean;
     code: string;
     fileName?: string;
+    label?: string;
     language?: CodeLanguage;
     hideCopyButton?: boolean;
     containerClassName?: string;
@@ -20,6 +11,17 @@
     autoAnimateId?: string;
     lines?: string;
   };
+</script>
+
+<script lang="ts">
+  import { cn, copyToClipboard } from '$lib/client/utils';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import CodeSource from './code-source.svelte';
+  import type { CodeLanguage } from './utils.svelte';
+  import { Button } from '../../ui/button';
+  import { toast } from 'svelte-sonner';
+  import * as Dialog from '../../ui/dialog';
+  import { Check, Clipboard } from 'lucide-svelte';
 
   const {
     fragment = false,
@@ -29,13 +31,14 @@
     autoAnimateId,
     lines,
     fileName,
+    label,
     children,
     hideCopyButton,
     codeClassName,
     ...props
-  }: Props = $props();
+  }: CodeBlockProps = $props();
 
-  const hasHeader = !!fileName || !!language || !!children;
+  const hasHeader = !!fileName || !!language || !!label || !!children;
 
   const headerButtonClasses = 'hover:bg-background-300 rounded-[8px] bg-background-200';
 
@@ -66,7 +69,19 @@
               headerButtonClasses
             )}
           >
-            {language.toUpperCase()}
+            {language}
+          </Button>
+        {/if}
+        {#if label}
+          <Button
+            variant="secondary"
+            size="sm"
+            class={cn(
+              'pointer-events-none !text-base hover:bg-secondary sm:!text-lg',
+              headerButtonClasses
+            )}
+          >
+            {label}
           </Button>
         {/if}
         {#if fileName}

@@ -2,11 +2,11 @@
   import {
     BasicSlide,
     Bold,
+    Italic,
     setSlideSection,
+    registerInTOC,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
-  import Italic from '$lib/client/components/revealjs/custom/italic.svelte';
-  import { registerInTOC } from '$lib/client/components/revealjs/custom/utils.svelte';
 
   const { section }: SlideSectionProps = $props();
 
