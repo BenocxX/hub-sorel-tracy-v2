@@ -1,3 +1,3 @@
-import IntroAjaxEtFetch from './intro-ajax-et-fetch/presentation.svelte';
+import IntroRequetesAjax from './intro-requetes-ajax/presentation.svelte';
 
-export { IntroAjaxEtFetch };
+export { IntroRequetesAjax };

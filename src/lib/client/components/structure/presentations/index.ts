@@ -11,7 +11,7 @@ type PresentationComponent = {
 
 const presentationComponents: PresentationComponent[] = [
   { id: 'web1-a2025-intro-html', component: web1A2025.IntroHtml },
-  { id: 'web3-a2025-intro-refactoring', component: web3A2025.IntroAjaxEtFetch },
+  { id: 'web3-a2025-intro-requetes-ajax', component: web3A2025.IntroRequetesAjax },
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
 ];
 

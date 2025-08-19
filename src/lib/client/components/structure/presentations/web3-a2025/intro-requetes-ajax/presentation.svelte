@@ -12,7 +12,7 @@
     requeteAjax: 'Comment faire une requête AJAX',
   };
 
-  currentPresentation.title = 'Introduction au AJAX et aux API avec fetch';
+  currentPresentation.title = 'Introduction aux requêtes AJAX';
 
   initializeSlideLinks();
 </script>
