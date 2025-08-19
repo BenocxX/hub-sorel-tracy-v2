@@ -30,7 +30,7 @@
     class: className,
     disableAutoAnimate,
     autoAnimateRestart,
-    instantUnmatched,
+    instantUnmatched = true,
     transition,
     animateEasing,
     animateId,

@@ -1,7 +1,8 @@
 import type { Presentation } from '@prisma/client';
-import * as web1A2025 from './web1-a2025';
-import * as poo2A2025 from './poo2-a2025';
 import type { Component } from 'svelte';
+import * as web1A2025 from './web1-a2025';
+import * as web3A2025 from './web3-a2025';
+import * as poo2A2025 from './poo2-a2025';
 
 type PresentationComponent = {
   id: string;
@@ -10,6 +11,7 @@ type PresentationComponent = {
 
 const presentationComponents: PresentationComponent[] = [
   { id: 'web1-a2025-intro-html', component: web1A2025.IntroHtml },
+  { id: 'web3-a2025-intro-refactoring', component: web3A2025.IntroAjaxEtFetch },
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
 ];
 

@@ -47,7 +47,7 @@
   class={cn('!h-full overflow-y-auto text-left', slideClassName)}
   {...props}
 >
-  <div class="flex h-full flex-col">
+  <div class="flex h-full flex-col overflow-x-hidden">
     <div class="sm:space-y-2">
       <div class="space-y-2">
         <div class="flex items-center gap-2" data-id="buttons-row">
