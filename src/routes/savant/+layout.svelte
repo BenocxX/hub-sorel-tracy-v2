@@ -18,15 +18,21 @@
   let isPresentation = $derived(page.route.id?.includes('/presentations'));
 
   const sidebarOpen = preferences.sidebarOpen();
+
+  const hasSidebar = data.user?.role === 'Admin' || data.courses.length > 0;
 </script>
 
 <ModeWatcher />
 <Sidebar.Provider open={sidebarOpen.value}>
-  <SavantSidebar user={data.user} courses={data.courses} />
+  {#if hasSidebar}
+    <SavantSidebar user={data.user} courses={data.courses} />
+  {/if}
   <main class="flex w-full flex-col gap-8 overflow-y-auto py-2">
     <header class="container mx-auto flex items-center justify-between">
       <div class="flex items-center gap-4">
-        <Sidebar.Trigger />
+        {#if hasSidebar}
+          <Sidebar.Trigger />
+        {/if}
         <div class="hidden items-center gap-4 lg:flex">
           {#if page.data.breadcrumbs && page.data.breadcrumbs.length > 0}
             <Separator orientation="vertical" class="h-5" />
