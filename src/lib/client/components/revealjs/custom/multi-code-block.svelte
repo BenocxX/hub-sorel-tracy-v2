@@ -124,7 +124,7 @@
   </div>
   <div
     class={cn(
-      'relative !mt-0 h-max w-full max-w-full overflow-x-auto rounded-b-lg border',
+      'relative !mt-0 h-max w-full max-w-full overflow-x-auto rounded-b-lg border bg-[#FAFAFA] dark:bg-secondary',
       containerClassName
     )}
   >

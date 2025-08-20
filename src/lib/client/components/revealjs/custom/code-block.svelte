@@ -148,7 +148,7 @@
   {/if}
   <div
     class={cn(
-      'relative h-max w-full max-w-full overflow-x-auto rounded-lg border',
+      'relative h-max w-full max-w-full overflow-x-auto rounded-lg border bg-[#FAFAFA] dark:bg-secondary',
       hasHeader && 'rounded-t-none',
       containerClassName
     )}
