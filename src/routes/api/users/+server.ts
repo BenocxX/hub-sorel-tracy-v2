@@ -10,6 +10,9 @@ export const GET = async () => {
       firstname: true,
       lastname: true,
     },
+    orderBy: {
+      username: 'asc',
+    },
   });
 
   return json(users);

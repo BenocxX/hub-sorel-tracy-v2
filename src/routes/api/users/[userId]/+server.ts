@@ -17,6 +17,9 @@ export const GET = async ({ params }) => {
               name: true,
               icon: true,
             },
+            orderBy: {
+              name: 'asc',
+            },
           },
         },
       },
