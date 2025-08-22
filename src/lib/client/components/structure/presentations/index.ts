@@ -14,6 +14,7 @@ const presentationComponents: PresentationComponent[] = [
   { id: 'web3-a2025-intro-requetes-ajax', component: web3A2025.IntroRequetesAjax },
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
   { id: 'poo2-a2025-mauvaises-odeurs', component: poo2A2025.MauvaisesOdeurs },
+  { id: 'poo2-a2025-gestionnaire-de-sources', component: poo2A2025.GestionnaireDeSources },
 ];
 
 export function getPresentationComponent(presentation: Presentation) {
