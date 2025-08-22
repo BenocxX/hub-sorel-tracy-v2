@@ -1,4 +1,5 @@
 import BasicSlide from './basic-slide.svelte';
+import TextAndImageSlide from './text-and-image-slide.svelte';
 import Bold from './bold.svelte';
 import Italic from './italic.svelte';
 import Underline from './underline.svelte';
@@ -14,6 +15,7 @@ import { registerInTOC } from './utils.svelte';
 
 export {
   BasicSlide,
+  TextAndImageSlide,
   Bold,
   Italic,
   Underline,

@@ -6,6 +6,6 @@
 </script>
 
 <Slide disableAutoAnimate class="!flex h-full flex-col items-center justify-center" {...props}>
-  <h1 class="r-fit-text">{currentPresentation.title}</h1>
+  <h1 class="r-fit-text text-7xl">{currentPresentation.title}</h1>
   <h2 class="mt-4 text-xl opacity-75 sm:text-5xl">{currentPresentation.subTitle}</h2>
 </Slide>

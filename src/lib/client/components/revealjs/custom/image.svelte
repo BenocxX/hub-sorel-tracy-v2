@@ -3,18 +3,18 @@
   import type { HTMLAttributes } from 'svelte/elements';
 
   type Props = HTMLAttributes<HTMLImageElement> & {
+    src: string;
+    alt: string;
     href?: string;
     caption?: string;
     figureClass?: string;
-    src: string;
-    alt: string;
   };
 
   const { href, caption, class: className, figureClass, ...props }: Props = $props();
 </script>
 
 <figure class={figureClass}>
-  <img class={cn('rounded-xl', className)} {...props} />
+  <img class={cn('rounded-xl', caption && 'mb-4', className)} {...props} />
   {#if caption}
     {#if href}
       <figcaption>

@@ -13,6 +13,7 @@ const presentationComponents: PresentationComponent[] = [
   { id: 'web1-a2025-intro-html', component: web1A2025.IntroHtml },
   { id: 'web3-a2025-intro-requetes-ajax', component: web3A2025.IntroRequetesAjax },
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
+  { id: 'poo2-a2025-mauvaises-odeurs', component: poo2A2025.MauvaisesOdeurs },
 ];
 
 export function getPresentationComponent(presentation: Presentation) {
