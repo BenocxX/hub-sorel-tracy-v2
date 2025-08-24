@@ -31,6 +31,7 @@ export const actions = {
       data: {
         name: form.data.name,
         icon: form.data.icon,
+        group: form.data.group,
         schoolSession: {
           connect: { id: +form.data.sessionId },
         },

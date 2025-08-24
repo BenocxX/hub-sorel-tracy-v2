@@ -9,6 +9,7 @@
   import { displaySession } from '$lib/common/tools/localizer';
   import { DialogClose } from '$lib/client/components/ui/dialog';
   import { resolve } from '$app/paths';
+  import OutsideLink from '$lib/client/components/utils/outside-link.svelte';
 
   type Props = {
     sessions: SchoolSession[];
@@ -28,23 +29,38 @@
 </script>
 
 <form method="POST" action="?/createCourse" class="flex flex-col" use:enhance>
-  <Form.Field {form} name="name">
-    <Form.Control>
-      {#snippet children({ props })}
-        <Form.Label>Nom</Form.Label>
-        <Input {...props} placeholder="Web 1" bind:value={$formData.name} />
-      {/snippet}
-    </Form.Control>
-    <Form.FieldErrors />
-  </Form.Field>
+  <div class="flex flex-col gap-2 sm:flex-row">
+    <Form.Field {form} name="name" class="w-full sm:w-2/3">
+      <Form.Control>
+        {#snippet children({ props })}
+          <Form.Label>Nom</Form.Label>
+          <Input {...props} placeholder="Web 1" bind:value={$formData.name} />
+        {/snippet}
+      </Form.Control>
+      <Form.FieldErrors />
+    </Form.Field>
+    <Form.Field {form} name="group" class="flex-1">
+      <Form.Control>
+        {#snippet children({ props })}
+          <Form.Label>Groupe</Form.Label>
+          <Input {...props} placeholder="1" bind:value={$formData.group} type="number" />
+        {/snippet}
+      </Form.Control>
+      <Form.FieldErrors />
+    </Form.Field>
+  </div>
   <div class="flex w-full flex-col gap-2 sm:flex-row">
-    <Form.Field {form} name="icon" class="w-2/3">
+    <Form.Field {form} name="icon" class="w-full sm:w-2/3">
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Icône</Form.Label>
           <Input {...props} placeholder="<svg>...</svg>" bind:value={$formData.icon} />
         {/snippet}
       </Form.Control>
+      <Form.Description>
+        Chercher un icône sur
+        <OutsideLink href="https://lucide.dev/icons/?focus">Lucide</OutsideLink>.
+      </Form.Description>
       <Form.FieldErrors />
     </Form.Field>
     <Form.Field {form} name="sessionId" class="flex-1">

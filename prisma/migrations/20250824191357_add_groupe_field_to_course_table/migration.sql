@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Course" ADD COLUMN     "group" INTEGER NOT NULL DEFAULT 1;
