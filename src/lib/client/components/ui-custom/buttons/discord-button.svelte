@@ -3,6 +3,7 @@
   import { cn } from '$lib/client/utils';
   import type { Snippet } from 'svelte';
   import DiscordIcon from '../icons/socials/discord-icon.svelte';
+  import { resolve } from '$app/paths';
 
   const {
     href,
@@ -13,7 +14,7 @@
 
 <Button
   class={cn('bg-[#5765f2] text-white hover:bg-[#4f5ce7]', classes)}
-  href={href ? href : '/login/discord'}
+  href={href ? href : resolve('/login/discord')}
 >
   <DiscordIcon class="mr-1 !size-5 fill-white" />
   {@render children()}

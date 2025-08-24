@@ -6,6 +6,7 @@
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import type { DeleteCourseSchema } from '$lib/common/schemas/course-schemas';
   import DeleteCourseForm from '$lib/client/components/structure/forms/admin/course/delete-course-form.svelte';
+  import { resolve } from '$app/paths';
 
   type Props = {
     course: Course;
@@ -30,7 +31,10 @@
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
         <DropdownMenu.Item>
           {#snippet child({ props })}
-            <a href={`/savant/teacher/courses/${course.id}`} {...props}>Détails</a>
+            <a
+              href={resolve('/savant/teacher/courses/[id=number]', { id: course.id.toString() })}
+              {...props}>Détails</a
+            >
           {/snippet}
         </DropdownMenu.Item>
         <DropdownMenu.Item>

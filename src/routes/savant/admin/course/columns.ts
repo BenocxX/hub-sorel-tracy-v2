@@ -6,6 +6,7 @@ import type { Infer, SuperValidated } from 'sveltekit-superforms';
 import type { DeleteCourseSchema } from '$lib/common/schemas/course-schemas';
 import { displaySession } from '$lib/common/tools/localizer';
 import type { Course } from '$lib/common/types/prisma-types';
+import { resolve } from '$app/paths';
 
 export function makeColumns({
   deleteCourseForm,
@@ -20,7 +21,7 @@ export function makeColumns({
       cell: ({ row }) => {
         const snippet = createRawSnippet(() => ({
           render: () =>
-            `<a href="/savant/teacher/courses/${row.original.id}" class="flex link text-foreground items-center gap-3 [&>svg]:size-5">${row.original.icon}<div>${row.original.name}</div></a>`,
+            `<a href="${resolve('/savant/teacher/courses/[id=number]', { id: row.original.id.toString() })}" class="flex link text-foreground items-center gap-3 [&>svg]:size-5">${row.original.icon}<div>${row.original.name}</div></a>`,
         }));
         return renderSnippet(snippet, '');
       },

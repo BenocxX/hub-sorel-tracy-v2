@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import { AuthService } from '$lib/server/services/auth-service.js';
 import { DiscordAuthService, type DiscordUser } from '$lib/server/services/discord-auth-service.js';
 import { redirect, type RequestEvent } from '@sveltejs/kit';
@@ -8,18 +9,18 @@ export const GET = async (event) => {
 
   const code = discordAuthService.getCode(event.url, event.cookies);
   if (!code) {
-    return redirect(302, '/login');
+    return redirect(302, resolve('/login'));
   }
 
   const tokens = await discordAuthService.askDiscordForAccessToken(code);
   if (!tokens) {
-    return redirect(302, '/login');
+    return redirect(302, resolve('/login'));
   }
 
   const discordUser = await discordAuthService.getDiscordUser(tokens.accessToken());
   await authenticate(event, discordUser, tokens);
 
-  return redirect(302, '/savant');
+  return redirect(302, resolve('/savant'));
 };
 
 async function authenticate(event: RequestEvent, discordUser: DiscordUser, tokens: OAuth2Tokens) {

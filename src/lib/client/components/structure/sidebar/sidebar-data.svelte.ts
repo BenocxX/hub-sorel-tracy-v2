@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import type { Course } from '$lib/common/types/prisma-types';
 import { Presentation, Users } from 'lucide-svelte';
 
@@ -80,12 +81,12 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
         items: [
           {
             title: 'Étudiants',
-            url: '/savant/admin/user?role=Student',
+            url: `${resolve('/savant/admin/user')}?role=Student`,
             getUrlToCompare: (url) => url.pathname + url.search,
           },
           {
             title: 'Enseignants',
-            url: '/savant/admin/user?role=Teacher',
+            url: `${resolve('/savant/admin/user')}?role=Teacher`,
             getUrlToCompare: (url) => url.pathname + url.search,
           },
         ],
@@ -98,12 +99,12 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
         items: [
           {
             title: 'Cours',
-            url: '/savant/admin/course',
+            url: `${resolve('/savant/admin/course')}`,
             getUrlToCompare: (url) => url.pathname,
           },
           {
             title: 'Sessions',
-            url: '/savant/admin/session',
+            url: `${resolve('/savant/admin/session')}`,
             getUrlToCompare: (url) => url.pathname,
           },
         ],

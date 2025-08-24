@@ -3,6 +3,7 @@
   import Logo from '../ui-custom/icons/logo.svelte';
   import { cn } from '$lib/client/utils';
   import { socials } from '$lib/common/tools/socials';
+  import { resolve } from '$app/paths';
 
   const { inSheet, class: classes }: { inSheet?: boolean; class?: string } = $props();
 </script>
@@ -11,7 +12,7 @@
   <h2 id="footer-heading" class="sr-only">Footer</h2>
   <div class={cn('px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32', classes)}>
     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-      <a href="/">
+      <a href={resolve('/')}>
         <Logo class="h-16 lg:h-20 xl:h-24" />
       </a>
     </div>

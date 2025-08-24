@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import { AuthService } from '$lib/server/services/auth-service.js';
 import { redirect } from '@sveltejs/kit';
 
@@ -6,6 +7,6 @@ export const actions = {
     const authService = new AuthService();
     await authService.logout(event);
 
-    return redirect(302, '/');
+    return redirect(302, resolve('/'));
   },
 };

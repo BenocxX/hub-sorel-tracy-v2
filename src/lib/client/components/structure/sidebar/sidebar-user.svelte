@@ -5,6 +5,7 @@
   import { ChevronsUpDownIcon, Cog, LogOut, Shield } from 'lucide-svelte';
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import { enhance } from '$app/forms';
+  import { resolve } from '$app/paths';
 
   let { user }: { user: NonNullable<App.PageData['user']> } = $props();
   const sidebar = useSidebar();
@@ -73,7 +74,7 @@
         <DropdownMenu.Separator />
         {#if user.role === 'Admin'}
           <DropdownMenu.Group>
-            <a href="/savant/admin">
+            <a href={resolve('/savant/admin')}>
               <DropdownMenu.Item>
                 <Shield />
                 Admin
@@ -82,7 +83,7 @@
           </DropdownMenu.Group>
         {/if}
         <DropdownMenu.Group>
-          <a href="/savant/settings">
+          <a href={resolve('/savant/settings')}>
             <DropdownMenu.Item>
               <Cog />
               Paramètres

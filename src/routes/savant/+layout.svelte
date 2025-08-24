@@ -12,6 +12,7 @@
   import { enhance } from '$app/forms';
   import { preferences } from '$lib/client/local-storage.svelte.js';
   import BreadcrumbRenderer from '$lib/client/components/structure/breadcrumb/breadcrumb-renderer.svelte';
+  import { resolve } from '$app/paths';
 
   const { children, data } = $props();
 
@@ -59,11 +60,11 @@
             <DropdownMenu.Item onclick={() => resetMode()}>System</DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-        <Button href="/savant/settings" variant="outline" size="icon-sm">
+        <Button href={resolve('/savant/settings')} variant="outline" size="icon-sm">
           <span class="sr-only">Paramètres</span>
           <Cog />
         </Button>
-        <Button href="/" variant="outline" size="icon-sm">
+        <Button href={resolve('/')} variant="outline" size="icon-sm">
           <span class="sr-only">Accueil</span>
           <Home />
         </Button>

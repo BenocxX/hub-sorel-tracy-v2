@@ -3,6 +3,7 @@ import { setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { AuthService } from '$lib/server/services/auth-service';
 import { registerSchema } from '$lib/common/schemas/auth-schemas';
+import { resolve } from '$app/paths';
 
 export const load = async () => {
   return {
@@ -27,6 +28,6 @@ export const actions = {
     const user = await authService.signup(form.data);
     await authService.createSession(event, user);
 
-    return redirect(302, '/savant');
+    return redirect(302, resolve('/savant'));
   },
 };

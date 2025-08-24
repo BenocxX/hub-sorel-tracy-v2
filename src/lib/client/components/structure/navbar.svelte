@@ -9,22 +9,23 @@
   import Footer from './footer.svelte';
   import { cn } from '$lib/client/utils';
   import { socials } from '$lib/common/tools/socials';
+  import { resolve } from '$app/paths';
 
   const links = [
     {
-      href: '/',
+      href: resolve('/'),
       label: 'Accueil',
     },
     {
-      href: '/program',
+      href: resolve('/program'),
       label: 'Notre programme',
     },
     {
-      href: '/about',
+      href: '#', // TODO: Change to resolve('/about')
       label: 'À propos',
     },
     {
-      href: '/contact',
+      href: '#', // TODO: Change to resolve('/contact')
       label: 'Contact',
     },
   ];
@@ -36,12 +37,12 @@
   <div class="container mx-auto flex items-center justify-between">
     <div class="flex h-16 items-center justify-between gap-8">
       <div class="flex flex-shrink-0 items-center gap-4">
-        <a href="/">
+        <a href={resolve('/')}>
           <Logo class="h-10 w-auto" />
         </a>
       </div>
       <div class="hidden h-full items-center gap-4 md:flex">
-        {#each links as link (link.href)}
+        {#each links as link (link.label + link.href)}
           <div class="relative h-full">
             <a
               href={link.href}
@@ -60,7 +61,7 @@
       </div>
     </div>
     <div class="flex items-center gap-4">
-      <Button href="/savant">
+      <Button href={resolve('/savant')}>
         <span>
           Accéder à <em>Savant</em>
         </span>
@@ -79,7 +80,7 @@
             <Sheet.Title class="text-3xl font-medium">Hub de Sorel-Tracy</Sheet.Title>
             <Separator />
             <div class="flex flex-col gap-1">
-              {#each links as link (link.href)}
+              {#each links as link (link.label + link.href)}
                 <Sheet.Close>
                   {#snippet child({ props })}
                     <Button

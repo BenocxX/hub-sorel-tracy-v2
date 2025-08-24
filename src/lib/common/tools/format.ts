@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import type { Presentation } from '@prisma/client';
 import { formatDate, formatDistance } from 'date-fns';
 import { frCA } from 'date-fns/locale';
@@ -33,5 +34,8 @@ export function formatToId(section: string) {
 }
 
 export function formatPresentationUrl({ id, courseId }: Presentation) {
-  return `/savant/courses/${courseId}/presentations/${id}`;
+  return resolve('/savant/courses/[courseId=number]/presentations/[presentationId=number]', {
+    courseId: courseId.toString(),
+    presentationId: id.toString(),
+  });
 }

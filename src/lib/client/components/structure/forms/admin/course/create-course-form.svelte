@@ -8,6 +8,7 @@
   import type { $Enums, SchoolSession } from '@prisma/client';
   import { displaySession } from '$lib/common/tools/localizer';
   import { DialogClose } from '$lib/client/components/ui/dialog';
+  import { resolve } from '$app/paths';
 
   type Props = {
     sessions: SchoolSession[];

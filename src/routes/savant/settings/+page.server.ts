@@ -10,6 +10,7 @@ import {
 } from '$lib/common/schemas/settings-schemas';
 import { SessionService } from '$lib/server/services/session-service.js';
 import { redirect } from '@sveltejs/kit';
+import { resolve } from '$app/paths';
 
 export const load = async (event) => {
   const userId = event.locals.user!.id;
@@ -80,7 +81,7 @@ export const actions = {
     await authService.changePassword(user, form.data.newPassword);
     await authService.fullLogout(event);
 
-    return redirect(300, '/login');
+    return redirect(300, resolve('/login'));
   },
   setPassword: async (event) => {
     const form = await superValidate(event, zod(setPasswordSchema));
@@ -97,7 +98,7 @@ export const actions = {
     await authService.changePassword(event.locals.user!, form.data.password);
     await authService.fullLogout(event);
 
-    return redirect(300, '/login');
+    return redirect(300, resolve('/login'));
   },
   deleteSession: async (event) => {
     const form = await superValidate(event, zod(deleteSessionSchema));

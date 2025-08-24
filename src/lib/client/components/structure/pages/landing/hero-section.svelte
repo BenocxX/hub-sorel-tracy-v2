@@ -2,6 +2,7 @@
   import { Button } from '$lib/client/components/ui/button';
   import { ArrowDown } from 'lucide-svelte';
   import DavidEt2Etudiants from '$lib/client/assets/images/landing/david-et-2-etudiants.jpg';
+  import { resolve } from '$app/paths';
 </script>
 
 <div
@@ -30,11 +31,11 @@
           IoT, tout en stimulant votre motivation entrepreneuriale dans le domaine technologique.
         </p>
         <div class="mt-10 flex items-center gap-x-6">
-          <Button href="/">
+          <Button href={resolve('/')}>
             En apprendre plus
             <ArrowDown class="scale-125" />
           </Button>
-          <Button href="/savant" variant="ghost">
+          <Button href={resolve('/savant')} variant="ghost">
             <span>
               Accéder à <em>Savant</em>
             </span>

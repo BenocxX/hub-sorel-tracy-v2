@@ -1,3 +1,4 @@
+import { resolve } from '$app/paths';
 import { makeBreadcrumbs } from '$lib/client/components/structure/breadcrumb/index.js';
 import { db } from '$lib/server/prisma/index.js';
 import { redirect } from '@sveltejs/kit';
@@ -9,7 +10,7 @@ export const load = async ({ params }) => {
   });
 
   if (!presentation) {
-    throw redirect(303, '/savant');
+    throw redirect(303, resolve('/savant'));
   }
 
   if (presentation.url) {
@@ -18,7 +19,10 @@ export const load = async ({ params }) => {
 
   return {
     breadcrumbs: makeBreadcrumbs(
-      { label: presentation.course.name, href: `/savant/courses/${params.courseId}` },
+      {
+        label: presentation.course.name,
+        href: resolve('/savant/courses/[courseId=number]', { courseId: params.courseId }),
+      },
       { label: presentation.title }
     ),
     presentation,

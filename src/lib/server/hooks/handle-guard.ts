@@ -1,5 +1,5 @@
 import { redirect, type Handle } from '@sveltejs/kit';
-import { db } from '../prisma';
+import { resolve } from '$app/paths';
 
 const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
 
@@ -22,7 +22,7 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
  */
 async function publicGuard(route: string, user?: App.Locals['user']) {
   if (route.includes('/(public)/(auth)') && user) {
-    throw redirect(303, '/');
+    throw redirect(303, resolve('/'));
   }
 }
 
@@ -30,8 +30,8 @@ async function publicGuard(route: string, user?: App.Locals['user']) {
  * Guard private routes from unauthenticated users
  */
 async function dashboardGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes('/savant') && !user) {
-    throw redirect(303, '/login');
+  if (route.includes(resolve('/savant')) && !user) {
+    throw redirect(303, resolve('/login'));
   }
 }
 
@@ -39,8 +39,8 @@ async function dashboardGuard(route: string, user?: App.Locals['user']) {
  * Guard private routes from non-teacher users
  */
 async function teacherGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes('/savant/teacher') && (!user || user.role === 'Student')) {
-    throw redirect(303, '/savant');
+  if (route.includes(resolve('/savant/teacher')) && (!user || user.role === 'Student')) {
+    throw redirect(303, resolve('/savant'));
   }
 }
 
@@ -48,7 +48,7 @@ async function teacherGuard(route: string, user?: App.Locals['user']) {
  * Guard admin routes from non-admin users
  */
 async function adminGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes('/savant/admin') && (!user || user.role !== 'Admin')) {
-    throw redirect(303, '/savant');
+  if (route.includes(resolve('/savant/admin')) && (!user || user.role !== 'Admin')) {
+    throw redirect(303, resolve('/savant'));
   }
 }
