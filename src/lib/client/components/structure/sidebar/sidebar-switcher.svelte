@@ -77,7 +77,7 @@
           <DropdownMenu.Label class="text-xs text-foreground-discreet">
             {section.name}
           </DropdownMenu.Label>
-          {#each section.headerSidebarChoice as sidebar (sidebar.name)}
+          {#each section.headerSidebarChoice as sidebar (sidebar.id)}
             {@const { background, foreground } = generateColorPair(
               sidebar.colorSeed,
               mode.current === 'dark'
