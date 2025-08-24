@@ -27,6 +27,17 @@ export function makeColumns({
       },
     },
     {
+      meta: { frenchName: 'Groupe' },
+      accessorKey: 'group',
+      header: 'Groupe',
+      cell: ({ row }) => {
+        const snippet = createRawSnippet(() => ({
+          render: () => `<div>Groupe ${row.original.group}</div>`,
+        }));
+        return renderSnippet(snippet, '');
+      },
+    },
+    {
       meta: { frenchName: 'Session' },
       accessorKey: 'schoolSessionId',
       header: 'Session',

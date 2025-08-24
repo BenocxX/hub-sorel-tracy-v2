@@ -32,7 +32,10 @@
   }
 </script>
 
-<PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />
+<PageTitle
+  title={data.course.name}
+  subtitle={`${displaySession(data.course.schoolSession)} - Groupe ${data.course.group}`}
+/>
 <Tabs.Root
   value={page.url.searchParams.get('tab') ?? 'students'}
   onValueChange={(value) => goto(`?tab=${value}`)}

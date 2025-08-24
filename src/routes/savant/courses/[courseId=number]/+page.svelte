@@ -9,5 +9,8 @@
   const columns = makeColumns();
 </script>
 
-<PageTitle title={data.course.name} subtitle={displaySession(data.course.schoolSession)} />
+<PageTitle
+  title={data.course.name}
+  subtitle={`${displaySession(data.course.schoolSession)} - Groupe ${data.course.group}`}
+/>
 <DataTable {columns} data={data.course.presentations} />

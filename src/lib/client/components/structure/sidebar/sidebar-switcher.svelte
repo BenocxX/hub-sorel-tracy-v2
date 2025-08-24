@@ -54,7 +54,7 @@
               <span class="truncate font-semibold">
                 {activeSidebar.name}
               </span>
-              <span class="truncate text-xs">{activeSidebar.subName}</span>
+              <span class="truncate text-xs text-foreground-discreet">{activeSidebar.subName}</span>
             </div>
             <ChevronsUpDown class="ml-auto" />
           </Sidebar.MenuButton>
@@ -79,13 +79,24 @@
               }}
               class="gap-3 p-2"
             >
-              <div class="flex size-6 items-center justify-center rounded border">
-                <div class="size-4 shrink">
+              <div
+                class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+              >
+                <div class="*:size-5">
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                   {@html sidebar.icon}
                 </div>
               </div>
-              {sidebar.name}
+              <div class="grid flex-1 text-left text-sm leading-tight">
+                <span class="truncate font-semibold">{sidebar.name}</span>
+                <span class="truncate text-xs text-foreground-discreet">{sidebar.subName}</span>
+              </div>
+              <!-- <div class="flex size-6 items-center justify-center rounded border">
+                <div class="size-4 shrink">
+                  {@html sidebar.icon}
+                </div>
+              </div>
+              {sidebar.name} -->
             </DropdownMenu.Item>
           {/each}
           {#if index < sections.length - 1}

@@ -44,7 +44,7 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
     return {
       id: `course-${course.id}`,
       name: course.name,
-      subName: '',
+      subName: `Groupe ${course.group}`,
       contentKey: 'course',
       icon: course.icon,
       meta: course,
@@ -75,36 +75,36 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
     adminSidebar: [
       {
         title: 'Utilisateurs',
-        url: '#',
+        url: resolve('/savant/admin/users'),
         icon: Users,
         isOpen: true,
         items: [
           {
             title: 'Étudiants',
-            url: `${resolve('/savant/admin/user')}?role=Student`,
+            url: `${resolve('/savant/admin/users')}?role=Student`,
             getUrlToCompare: (url) => url.pathname + url.search,
           },
           {
             title: 'Enseignants',
-            url: `${resolve('/savant/admin/user')}?role=Teacher`,
+            url: `${resolve('/savant/admin/users')}?role=Teacher`,
             getUrlToCompare: (url) => url.pathname + url.search,
           },
         ],
       },
       {
         title: 'Contenu',
-        url: '#',
+        url: resolve('/savant/admin/courses'),
         icon: Presentation,
         isOpen: true,
         items: [
           {
             title: 'Cours',
-            url: `${resolve('/savant/admin/course')}`,
+            url: `${resolve('/savant/admin/courses')}`,
             getUrlToCompare: (url) => url.pathname,
           },
           {
             title: 'Sessions',
-            url: `${resolve('/savant/admin/session')}`,
+            url: `${resolve('/savant/admin/sessions')}`,
             getUrlToCompare: (url) => url.pathname,
           },
         ],
