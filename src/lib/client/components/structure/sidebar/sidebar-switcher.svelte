@@ -6,6 +6,8 @@
   import type { HeaderSection, SidebarChoice } from './sidebar-data.svelte';
   import { preferences } from '$lib/client/local-storage.svelte';
   import { browser } from '$app/environment';
+  import { mode } from 'mode-watcher';
+  import { generateColorPair } from '$lib/common/tools/color-mixer';
 
   type Props = {
     onSidebarChange: (sidebarChoice: SidebarChoice) => void;
@@ -35,15 +37,20 @@
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
         {#snippet child({ props })}
+          {@const { background, foreground } = generateColorPair(
+            activeSidebar.colorSeed,
+            mode.current === 'dark'
+          )}
           <Sidebar.MenuButton
             {...props}
             size="lg"
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
             <div
-              class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+              class="flex aspect-square size-8 items-center justify-center rounded-lg"
+              style="background-color: {background}; color: {foreground};"
             >
-              <div class="*:size-5">
+              <div class="*:!size-5">
                 {#if browser}
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                   {@html activeSidebar.icon}
@@ -61,7 +68,7 @@
         {/snippet}
       </DropdownMenu.Trigger>
       <DropdownMenu.Content
-        class="w-[var(--bits-dropdown-menu-anchor-width)] min-w-56 rounded-lg"
+        class="min-w-56 max-w-96 rounded-lg"
         align="start"
         side={sidebar.isMobile ? 'bottom' : 'right'}
         sideOffset={4}
@@ -71,6 +78,10 @@
             {section.name}
           </DropdownMenu.Label>
           {#each section.headerSidebarChoice as sidebar (sidebar.name)}
+            {@const { background, foreground } = generateColorPair(
+              sidebar.colorSeed,
+              mode.current === 'dark'
+            )}
             <DropdownMenu.Item
               onSelect={() => {
                 lastSelectedSidebarId.value = sidebar.id;
@@ -79,10 +90,12 @@
               }}
               class="gap-3 p-2"
             >
+              <!-- class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground" -->
               <div
-                class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+                class="flex aspect-square size-8 items-center justify-center rounded-lg"
+                style="background-color: {background}; color: {foreground};"
               >
-                <div class="*:size-5">
+                <div class="*:!size-5">
                   <!-- eslint-disable-next-line svelte/no-at-html-tags -->
                   {@html sidebar.icon}
                 </div>
@@ -91,12 +104,6 @@
                 <span class="truncate font-semibold">{sidebar.name}</span>
                 <span class="truncate text-xs text-foreground-discreet">{sidebar.subName}</span>
               </div>
-              <!-- <div class="flex size-6 items-center justify-center rounded border">
-                <div class="size-4 shrink">
-                  {@html sidebar.icon}
-                </div>
-              </div>
-              {sidebar.name} -->
             </DropdownMenu.Item>
           {/each}
           {#if index < sections.length - 1}

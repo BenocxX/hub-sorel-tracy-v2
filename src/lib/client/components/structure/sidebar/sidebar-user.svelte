@@ -6,11 +6,17 @@
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import { enhance } from '$app/forms';
   import { resolve } from '$app/paths';
+  import { mode } from 'mode-watcher';
+  import { generateColorPair } from '$lib/common/tools/color-mixer';
 
   let { user }: { user: NonNullable<App.PageData['user']> } = $props();
   const sidebar = useSidebar();
 
   let logoutForm: HTMLFormElement;
+
+  const { background, foreground } = $derived(
+    generateColorPair(user.username, mode.current === 'dark')
+  );
 </script>
 
 <Sidebar.Menu>
@@ -28,7 +34,10 @@
                 src={`https://cdn.discordapp.com/avatars/${user.discordUser?.discordId}/${user.discordUser?.avatar}.png?size=64`}
                 alt={user.username}
               />
-              <Avatar.Fallback class="rounded-lg">
+              <Avatar.Fallback
+                class="rounded-lg"
+                style={`background-color: ${background}; color: ${foreground};`}
+              >
                 {#if user.firstname && user.lastname}
                   {user.firstname[0]}{user.lastname[0]}
                 {:else}
@@ -57,7 +66,10 @@
                 src={`https://cdn.discordapp.com/avatars/${user.discordUser?.discordId}/${user.discordUser?.avatar}.png?size=64`}
                 alt={user.username}
               />
-              <Avatar.Fallback class="rounded-lg">
+              <Avatar.Fallback
+                class="rounded-lg"
+                style={`background-color: ${background}; color: ${foreground};`}
+              >
                 {#if user.firstname && user.lastname}
                   {user.firstname[0]}{user.lastname[0]}
                 {:else}
