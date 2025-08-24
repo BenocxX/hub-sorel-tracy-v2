@@ -1,0 +1,4 @@
+PR examples:
+- Good PR description, bad commits: https://github.com/sveltejs/kit/pull/13864
+- Loong PR, no description, good commits: https://github.com/TanStack/router/pull/4111
+- Short PR, good commits: https://github.com/TanStack/router/pull/4886
