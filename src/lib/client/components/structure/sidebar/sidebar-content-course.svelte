@@ -20,12 +20,14 @@
     })
   );
 
-  const teacherCourseHref = resolve('/savant/teacher/courses/[id=number]', {
-    id: course.id.toString(),
-  });
-  const studentTabHref = `${teacherCourseHref}?tab=students`;
-  const teacherTabHref = `${teacherCourseHref}?tab=teachers`;
-  const presentationTabHref = `${teacherCourseHref}?tab=presentations`;
+  const teacherCourseHref = $derived(
+    resolve('/savant/teacher/courses/[id=number]', {
+      id: course.id.toString(),
+    })
+  );
+  const studentTabHref = $derived(`${teacherCourseHref}?tab=students`);
+  const teacherTabHref = $derived(`${teacherCourseHref}?tab=teachers`);
+  const presentationTabHref = $derived(`${teacherCourseHref}?tab=presentations`);
 
   const unlockedPresentations = $derived(
     course.presentations.filter((presentation) => !presentation.isLocked)
