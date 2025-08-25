@@ -1,7 +1,7 @@
 import { resolve } from '$app/paths';
-import { generateColorPair } from '$lib/common/tools/color-mixer';
+import { page } from '$app/state';
 import type { Course } from '$lib/common/types/prisma-types';
-import { Presentation, Users } from 'lucide-svelte';
+import { CalendarDays, Presentation, Users } from 'lucide-svelte';
 
 export type SidebarChoice = {
   id: string;
@@ -22,13 +22,12 @@ export type HeaderSection = {
 type SidebarSubItem = {
   title: string;
   url: string;
-  getUrlToCompare: (url: URL) => string;
 };
 
 export type SidebarItem = {
   title: string;
   url: string;
-  isOpen: boolean;
+  isOpen?: boolean;
   // this should be `Component` after @lucide/svelte updates types
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon?: any;
@@ -86,33 +85,27 @@ export function makeSidebarData(user: App.PageData['user'], courses: Course[]): 
           {
             title: 'Étudiants',
             url: `${resolve('/savant/admin/users')}?role=Student`,
-            getUrlToCompare: (url) => url.pathname + url.search,
           },
           {
             title: 'Enseignants',
             url: `${resolve('/savant/admin/users')}?role=Teacher`,
-            getUrlToCompare: (url) => url.pathname + url.search,
           },
         ],
       },
       {
-        title: 'Contenu',
-        url: resolve('/savant/admin/courses'),
+        title: 'Cours',
+        url: `${resolve('/savant/admin/courses')}`,
         icon: Presentation,
-        isOpen: true,
-        items: [
-          {
-            title: 'Cours',
-            url: `${resolve('/savant/admin/courses')}`,
-            getUrlToCompare: (url) => url.pathname,
-          },
-          {
-            title: 'Sessions',
-            url: `${resolve('/savant/admin/sessions')}`,
-            getUrlToCompare: (url) => url.pathname,
-          },
-        ],
+      },
+      {
+        title: 'Sessions',
+        url: `${resolve('/savant/admin/sessions')}`,
+        icon: CalendarDays,
       },
     ],
   };
+}
+
+export function isActive(url: string): boolean {
+  return url === page.url.pathname + page.url.search;
 }
