@@ -27,8 +27,8 @@
   const teacherTabHref = `${teacherCourseHref}?tab=teachers`;
   const presentationTabHref = `${teacherCourseHref}?tab=presentations`;
 
-  const unlockedPresentations = course.presentations.filter(
-    (presentation) => !presentation.isLocked
+  const unlockedPresentations = $derived(
+    course.presentations.filter((presentation) => !presentation.isLocked)
   );
 </script>
 
