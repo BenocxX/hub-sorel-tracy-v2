@@ -54,7 +54,7 @@
 
 <div class={fragment ? 'fragment' : ''}>
   <div
-    class="flex max-h-[51px] w-full max-w-full items-center justify-between gap-4 overflow-hidden overflow-x-hidden rounded-t-lg border border-b-0 bg-background-100 py-2 pl-4 pr-2"
+    class="flex max-h-[51px] w-full max-w-full items-center justify-between gap-4 overflow-x-auto overflow-y-hidden rounded-t-lg border border-b-0 bg-background-100 py-2 pl-4 pr-2"
   >
     <div class="flex items-center gap-2">
       {#each codes as code, index (index)}

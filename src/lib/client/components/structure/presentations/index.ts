@@ -15,6 +15,7 @@ const presentationComponents: PresentationComponent[] = [
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
   { id: 'poo2-a2025-mauvaises-odeurs', component: poo2A2025.MauvaisesOdeurs },
   { id: 'poo2-a2025-gestionnaire-de-sources', component: poo2A2025.GestionnaireDeSources },
+  { id: 'poo2-a2025-refactoring-de-methodes', component: poo2A2025.RefactoringDeMethodes },
 ];
 
 export function getPresentationComponent(presentation: Presentation) {
