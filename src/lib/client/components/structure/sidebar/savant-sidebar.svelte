@@ -6,6 +6,10 @@
   import SidebarContentCourse from './sidebar-content-course.svelte';
   import { makeSidebarData, type SidebarChoice } from './sidebar-data.svelte';
   import type { Course } from '$lib/common/types/prisma-types';
+  import { goto } from '$app/navigation';
+  import { resolve } from '$app/paths';
+  import { browser } from '$app/environment';
+  import { page } from '$app/state';
 
   type CourseWithIncludes = Course<{ presentations: true }>;
 
@@ -20,9 +24,20 @@
 
   let selectedCourse = $state<CourseWithIncludes | null>(null);
 
+  function replaceIdInUrl(url: string, newId: string) {
+    return url.replace(/(\/courses\/)(\d+)/, `$1${newId}`);
+  }
+
   function onSidebarChange(sidebarChoice: SidebarChoice) {
     if (sidebarChoice.contentKey === 'course') {
       selectedCourse = sidebarChoice.meta as CourseWithIncludes;
+      if (browser) {
+        // goto(
+        // resolve('/savant/courses/[courseId=number]', { courseId: selectedCourse.id.toString() })
+        // page.url
+        // );
+        goto(replaceIdInUrl(page.url.pathname, selectedCourse.id.toString()) + page.url.search);
+      }
     } else {
       selectedCourse = null;
     }

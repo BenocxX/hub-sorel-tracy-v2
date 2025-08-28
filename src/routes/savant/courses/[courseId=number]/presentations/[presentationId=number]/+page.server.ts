@@ -10,7 +10,10 @@ export const load = async ({ params }) => {
   });
 
   if (!presentation) {
-    throw redirect(303, resolve('/savant'));
+    throw redirect(
+      303,
+      resolve('/savant/courses/[courseId=number]', { courseId: params.courseId })
+    );
   }
 
   if (presentation.url) {
