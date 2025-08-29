@@ -28,8 +28,8 @@ function makeUserKey(value: string) {
   return `${value}-${page.data.user!.id}`;
 }
 
-function getLastSelectedSidebarIdPreference() {
-  return useLocalStorage<string>(makeUserKey('last-selected-sidebar-id'), '');
+function getLastSelectedCourseIdPreference() {
+  return useLocalStorage<string>(makeUserKey('last-selected-course-id'), '');
 }
 
 function getSidebarOpenPreference() {
@@ -37,6 +37,6 @@ function getSidebarOpenPreference() {
 }
 
 export const preferences = {
-  lastSelectedSidebarId: getLastSelectedSidebarIdPreference,
+  lastSelectedCourseId: getLastSelectedCourseIdPreference,
   sidebarOpen: getSidebarOpenPreference,
 };

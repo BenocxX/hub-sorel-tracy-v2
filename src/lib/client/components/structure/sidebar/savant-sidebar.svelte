@@ -6,6 +6,7 @@
   import { makeSidebarSections } from './sidebar-data';
   import { page } from '$app/state';
   import SidebarCollapsibleMenuButton from './components/sidebar-collapsible-menu-button.svelte';
+  import { preferences } from '$lib/client/local-storage.svelte';
 
   type Props = {
     user: App.PageData['user'];
@@ -14,9 +15,21 @@
 
   const { user, courses }: Props = $props();
 
-  const selectedCourse = $derived(
-    courses.find(({ id }) => id.toString() === page.params.courseId) ?? courses[0]
-  );
+  const lastSelectedSidebarId = preferences.lastSelectedCourseId();
+
+  $effect(() => {
+    if (page.params.courseId) {
+      lastSelectedSidebarId.value = page.params.courseId;
+    } else if (!lastSelectedSidebarId.value) {
+      lastSelectedSidebarId.value = courses[0]?.id.toString();
+    }
+  });
+
+  function isSelectedCourse({ id }: Course) {
+    return id.toString() === page.params.courseId || id.toString() === lastSelectedSidebarId.value;
+  }
+
+  const selectedCourse = $derived(courses.find(isSelectedCourse) ?? courses[0]);
 
   const sidebarSections = $derived(makeSidebarSections({ user, selectedCourse }));
 
