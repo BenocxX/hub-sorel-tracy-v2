@@ -20,7 +20,7 @@
   $effect(() => {
     if (page.params.courseId) {
       lastSelectedSidebarId.value = page.params.courseId;
-    } else if (!lastSelectedSidebarId.value) {
+    } else if (!lastSelectedSidebarId.value && courses.length > 0) {
       lastSelectedSidebarId.value = courses[0]?.id.toString();
     }
   });
@@ -29,7 +29,7 @@
     return id.toString() === page.params.courseId || id.toString() === lastSelectedSidebarId.value;
   }
 
-  const selectedCourse = $derived(courses.find(isSelectedCourse) ?? courses[0]);
+  const selectedCourse = $derived(courses.find(isSelectedCourse) ?? courses[0] ?? null);
 
   const sidebarSections = $derived(makeSidebarSections({ user, selectedCourse }));
 
@@ -39,9 +39,11 @@
 </script>
 
 <Sidebar.Root collapsible="icon">
-  <Sidebar.Header>
-    <SidebarSwitcher {courses} {selectedCourse} />
-  </Sidebar.Header>
+  {#if selectedCourse}
+    <Sidebar.Header>
+      <SidebarSwitcher {courses} {selectedCourse} />
+    </Sidebar.Header>
+  {/if}
   <Sidebar.Content>
     {#each sidebarSections.filter((section) => !section.isHidden) as section (section)}
       <Sidebar.Group>

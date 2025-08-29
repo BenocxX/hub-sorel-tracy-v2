@@ -3,7 +3,9 @@ import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
 import { ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte';
 
-function makePresentationLinksForCourse(course: Course<{ presentations: true }>) {
+function makePresentationLinksForCourse(course: Course<{ presentations: true }> | null) {
+  if (!course) return [];
+
   return course.presentations.map(
     (presentation): SidebarLinkItem => ({
       type: 'link',
@@ -19,32 +21,37 @@ function makePresentationLinksForCourse(course: Course<{ presentations: true }>)
   );
 }
 
+function getPresentationCount(course: Course<{ presentations: true }> | null) {
+  return course?.presentations.filter((p) => !p.isLocked).length ?? 0;
+}
+
 export function makeSidebarSections({
   user,
   selectedCourse,
 }: {
   user: App.PageData['user'];
-  selectedCourse: Course<{ presentations: true }>;
+  selectedCourse: Course<{ presentations: true }> | null;
 }): SidebarSection[] {
   const courseUrl = resolve('/savant/courses/[courseId=number]', {
-    courseId: selectedCourse.id.toString(),
+    courseId: selectedCourse?.id.toString() ?? '0',
   });
 
   const teacherUrl = resolve('/savant/teacher/courses/[courseId=number]', {
-    courseId: selectedCourse.id.toString(),
+    courseId: selectedCourse?.id.toString() ?? '0',
   });
 
   return [
     {
       type: 'section',
       label: 'Informations',
+      isHidden: !selectedCourse,
       items: [
         {
           type: 'collapsible',
           label: 'Présentations',
           icon: Presentation,
           url: courseUrl,
-          isHidden: selectedCourse.presentations.filter((p) => !p.isLocked).length === 0,
+          isHidden: getPresentationCount(selectedCourse) === 0,
           items: makePresentationLinksForCourse(selectedCourse),
         },
         {
@@ -52,14 +59,14 @@ export function makeSidebarSections({
           label: 'Présentations',
           icon: Presentation,
           url: courseUrl,
-          isHidden: selectedCourse.presentations.filter((p) => !p.isLocked).length > 0,
+          isHidden: getPresentationCount(selectedCourse) > 0,
         },
       ],
     },
     {
       type: 'section',
       label: 'Gestion du cours',
-      isHidden: user!.role !== 'Teacher' && user!.role !== 'Admin',
+      isHidden: !selectedCourse || (user!.role !== 'Teacher' && user!.role !== 'Admin'),
       items: [
         {
           type: 'link',
