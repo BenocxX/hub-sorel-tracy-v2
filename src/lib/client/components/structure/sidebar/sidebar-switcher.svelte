@@ -25,8 +25,12 @@
   }
 
   function onCourseSelected(course: Course) {
-    goto(resolve('/savant/courses/[courseId=number]', { courseId: course.id.toString() }));
-    const pathname = page.url.pathname.replace(/\/courses\/\d+/, `/courses/${course.id}`);
+    const currentPath = page.url.pathname;
+
+    const pathname = currentPath.includes('/courses')
+      ? page.url.pathname.replace(/\/courses\/\d+/, `/courses/${course.id}`)
+      : `/savant/courses/${course.id}`;
+
     goto(pathname + page.url.search);
   }
 </script>

@@ -16,7 +16,9 @@
   <Sidebar.Header>
     <SidebarSwitcher {courses} />
   </Sidebar.Header>
-  <Sidebar.Content></Sidebar.Content>
+  <Sidebar.Content>
+    <!-- add content here -->
+  </Sidebar.Content>
   <Sidebar.Footer>
     <SidebarUser user={user!} />
   </Sidebar.Footer>
