@@ -15,7 +15,7 @@ import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = async (event) => {
-  const id = Number(event.params.id);
+  const id = Number(event.params.courseId);
 
   const course = await db.course.findFirst({
     where: { id },
@@ -66,7 +66,7 @@ export const actions = {
     }
 
     await db.course.update({
-      where: { id: Number(event.params.id) },
+      where: { id: Number(event.params.courseId) },
       data: form.data,
     });
 
@@ -85,7 +85,7 @@ export const actions = {
     }
 
     await db.course.update({
-      where: { id: Number(event.params.id) },
+      where: { id: Number(event.params.courseId) },
       data: {
         students: user.role === 'Student' ? { connect: { id: user.id } } : undefined,
         teachers: user.role !== 'Student' ? { connect: { id: user.id } } : undefined,
@@ -107,7 +107,7 @@ export const actions = {
     }
 
     await db.course.update({
-      where: { id: Number(event.params.id) },
+      where: { id: Number(event.params.courseId) },
       data: {
         students: user.role === 'Student' ? { disconnect: { id: user.id } } : undefined,
         teachers: user.role !== 'Student' ? { disconnect: { id: user.id } } : undefined,
@@ -126,7 +126,7 @@ export const actions = {
     await db.presentation.create({
       data: {
         ...form.data,
-        course: { connect: { id: Number(event.params.id) } },
+        course: { connect: { id: Number(event.params.courseId) } },
       },
     });
 
@@ -140,7 +140,7 @@ export const actions = {
     }
 
     await db.presentation.update({
-      where: { id: form.data.id, courseId: Number(event.params.id) },
+      where: { id: form.data.id, courseId: Number(event.params.courseId) },
       data: form.data,
     });
 
@@ -154,7 +154,7 @@ export const actions = {
     }
 
     await db.presentation.update({
-      where: { id: form.data.id, course: { id: Number(event.params.id) } },
+      where: { id: form.data.id, course: { id: Number(event.params.courseId) } },
       data: { isLocked: form.data.isLocked },
     });
 

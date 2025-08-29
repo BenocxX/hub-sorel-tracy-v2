@@ -1,23 +1,25 @@
 <script lang="ts">
   import * as Sidebar from '$lib/client/components/ui/sidebar';
-  import * as Avatar from '$lib/client/components/ui/avatar';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import { ChevronsUpDownIcon, Cog, LogOut, Shield } from 'lucide-svelte';
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import { enhance } from '$app/forms';
   import { resolve } from '$app/paths';
-  import { mode } from 'mode-watcher';
-  import { generateColorPair } from '$lib/common/tools/color-mixer';
+  import UserAvatar from '../../ui-custom/avatar/user-avatar.svelte';
 
   let { user }: { user: NonNullable<App.PageData['user']> } = $props();
   const sidebar = useSidebar();
 
   let logoutForm: HTMLFormElement;
-
-  const { background, foreground } = $derived(
-    generateColorPair(user.username, mode.current === 'dark')
-  );
 </script>
+
+{#snippet userInfo()}
+  <UserAvatar {user} />
+  <div class="grid flex-1 text-left text-sm leading-tight">
+    <span class="truncate font-medium">{user.username}</span>
+    <span class="truncate text-xs text-foreground-discreet">{user.firstname} {user.lastname}</span>
+  </div>
+{/snippet}
 
 <Sidebar.Menu>
   <Sidebar.MenuItem>
@@ -29,26 +31,7 @@
             class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             {...props}
           >
-            <Avatar.Root class="size-8 rounded-lg">
-              <Avatar.Image
-                src={`https://cdn.discordapp.com/avatars/${user.discordUser?.discordId}/${user.discordUser?.avatar}.png?size=64`}
-                alt={user.username}
-              />
-              <Avatar.Fallback
-                class="rounded-lg"
-                style={`background-color: ${background}; color: ${foreground};`}
-              >
-                {#if user.firstname && user.lastname}
-                  {user.firstname[0]}{user.lastname[0]}
-                {:else}
-                  {user.username[0]}
-                {/if}
-              </Avatar.Fallback>
-            </Avatar.Root>
-            <div class="grid flex-1 text-left text-sm leading-tight">
-              <span class="truncate font-medium">{user.username}</span>
-              <span class="truncate text-xs">{user.firstname} {user.lastname}</span>
-            </div>
+            {@render userInfo()}
             <ChevronsUpDownIcon class="ml-auto size-4" />
           </Sidebar.MenuButton>
         {/snippet}
@@ -61,26 +44,7 @@
       >
         <DropdownMenu.Label class="p-0 font-normal">
           <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <Avatar.Root class="size-8 rounded-lg">
-              <Avatar.Image
-                src={`https://cdn.discordapp.com/avatars/${user.discordUser?.discordId}/${user.discordUser?.avatar}.png?size=64`}
-                alt={user.username}
-              />
-              <Avatar.Fallback
-                class="rounded-lg"
-                style={`background-color: ${background}; color: ${foreground};`}
-              >
-                {#if user.firstname && user.lastname}
-                  {user.firstname[0]}{user.lastname[0]}
-                {:else}
-                  {user.username[0]}
-                {/if}
-              </Avatar.Fallback>
-            </Avatar.Root>
-            <div class="grid flex-1 text-left text-sm leading-tight">
-              <span class="truncate font-medium">{user.username}</span>
-              <span class="truncate text-xs">{user.firstname} {user.lastname}</span>
-            </div>
+            {@render userInfo()}
           </div>
         </DropdownMenu.Label>
         <DropdownMenu.Separator />
