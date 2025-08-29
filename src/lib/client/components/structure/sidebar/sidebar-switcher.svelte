@@ -8,15 +8,11 @@
   import { page } from '$app/state';
   import { ChevronsUpDown } from 'lucide-svelte';
   import { goto } from '$app/navigation';
-  import { resolve } from '$app/paths';
+  import { cn } from '$lib/client/utils';
 
-  type Props = { courses: Course[] };
+  type Props = { courses: Course[]; selectedCourse: Course };
 
-  const { courses }: Props = $props();
-
-  const selectedCourse = $derived(
-    courses.find(({ id }) => id.toString() === page.params.courseId) ?? courses[0]
-  );
+  let { courses, selectedCourse }: Props = $props();
 
   const sidebar = useSidebar();
 
@@ -77,7 +73,10 @@
           <DropdownMenu.Label class="text-xs text-foreground-discreet">Cours</DropdownMenu.Label>
           <DropdownMenu.Separator />
           {#each courses as course (course)}
-            <DropdownMenu.Item onSelect={() => onCourseSelected(course)} class="gap-3 p-2">
+            <DropdownMenu.Item
+              class={cn('gap-3 p-2', selectedCourse.id === course.id && 'bg-secondary')}
+              onSelect={() => onCourseSelected(course)}
+            >
               {@render courseItem(course)}
             </DropdownMenu.Item>
           {/each}

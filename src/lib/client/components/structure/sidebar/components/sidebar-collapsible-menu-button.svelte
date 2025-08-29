@@ -20,8 +20,8 @@
   {#snippet child({ props })}
     <Sidebar.MenuItem {...props}>
       <Sidebar.MenuButton {isActive} class="pr-0">
-        {@render trigger({ props: { class: 'flex flex-1 items-center gap-2 [&>svg]:size-4' } })}
         {#snippet tooltipContent()}{tooltip}{/snippet}
+        {@render trigger({ props: { class: 'flex flex-1 items-center gap-2 [&>svg]:size-4' } })}
         <Collapsible.Trigger>
           {#snippet child({ props })}
             <Button variant="ghost" size="icon-sm" {...props}>
