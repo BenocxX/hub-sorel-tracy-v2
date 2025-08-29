@@ -32,7 +32,9 @@
         <DropdownMenu.Item>
           {#snippet child({ props })}
             <a
-              href={resolve('/savant/teacher/courses/[id=number]', { id: course.id.toString() })}
+              href={resolve('/savant/teacher/courses/[courseId=number]', {
+                courseId: course.id.toString(),
+              })}
               {...props}>Détails</a
             >
           {/snippet}

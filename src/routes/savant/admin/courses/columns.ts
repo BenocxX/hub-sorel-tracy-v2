@@ -21,7 +21,7 @@ export function makeColumns({
       cell: ({ row }) => {
         const snippet = createRawSnippet(() => ({
           render: () =>
-            `<a href="${resolve('/savant/teacher/courses/[id=number]', { id: row.original.id.toString() })}" class="flex link text-foreground items-center gap-3 [&>svg]:size-5">${row.original.icon}<div>${row.original.name}</div></a>`,
+            `<a href="${resolve('/savant/teacher/courses/[courseId=number]', { courseId: row.original.id.toString() })}" class="flex link text-foreground items-center gap-3 [&>svg]:size-5">${row.original.icon}<div>${row.original.name}</div></a>`,
         }));
         return renderSnippet(snippet, '');
       },
