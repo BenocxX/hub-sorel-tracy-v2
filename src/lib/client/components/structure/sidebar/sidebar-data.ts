@@ -1,7 +1,7 @@
 import { resolve } from '$app/paths';
 import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
-import { ContactRound, GraduationCap, Presentation } from 'lucide-svelte';
+import { ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte';
 
 function makePresentationLinksForCourse(course: Course<{ presentations: true }>) {
   return course.presentations.map(
@@ -58,7 +58,7 @@ export function makeSidebarSections({
     },
     {
       type: 'section',
-      label: 'Administration',
+      label: 'Gestion du cours',
       isHidden: user!.role !== 'Teacher' && user!.role !== 'Admin',
       items: [
         {
@@ -78,6 +78,50 @@ export function makeSidebarSections({
           label: 'Présentations',
           icon: Presentation,
           url: `${teacherUrl}?tab=presentations`,
+        },
+      ],
+    },
+    {
+      type: 'section',
+      label: 'Administration',
+      isHidden: user!.role !== 'Admin',
+      items: [
+        {
+          type: 'collapsible',
+          label: 'Utilisateurs',
+          icon: Users,
+          isOpen: true,
+          url: resolve('/savant/admin/users'),
+          items: [
+            {
+              type: 'link',
+              label: 'Étudiants',
+              url: `${resolve('/savant/admin/users')}?role=Student`,
+            },
+            {
+              type: 'link',
+              label: 'Enseignants',
+              url: `${resolve('/savant/admin/users')}?role=Teacher`,
+            },
+          ],
+        },
+        {
+          type: 'collapsible',
+          label: 'Contenu',
+          icon: Presentation,
+          isOpen: true,
+          items: [
+            {
+              type: 'link',
+              label: 'Cours',
+              url: `${resolve('/savant/admin/courses')}`,
+            },
+            {
+              type: 'link',
+              label: 'Sessions',
+              url: `${resolve('/savant/admin/sessions')}`,
+            },
+          ],
         },
       ],
     },
