@@ -8,7 +8,7 @@
     bitwise: 'Résolution par expression Bitwise',
   };
 
-  currentPresentation.title = 'Refactoring de méthodes';
+  currentPresentation.title = 'Résolution par expression bitwise';
 
   initializeSlideLinks();
 </script>
