@@ -6,19 +6,21 @@ import { ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte'
 function makePresentationLinksForCourse(course: Course<{ presentations: true }> | null) {
   if (!course) return [];
 
-  return course.presentations.map(
-    (presentation): SidebarLinkItem => ({
-      type: 'link',
-      label: presentation.title,
-      url:
-        presentation.url ??
-        resolve('/savant/courses/[courseId=number]/presentations/[presentationId=number]', {
-          courseId: course.id.toString(),
-          presentationId: presentation.id.toString(),
-        }),
-      target: presentation.url ? '_blank' : '_self',
-    })
-  );
+  return course.presentations
+    .filter((p) => !p.isLocked)
+    .map(
+      (presentation): SidebarLinkItem => ({
+        type: 'link',
+        label: presentation.title,
+        url:
+          presentation.url ??
+          resolve('/savant/courses/[courseId=number]/presentations/[presentationId=number]', {
+            courseId: course.id.toString(),
+            presentationId: presentation.id.toString(),
+          }),
+        target: presentation.url ? '_blank' : '_self',
+      })
+    );
 }
 
 function getPresentationCount(course: Course<{ presentations: true }> | null) {
