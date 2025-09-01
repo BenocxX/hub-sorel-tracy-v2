@@ -51,7 +51,7 @@
     <div class="sm:space-y-2">
       <div class="space-y-2">
         <div class="flex items-center gap-2" data-id="buttons-row">
-          <a href="#/table-of-content" class={buttonVariants({ variant: 'outline', size: 'sm' })}>
+          <a href="#/table-of-content" class={buttonVariants({ variant: 'outline', size: 'xs' })}>
             <ArrowLeft size={16} className="mr-2" />
             Table des matières
           </a>
@@ -88,16 +88,18 @@
             </Dialog.Root>
           {/if}
         </div>
-        <h1 class="text-xl font-light opacity-75 sm:text-3xl">{currentPresentation.title}</h1>
+        <h1 class="text-lg font-light opacity-75 sm:text-2xl">{currentPresentation.title}</h1>
       </div>
-      <h1 class="text-4xl font-medium sm:text-6xl">{title || section}</h1>
+      <h1 class="text-3xl font-medium sm:text-5xl">{title || section}</h1>
       {#if subTitleComponent}
         {@render subTitleComponent()}
+      {:else if subTitle}
+        <h4 class="text-foreground-discreet sm:text-xl">{subTitle}</h4>
       {/if}
     </div>
     <div
       class={cn(
-        'flex w-full flex-1 flex-col space-y-6 pt-8 !text-left sm:space-y-10 sm:pt-12 sm:!text-left sm:font-light [&_*]:text-lg sm:[&_*]:text-3xl',
+        'flex w-full flex-1 flex-col space-y-6 pt-6 !text-left sm:space-y-10 sm:pt-10 sm:!text-left sm:font-light [&_*]:text-lg sm:[&_*]:text-3xl',
         center && '!text-center sm:items-center sm:justify-center sm:pt-0 sm:!text-center',
         className
       )}
