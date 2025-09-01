@@ -6,14 +6,12 @@
   import SimplifierAppelMethodes from './simplifier-appel-methodes.svelte';
   import CompositionMethodes from './composition-methodes.svelte';
   import SimplifierConditions from './simplifier-conditions.svelte';
-  import Bitwise from './bitwise.svelte';
 
   const sections = {
     intro: 'Introduction',
     simplifierAppelMethodes: "Simplifier l'appel des méthodes",
     compositionMethodes: 'Composition des méthodes',
     simplifierConditions: 'Simplifier les conditions',
-    bitwise: 'Résolution par expression Bitwise',
   };
 
   currentPresentation.title = 'Refactoring de méthodes';
@@ -26,5 +24,4 @@
   <SimplifierAppelMethodes section={sections.simplifierAppelMethodes} />
   <CompositionMethodes section={sections.compositionMethodes} />
   <SimplifierConditions section={sections.simplifierConditions} />
-  <Bitwise section={sections.bitwise} />
 </PresentationRoot>
