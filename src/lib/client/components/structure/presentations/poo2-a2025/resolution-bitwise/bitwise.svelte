@@ -40,6 +40,5 @@
   </div>
 </BasicSlide>
 <BasicSlide>
-  <p>Test Animator</p>
-  <!-- <BitshiftAnimation /> -->
+  <BitshiftAnimation />
 </BasicSlide>

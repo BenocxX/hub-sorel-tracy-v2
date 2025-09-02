@@ -14,10 +14,10 @@
  */
 export type EasingFn = (t: number) => number;
 
-/**
- * A simple linear easing function (no easing applied).
- */
+/** Built-in easing functions */
 export const linear: EasingFn = (t) => t;
+export const easeInOutQuad: EasingFn = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+export const easeOutCubic: EasingFn = (t) => --t * t * t + 1;
 
 /**
  * A tween represents a value interpolation over time.
@@ -53,7 +53,7 @@ export interface Callback {
   at: number;
 
   /** Function to execute when the time is reached. */
-  fn: () => void;
+  fn: (time: number) => void;
 }
 
 /**
@@ -62,6 +62,7 @@ export interface Callback {
 export interface AnimatorOptions {
   /** Total duration of the animation timeline in milliseconds. */
   duration: number;
+  loopMode?: 'none' | 'loop' | 'pingpong';
 }
 
 /**
@@ -87,6 +88,12 @@ export class Animator {
   /** Total duration of the timeline (ms). */
   private duration: number;
 
+  /** Looping mode for the animation. */
+  private loopMode: 'none' | 'loop' | 'pingpong';
+
+  /** Current direction of playback (1 = forward, -1 = backward). */
+  private direction = 1;
+
   /** Current time position (ms). */
   private time = 0;
 
@@ -105,6 +112,9 @@ export class Animator {
   /** Timestamp of the last animation frame. */
   private lastTs = 0;
 
+  /** Timestamp for the callback crossing check */
+  private lastTime = 0;
+
   /**
    * Create a new Animator.
    *
@@ -112,6 +122,7 @@ export class Animator {
    */
   constructor(opts: AnimatorOptions) {
     this.duration = opts.duration;
+    this.loopMode = opts.loopMode ?? 'none';
   }
 
   /**
@@ -124,12 +135,38 @@ export class Animator {
   }
 
   /**
+   * Remove a tween from the timeline.
+   *
+   * @param tween The tween to remove.
+   */
+  removeTween(tween: Tween) {
+    this.tweens = this.tweens.filter((t) => t !== tween);
+  }
+
+  /**
    * Add a callback to fire at a specific time.
    *
    * @param cb Callback definition.
    */
   addCallback(cb: Callback) {
     this.callbacks.push(cb);
+  }
+
+  /**
+   * Remove a callback from the timeline.
+   *
+   * @param cb The callback to remove.
+   */
+  removeCallback(cb: Callback) {
+    this.callbacks = this.callbacks.filter((c) => c !== cb);
+  }
+
+  /**
+   * Clear all tweens and callbacks from the timeline.
+   */
+  clear() {
+    this.tweens = [];
+    this.callbacks = [];
   }
 
   /**
@@ -169,8 +206,27 @@ export class Animator {
    * @param delta Time delta to advance (can be negative).
    */
   step(delta: number) {
-    this.time = Math.max(0, Math.min(this.time + delta, this.duration));
+    const oldTime = this.time;
+
+    this.time += delta * this.direction;
+
+    if (this.loopMode === 'none') {
+      this.time = Math.max(0, Math.min(this.time, this.duration));
+    } else if (this.loopMode === 'loop') {
+      if (this.time > this.duration) this.time %= this.duration;
+      if (this.time < 0) this.time = ((this.time % this.duration) + this.duration) % this.duration;
+    } else if (this.loopMode === 'pingpong') {
+      if (this.time > this.duration) {
+        this.time = this.duration - (this.time - this.duration);
+        this.direction = -1;
+      } else if (this.time < 0) {
+        this.time = -this.time;
+        this.direction = 1;
+      }
+    }
+
     this.applyTweens();
+    this.applyCallbacks(oldTime, this.time);
     this.onTick?.(this.time);
   }
 
@@ -179,6 +235,7 @@ export class Animator {
    */
   restart() {
     this.time = 0;
+    this.direction = 1;
     this.applyTweens();
     this.play();
   }
@@ -232,7 +289,19 @@ export class Animator {
 
     for (const c of this.callbacks) {
       // Fire if we're within one frame (~16ms) of the target time
-      if (Math.abs(this.time - c.at) < 16) c.fn();
+      if (Math.abs(this.time - c.at) < 16) c.fn(this.time);
     }
+  }
+
+  private applyCallbacks(prevTime: number, currentTime: number) {
+    for (const c of this.callbacks) {
+      if (prevTime <= c.at && currentTime >= c.at) {
+        c.fn(c.at);
+      }
+      if (prevTime >= c.at && currentTime <= c.at && this.direction < 0) {
+        c.fn(c.at);
+      }
+    }
+    this.lastTime = this.time;
   }
 }

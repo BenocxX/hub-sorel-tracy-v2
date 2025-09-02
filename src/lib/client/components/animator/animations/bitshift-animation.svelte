@@ -1,102 +1,126 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { useAnimator } from '../useAnimator.svelte.js';
+  import { onMount, onDestroy } from 'svelte';
+  import { easeInOutQuad } from '../animator';
+  import { useAnimator } from '../useAnimator.svelte';
+  import { browser } from '$app/environment';
 
-  // 6 in binary
-  const original = 6;
-  const shiftAmount = 2;
-  const result = original << shiftAmount;
+  // SVG canvas size
+  const width = 400;
+  const height = 200;
 
-  // Timeline duration in ms
-  const STEP_DURATION = 800; // time per bit change
-  const POST_DELAY = 1200; // wait before looping
+  // Circle properties (runes)
+  let x = $state(50);
+  let y = $state(50);
+  let color = $state('blue');
 
-  const totalSteps = 3 + 1; // 3 shifts + final result display
-  const timelineDuration = totalSteps * STEP_DURATION + POST_DELAY;
+  // Step sizes
+  const STEP_SMALL = 16; // ~1 frame
+  const STEP_LARGE = 100; // coarse step
 
-  // Animator
-  const { animator, state: animationState } = useAnimator({ duration: timelineDuration });
+  // Animator: 3-second timeline
+  const { animator, state: animationState } = useAnimator({ duration: 3000 });
 
-  // Displayed value (binary string)
-  let display = $state(original.toString(2).padStart(4, '0'));
+  // Step 1 → move circle horizontally
+  animator.addTween({
+    start: 0,
+    duration: 1000,
+    from: 50,
+    to: width - 50,
+    easing: easeInOutQuad,
+    update: (val) => (x = val),
+  });
 
-  /**
-   * Generate the intermediate bit values for each step
-   */
-  function generateSteps() {
-    const steps: string[] = [];
+  // Step 2 → change color to red
+  animator.addCallback({
+    at: 1000,
+    fn: () => (color = 'red'),
+  });
 
-    // Step 0: original
-    steps.push(original.toString(2).padStart(4, '0'));
+  // Step 3 → move circle down
+  animator.addTween({
+    start: 1000,
+    duration: 2000,
+    from: 50,
+    to: 150,
+    easing: easeInOutQuad,
+    update: (val) => (y = val),
+  });
 
-    // Step 1..shiftAmount: shift left 1 bit each
-    let value = original;
-    for (let i = 1; i <= shiftAmount; i++) {
-      value <<= 1;
-      steps.push(value.toString(2).padStart(4, '0'));
-    }
-
-    // Step after shifts: final result
-    steps.push(result.toString(2).padStart(4, '0'));
-
-    return steps;
+  // Generic step helper: pause then step
+  function step(deltaMs: number) {
+    // Pause first so stepping doesn't race with play()
+    animator.pause();
+    animator.step(deltaMs);
   }
 
-  const steps = generateSteps();
+  const stepForwardSmall = () => step(STEP_SMALL);
+  const stepBackwardSmall = () => step(-STEP_SMALL);
+  const stepForwardLarge = () => step(STEP_LARGE);
+  const stepBackwardLarge = () => step(-STEP_LARGE);
+
+  // Keyboard bindings
+  function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'ArrowRight') stepForwardSmall();
+    else if (e.key === 'ArrowLeft') stepBackwardSmall();
+    else if (e.key === 'PageDown') stepForwardLarge();
+    else if (e.key === 'PageUp') stepBackwardLarge();
+  }
 
   onMount(() => {
-    animator.addCallback({
-      at: timelineDuration,
-      fn: () => {
-        console.log('Done');
-        animator.pause();
-      },
-    });
+    if (browser) {
+      window.addEventListener('keydown', handleKeydown);
+    }
+  });
 
-    // Schedule steps in timeline
-    steps.forEach((val, index) => {
-      animator.addCallback({
-        at: index * STEP_DURATION,
-        fn: () => (display = val),
-      });
-    });
-
-    animator.play();
+  onDestroy(() => {
+    if (browser) {
+      window.removeEventListener('keydown', handleKeydown);
+    }
   });
 </script>
 
-<div class="bitshift-demo">
-  <h3>Bitshift Demo: 6 &lt;&lt; 2</h3>
-  <div class="binary-display">
-    {#each display.split('') as bit, index (bit + index)}
-      <span class="bit">{bit}</span>
-    {/each}
-  </div>
-  <p>Decimal: {parseInt(display, 2)}</p>
+<svg {width} {height} style="border:1px solid #ccc">
+  <circle cx={x} cy={y} r="20" fill={color} />
+</svg>
+
+<!-- Debug info -->
+<p>Time: {Math.round(animationState.time)} ms</p>
+<p>Playing: {animationState.playing ? 'yes' : 'no'}</p>
+
+<!-- Playback controls -->
+<div class="controls">
+  <button onclick={() => animator.restart()}>Restart</button>
+  <button onclick={() => animator.pause()}>Pause</button>
+  <button onclick={() => animator.play()}>Play</button>
+</div>
+
+<!-- Step controls -->
+<div class="step-controls">
+  <button onclick={stepBackwardLarge}>‹‹ -100ms</button>
+  <button onclick={stepBackwardSmall}>‹ -16ms</button>
+
+  <button onclick={stepForwardSmall}>+16ms ›</button>
+  <button onclick={stepForwardLarge}>+100ms ››</button>
 </div>
 
 <style>
-  .bitshift-demo {
-    font-family: monospace;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .binary-display {
+  .controls,
+  .step-controls {
     display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+    gap: 8px;
+    margin-top: 8px;
   }
-
-  .bit {
-    display: inline-block;
-    width: 2rem;
-    height: 2rem;
-    margin: 0 0.25rem;
-    line-height: 2rem;
-    background: #ddd;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 1.5rem;
+  button {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+  }
+  button:active {
+    transform: translateY(1px);
+  }
+  circle {
+    transition: fill 0.2s linear;
   }
 </style>
