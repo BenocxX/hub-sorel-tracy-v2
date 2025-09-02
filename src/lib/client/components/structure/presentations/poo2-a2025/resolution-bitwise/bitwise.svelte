@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BitshiftAnimation from '$lib/client/components/animator/animations/bitshift-animation.svelte';
   import {
     BasicSlide,
     Bold,
@@ -37,4 +38,8 @@
   <div class="fragment flex w-full items-center justify-center py-16">
     <p><Bold class="!text-5xl">Comment faire traditionnellement 🧐 ?</Bold></p>
   </div>
+</BasicSlide>
+<BasicSlide>
+  <p>Test Animator</p>
+  <!-- <BitshiftAnimation /> -->
 </BasicSlide>
