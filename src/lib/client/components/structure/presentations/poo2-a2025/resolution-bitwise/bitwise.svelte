@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BitshiftAnimation from '$lib/client/components/animator/animations/bitshift-animation.svelte';
+  import BitshiftAnimation2 from '$lib/client/components/animator/animations/bitshift-animation-2.svelte';
   import {
     BasicSlide,
     Bold,
@@ -40,5 +40,5 @@
   </div>
 </BasicSlide>
 <BasicSlide>
-  <BitshiftAnimation />
+  <BitshiftAnimation2 />
 </BasicSlide>
