@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { tweened } from 'svelte/motion';
   import { Button } from '../../ui/button';
   import Checkbox from '../../ui/checkbox/checkbox.svelte';
-  import { animated } from '../animate.svelte';
+  import { tweener } from '../tweener.svelte';
   import { interpolateLab } from 'd3-interpolate';
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,15 +11,14 @@
   let isPlaying = $state(false);
   let isLoop = $state(false);
 
-  const circle = animated({ left: 25, top: 50, right: 0, bottom: 0 }, { duration: 500 });
-  const color = tweened('#FFF', { interpolate: interpolateLab });
+  const circle = tweener({ left: 25, top: 50, right: 0, bottom: 0 }, { duration: 500 });
+  const color = tweener('#FFF', { interpolate: interpolateLab });
 
-  steps.push(() => Promise.all([circle.to({ left: 25, top: 50 }), color.set('#FFF')]));
+  steps.push(() => Promise.all([circle.to({ left: 25, top: 50 }), color.to('#FFF')]));
   steps.push(() => circle.to({ left: 75, top: 50 }));
-  steps.push(() => circle.to({ left: 25, top: 50 }));
-  steps.push(() => Promise.all([circle.to({ left: 25, top: 25 }), color.set('#FF0000')]));
-  steps.push(() => circle.to({ left: 25, top: 75 }));
-  steps.push(() => circle.to({ left: 25, top: 50 }));
+  steps.push(() => Promise.all([circle.to({ left: 75, top: 25 }), color.to('#FF0000')]));
+  steps.push(() => circle.to({ left: 75, top: 75 }));
+  steps.push(() => circle.to({ left: 75, top: 50 }));
 
   async function play() {
     do {
@@ -91,8 +89,8 @@
 <div class="relative h-[300px] w-full rounded-xl bg-secondary">
   <div
     class="absolute h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
-    style="left: {circle.tween.current.left}%; top: {circle.tween.current.top}%; right: {circle
-      .tween.current.right}%; bottom: {circle.tween.current.bottom}%; background-color: {$color};"
+    style="left: {circle.current.left}%; top: {circle.current.top}%; right: {circle.current
+      .right}%; bottom: {circle.current.bottom}%; background-color: {color.current};"
   ></div>
 </div>
 <div class="flex items-center justify-center gap-2 pt-8 *:!text-lg">
