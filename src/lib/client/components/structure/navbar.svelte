@@ -16,18 +16,18 @@
       href: resolve('/'),
       label: 'Accueil',
     },
-    {
-      href: resolve('/program'),
-      label: 'Notre programme',
-    },
-    {
-      href: '#', // TODO: Change to resolve('/about')
-      label: 'À propos',
-    },
-    {
-      href: '#', // TODO: Change to resolve('/contact')
-      label: 'Contact',
-    },
+    // {
+    //   href: resolve('/program'),
+    //   label: 'Notre programme',
+    // },
+    // {
+    //   href: '#', // TODO: Change to resolve('/about')
+    //   label: 'À propos',
+    // },
+    // {
+    //   href: '#', // TODO: Change to resolve('/contact')
+    //   label: 'Contact',
+    // },
   ];
 
   const { class: classes }: { class?: string } = $props();
