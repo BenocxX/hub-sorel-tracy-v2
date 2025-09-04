@@ -25,13 +25,13 @@
     },
     {
       name: 'Jean-Philippe Hébert',
-      role: 'Entrepreneuriat et gestion',
+      role: 'Coordonateur du HUB',
       passion: "Passionné d'entrepreneuriat",
       imageUrl: JeanPhilippeHebertFace,
     },
     {
       name: 'David Tucker',
-      role: 'Développeur blockchain et I.A.',
+      role: 'Blockchain et cyber-sécurité',
       passion: "Fan d'univers d'horreur",
       imageUrl: DavidTuckerFace,
     },
@@ -43,7 +43,7 @@
     },
     {
       name: 'Christoper Massé',
-      role: 'Spécialiste base de données',
+      role: 'Spécialiste bases de données',
       passion: 'Joueur de jeux de société',
       imageUrl: ChristoperMasseFace,
     },
