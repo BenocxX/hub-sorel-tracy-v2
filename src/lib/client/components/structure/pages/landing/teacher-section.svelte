@@ -7,47 +7,69 @@
   import JordanRiouxLeclaireFace from '$lib/client/assets/images/landing/teachers/jordan-rioux-leclaire-face.jpg';
   import MathisCoteFace from '$lib/client/assets/images/landing/teachers/mathis-cote-face.jpg';
   import RichardFarleyFace from '$lib/client/assets/images/landing/teachers/richard-farley-face.jpg';
+  import HugoLarochelleFace from '$lib/client/assets/images/landing/teachers/hugo-larochelle-face.png';
+  import SamuelParadisFace from '$lib/client/assets/images/landing/teachers/samuel-paradis-face.png';
 
   const people = [
     {
-      name: 'Jean-Philippe Hébert',
-      role: 'Enseignant en entrepreneuriat',
-      imageUrl: JeanPhilippeHebertFace,
-    },
-    {
-      name: 'Alexandre Vovan',
-      role: 'Enseignant en écosystèmes connectés',
-      imageUrl: AlexandreVovanFace,
-    },
-    {
       name: 'Richard Farley',
-      role: 'Enseignant en développement personnel',
+      role: 'Spécialiste en algorithmes',
+      passion: 'Amateur de sports et musique',
       imageUrl: RichardFarleyFace,
     },
     {
+      name: 'Alexandre Vovan',
+      role: 'Développement IoT',
+      passion: 'Bicroleur de tout genre',
+      imageUrl: AlexandreVovanFace,
+    },
+    {
+      name: 'Jean-Philippe Hébert',
+      role: 'Entrepreneuriat et gestion',
+      passion: "Passionné d'entrepreneuriat",
+      imageUrl: JeanPhilippeHebertFace,
+    },
+    {
       name: 'David Tucker',
-      role: 'Enseignant en programmation web',
+      role: 'Développeur blockchain et I.A.',
+      passion: "Fan d'univers d'horreur",
       imageUrl: DavidTuckerFace,
     },
     {
-      name: 'Jordan Rioux-Leclaire',
-      role: 'Enseignant en programmation mobile',
+      name: 'Jordan Rioux-Leclair',
+      role: 'Développeur full-stack',
+      passion: 'Amoureux de ses samoyèdes',
       imageUrl: JordanRiouxLeclaireFace,
     },
     {
-      name: 'Hugues Massé',
-      role: 'Enseignant en informatique',
-      imageUrl: HuguesMasseFace,
-    },
-    {
       name: 'Christoper Massé',
-      role: 'Enseignant en base de données',
+      role: 'Spécialiste base de données',
+      passion: 'Joueur de jeux de société',
       imageUrl: ChristoperMasseFace,
     },
     {
+      name: 'Hugues Massé',
+      role: 'Coordonateur du programme',
+      passion: 'Temp',
+      imageUrl: HuguesMasseFace,
+    },
+    {
       name: 'Mathis Côté',
-      role: 'Enseignant en programmation web',
+      role: 'Développeur front-end',
+      passion: "Fan d'arts de tout genre",
       imageUrl: MathisCoteFace,
+    },
+    {
+      name: 'Hugo Larochelle',
+      role: 'Temp',
+      passion: 'Temp',
+      imageUrl: HugoLarochelleFace,
+    },
+    {
+      name: 'Samuel Paradis',
+      role: 'TTP et développeur back-end',
+      passion: 'Amateur de skate',
+      imageUrl: SamuelParadisFace,
     },
   ];
 </script>
@@ -56,12 +78,12 @@
   <div class="container mx-auto grid gap-20 px-6 lg:px-8 xl:grid-cols-3">
     <div class="max-w-xl">
       <h2 class="text-pretty text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-        Vos futurs enseignants
+        Voici le département T.I.
       </h2>
       <p class="mt-6 text-lg leading-8 text-foreground-discreet">
-        Vos futurs enseignants sont des professionnels de l'industrie, passionnés et engagés à
-        partager leurs connaissances en programmation. Ils se consacrent à rester à jour, peu
-        importe la vitesse à laquelle évolue le secteur.
+        Le personnel du département T.I. sont des professionnels de l'industrie, passionnés et
+        engagés à partager leurs connaissances en programmation. Ils se consacrent à rester à jour,
+        peu importe la vitesse à laquelle évolue le secteur.
       </p>
     </div>
     <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
@@ -78,6 +100,9 @@
                 {person.name}
               </h3>
               <p class="text-sm font-semibold leading-6 text-primary">{person.role}</p>
+              <p class="text-xs font-semibold leading-6 text-foreground-discreet">
+                {person.passion}
+              </p>
             </div>
           </div>
         </li>
