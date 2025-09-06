@@ -23,6 +23,7 @@
   import { getSlideSection } from './utils.svelte';
   import { OutsideLink } from '../../utils';
   import SnippetOrString from '../../utils/snippet-or-string.svelte';
+  import SubTitle from './subtitles/sub-title.svelte';
 
   const {
     title,
@@ -94,7 +95,7 @@
       {#if subTitleComponent}
         {@render subTitleComponent()}
       {:else if subTitle}
-        <h4 class="text-foreground-discreet sm:text-xl">{subTitle}</h4>
+        <SubTitle>{subTitle}</SubTitle>
       {/if}
     </div>
     <div
