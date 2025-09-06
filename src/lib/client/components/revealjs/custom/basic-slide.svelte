@@ -52,15 +52,15 @@
       <div class="space-y-2">
         <div class="flex items-center gap-2" data-id="buttons-row">
           <a href="#/table-of-content" class={buttonVariants({ variant: 'outline', size: 'xs' })}>
-            <ArrowLeft size={16} className="mr-2" />
+            <ArrowLeft size={16} />
             Table des matières
           </a>
           {#if links?.length}
             <Dialog.Root>
               <Dialog.Trigger>
                 {#snippet child({ props })}
-                  <Button variant="outline" size="sm" {...props}>
-                    <Link size={16} class="mr-2" />
+                  <Button variant="outline" size="xs" {...props}>
+                    <Link size={16} />
                     Liens
                   </Button>
                 {/snippet}

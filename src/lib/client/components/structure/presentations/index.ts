@@ -12,6 +12,7 @@ type PresentationComponent = {
 const presentationComponents: PresentationComponent[] = [
   { id: 'web1-a2025-intro-html', component: web1A2025.IntroHtml },
   { id: 'web1-a2025-html-semantique', component: web1A2025.HTMLSemantique },
+  { id: 'web1-a2025-intro-css', component: web1A2025.IntroCss },
   { id: 'web3-a2025-intro-requetes-ajax', component: web3A2025.IntroRequetesAjax },
   { id: 'poo2-a2025-intro-refactoring', component: poo2A2025.IntroRefactoring },
   { id: 'poo2-a2025-mauvaises-odeurs', component: poo2A2025.MauvaisesOdeurs },
