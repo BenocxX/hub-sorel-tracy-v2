@@ -1,7 +1,7 @@
 import { resolve } from '$app/paths';
 import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
-import { ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte';
+import { Archive, ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte';
 
 function makePresentationLinksForCourse(course: Course<{ presentations: true }> | null) {
   if (!course) return [];
@@ -117,7 +117,7 @@ export function makeSidebarSections({
         {
           type: 'collapsible',
           label: 'Contenu',
-          icon: Presentation,
+          icon: Archive,
           isOpen: true,
           items: [
             {

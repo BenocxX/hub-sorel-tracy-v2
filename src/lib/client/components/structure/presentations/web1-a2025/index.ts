@@ -1,5 +1,17 @@
 import IntroHtml from './intro-html/presentation.svelte';
 import HTMLSemantique from './html-semantique/presentation.svelte';
 import IntroCss from './intro-css/presentation.svelte';
+import Liens from './liens/presentation.svelte';
+import Images from './images/presentation.svelte';
+import Espacements from './espacements/presentation.svelte';
 
-export { IntroHtml, HTMLSemantique, IntroCss };
+export function makeWeb1PresentationComponents() {
+  return [
+    { id: 'web1-a2025-intro-html', component: IntroHtml },
+    { id: 'web1-a2025-html-semantique', component: HTMLSemantique },
+    { id: 'web1-a2025-intro-css', component: IntroCss },
+    { id: 'web1-a2025-liens', component: Liens },
+    { id: 'web1-a2025-images', component: Images },
+    { id: 'web1-a2025-espacements', component: Espacements },
+  ];
+}

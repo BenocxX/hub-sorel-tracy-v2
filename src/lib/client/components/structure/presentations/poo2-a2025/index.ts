@@ -4,10 +4,12 @@ import GestionnaireDeSources from './gestionnaire-de-sources/presentation.svelte
 import RefactoringDeMethodes from './refactoring-de-methodes/presentation.svelte';
 import ResolutionBitwise from './resolution-bitwise/presentation.svelte';
 
-export {
-  IntroRefactoring,
-  MauvaisesOdeurs,
-  GestionnaireDeSources,
-  RefactoringDeMethodes,
-  ResolutionBitwise,
-};
+export function makePoo2PresentationComponents() {
+  return [
+    { id: 'poo2-a2025-intro-refactoring', component: IntroRefactoring },
+    { id: 'poo2-a2025-mauvaises-odeurs', component: MauvaisesOdeurs },
+    { id: 'poo2-a2025-gestionnaire-de-sources', component: GestionnaireDeSources },
+    { id: 'poo2-a2025-refactoring-de-methodes', component: RefactoringDeMethodes },
+    { id: 'poo2-a2025-resolution-bitwise', component: ResolutionBitwise },
+  ];
+}
