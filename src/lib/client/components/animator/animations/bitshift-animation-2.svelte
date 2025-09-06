@@ -1,13 +1,13 @@
 <script lang="ts">
   import { all, TweenStepper } from '../tween-stepper.svelte';
   import { tweener } from '../tweener.svelte';
-  import { interpolateLab } from 'd3-interpolate';
+  import * as d3Interpolate from 'd3-interpolate';
   import TweenStepperControls from '../tween-stepper-controls.svelte';
 
   const stepper = new TweenStepper();
 
   const position = tweener({ left: 25, top: 50, right: 0, bottom: 0 }, { duration: 500 });
-  const color = tweener('#FFF', { interpolate: interpolateLab });
+  const color = tweener('#FFF', { interpolate: d3Interpolate.interpolateLab });
 
   stepper.addStep(() => all(position.to({ left: 25, top: 50 }), color.to('#FFF')));
   stepper.addStep(() => position.to({ left: 75, top: 50 }));
