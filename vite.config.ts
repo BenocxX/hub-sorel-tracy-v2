@@ -4,4 +4,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [sveltekit(), devtoolsJson()],
+  build: {
+    rollupOptions: {
+      external: ['d3-interpolate'],
+    },
+  },
 });
