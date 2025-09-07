@@ -5,7 +5,9 @@ import { Tween } from 'svelte/motion';
  * Extracts the second constructor parameter type from a class constructor type. Also provides a generic T
  * for the second constructor parameter.
  */
-type TweenOptions<C, T> = C extends new (arg0: any, arg1: infer P, ...rest: any) => any ? P : never;
+export type TweenOptions<C, T> = C extends new (arg0: any, arg1: infer P, ...rest: any) => any
+  ? P
+  : never;
 
 export type TweenerTo<T> = (
   value: Partial<T>,

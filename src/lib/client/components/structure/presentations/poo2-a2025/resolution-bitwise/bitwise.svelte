@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BitshiftAnimation2 from '$lib/client/components/animator/animations/bitshift-animation-2.svelte';
+  import BitshiftAnimation2 from '$lib/client/components/animator/animations/example-animation.svelte';
   import {
     BasicSlide,
     Bold,
