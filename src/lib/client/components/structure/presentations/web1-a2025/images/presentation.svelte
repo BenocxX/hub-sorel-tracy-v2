@@ -14,7 +14,7 @@
     utilisationCss: 'Utilisation depuis la structure CSS',
   };
 
-  currentPresentation.title = "Traitement d'images";
+  currentPresentation.title = "Utilisation d'images";
 
   initializeSlideLinks();
 </script>
