@@ -8,6 +8,7 @@
   import Padding from './padding.svelte';
   import Border from './border.svelte';
   import Margin from './margin.svelte';
+  import Playground from './playground.svelte';
 
   const sections = {
     typesEspacements: "Types d'espacements",
@@ -16,6 +17,7 @@
     padding: 'Padding',
     border: 'Border',
     margin: 'Margin',
+    playground: 'Playground',
   };
 
   currentPresentation.title = 'Les espacements';
@@ -30,4 +32,5 @@
   <Padding section={sections.padding} />
   <Border section={sections.border} />
   <Margin section={sections.margin} />
+  <Playground section={sections.playground} />
 </PresentationRoot>
