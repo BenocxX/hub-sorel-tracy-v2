@@ -12,7 +12,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 7 });
 
   const gameOfThroneImage =
     'https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg';

@@ -14,7 +14,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 10 });
 
   const gameOfThroneImage =
     'https://images.justwatch.com/poster/297859466/s166/game-of-thrones.webp';
