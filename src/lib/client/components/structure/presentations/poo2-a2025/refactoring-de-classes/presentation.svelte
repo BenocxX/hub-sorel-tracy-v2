@@ -12,7 +12,7 @@
     couplage: 'Couplage',
   };
 
-  currentPresentation.title = 'Refactoring de méthodes';
+  currentPresentation.title = 'Refactoring de classes';
 
   initializeSlideLinks();
 </script>

@@ -88,6 +88,46 @@ Run the following command to connect to the database and make sure everything is
 psql -U [USERNAME] -d postgres -h localhost -d [DB_NAME] -W
 ```
 
+#### Backup data
+
+```bash
+pg_dump -U [USERNAME] -h localhost -d [DB_NAME] -F c -f ~/db_backups/[DB_NAME].[DATE].backup
+```
+
+##### Restore backup
+
+To restore the db on a new server/db:
+
+```bash
+# Create a new DB
+sudo -u postgres createdb [DB_NAME] -O [USERNAME]
+
+# Restore
+pg_restore -U [USERNAME] -d [DB_NAME] ~/db_backups/[DB_NAME].[DATE].backup
+```
+
+Or if you want pg_restore to create the database automatically:
+
+```bash
+pg_restore -U [USERNAME] -C ~/db_backups/[DB_NAME].[DATE].backup
+```
+
+##### Export backup to desktop
+
+You can export a backup from the server to your local computer:
+
+```bash
+scp -i /path/to/your/key.pem [LINUX_USER]@[PUBLIC_IP]:~/db_backups/[DB_NAME].[DATE].backup ~/Downloads/
+```
+
+##### Import backup from desktop
+
+You can push a local backup to the server:
+
+```bash
+scp -i /path/to/your/key.pem ~/[DB_NAE].[DATE].backup [LINUX_USER]@[EC2_PUBLIC_IP]:~/db_backups/
+```
+
 ### Install bun
 
 We are using Bun to bundle the project. We can install bun using:

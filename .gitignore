@@ -1,5 +1,7 @@
 /src/generated
 
+/prisma/backups
+
 node_modules
 
 # Output
