@@ -47,7 +47,9 @@
   <Sidebar.Content>
     {#each sidebarSections.filter((section) => !section.isHidden) as section (section)}
       <Sidebar.Group>
-        <Sidebar.GroupLabel>{section.label}</Sidebar.GroupLabel>
+        <Sidebar.GroupLabel class="pointer-events-none">
+          {section.label}
+        </Sidebar.GroupLabel>
         <Sidebar.Menu>
           {#each section.items.filter((item) => !item.isHidden) as sectionItem (sectionItem)}
             {#if sectionItem.type === 'link'}
