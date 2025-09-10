@@ -27,6 +27,7 @@
     const Notes = (await import('reveal.js/plugin/notes/notes')).default;
 
     const defaults: Reveal.Options = {
+      embedded: true,
       plugins: [Zoom, Highlight, Notes],
       // slide controls
       controls: true,
