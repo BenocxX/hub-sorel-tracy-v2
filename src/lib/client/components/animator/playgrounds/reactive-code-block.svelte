@@ -16,11 +16,11 @@
 
 <div
   class={cn(
-    'w-full max-w-full overflow-x-auto rounded-xl bg-secondary dark:bg-secondary',
+    'w-full max-w-full overflow-x-auto overflow-y-hidden rounded-xl bg-secondary dark:bg-secondary',
     className
   )}
 >
-  <pre class="-my-[64px] px-4">
+  <pre class="-my-[48px] px-4 md:-my-[64px]">
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     <div>{@html highlightedCode}</div>
   </pre>

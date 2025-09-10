@@ -55,7 +55,7 @@
     </div>
   </div>
   <ul
-    class="h-[400px] w-full list-disc space-y-0 rounded-xl bg-secondary p-8 pl-12 *:w-max *:!text-xl md:h-full md:w-1/2"
+    class="!h-[324px] w-full list-disc space-y-0 rounded-xl bg-secondary p-8 pl-12 *:w-max *:!text-xl md:h-full md:w-1/2"
   >
     <li>Item 1</li>
     <li>Item 2</li>
@@ -66,7 +66,7 @@
 </div>
 
 <div class="flex gap-16">
-  <div class="flex-1"></div>
+  <div class="hidden flex-1 md:flex"></div>
   <ReactiveCodeBlock
     class="flex-1"
     language="CSS"

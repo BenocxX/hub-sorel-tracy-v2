@@ -17,7 +17,7 @@
     padding: 'Padding',
     border: 'Border',
     margin: 'Margin',
-    playground: 'Playground',
+    playground: 'Bac à sable',
   };
 
   currentPresentation.title = 'Les espacements';
