@@ -24,8 +24,10 @@
   const DELAY_MAX = 100;
   const DELAY_MIN = 0;
 
-  let debouncerDelay = new Tween(DELAY_MAX, { duration: DEBOUNCE_DELAY });
+  let debounceDelay = new Tween(DELAY_MAX, { duration: DEBOUNCE_DELAY });
+
   let debouncerResult = $state('');
+  let debounceResult = $state('');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function debounce(callback: (...args: any[]) => void, delay: number) {
@@ -34,8 +36,8 @@
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return async function (...args: any[]) {
       clearTimeout(timeoutId);
-      debouncerDelay.set(DELAY_MAX, { duration: 0 });
-      debouncerDelay.target = DELAY_MIN;
+      debounceDelay.set(DELAY_MAX, { duration: 0 });
+      debounceDelay.target = DELAY_MIN;
 
       timeoutId = setTimeout(() => {
         callback(...args);
@@ -122,13 +124,54 @@
 
 const input = document.querySelector("input");
 input.addEventListener("input", debouncer.debounce);`,
+  ];
 
-    `const debouncer = new Debouncer((event) => {
-  console.log("Input: ", event.target.value);
-}, ${DEBOUNCE_DELAY});
+  const debounceFunctionCodes = [
+    `function debounce(callback, delay) {
+    
+};
 
-const input = document.querySelector("input");
-input.addEventListener("input", debouncer.debounce);`,
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+
+    `function debounce(callback, delay) {
+  let timeoutId;
+    
+};
+
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+
+    `function debounce(callback, delay) {
+  let timeoutId;
+  
+  return () => {
+      
+  };
+}
+  
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+
+    `function debounce(callback, delay) {
+  let timeoutId;
+  
+  return () => {
+    clearTimeout(timeoutId);
+  };
+}
+  
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+
+    `function debounce(callback, delay) {
+  let timeoutId;
+
+  return () => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback();
+    }, delay);
+  };
+}
+
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
   ];
 </script>
 
@@ -301,7 +344,16 @@ input.addEventListener("input", debouncer.debounce);`,
   <p>
     Voici un exemple d'utilisation de la classe <InlineCodeBlock>Debouncer</InlineCodeBlock> :
   </p>
-  <CodeBlock autoAnimateId="debouncer-usage" language="JS" code={debouncerUsageCodes.at(-1) ?? ''}>
+  <CodeBlock
+    autoAnimateId="debouncer-usage"
+    language="JS"
+    code={`const debouncer = new Debouncer((event) => {
+  console.log("Input: ", event.target.value);
+}, ${DEBOUNCE_DELAY});
+
+const input = document.querySelector("input");
+input.addEventListener("input", debouncer.debounce);`}
+  >
     <Label for="debounced-input" class="mb-4">Input avec debounce</Label>
     <Input
       id="debounced-input"
@@ -315,9 +367,64 @@ input.addEventListener("input", debouncer.debounce);`,
     <div class="relative my-4 h-2 w-full overflow-hidden rounded bg-secondary">
       <div
         class="h-full bg-primary transition-[width] duration-100 ease-linear"
-        style="width: {debouncerDelay.current}%;"
+        style="width: {debounceDelay.current}%;"
       ></div>
     </div>
     <p>Résultat debounced : {debouncerResult}</p>
+  </CodeBlock>
+</BasicSlide>
+<BasicSlide>
+  <p>
+    Toutefois, comme vous le savez, JavaScript est un langage "fonctionnel". Cela signifie que nous
+    pouvons créer des fonctions qui retournent d'autres fonctions. C'est exactement ce que nous
+    allons faire pour notre debounce.
+  </p>
+  <p>
+    Rien nous empêche d'utiliser la class <InlineCodeBlock>Debouncer</InlineCodeBlock>, mais il est
+    plus courant d'utiliser une fonction pour effectuer un debounce.
+  </p>
+</BasicSlide>
+{#each debounceFunctionCodes as code, index (index)}
+  <BasicSlide>
+    <CodeBlock autoAnimateId="debounce-function" language="JS" {code} />
+  </BasicSlide>
+{/each}
+<BasicSlide>
+  <p>
+    Voici un exemple d'utilisation de la fonction <InlineCodeBlock>debounce()</InlineCodeBlock> :
+  </p>
+  <CodeBlock
+    autoAnimateId="debounce-function"
+    language="JS"
+    code={`function debounce(callback, delay) {
+  let timeoutId;
+
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback(...args);
+    }, delay);
+  };
+}
+  
+input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`}
+  >
+    <Label for="debounced-input-2" class="mb-4">Input avec debounce</Label>
+    <Input
+      id="debounced-input-2"
+      type="text"
+      placeholder="Tapez quelque chose..."
+      oninput={debounce((event) => {
+        console.log('Input: ', event.target.value);
+        debounceResult = event.target.value;
+      }, DEBOUNCE_DELAY)}
+    />
+    <div class="relative my-4 h-2 w-full overflow-hidden rounded bg-secondary">
+      <div
+        class="h-full bg-primary transition-[width] duration-100 ease-linear"
+        style="width: {debounceDelay.current}%;"
+      ></div>
+    </div>
+    <p>Résultat debounced : {debounceResult}</p>
   </CodeBlock>
 </BasicSlide>
