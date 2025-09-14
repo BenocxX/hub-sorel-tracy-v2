@@ -2,10 +2,14 @@
   import PresentationRoot from '$lib/client/components/revealjs/custom/presentation-root.svelte';
   import { currentPresentation } from '$lib/client/components/revealjs/store.svelte';
   import { initializeSlideLinks } from '$lib/client/components/revealjs/custom/utils.svelte';
-  import Event from './event.svelte';
+  import Intro from './intro.svelte';
+  import EventBubbling from './event-bubbling.svelte';
+  import EventDelegation from './event-delegation.svelte';
 
   const sections = {
-    event: 'Event bubbling',
+    intro: 'Introduction',
+    eventBubbling: 'Event bubbling',
+    eventDelegation: 'Event delegation',
   };
 
   currentPresentation.title = "Optimisation d'événements";
@@ -14,5 +18,7 @@
 </script>
 
 <PresentationRoot>
-  <Event section={sections.event} />
+  <Intro section={sections.intro} />
+  <EventBubbling section={sections.eventBubbling} />
+  <EventDelegation section={sections.eventDelegation} />
 </PresentationRoot>

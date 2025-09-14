@@ -11,7 +11,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 23 });
 
   const usageCodes = [
     `const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;`,
