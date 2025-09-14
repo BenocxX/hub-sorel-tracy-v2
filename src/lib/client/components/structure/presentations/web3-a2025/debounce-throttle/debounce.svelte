@@ -18,7 +18,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 3 });
 
   const DEBOUNCE_DELAY = 1000;
   const DELAY_MAX = 100;
