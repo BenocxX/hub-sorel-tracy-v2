@@ -165,9 +165,7 @@ input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000))
 
   return () => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      callback();
-    }, delay);
+    timeoutId = setTimeout(() => callback(), delay);
   };
 }
 
@@ -401,9 +399,7 @@ input.addEventListener("input", debouncer.debounce);`}
 
   return (...args) => {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-      callback(...args);
-    }, delay);
+    timeoutId = setTimeout(() => callback(...args), delay);
   };
 }
   
