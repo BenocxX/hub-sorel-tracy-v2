@@ -4,6 +4,7 @@ import GestionnaireDeSources from './gestionnaire-de-sources/presentation.svelte
 import RefactoringDeMethodes from './refactoring-de-methodes/presentation.svelte';
 import RefactoringDeClasses from './refactoring-de-classes/presentation.svelte';
 import TestsUnitaires from './tests-unitaires/presentation.svelte';
+import GestionErreurs from './gestion-erreurs/presentation.svelte';
 
 // Not done, used for testing animation system
 import ResolutionBitwise from './resolution-bitwise/presentation.svelte';
@@ -16,6 +17,7 @@ export function makePoo2PresentationComponents() {
     { id: 'poo2-a2025-refactoring-de-methodes', component: RefactoringDeMethodes },
     { id: 'poo2-a2025-refactoring-de-classes', component: RefactoringDeClasses },
     { id: 'poo2-a2025-tests-unitaires', component: TestsUnitaires },
+    { id: 'poo2-a2025-gestion-erreurs', component: GestionErreurs },
 
     // Not done, used for testing animation system
     { id: 'poo2-a2025-resolution-bitwise', component: ResolutionBitwise },
