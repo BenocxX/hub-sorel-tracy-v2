@@ -33,6 +33,18 @@
   </List>
 </BasicSlide>
 <BasicSlide>
+  <List listType="ol" paragraph="Pour installer JUnit dans un projet :">
+    <li>Cliquez sur "File &gt; Project Structure"</li>
+    <li>Allez dans la section "Libraries"</li>
+    <li>Cliquez sur le bouton "+" et sélectionnez "From Maven..."</li>
+    <li>
+      Écrivez la ligne suivante:
+      <InlineCodeBlock>org.junit.jupiter:junit-jupiter:5.9.1</InlineCodeBlock>
+    </li>
+    <li>Cliquez sur le bouton "Ok" et vous devriez pouvoir débuter l'utilisation de JUnit.</li>
+  </List>
+</BasicSlide>
+<BasicSlide>
   <p>
     Pour rédiger une classe de tests, il suffit de créer, tout d'abord, une classe standard en
     respectant la même hiérarchie que la classe à tester (ceci permet de respecter les visibilités
