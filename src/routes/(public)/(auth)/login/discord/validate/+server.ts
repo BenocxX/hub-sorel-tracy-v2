@@ -20,7 +20,10 @@ export const GET = async (event) => {
   const discordUser = await discordAuthService.getDiscordUser(tokens.accessToken());
   await authenticate(event, discordUser, tokens);
 
-  return redirect(302, resolve('/savant'));
+  const redirectTo = event.cookies.get('redirectTo');
+  event.cookies.delete('redirectTo', { path: '/' });
+
+  return redirect(302, redirectTo ?? resolve('/savant'));
 };
 
 async function authenticate(event: RequestEvent, discordUser: DiscordUser, tokens: OAuth2Tokens) {

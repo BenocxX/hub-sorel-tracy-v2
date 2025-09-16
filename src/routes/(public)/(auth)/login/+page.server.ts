@@ -34,6 +34,9 @@ export const actions = {
 
     await authService.createSession(event, user);
 
-    return redirect(302, resolve('/savant'));
+    const redirectTo = event.cookies.get('redirectTo');
+    event.cookies.delete('redirectTo', { path: '/' });
+
+    return redirect(302, redirectTo ?? resolve('/savant'));
   },
 };

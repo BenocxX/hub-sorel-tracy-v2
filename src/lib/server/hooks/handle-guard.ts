@@ -1,17 +1,15 @@
-import { redirect, type Handle } from '@sveltejs/kit';
+import { redirect, type Handle, type RequestEvent } from '@sveltejs/kit';
 import { resolve } from '$app/paths';
 
 const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
 
 export const handleGuard: Handle = async ({ event, resolve }) => {
-  const routeId = event.route.id;
-
-  if (!routeId) {
+  if (!event.route.id) {
     return resolve(event);
   }
 
   for (const guard of guards) {
-    await guard(routeId, event.locals.user);
+    await guard(event, event.locals.user);
   }
 
   return resolve(event);
@@ -20,8 +18,8 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
 /**
  * Guard public auth routes from authenticated users
  */
-async function publicGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes('/(public)/(auth)') && user) {
+async function publicGuard({ route: { id } }: RequestEvent, user?: App.Locals['user']) {
+  if (id!.includes('/(public)/(auth)') && user) {
     throw redirect(303, resolve('/'));
   }
 }
@@ -29,8 +27,9 @@ async function publicGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard private routes from unauthenticated users
  */
-async function dashboardGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes(resolve('/savant')) && !user) {
+async function dashboardGuard(event: RequestEvent, user?: App.Locals['user']) {
+  if (event.route.id!.includes(resolve('/savant')) && !user) {
+    event.cookies.set('redirectTo', event.url.pathname + event.url.search, { path: '/' });
     throw redirect(303, resolve('/login'));
   }
 }
@@ -38,8 +37,8 @@ async function dashboardGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard private routes from non-teacher users
  */
-async function teacherGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes(resolve('/savant/teacher')) && (!user || user.role === 'Student')) {
+async function teacherGuard({ route: { id } }: RequestEvent, user?: App.Locals['user']) {
+  if (id!.includes(resolve('/savant/teacher')) && (!user || user.role === 'Student')) {
     throw redirect(303, resolve('/savant'));
   }
 }
@@ -47,8 +46,8 @@ async function teacherGuard(route: string, user?: App.Locals['user']) {
 /**
  * Guard admin routes from non-admin users
  */
-async function adminGuard(route: string, user?: App.Locals['user']) {
-  if (route.includes(resolve('/savant/admin')) && (!user || user.role !== 'Admin')) {
+async function adminGuard({ route: { id } }: RequestEvent, user?: App.Locals['user']) {
+  if (id!.includes(resolve('/savant/admin')) && (!user || user.role !== 'Admin')) {
     throw redirect(303, resolve('/savant'));
   }
 }
