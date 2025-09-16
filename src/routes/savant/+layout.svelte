@@ -41,7 +41,7 @@
           {/if}
         </div>
       </div>
-      <div class="itemsnter flex gap-3">
+      <div class="itemsnter flex gap-2">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             {#snippet child({ props })}

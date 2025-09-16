@@ -47,17 +47,17 @@
   }
 
   const throttleClassCode = [
-    `class Throttle {
+    `class Throttler {
 
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) {
 
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) {
     this.callback = callback;
     this.delay = delay;
@@ -67,7 +67,7 @@
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) {
     this.callback = callback;
     this.delay = delay;
@@ -81,7 +81,7 @@
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) { /* ... */ }
 
   throttle(...args) {
@@ -89,7 +89,7 @@
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) { /* ... */ }
 
   throttle(...args) {
@@ -99,7 +99,7 @@
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) { /* ... */ }
 
   throttle(...args) {
@@ -113,7 +113,7 @@
   }
 }`,
 
-    `class Throttle {
+    `class Throttler {
   constructor(callback, delay) { /* ... */ }
 
   throttle(...args) {
@@ -202,12 +202,12 @@
   </p>
   <CodeBlock
     language="JS"
-    code={`const throttle = new Throttle((event) => {
-  console.log("Input: ", event.target.value);
-}, ${THROTTLE_DELAY}).throttle;
+    code={`function handleInput(event) {
+  console.log("Input:", event.target.value);
+}
 
-const input = document.querySelector("input");
-input.addEventListener("input", throttle);`}
+const throttler = new Throttler(handleInput, ${THROTTLE_DELAY});
+input.addEventListener("input", throttler.throttle);`}
   >
     <Label for="debounced-input" class="mb-4">Input avec throttle</Label>
     <Input
@@ -225,7 +225,7 @@ input.addEventListener("input", throttle);`}
         style="width: {throttleDelay.current}%;"
       ></div>
     </div>
-    <p>Résultat debounced : {throttleClassResult}</p>
+    <p>Résultat throttle : {throttleClassResult}</p>
   </CodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -250,9 +250,12 @@ input.addEventListener("input", throttle);`}
   </p>
   <CodeBlock
     language="JS"
-    code={`input.addEventListener('input', throttle((event) => {
-  console.log("Input: ", event.target.value);
-}, ${THROTTLE_DELAY}));`}
+    code={`function handleInput(event) {
+    console.log("Input:", event.target.value);
+}
+
+const throttledHandleInput = throttle(handleInput, ${THROTTLE_DELAY});
+input.addEventListener('input', throttledHandleInput);`}
   >
     <Label for="debounced-input" class="mb-4">Input avec throttle</Label>
     <Input
@@ -270,6 +273,6 @@ input.addEventListener("input", throttle);`}
         style="width: {throttleDelay.current}%;"
       ></div>
     </div>
-    <p>Résultat debounced : {throttleFuncResult}</p>
+    <p>Résultat throttle : {throttleFuncResult}</p>
   </CodeBlock>
 </BasicSlide>
