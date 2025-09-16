@@ -49,34 +49,70 @@
     `class Debouncer {
 
 }`,
+
     `class Debouncer {
+  callback = null;
+  delay = null;
+  timeoutId = null;
+}`,
+
+    `class Debouncer {
+  callback = null;
+  delay = null;
+  timeoutId = null;
+
   constructor(callback, delay) {
 
   }
 }`,
+
     `class Debouncer {
+  callback = null;
+  delay = null;
+  timeoutId = null;
+
   constructor(callback, delay) {
     this.callback = callback;
     this.delay = delay;
     this.timeoutId = null;
   }
 }`,
+
     `class Debouncer {
+  /* properties */
+
   constructor(callback, delay) {
     this.callback = callback;
     this.delay = delay;
     this.timeoutId = null;
+  }
+}`,
+
+    `class Debouncer {
+  /* properties */
+
+  constructor(callback, delay) {
+    /* initialize properties */
+  }
+}`,
+
+    `class Debouncer {
+  /* properties */
+
+  constructor(callback, delay) {
+    /* initialize properties */
   }
 
   debounce() {
 
   }
 }`,
+
     `class Debouncer {
+  /* properties */
+
   constructor(callback, delay) {
-    this.callback = callback;
-    this.delay = delay;
-    this.timeoutId = null;
+    /* initialize properties */
   }
 
   debounce() {
@@ -84,10 +120,10 @@
   }
 }`,
     `class Debouncer {
+  /* properties */
+
   constructor(callback, delay) {
-    this.callback = callback;
-    this.delay = delay;
-    this.timeoutId = null;
+    /* initialize properties */
   }
 
   debounce() {
@@ -98,10 +134,27 @@
   }
 }`,
     `class Debouncer {
+  /* properties */
+
   constructor(callback, delay) {
-    this.callback = callback;
-    this.delay = delay;
-    this.timeoutId = null;
+    /* initialize properties */
+  }
+
+  debounce(...args) {
+    clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(() => {
+      this.callback(...args);
+    }, this.delay);
+  }
+}`,
+
+    `class Debouncer {
+  /* properties */
+
+  constructor(callback, delay) {
+    /* initialize properties */
+
+    this.debounce = this.debounce.bind(this);
   }
 
   debounce(...args) {
@@ -114,54 +167,80 @@
   ];
 
   const debouncerUsageCodes = [
-    `const debouncer = new Debouncer(() => {
-  console.log("Debounced!");
-}, ${DEBOUNCE_DELAY});`,
+    `function handleInput(event) {
+    console.log("Input:", event.target.value);
+}`,
 
-    `const debouncer = new Debouncer(() => {
-  console.log("Debounced!");
-}, ${DEBOUNCE_DELAY});
+    `function handleInput(event) {
+    console.log("Input:", event.target.value);
+}
 
-const input = document.querySelector("input");
-input.addEventListener("input", debouncer.debounce);`,
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) {
+    console.log("Input:", event.target.value);
+}
+
+const debouncer = new Debouncer(handleInput, ${DEBOUNCE_DELAY});
+
+input.addEventListener("input", handleInput);`,
   ];
 
   const debounceFunctionCodes = [
-    `function debounce(callback, delay) {
-    
-};
+    `function handleInput(event) {
+    console.log("Input:", event.target.value);
+}
 
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+input.addEventListener("input", handleInput);`,
 
-    `function debounce(callback, delay) {
-  let timeoutId;
-    
-};
+    `function handleInput(event) { /* ... */ }
 
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+input.addEventListener("input", handleInput);`,
 
-    `function debounce(callback, delay) {
-  let timeoutId;
-  
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+
+}
+
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
+}
+
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
+
   return () => {
       
   };
 }
-  
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
 
-    `function debounce(callback, delay) {
-  let timeoutId;
-  
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
+
   return () => {
     clearTimeout(timeoutId);
   };
 }
-  
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
 
-    `function debounce(callback, delay) {
-  let timeoutId;
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
 
   return () => {
     clearTimeout(timeoutId);
@@ -169,7 +248,34 @@ input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000))
   };
 }
 
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`,
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
+
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback(...args), delay);
+  };
+}
+
+input.addEventListener("input", handleInput);`,
+
+    `function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
+
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback(...args), delay);
+  };
+}
+
+const debouncedHandleInput = debounce(handleInput, ${DEBOUNCE_DELAY});
+input.addEventListener("input", handleInput);`,
   ];
 </script>
 
@@ -345,11 +451,12 @@ input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000))
   <CodeBlock
     autoAnimateId="debouncer-usage"
     language="JS"
-    code={`const debouncer = new Debouncer((event) => {
-  console.log("Input: ", event.target.value);
-}, ${DEBOUNCE_DELAY});
+    code={`function handleInput(event) {
+    console.log("Input:", event.target.value);
+}
 
-const input = document.querySelector("input");
+const debouncer = new Debouncer(handleInput, ${DEBOUNCE_DELAY});
+
 input.addEventListener("input", debouncer.debounce);`}
   >
     <Label for="debounced-input" class="mb-4">Input avec debounce</Label>
@@ -358,7 +465,7 @@ input.addEventListener("input", debouncer.debounce);`}
       type="text"
       placeholder="Tapez quelque chose..."
       oninput={debounce((event) => {
-        console.log('Input: ', event.target.value);
+        console.log('Input:', event.target.value);
         debouncerResult = event.target.value;
       }, DEBOUNCE_DELAY)}
     />
@@ -388,22 +495,22 @@ input.addEventListener("input", debouncer.debounce);`}
   </BasicSlide>
 {/each}
 <BasicSlide>
-  <p>
-    Voici un exemple d'utilisation de la fonction <InlineCodeBlock>debounce()</InlineCodeBlock> :
-  </p>
   <CodeBlock
     autoAnimateId="debounce-function"
     language="JS"
-    code={`function debounce(callback, delay) {
-  let timeoutId;
+    code={`function handleInput(event) { /* ... */ }
+
+function debounce(callback, delay) {
+  let timeoutId = null;
 
   return (...args) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback(...args), delay);
   };
 }
-  
-input.addEventListener("input", debounce(() => console.log("Debounced!"), 1000));`}
+
+const debouncedHandleInput = debounce(handleInput, ${DEBOUNCE_DELAY});
+input.addEventListener("input", debouncedHandleInput);`}
   >
     <Label for="debounced-input-2" class="mb-4">Input avec debounce</Label>
     <Input

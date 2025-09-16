@@ -41,10 +41,10 @@
       },
       {
         language: 'JS',
-        code: `const parent = document.querySelector('#parent')
+        code: `const parent = document.querySelector('#parent');
 parent.addEventListener('click', () => console.log('Div clicked'));
 
-const child = document.getElementById('child');
+const child = document.querySelector('#child');
 child.addEventListener('click', () => console.log('Button clicked'));`,
       },
     ]}
@@ -73,10 +73,10 @@ child.addEventListener('click', () => console.log('Button clicked'));`,
     codes={[
       {
         language: 'JS',
-        code: `const parent = document.querySelector('#parent')
+        code: `const parent = document.querySelector('#parent');
 parent.addEventListener('click', () => console.log('Div clicked'));
 
-const child = document.getElementById('child');
+const child = document.querySelector('#child');
 child.addEventListener('click', (event) => {
   event.stopPropagation();
 
