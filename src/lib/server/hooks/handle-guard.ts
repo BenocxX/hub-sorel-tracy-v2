@@ -1,5 +1,6 @@
 import { redirect, type Handle, type RequestEvent } from '@sveltejs/kit';
 import { resolve } from '$app/paths';
+import { RedirectToCookie } from '../cookies/redirect-to-cookie';
 
 const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
 
@@ -29,7 +30,7 @@ async function publicGuard({ route: { id } }: RequestEvent, user?: App.Locals['u
  */
 async function dashboardGuard(event: RequestEvent, user?: App.Locals['user']) {
   if (event.route.id!.includes(resolve('/savant')) && !user) {
-    event.cookies.set('redirectTo', event.url.pathname + event.url.search, { path: '/' });
+    RedirectToCookie.set(event.cookies, event.url);
     throw redirect(303, resolve('/login'));
   }
 }
