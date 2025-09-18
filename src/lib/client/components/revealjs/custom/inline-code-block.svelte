@@ -1,7 +1,6 @@
 <script lang="ts">
   import { cn, copyToClipboard } from '$lib/client/utils';
   import type { Snippet } from 'svelte';
-  import type { Attachment } from 'svelte/attachments';
   import type { HTMLAttributes } from 'svelte/elements';
   import { toast } from 'svelte-sonner';
 
@@ -12,19 +11,17 @@
 
   const { allowCopy, class: className, children, ...props }: Props = $props();
 
-  let content = $state<string | null | undefined>('');
-  const myAttachment: Attachment = (element) => {
-    content = element.firstChild?.textContent;
-  };
+  let codeElement = $state<HTMLSpanElement | null>(null);
 </script>
 
 <code
-  {@attach myAttachment}
+  bind:this={codeElement}
   onclick={() => {
     if (!allowCopy) {
       return;
     }
 
+    const content = codeElement?.textContent;
     copyToClipboard(content ?? '');
     toast.success('Contenu copié dans le presse-papiers');
   }}

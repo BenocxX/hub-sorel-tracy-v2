@@ -1,4 +1,5 @@
 import { resolve } from '$app/paths';
+import { RedirectToCookie } from '$lib/server/cookies/redirect-to-cookie';
 import { AuthService } from '$lib/server/services/auth-service.js';
 import { DiscordAuthService, type DiscordUser } from '$lib/server/services/discord-auth-service.js';
 import { redirect, type RequestEvent } from '@sveltejs/kit';
@@ -20,7 +21,7 @@ export const GET = async (event) => {
   const discordUser = await discordAuthService.getDiscordUser(tokens.accessToken());
   await authenticate(event, discordUser, tokens);
 
-  return redirect(302, resolve('/savant'));
+  return redirect(302, RedirectToCookie.get(event.cookies, resolve('/savant')));
 };
 
 async function authenticate(event: RequestEvent, discordUser: DiscordUser, tokens: OAuth2Tokens) {

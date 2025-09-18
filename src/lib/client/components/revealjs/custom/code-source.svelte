@@ -40,7 +40,7 @@
   <code
     data-trim
     data-noescape
-    class={cn('rounded-b-lg', language ? `language-${language}` : '', codeClassName)}
+    class={cn('block w-max rounded-b-lg', language ? `language-${language}` : '', codeClassName)}
     data-line-numbers={lines}
     {...props}>
     {codeToDisplay}

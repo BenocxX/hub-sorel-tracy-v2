@@ -5,6 +5,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { AuthService } from '$lib/server/services/auth-service';
 import { loginSchema } from '$lib/common/schemas/auth-schemas';
 import { resolve } from '$app/paths';
+import { RedirectToCookie } from '$lib/server/cookies/redirect-to-cookie.js';
 
 export const load = async ({ url }) => {
   const form = await superValidate(zod(loginSchema), {
@@ -34,6 +35,6 @@ export const actions = {
 
     await authService.createSession(event, user);
 
-    return redirect(302, resolve('/savant'));
+    return redirect(302, RedirectToCookie.get(event.cookies, resolve('/savant')));
   },
 };

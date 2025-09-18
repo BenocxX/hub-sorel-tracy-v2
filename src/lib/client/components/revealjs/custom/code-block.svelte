@@ -159,7 +159,7 @@
       {autoAnimateId}
       lines={lines ?? ''}
       codeClassName={cn(
-        '[&_table.hljs-ln]:!ml-[8px] [&_table.hljs-ln]:!mb-[-24px] [&.fragment_table.hljs-ln]:!ml-[-8px] [&.fragment_table.hljs-ln]:!mb-0 rounded-t-lg !px-4 [&_table.hljs-ln]:!mt-[-24px] [&.fragment_table.hljs-ln]:!mt-[12px]',
+        '[&_table.hljs-ln]:!ml-[8px] [&_table.hljs-ln]:!mb-[-24px] [&.fragment_table.hljs-ln]:!mb-0 rounded-t-lg !pl-2 !pr-4 [&_table.hljs-ln]:!mt-[-24px] [&.fragment_table.hljs-ln]:!mt-[12px]',
         !hasHeader && !hideCopyButton ? '!pr-12' : '',
         codeClassName
       )}
