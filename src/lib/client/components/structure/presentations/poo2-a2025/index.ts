@@ -7,6 +7,7 @@ import TestsUnitaires from './tests-unitaires/presentation.svelte';
 import GestionErreurs from './gestion-erreurs/presentation.svelte';
 import QualiteLogicielle from './qualite-logicielle/presentation.svelte';
 import ConceptsObjetsAvances from './concepts-objets-avances/presentation.svelte';
+import Polymorphism from './polymorphism/presentation.svelte';
 
 // Not done, used for testing animation system
 import ResolutionBitwise from './resolution-bitwise/presentation.svelte';
@@ -22,6 +23,7 @@ export function makePoo2PresentationComponents() {
     { id: 'poo2-a2025-gestion-erreurs', component: GestionErreurs },
     { id: 'poo2-a2025-qualite-logicielle', component: QualiteLogicielle },
     { id: 'poo2-a2025-concepts-objets-avances', component: ConceptsObjetsAvances },
+    { id: 'poo2-a2025-polymorphism', component: Polymorphism },
 
     // Not done, used for testing animation system
     { id: 'poo2-a2025-resolution-bitwise', component: ResolutionBitwise },
