@@ -50,7 +50,7 @@
     {
       name: 'Hugues Massé',
       role: 'Coordonateur du programme',
-      passion: 'Temp',
+      passion: 'Participant de JDR et Grandeur Nature',
       imageUrl: HuguesMasseFace,
     },
     {
