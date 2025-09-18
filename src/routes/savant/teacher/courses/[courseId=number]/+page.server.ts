@@ -23,11 +23,11 @@ export const load = async (event) => {
       schoolSession: true,
       presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] },
       students: {
-        include: { user: true },
+        include: { user: { include: { discordUser: true } } },
         orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
       },
       teachers: {
-        include: { user: true },
+        include: { user: { include: { discordUser: true } } },
         orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
       },
     },

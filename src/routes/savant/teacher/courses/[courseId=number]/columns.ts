@@ -15,6 +15,7 @@ import type {
 } from '$lib/common/schemas/presentation-schemas';
 import DataTableTitleCell from './data-table-title-cell.svelte';
 import { localizeRole } from '$lib/common/tools/localizer';
+import UsernameAvatar from './username-avatar.svelte';
 
 export function makeUserColumns({
   course,
@@ -22,7 +23,7 @@ export function makeUserColumns({
 }: {
   course: Course;
   removeUserFromCourse: SuperValidated<Infer<RemoveUserFromCourseSchema>>;
-}): ColumnDef<User>[] {
+}): ColumnDef<User<{ discordUser: true }>>[] {
   return [
     {
       meta: { frenchName: "Nom d'utilisateur" },
@@ -34,12 +35,7 @@ export function makeUserColumns({
           onclick: column.getToggleSortingHandler(),
         });
       },
-      cell: ({ row }) => {
-        const cellSnippet = createRawSnippet(() => ({
-          render: () => `<div class="ml-4">${row.original.username}</div>`,
-        }));
-        return renderSnippet(cellSnippet, '');
-      },
+      cell: ({ row }) => renderComponent(UsernameAvatar, { user: row.original }),
     },
     {
       meta: { frenchName: 'Prénom' },
