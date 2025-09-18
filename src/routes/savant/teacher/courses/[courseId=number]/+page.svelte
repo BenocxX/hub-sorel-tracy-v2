@@ -94,7 +94,11 @@
     </DataTable>
   </Tabs.Content>
   <Tabs.Content value="presentations">
-    <DataTable columns={presentationColumns} data={data.course.presentations}>
+    <DataTable
+      columns={presentationColumns}
+      data={data.course.presentations}
+      pagination={{ size: data.course.presentations.length }}
+    >
       {#snippet createDialogFormSnippet()}
         <Dialog.Header>
           <Dialog.Title>Ajouter une présentation au cours</Dialog.Title>
