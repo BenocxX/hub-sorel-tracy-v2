@@ -5,6 +5,7 @@ import Liens from './liens/presentation.svelte';
 import Images from './images/presentation.svelte';
 import Espacements from './espacements/presentation.svelte';
 import Display from './display/presentation.svelte';
+import Flexbox from './flexbox/presentation.svelte';
 
 export function makeWeb1PresentationComponents() {
   return [
@@ -15,5 +16,6 @@ export function makeWeb1PresentationComponents() {
     { id: 'web1-a2025-images', component: Images },
     { id: 'web1-a2025-espacements', component: Espacements },
     { id: 'web1-a2025-display', component: Display },
+    { id: 'web1-a2025-flexbox', component: Flexbox },
   ];
 }
