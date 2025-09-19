@@ -1,3 +1,10 @@
+<script lang="ts" module>
+  export type MultiCodeBlockProps = Omit<CodeBlockProps, 'language' | 'code' | 'fileName'> & {
+    codes: { code: string; language: CodeLanguage; label?: string }[];
+    defaultSelectedId?: number;
+  };
+</script>
+
 <script lang="ts">
   import { cn, copyToClipboard } from '$lib/client/utils';
   import { Button } from '../../ui/button';
@@ -6,11 +13,6 @@
   import * as Dialog from '../../ui/dialog';
   import { Check, Clipboard } from 'lucide-svelte';
   import CodeSource from './code-source.svelte';
-
-  type Props = Omit<CodeBlockProps, 'language' | 'code' | 'fileName'> & {
-    codes: { code: string; language: CodeLanguage; label?: string }[];
-    defaultSelectedId?: number;
-  };
 
   const {
     fragment,
@@ -24,7 +26,7 @@
     defaultSelectedId = 0,
     children,
     ...props
-  }: Props = $props();
+  }: MultiCodeBlockProps = $props();
 
   let isCheckIcon = $state(false);
 

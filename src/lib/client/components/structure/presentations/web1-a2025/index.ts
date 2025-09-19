@@ -4,6 +4,7 @@ import IntroCss from './intro-css/presentation.svelte';
 import Liens from './liens/presentation.svelte';
 import Images from './images/presentation.svelte';
 import Espacements from './espacements/presentation.svelte';
+import Display from './display/presentation.svelte';
 
 export function makeWeb1PresentationComponents() {
   return [
@@ -13,5 +14,6 @@ export function makeWeb1PresentationComponents() {
     { id: 'web1-a2025-liens', component: Liens },
     { id: 'web1-a2025-images', component: Images },
     { id: 'web1-a2025-espacements', component: Espacements },
+    { id: 'web1-a2025-display', component: Display },
   ];
 }
