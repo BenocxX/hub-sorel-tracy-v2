@@ -51,7 +51,7 @@
       },
     ]}
   >
-    <div class="w-max border-2 border-solid border-[black]">contenu</div>
+    <div class="w-max border-2 border-solid border-foreground">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -81,7 +81,7 @@
       },
     ]}
   >
-    <div class="w-max border-t-2 border-solid border-t-[black]">contenu</div>
+    <div class="w-max border-t-2 border-solid border-t-foreground">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -104,6 +104,6 @@
       },
     ]}
   >
-    <div class="w-max border-2 border-solid border-[black]">contenu</div>
+    <div class="w-max border-2 border-solid border-foreground">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>

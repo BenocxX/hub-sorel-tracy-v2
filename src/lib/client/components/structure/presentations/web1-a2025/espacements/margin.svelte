@@ -35,7 +35,7 @@
       },
     ]}
   >
-    <div class="m-[20px] w-max bg-[lightgray] dark:bg-[lightgray]">contenu</div>
+    <div class="m-[20px] w-max bg-[lightgray] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -66,7 +66,7 @@
       },
     ]}
   >
-    <div class="m-[20px_10px_30px_40px] w-max bg-[lightgray] dark:bg-[lightgray]">contenu</div>
+    <div class="m-[20px_10px_30px_40px] w-max bg-[lightgray] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -90,7 +90,7 @@
       },
     ]}
   >
-    <div class="m-[20px_10px_30px_40px] w-max bg-[lightgray] dark:bg-[lightgray]">contenu</div>
+    <div class="m-[20px_10px_30px_40px] w-max bg-[lightgray] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -119,7 +119,7 @@
     ]}
   >
     <div
-      class="m-[20px_10px_30px_40px] w-max border-[20px] border-solid border-[black] bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-[lightgray]"
+      class="m-[20px_10px_30px_40px] w-max border-[20px] border-solid border-[black] bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-secondary"
     >
       contenu
     </div>

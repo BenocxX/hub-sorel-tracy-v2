@@ -35,7 +35,7 @@
       },
     ]}
   >
-    <div class="w-max bg-[lightgray] p-[20px] dark:bg-[lightgray]">contenu</div>
+    <div class="w-max bg-[lightgray] p-[20px] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -66,7 +66,7 @@
       },
     ]}
   >
-    <div class="w-max bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-[lightgray]">contenu</div>
+    <div class="w-max bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -94,7 +94,7 @@
       },
     ]}
   >
-    <div class="w-max bg-[lightgray] p-[20px_10px] dark:bg-[lightgray]">contenu</div>
+    <div class="w-max bg-[lightgray] p-[20px_10px] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -118,7 +118,7 @@
       },
     ]}
   >
-    <div class="w-max bg-[lightgray] p-[20px_10px_30px] dark:bg-[lightgray]">contenu</div>
+    <div class="w-max bg-[lightgray] p-[20px_10px_30px] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -142,6 +142,6 @@
       },
     ]}
   >
-    <div class="w-max bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-[lightgray]">contenu</div>
+    <div class="w-max bg-[lightgray] p-[20px_10px_30px_40px] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>
