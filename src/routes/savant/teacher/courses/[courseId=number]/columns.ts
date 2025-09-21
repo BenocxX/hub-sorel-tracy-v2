@@ -13,9 +13,9 @@ import type {
   ModifyPresentationSchema,
   TogglePresentationLockedSchema,
 } from '$lib/common/schemas/presentation-schemas';
-import DataTableTitleCell from './data-table-title-cell.svelte';
 import { localizeRole } from '$lib/common/tools/localizer';
 import UsernameAvatar from './username-avatar.svelte';
+import PresentationTitleLink from '$lib/client/components/ui-custom/data-tables/presentations/presentation-title-link.svelte';
 
 export function makeUserColumns({
   course,
@@ -130,7 +130,7 @@ export function makePresentationColumns({
           onclick: column.getToggleSortingHandler(),
         });
       },
-      cell: ({ row }) => renderComponent(DataTableTitleCell, row.original),
+      cell: ({ row }) => renderComponent(PresentationTitleLink, row.original),
     },
     {
       meta: { frenchName: 'Description' },
