@@ -11,7 +11,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 21 });
 
   const value = '&lt;script&gt;';
   const html = value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

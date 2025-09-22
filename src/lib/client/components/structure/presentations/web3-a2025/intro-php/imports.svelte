@@ -11,7 +11,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 23 });
 </script>
 
 <BasicSlide>
