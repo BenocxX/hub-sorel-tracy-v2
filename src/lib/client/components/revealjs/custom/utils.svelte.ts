@@ -55,6 +55,8 @@ export type CodeLanguage =
   | 'TS'
   | 'Bash'
   | 'JSON'
+  | 'YAML'
   | 'SCSS'
   | 'SASS'
-  | 'Java';
+  | 'Java'
+  | 'Dockerfile';
