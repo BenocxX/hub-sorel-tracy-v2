@@ -81,7 +81,7 @@
 <BasicSlide>
   <p>
     À l'intérieur d'une classe enfant, il est possible d'avoir accès au contexte du parent
-    (variables et méthodes accessibles) en uVlisant super.
+    (variables et méthodes accessibles) en utilisant super.
   </p>
   <CodeBlock
     language="Java"
