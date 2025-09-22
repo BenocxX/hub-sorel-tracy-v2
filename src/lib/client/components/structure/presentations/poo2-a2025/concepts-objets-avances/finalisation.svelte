@@ -99,9 +99,9 @@ public MaClasse(char genre) {
 }`}
   />
   <p class="fragment">
-    Il arrive parfois qu'une méthode qui effectue un traitement parVculier interne à la classe soit
-    publique pour diverses raisons et que la classe en quesVon ne soit pas nécessairement finale. On
-    uVlise ce mécanisme pour éviter qu'un peVt malin vienne court-circuiter le processus internet
-    avec une redéfiniVon.
+    Il arrive parfois qu'une méthode qui effectue un traitement particulier interne à la classe soit
+    publique pour diverses raisons et que la classe en question ne soit pas nécessairement finale.
+    On utilise ce mécanisme pour éviter qu'un petit malin vienne court-circuiter le processus
+    internet avec une redéfinition.
   </p>
 </BasicSlide>

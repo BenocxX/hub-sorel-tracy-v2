@@ -31,7 +31,7 @@
     On parle alors de <Bold>liaison dynamique</Bold>.
   </p>
   <p>
-    Ceci permet de déterminer dynamiquement une méthode à lancée à l'exécution. Attention de ne pas
+    Ceci permet de déterminer dynamiquement une méthode à lancée de l'exécution. Attention de ne pas
     confondre avec la redéfinition qui est le résultat d'une liaison statique par le compilateur.
   </p>
 </BasicSlide>
@@ -41,7 +41,7 @@
     sera maintenant possible de créer une collection qui contiendra des éléments de types
     différents.
   </p>
-  <p>
+  <p class="fragment">
     L'idée est simple : il suffit de déterminer une classe parente intelligente et de faire une
     lignée d'enfants dérivés. Prenons comme exemple une classe
     <InlineCodeBlock>Poisson</InlineCodeBlock> puis des enfants comme :
@@ -49,7 +49,7 @@
     <InlineCodeBlock>Cod</InlineCodeBlock>. Il sera possible de créer une collection de
     <InlineCodeBlock>Poisson</InlineCodeBlock> et d'y insérer des enfants.
   </p>
-  <div class="flex items-center">
+  <div class="fragment flex items-center">
     {#each items as item, index (item + index)}
       <div class="flex flex-1 flex-col items-center gap-2">
         <div
