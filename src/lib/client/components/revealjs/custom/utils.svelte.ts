@@ -48,6 +48,7 @@ export type SlideSectionProps = {
 
 export type CodeLanguage =
   | 'HTML'
+  | 'PHP'
   | 'CSS'
   | 'XML'
   | 'JS'
