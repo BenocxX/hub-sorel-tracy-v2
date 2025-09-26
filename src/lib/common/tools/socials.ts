@@ -36,7 +36,7 @@ export const socials = [
   },
   {
     name: 'YouTube',
-    href: 'https://www.youtube.com/user/cegepsoreltracy/streams',
+    href: 'https://www.youtube.com/@cegepsoreltracy/featured',
     icon: YoutubeIcon,
   },
 ];
