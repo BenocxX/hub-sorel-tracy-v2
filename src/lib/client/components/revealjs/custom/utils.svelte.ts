@@ -48,12 +48,15 @@ export type SlideSectionProps = {
 
 export type CodeLanguage =
   | 'HTML'
+  | 'PHP'
   | 'CSS'
   | 'XML'
   | 'JS'
   | 'TS'
   | 'Bash'
   | 'JSON'
+  | 'YAML'
   | 'SCSS'
   | 'SASS'
-  | 'Java';
+  | 'Java'
+  | 'Dockerfile';

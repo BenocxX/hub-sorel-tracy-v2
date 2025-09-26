@@ -7,6 +7,7 @@ import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/use
 import DataTableActions from './data-table-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 import { localizeRole } from '$lib/common/tools/localizer';
+import UsernameAvatar from './username-avatar.svelte';
 
 export function makeColumns({
   deleteUserForm,
@@ -14,7 +15,7 @@ export function makeColumns({
 }: {
   deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
   changeRoleForm: SuperValidated<Infer<ChangeRoleSchema>>;
-}): ColumnDef<User>[] {
+}): ColumnDef<User<{ discordUser: true }>>[] {
   return [
     {
       meta: { frenchName: "Nom d'utilisateur" },
@@ -27,10 +28,7 @@ export function makeColumns({
         });
       },
       cell: ({ row }) => {
-        const cellSnippet = createRawSnippet(() => ({
-          render: () => `<div class="ml-4">${row.original.username}</div>`,
-        }));
-        return renderSnippet(cellSnippet, '');
+        return renderComponent(UsernameAvatar, { user: row.original });
       },
     },
     {

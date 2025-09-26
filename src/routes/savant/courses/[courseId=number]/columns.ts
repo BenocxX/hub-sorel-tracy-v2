@@ -2,7 +2,7 @@ import { renderComponent } from '$lib/client/components/ui/data-table';
 import type { ColumnDef } from '@tanstack/table-core';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 import type { Presentation } from '@prisma/client';
-import DataTableTitleCell from './data-table-title-cell.svelte';
+import PresentationTitleLink from '$lib/client/components/ui-custom/data-tables/presentations/presentation-title-link.svelte';
 
 export function makeColumns(): ColumnDef<Presentation>[] {
   return [
@@ -16,7 +16,7 @@ export function makeColumns(): ColumnDef<Presentation>[] {
           onclick: column.getToggleSortingHandler(),
         });
       },
-      cell: ({ row }) => renderComponent(DataTableTitleCell, row.original),
+      cell: ({ row }) => renderComponent(PresentationTitleLink, row.original),
     },
     {
       meta: {

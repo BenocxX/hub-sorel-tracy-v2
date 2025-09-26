@@ -1,14 +1,26 @@
 <script lang="ts">
+  import { page } from '$app/state';
+  import { cn } from '$lib/client/utils';
   import { formatPresentationUrl } from '$lib/common/tools/format';
   import type { Presentation } from '@prisma/client';
 
   const presentation: Presentation = $props();
 
-  const target = presentation.url ? '_blank' : '_self';
-  const href = presentation.url ? presentation.url : formatPresentationUrl(presentation);
+  const target = $derived(presentation.url ? '_blank' : '_self');
+  const href = $derived(presentation.url ? presentation.url : formatPresentationUrl(presentation));
+
+  const isLocked = $derived(page.data.user?.role === 'Student' && presentation.isLocked);
 </script>
 
-<a {href} {target} class="link ml-4 flex items-center gap-2 text-foreground">
+<a
+  href={isLocked ? undefined : href}
+  {target}
+  class={cn(
+    'link ml-4 flex items-center gap-2 text-foreground',
+    isLocked && 'cursor-default text-foreground-discreet hover:no-underline'
+  )}
+>
+  <!-- We show the lock icon even for teachers to let them know a presentation is currently locked for students -->
   {#if presentation.isLocked}
     <svg
       xmlns="http://www.w3.org/2000/svg"

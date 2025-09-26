@@ -12,7 +12,7 @@
   const { children }: Props = $props();
 </script>
 
-<Presentation class="!w-[85%]" options={{ reload: dev ? true : false }}>
+<Presentation class="!w-[85%]">
   <TitleSlide />
   <TableOfContentSlide />
   {@render children()}

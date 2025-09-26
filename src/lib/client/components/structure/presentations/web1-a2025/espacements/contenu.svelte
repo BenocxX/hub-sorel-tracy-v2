@@ -35,6 +35,6 @@
       },
     ]}
   >
-    <div class="w-[200px] bg-[lightgray] dark:bg-[gray]">contenu</div>
+    <div class="w-[200px] bg-[lightgray] dark:bg-secondary">contenu</div>
   </MultiCodeBlock>
 </BasicSlide>

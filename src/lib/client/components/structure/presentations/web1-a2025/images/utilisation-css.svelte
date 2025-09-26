@@ -42,7 +42,7 @@
       },
     ]}
   >
-    <div class="h-[400px] bg-[url('{gameOfThroneImage}')]"></div>
+    <div class="h-[400px]" style="background-image: url('{gameOfThroneImage}')"></div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -73,7 +73,7 @@
       },
     ]}
   >
-    <div class="h-[400px] bg-[url('{gameOfThroneImage}')] bg-no-repeat"></div>
+    <div class="h-[400px] bg-no-repeat" style="background-image: url('{gameOfThroneImage}')"></div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -100,7 +100,10 @@
       },
     ]}
   >
-    <div class="h-[400px] bg-[url('{gameOfThroneImage}')] bg-right-bottom bg-no-repeat"></div>
+    <div
+      class="h-[400px] bg-right-bottom bg-no-repeat"
+      style="background-image: url('{gameOfThroneImage}')"
+    ></div>
   </MultiCodeBlock>
 </BasicSlide>
 <BasicSlide>
@@ -136,7 +139,10 @@
       },
     ]}
   >
-    <div class="h-[400px] bg-[url('{gameOfThroneImage}')] bg-right-bottom bg-no-repeat"></div>
+    <div
+      class="h-[400px] bg-right-bottom bg-no-repeat"
+      style="background-image: url('{gameOfThroneImage}')"
+    ></div>
   </MultiCodeBlock>
   <p>
     Il n'est évidemment pas nécessaire de définir toutes les valeurs pour utiliser la forme
@@ -172,7 +178,8 @@
     ]}
   >
     <div
-      class="h-[400px] bg-[url('{gameOfThroneImage}')] bg-cover bg-right-bottom bg-no-repeat"
+      class="h-[400px] bg-cover bg-right-bottom bg-no-repeat"
+      style="background-image: url('{gameOfThroneImage}')"
     ></div>
   </MultiCodeBlock>
 </BasicSlide>
@@ -200,7 +207,8 @@
     ]}
   >
     <div
-      class="h-[200px] w-[200px] rounded-[100%] bg-[#FFFFFF] bg-[url('{gameOfThroneImage}')] bg-cover bg-center bg-no-repeat"
+      class="h-[200px] w-[200px] rounded-[100%] bg-[#FFFFFF] bg-cover bg-center bg-no-repeat"
+      style="background-image: url('{gameOfThroneImage}')"
     ></div>
   </MultiCodeBlock>
 </BasicSlide>

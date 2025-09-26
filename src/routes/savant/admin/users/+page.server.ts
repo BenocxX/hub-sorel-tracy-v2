@@ -42,7 +42,7 @@ export const actions = {
       await db.teacher.delete({ where: { id } });
       await db.student.create({ data: { user: { connect: user } } });
     } else {
-      // Is a promotion or demotion from teacher/admin to teacher/admin
+      // Is a promotion or demotion from teacher/admin
       await db.teacher.update({
         where: { id },
         data: { isAdmin: role === 'Admin' },
@@ -70,7 +70,7 @@ export const actions = {
 
 async function getUsersByRole(role: string | null) {
   if (role === null) {
-    return await db.user.findMany();
+    return await db.user.findMany({ include: { discordUser: true }, orderBy: { username: 'asc' } });
   }
 
   const result = roleSchema.safeParse(role);
@@ -80,13 +80,22 @@ async function getUsersByRole(role: string | null) {
   }
 
   if (result.data === 'Student') {
-    return await db.user.findMany({ where: { role: 'Student' }, orderBy: { username: 'asc' } });
+    return await db.user.findMany({
+      where: { role: 'Student' },
+      orderBy: { username: 'asc' },
+      include: { discordUser: true },
+    });
   } else if (result.data === 'Teacher') {
     return await db.user.findMany({
       where: { OR: [{ role: 'Teacher' }, { role: 'Admin' }] },
       orderBy: { username: 'asc' },
+      include: { discordUser: true },
     });
   }
 
-  return await db.user.findMany({ where: { role: 'Admin' }, orderBy: { username: 'asc' } });
+  return await db.user.findMany({
+    where: { role: 'Admin' },
+    orderBy: { username: 'asc' },
+    include: { discordUser: true },
+  });
 }

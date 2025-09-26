@@ -23,11 +23,11 @@ export const load = async (event) => {
       schoolSession: true,
       presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] },
       students: {
-        include: { user: true },
+        include: { user: { include: { discordUser: true } } },
         orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
       },
       teachers: {
-        include: { user: true },
+        include: { user: { include: { discordUser: true } } },
         orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
       },
     },
@@ -119,9 +119,13 @@ export const actions = {
   createPresentation: async (event) => {
     const form = await superValidate(event, zod(createPresentationSchema));
 
+    console.log(form);
+
     if (!form.valid) {
       return fail(400, { form });
     }
+
+    console.log(form.data);
 
     await db.presentation.create({
       data: {
