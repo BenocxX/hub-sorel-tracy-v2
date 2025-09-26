@@ -19,7 +19,7 @@
     },
     {
       name: 'Alexandre Vovan',
-      role: 'Développement IoT',
+      role: 'Réseautique et IoT',
       passion: 'Bicroleur de tout genre',
       imageUrl: AlexandreVovanFace,
     },
@@ -31,7 +31,7 @@
     },
     {
       name: 'David Tucker',
-      role: 'Blockchain et cyber-sécurité',
+      role: 'Cyber-sécurité et blockchain',
       passion: "Fan d'univers d'horreur",
       imageUrl: DavidTuckerFace,
     },
@@ -56,13 +56,13 @@
     {
       name: 'Mathis Côté',
       role: 'Développeur front-end',
-      passion: "Fan d'arts de tout genre",
+      passion: 'Fan de cinéma et jeux-vidéo',
       imageUrl: MathisCoteFace,
     },
     {
       name: 'Hugo Larochelle',
-      role: 'Temp',
-      passion: 'Temp',
+      role: 'Développeur back-end',
+      passion: 'Passionné de musique',
       imageUrl: HugoLarochelleFace,
     },
     {
