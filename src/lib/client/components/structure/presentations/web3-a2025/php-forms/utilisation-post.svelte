@@ -47,11 +47,8 @@ print_r($_POST);
   <CodeBlock
     language="PHP"
     code={`<?php
-$firstnameKey = 'firstname';
-$lastnameKey = 'lastname';
-
-$firstname = $_POST[$firstnameKey] ?? '';
-$lastname = $_POST[$lastnameKey] ?? '';
+$firstname = $_POST['firstname'] ?? '';
+$lastname = $_POST['lastname'] ?? '';
 ?>`}
   />
 </BasicSlide>

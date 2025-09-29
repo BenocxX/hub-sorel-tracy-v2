@@ -73,8 +73,8 @@ print_r($_GET);
   <CodeBlock
     language="PHP"
     code={`<?php
-  $firstname = $_GET['firstname'];
-  $lastname = $_GET['lastname'];
+$firstname = $_GET['firstname'];
+$lastname = $_GET['lastname'];
 ?>`}
   />
 </BasicSlide>
@@ -89,21 +89,10 @@ print_r($_GET);
   <CodeBlock
     language="PHP"
     code={`<?php
-$firstnameKey = 'firstname';
-$lastnameKey = 'lastname';
-
-$firstname = $_GET[$firstnameKey] ?? '';
-$lastname = $_GET[$lastnameKey] ?? '';
+$firstname = $_GET['firstname'] ?? '';
+$lastname = $_GET['lastname'] ?? '';
 ?>`}
   />
-</BasicSlide>
-<BasicSlide>
-  <p>
-    Utiliser
-    <InlineCodeBlock>array_key_exists($key, $_GET) ? $_GET[$key] : '';</InlineCodeBlock> à chaque fois
-    qu'on veut accéder à une valeur dans <InlineCodeBlock>$_GET</InlineCodeBlock> peut rapidement devenir
-    lourd. je vous recommande de créer une petite fonction utilitaire pour simplifier l'accès aux valeurs.
-  </p>
 </BasicSlide>
 <BasicSlide>
   <p>
