@@ -97,7 +97,7 @@
     <DataTable
       columns={presentationColumns}
       data={data.course.presentations}
-      pagination={{ size: data.course.presentations.length }}
+      pagination={{ disabled: true }}
     >
       {#snippet createDialogFormSnippet()}
         <Dialog.Header>

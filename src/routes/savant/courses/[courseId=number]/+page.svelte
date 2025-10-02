@@ -13,8 +13,4 @@
   title={data.course.name}
   subtitle={`${displaySession(data.course.schoolSession)} - Groupe ${data.course.group}`}
 />
-<DataTable
-  {columns}
-  data={data.course.presentations}
-  pagination={{ size: data.course.presentations.length }}
-/>
+<DataTable {columns} data={data.course.presentations} pagination={{ disabled: true }} />
