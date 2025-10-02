@@ -116,6 +116,12 @@
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
   });
+
+  const rows = $derived(
+    Object.entries(table.getRowModel().rowsById).map(([_, row]) => ({
+      ...row,
+    }))
+  );
 </script>
 
 <div>
@@ -192,7 +198,7 @@
         {/each}
       </Table.Header>
       <Table.Body>
-        {#each table.getRowModel().rows as row (row.id)}
+        {#each rows as row (row.id)}
           <Table.Row data-state={row.getIsSelected() && 'selected'}>
             {#each row.getVisibleCells() as cell (cell.id)}
               {@const meta = cell.column.columnDef.meta}
