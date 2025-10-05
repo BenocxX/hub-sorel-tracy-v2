@@ -8,13 +8,12 @@
     registerInTOC,
     type SlideSectionProps,
   } from '$lib/client/components/revealjs/custom';
-  import { lt } from 'date-fns/locale';
   import { ArrowRight } from 'lucide-svelte';
 
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 3 });
 </script>
 
 <BasicSlide>
