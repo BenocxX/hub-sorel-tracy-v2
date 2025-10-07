@@ -22,7 +22,7 @@ const heroes = {
     bio: "Natasha Romanova is the world's most elite spy in any era. Her mastery of the sniper rifle eliminates targets from afar, while her shock batons neutralize close-range threats. Black Widow is locked, loaded, and ready to deliver a fatal bite!",
   },
   blade: {
-    name: 'Black Widow',
+    name: 'Blade',
     class: 'duelist',
     bio: "Half-human and half-vampire, Eric Brooks walks betweenworlds, craving the very life force of his enemies. As nightfalls, Blade's hunt begins as he wields the Sword of Draculato become the nightmare of any foe who dares to bare theirfangs.",
   },
