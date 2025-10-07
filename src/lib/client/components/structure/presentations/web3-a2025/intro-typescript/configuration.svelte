@@ -16,7 +16,7 @@
   const { section }: SlideSectionProps = $props();
 
   setSlideSection(section);
-  registerInTOC({ page: 2 });
+  registerInTOC({ page: 5 });
 </script>
 
 <BasicSlide>
@@ -60,26 +60,16 @@
     language="JSON"
     code={`{
   "compilerOptions": {
+    "strict": true,
     "target": "ES6",
     "module": "ES6",
-    "moduleResolution": "nodenext",
-    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "./public/scripts",
+    "outDir": "./dist",
   },
 }`}
   />
-</BasicSlide>
-<BasicSlide>
-  <p>
-    Notez qu'il existe beaucoup d'autres options de configuration que vous pouvez ajouter à ce
-    fichier. Voici un exemple d'un fichier plus complet utilisé pour le site web du Hub:
-  </p>
-  <p>
-    Notamment, l'une des configurations les plus importantes selon moi est
-    <InlineCodeBlock>strict</InlineCodeBlock>, qui active toutes les vérifications de type strictes.
-    Cela risque de vous causer quelques soucis au début, mais vous aidera à écrire un code plus sûr
-    et plus robuste. Toutefois, je vous recommande de vous familiariser avec TypeScript avant
-    d'activer cette option.
-  </p>
 </BasicSlide>
 <BasicSlide>
   <p>
