@@ -4,7 +4,7 @@
   import DavidEt2Etudiants from '$lib/client/assets/images/landing/david-et-2-etudiants.jpg';
   import { resolve } from '$app/paths';
 
-  function smoothScrollTo(event: PointerEvent) {
+  function smoothScrollTo(event: MouseEvent) {
     event.preventDefault();
 
     const headerOffset = 100;
