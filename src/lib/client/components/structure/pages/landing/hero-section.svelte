@@ -1,8 +1,24 @@
-<script>
+<script lang="ts">
   import { Button } from '$lib/client/components/ui/button';
   import { ArrowDown } from 'lucide-svelte';
   import DavidEt2Etudiants from '$lib/client/assets/images/landing/david-et-2-etudiants.jpg';
   import { resolve } from '$app/paths';
+
+  function smoothScrollTo(event: PointerEvent) {
+    event.preventDefault();
+
+    const headerOffset = 100;
+    const targetId = '#bento-section';
+
+    const targetElement = document.querySelector(targetId);
+    if (!targetElement) {
+      return;
+    }
+
+    const elementPosition = targetElement.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+  }
 </script>
 
 <div
@@ -31,7 +47,7 @@
           IoT, tout en stimulant votre motivation entrepreneuriale dans le domaine technologique.
         </p>
         <div class="mt-10 flex items-center gap-x-6">
-          <Button href={resolve('/')}>
+          <Button onclick={smoothScrollTo}>
             En apprendre plus
             <ArrowDown class="scale-125" />
           </Button>

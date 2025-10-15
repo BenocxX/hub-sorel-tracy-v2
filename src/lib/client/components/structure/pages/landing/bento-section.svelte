@@ -7,7 +7,7 @@
   import * as BentoGrid from '$lib/client/components/ui-custom/bento-grid';
 </script>
 
-<div class="bg-white">
+<div class="bg-white" id="bento-section">
   <div class="container mx-auto px-6 lg:px-8">
     <h2 class="text-base/7 font-semibold text-primary">On a hâte de te voir!</h2>
     <p
