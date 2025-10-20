@@ -19,7 +19,7 @@
   <List>
     {#snippet paragraph()}
       Il existe également la valeur <Bold>inline-block</Bold> qui permet d'avoir le meilleur des deux
-      mondes pour le <Bold>inline</Bold> et le <Bold>bold</Bold>.
+      mondes pour le <Bold>inline</Bold> et le <Bold>block</Bold>.
     {/snippet}
     <li>
       Un élément <Bold>inline-block</Bold> se comportera comme un élément <Bold>inline</Bold>, mais

@@ -20,7 +20,7 @@
     <li>Chaque balise "veut dire quelque chose";</li>
     <li>On utilise une balise uniquement dans son contexte logique;</li>
     <li>
-      En harmonie avec le concept de balise (qui tant à ce que la balise
+      En harmonie avec le concept de balise (qui tend à ce que la balise
       <Italic>décrive</Italic> le contenu);
     </li>
     <li>Il existe plusieurs balises HTML dénuées de sens... elles sont à éviter;</li>

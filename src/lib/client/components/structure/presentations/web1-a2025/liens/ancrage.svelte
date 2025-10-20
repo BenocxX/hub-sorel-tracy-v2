@@ -29,8 +29,8 @@
 <BasicSlide>
   <p>
     Tout d'abord, on définit l'ancrage dans la page. C'est-à-dire l'endroit où on voudrait se rendre
-    directement à partir d'une lien. Par exemple, le haut de la page. Nous définissons un élément
-    (une balise) avec la propriété id pour identifier l'ancrage qui pourra être utiliser par un lien
+    directement à partir d'un lien. Par exemple, le haut de la page. Nous définissons un élément
+    (une balise) avec la propriété id pour identifier l'ancrage qui pourra être utilisé par un lien
     par la suite.
   </p>
   <p>

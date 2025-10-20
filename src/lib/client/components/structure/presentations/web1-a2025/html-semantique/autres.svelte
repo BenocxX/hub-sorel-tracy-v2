@@ -45,8 +45,8 @@
   ]}
 >
   <p>
-    La balise <InlineCodeBlock>cite</InlineCodeBlock> permet de définir le titre d'un oeuvre (film, livre,
-    chanson, peinture, etc.). Les navigateurs vont afficher le contenu en italique.
+    La balise <InlineCodeBlock>cite</InlineCodeBlock> permet de définir le titre d'une oeuvre (film,
+    livre, chanson, peinture, etc.). Les navigateurs vont afficher le contenu en italique.
   </p>
   <CodeBlock
     language="HTML"

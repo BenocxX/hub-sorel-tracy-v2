@@ -305,7 +305,7 @@ strong {
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <p>Un paragraph vraiment horrible</p>
+        <p>Un paragraphe vraiment horrible</p>
     </body>
 </html>`,
       },
@@ -315,7 +315,7 @@ strong {
       class="text-right text-[24px] font-bold italic text-[red] underline"
       style="font-variant: small-caps;"
     >
-      Un paragraph vraiment horrible
+      Un paragraphe vraiment horrible
     </p>
   </MultiCodeBlock>
 </BasicSlide>
