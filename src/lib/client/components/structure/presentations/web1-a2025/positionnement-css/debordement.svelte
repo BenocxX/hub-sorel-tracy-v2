@@ -2,7 +2,6 @@
   import {
     BasicSlide,
     InlineCodeBlock,
-    CodeBlock,
     MultiCodeBlock,
     setSlideSection,
     registerInTOC,
