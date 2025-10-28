@@ -11,6 +11,7 @@ import StyliserForm from './styliser-form/presentation.svelte';
 import JeuxCaracteres from './jeux-caracteres/presentation.svelte';
 import PositionnementCss from './positionnement-css/presentation.svelte';
 import BienCoder from './bien-coder/presentation.svelte';
+import ResponsiveCSS from './responsive-css/presentation.svelte';
 
 export function makeWeb1PresentationComponents() {
   return [
@@ -27,5 +28,6 @@ export function makeWeb1PresentationComponents() {
     { id: 'web1-a2025-jeux-caracteres', component: JeuxCaracteres },
     { id: 'web1-a2025-positionnement-css', component: PositionnementCss },
     { id: 'web1-a2025-bien-coder', component: BienCoder },
+    { id: 'web1-a2025-responsive-css', component: ResponsiveCSS },
   ];
 }
