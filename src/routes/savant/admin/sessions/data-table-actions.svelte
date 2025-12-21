@@ -2,6 +2,7 @@
   import EllipsisIcon from '@lucide/svelte/icons/ellipsis';
   import { Button } from '$lib/client/components/ui/button/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu/index.js';
+  import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import type { SchoolSession } from '@prisma/client';
   import type {
     DeleteSessionSchema,
@@ -10,6 +11,7 @@
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import DeleteSessionForm from '$lib/client/components/structure/forms/admin/session/delete-session-form.svelte';
   import ToggleCurrentSessionForm from '$lib/client/components/structure/forms/admin/session/toggle-current-session-form.svelte';
+  import { localizeSeason } from '$lib/common/tools/localizer';
 
   type Props = {
     session: SchoolSession;
@@ -18,30 +20,59 @@
   };
 
   const { session, deleteSessionForm, toggleCurrentSessionForm }: Props = $props();
+
+  let currentDialog = $state<'delete' | undefined>(undefined);
 </script>
 
 <div class="text-right">
-  <DropdownMenu.Root>
-    <DropdownMenu.Trigger>
-      {#snippet child({ props })}
-        <Button {...props} variant="ghost" size="icon" class="relative size-8 p-0">
-          <span class="sr-only">Ouvrir le menu</span>
-          <EllipsisIcon />
-        </Button>
-      {/snippet}
-    </DropdownMenu.Trigger>
-    <DropdownMenu.Content>
-      <DropdownMenu.Group>
-        <DropdownMenu.Label>Actions</DropdownMenu.Label>
-        {#if !session.isCurrent}
-          <DropdownMenu.Item>
-            <ToggleCurrentSessionForm {session} data={toggleCurrentSessionForm} />
+  <Dialog.Root>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        {#snippet child({ props })}
+          <Button {...props} variant="ghost" size="icon" class="relative size-8 p-0">
+            <span class="sr-only">Ouvrir le menu</span>
+            <EllipsisIcon />
+          </Button>
+        {/snippet}
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
+        <DropdownMenu.Group>
+          <DropdownMenu.Label>Actions</DropdownMenu.Label>
+          {#if !session.isCurrent}
+            <DropdownMenu.Item class="p-0">
+              <ToggleCurrentSessionForm {session} data={toggleCurrentSessionForm} />
+            </DropdownMenu.Item>
+          {/if}
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item
+            onclick={() => (currentDialog = 'delete')}
+            class="w-full cursor-pointer"
+          >
+            {#snippet child({ props })}
+              <Dialog.Trigger {...props}>Supprimer</Dialog.Trigger>
+            {/snippet}
           </DropdownMenu.Item>
-        {/if}
-        <DropdownMenu.Item>
+        </DropdownMenu.Group>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+
+    <!-- Dialogs -->
+    {#if currentDialog === 'delete'}
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
+            Suppression de la session {localizeSeason(session.season)}
+            {session.year}
+          </Dialog.Title>
+          <Dialog.Description>
+            La soumission de ce formulaire va supprimer la session "{localizeSeason(session.season)}
+            {session.year}" du système.
+          </Dialog.Description>
+        </Dialog.Header>
+        <Dialog.Footer>
           <DeleteSessionForm {session} data={deleteSessionForm} />
-        </DropdownMenu.Item>
-      </DropdownMenu.Group>
-    </DropdownMenu.Content>
-  </DropdownMenu.Root>
+        </Dialog.Footer>
+      </Dialog.Content>
+    {/if}
+  </Dialog.Root>
 </div>

@@ -29,7 +29,7 @@
   $formData.isLocked = !presentation.isLocked;
 </script>
 
-<form method="POST" action="?/togglePresentationLocked" class="w-full sm:w-max" use:enhance>
+<form method="POST" action="?/togglePresentationLocked" class="w-full" use:enhance>
   <Form.Field {form} name="id">
     <Form.Control>
       {#snippet children({ props })}
@@ -44,7 +44,7 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {delayed} class="h-max w-full p-0 font-normal" variant="ghost">
+  <Form.Button {delayed} class="h-max w-full justify-start px-2 py-1.5 font-normal" variant="ghost">
     {#if presentation.isLocked}
       Débloquer
     {:else}

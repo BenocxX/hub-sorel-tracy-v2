@@ -50,23 +50,25 @@
       <DropdownMenu.Content>
         <DropdownMenu.Group>
           <DropdownMenu.Label>Actions</DropdownMenu.Label>
-          <DropdownMenu.Item onclick={() => (currentDialog = 'modify')}>
-            <Dialog.Trigger>
-              {#snippet child({ props })}
-                <button {...props}>Modifier</button>
-              {/snippet}
-            </Dialog.Trigger>
+          <DropdownMenu.Item
+            onclick={() => (currentDialog = 'modify')}
+            class="w-full cursor-pointer"
+          >
+            {#snippet child({ props })}
+              <Dialog.Trigger {...props}>Modifier</Dialog.Trigger>
+            {/snippet}
           </DropdownMenu.Item>
-          <DropdownMenu.Item>
+          <DropdownMenu.Item class="w-full p-0">
             <TogglePresentationLockedForm {presentation} data={togglePresentationLocked} />
           </DropdownMenu.Item>
           <DropdownMenu.Separator />
-          <DropdownMenu.Item onclick={() => (currentDialog = 'delete')}>
-            <Dialog.Trigger>
-              {#snippet child({ props })}
-                <button {...props}>Supprimer</button>
-              {/snippet}
-            </Dialog.Trigger>
+          <DropdownMenu.Item
+            onclick={() => (currentDialog = 'delete')}
+            class="w-full cursor-pointer"
+          >
+            {#snippet child({ props })}
+              <Dialog.Trigger {...props}>Supprimer</Dialog.Trigger>
+            {/snippet}
           </DropdownMenu.Item>
         </DropdownMenu.Group>
       </DropdownMenu.Content>
@@ -81,8 +83,8 @@
             La soumission de ce formulaire va modifier la présentation "{presentation.title}" dans
             le système.
           </Dialog.Description>
-          <ModifyPresentationForm {presentation} data={modifyPresentation} />
         </Dialog.Header>
+        <ModifyPresentationForm {presentation} data={modifyPresentation} />
       </Dialog.Content>
     {/if}
     {#if currentDialog === 'delete'}

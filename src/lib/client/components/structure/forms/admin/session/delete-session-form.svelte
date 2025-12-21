@@ -28,7 +28,7 @@
   $formData.id = session.id;
 </script>
 
-<form method="POST" action="?/deleteSession" class="w-full sm:w-max" use:enhance>
+<form method="POST" action="?/deleteSession" use:enhance>
   <Form.Field {form} name="id">
     <Form.Control>
       {#snippet children({ props })}
@@ -36,7 +36,5 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {...buttonProps} {delayed} class="h-max w-full p-0 font-normal" variant="ghost">
-    Supprimer
-  </Form.Button>
+  <Form.Button {...buttonProps} {delayed} variant="destructive">Supprimer</Form.Button>
 </form>
