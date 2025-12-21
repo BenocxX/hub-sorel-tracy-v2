@@ -2,6 +2,7 @@ import { resolve } from '$app/paths';
 import type { Presentation } from '@prisma/client';
 import { formatDate, formatDistance } from 'date-fns';
 import { frCA } from 'date-fns/locale';
+import type { User } from '../types/prisma-types';
 
 export function formatDateFrench(date: Date, format = 'PPP') {
   return formatDate(date, format, {
@@ -20,6 +21,14 @@ export function formatCurrency(value: number) {
     style: 'currency',
     currency: 'CAD',
   }).format(value);
+}
+
+export function formatUserNames(user: User, options?: { hideUsername?: boolean }) {
+  let names = `${user.firstname} ${user.lastname}`;
+  if (!options?.hideUsername) {
+    names += ` (${user.username})`;
+  }
+  return names;
 }
 
 /**

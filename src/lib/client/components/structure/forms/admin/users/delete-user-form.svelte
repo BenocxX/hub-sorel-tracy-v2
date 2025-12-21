@@ -33,7 +33,5 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {...buttonProps} {delayed} class="h-max w-full p-0 font-normal" variant="ghost">
-    Supprimer
-  </Form.Button>
+  <Form.Button {...buttonProps} {delayed} variant="destructive">Supprimer</Form.Button>
 </form>

@@ -30,7 +30,7 @@
   $formData.role = role;
 </script>
 
-<form method="POST" action="?/changeRole" class="w-full sm:w-max" use:enhance>
+<form method="POST" action="?/changeRole" class="w-full" use:enhance>
   <Form.Field {form} name="id">
     <Form.Control>
       {#snippet children({ props })}
@@ -45,7 +45,12 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {...buttonProps} {delayed} class="h-max w-full p-0 font-normal" variant="ghost">
+  <Form.Button
+    {...buttonProps}
+    {delayed}
+    class="h-max w-full justify-start px-2 py-1.5 font-normal"
+    variant="ghost"
+  >
     {@render children()}
   </Form.Button>
 </form>
