@@ -10,5 +10,10 @@ export const deleteSessionSchema = z.object({
   id: z.number(),
 });
 
+export const toggleCurrentSessionSchema = z.object({
+  id: z.number(),
+});
+
 export type CreateSessionSchema = typeof createSessionSchema;
 export type DeleteSessionSchema = typeof deleteSessionSchema;
+export type ToggleCurrentSessionSchema = typeof toggleCurrentSessionSchema;

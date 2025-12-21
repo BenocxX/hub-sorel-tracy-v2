@@ -4,13 +4,18 @@ import { createRawSnippet } from 'svelte';
 import DataTableActions from './data-table-actions.svelte';
 import type { SchoolSession } from '@prisma/client';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
-import type { DeleteSessionSchema } from '$lib/common/schemas/school-session-schemas';
+import type {
+  DeleteSessionSchema,
+  ToggleCurrentSessionSchema,
+} from '$lib/common/schemas/school-session-schemas';
 import { localizeSeason } from '$lib/common/tools/localizer';
 
 export function makeColumns({
   deleteSessionForm,
+  toggleCurrentSessionForm,
 }: {
   deleteSessionForm: SuperValidated<Infer<DeleteSessionSchema>>;
+  toggleCurrentSessionForm: SuperValidated<Infer<ToggleCurrentSessionSchema>>;
 }): ColumnDef<SchoolSession>[] {
   return [
     {
@@ -42,6 +47,14 @@ export function makeColumns({
       header: 'Année',
     },
     {
+      meta: { frenchName: 'Session Actuelle' },
+      accessorKey: 'isCurrent',
+      header: 'Session actuelle',
+      cell: ({ row }) => {
+        return row.original.isCurrent ? 'Oui' : '';
+      },
+    },
+    {
       meta: { frenchName: 'Actions' },
       id: 'actions',
       header: () => {
@@ -54,6 +67,7 @@ export function makeColumns({
         return renderComponent(DataTableActions, {
           session: row.original,
           deleteSessionForm,
+          toggleCurrentSessionForm,
         });
       },
     },

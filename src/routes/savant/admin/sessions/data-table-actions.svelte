@@ -3,16 +3,21 @@
   import { Button } from '$lib/client/components/ui/button/index.js';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu/index.js';
   import type { SchoolSession } from '@prisma/client';
-  import type { DeleteSessionSchema } from '$lib/common/schemas/school-session-schemas';
+  import type {
+    DeleteSessionSchema,
+    ToggleCurrentSessionSchema,
+  } from '$lib/common/schemas/school-session-schemas';
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
   import DeleteSessionForm from '$lib/client/components/structure/forms/admin/session/delete-session-form.svelte';
+  import ToggleCurrentSessionForm from '$lib/client/components/structure/forms/admin/session/toggle-current-session-form.svelte';
 
   type Props = {
     session: SchoolSession;
     deleteSessionForm: SuperValidated<Infer<DeleteSessionSchema>>;
+    toggleCurrentSessionForm: SuperValidated<Infer<ToggleCurrentSessionSchema>>;
   };
 
-  const { session, deleteSessionForm }: Props = $props();
+  const { session, deleteSessionForm, toggleCurrentSessionForm }: Props = $props();
 </script>
 
 <div class="text-right">
@@ -28,6 +33,11 @@
     <DropdownMenu.Content>
       <DropdownMenu.Group>
         <DropdownMenu.Label>Actions</DropdownMenu.Label>
+        {#if !session.isCurrent}
+          <DropdownMenu.Item>
+            <ToggleCurrentSessionForm {session} data={toggleCurrentSessionForm} />
+          </DropdownMenu.Item>
+        {/if}
         <DropdownMenu.Item>
           <DeleteSessionForm {session} data={deleteSessionForm} />
         </DropdownMenu.Item>

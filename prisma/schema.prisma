@@ -68,8 +68,10 @@ model Course {
 }
 
 model SchoolSession {
-  id      Int      @id @default(autoincrement())
-  year    Int
+  id        Int     @id @default(autoincrement())
+  year      Int
+  isCurrent Boolean @default(false)
+
   season  Season
   courses Course[]
 }

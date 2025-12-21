@@ -6,7 +6,10 @@
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
 
   const { data } = $props();
-  const columns = makeColumns({ deleteSessionForm: data.deleteSessionForm });
+  const columns = makeColumns({
+    deleteSessionForm: data.deleteSessionForm,
+    toggleCurrentSessionForm: data.toggleCurrentSessionForm,
+  });
 </script>
 
 <PageTitle
