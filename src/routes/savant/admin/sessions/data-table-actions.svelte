@@ -42,16 +42,20 @@
             <DropdownMenu.Item class="p-0">
               <ToggleCurrentSessionForm {session} data={toggleCurrentSessionForm} />
             </DropdownMenu.Item>
+            <DropdownMenu.Separator />
+            <DropdownMenu.Item
+              onclick={() => (currentDialog = 'delete')}
+              class="w-full cursor-pointer"
+            >
+              {#snippet child({ props })}
+                <Dialog.Trigger {...props}>Supprimer</Dialog.Trigger>
+              {/snippet}
+            </DropdownMenu.Item>
+          {:else}
+            <DropdownMenu.Item class="cursor-default data-[highlighted]:bg-transparent">
+              Aucune action disponible
+            </DropdownMenu.Item>
           {/if}
-          <DropdownMenu.Separator />
-          <DropdownMenu.Item
-            onclick={() => (currentDialog = 'delete')}
-            class="w-full cursor-pointer"
-          >
-            {#snippet child({ props })}
-              <Dialog.Trigger {...props}>Supprimer</Dialog.Trigger>
-            {/snippet}
-          </DropdownMenu.Item>
         </DropdownMenu.Group>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
@@ -61,12 +65,12 @@
       <Dialog.Content>
         <Dialog.Header>
           <Dialog.Title>
-            Suppression de la session {localizeSeason(session.season)}
+            Suppression de la session <em>{localizeSeason(session.season)}</em>
             {session.year}
           </Dialog.Title>
           <Dialog.Description>
-            La soumission de ce formulaire va supprimer la session "{localizeSeason(session.season)}
-            {session.year}" du système.
+            La soumission de ce formulaire va supprimer la session
+            <em>{localizeSeason(session.season)} {session.year}</em> du système.
           </Dialog.Description>
         </Dialog.Header>
         <Dialog.Footer>

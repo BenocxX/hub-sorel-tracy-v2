@@ -47,11 +47,11 @@ export function makeColumns({
       header: 'Année',
     },
     {
-      meta: { frenchName: 'Session Actuelle' },
+      meta: { frenchName: 'Session actuelle' },
       accessorKey: 'isCurrent',
-      header: 'Session actuelle',
+      header: '',
       cell: ({ row }) => {
-        return row.original.isCurrent ? 'Oui' : '';
+        return row.original.isCurrent ? 'Session actuelle' : '';
       },
     },
     {
