@@ -7,7 +7,11 @@ import { zod } from 'sveltekit-superforms/adapters';
 export const load = async (event) => {
   const courses = await db.course.findMany({
     include: { schoolSession: true },
-    orderBy: [{ schoolSession: { year: 'asc' } }, { name: 'asc' }],
+    orderBy: [
+      { schoolSession: { year: 'asc' } },
+      { schoolSession: { season: 'desc' } },
+      { name: 'asc' },
+    ],
   });
   const sessions = await db.schoolSession.findMany();
 
