@@ -3,6 +3,8 @@ import { db } from '$lib/server/prisma/index.js';
 export const load = async (event) => {
   const user = event.locals.user;
 
+  const currentSession = await db.schoolSession.findFirst({ where: { isCurrent: true } });
+
   const courses = await db.course.findMany({
     where: {
       students: user?.role === 'Student' ? { some: { id: user?.id } } : undefined,
@@ -14,5 +16,5 @@ export const load = async (event) => {
     include: { presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] } },
   });
 
-  return { user, courses };
+  return { user, courses, currentSession };
 };

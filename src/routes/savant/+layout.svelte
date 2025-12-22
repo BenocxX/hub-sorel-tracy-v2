@@ -26,7 +26,7 @@
 <ModeWatcher />
 <Sidebar.Provider open={sidebarOpen.value}>
   {#if hasSidebar}
-    <SavantSidebar user={data.user} courses={data.courses} />
+    <SavantSidebar currentSession={data.currentSession} user={data.user} courses={data.courses} />
   {/if}
   <main class="flex w-full flex-col gap-8 overflow-y-auto py-2">
     <header class="container mx-auto flex items-center justify-between">

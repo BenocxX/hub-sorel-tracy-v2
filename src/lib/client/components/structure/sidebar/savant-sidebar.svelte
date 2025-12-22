@@ -1,7 +1,7 @@
 <script lang="ts">
   import * as Sidebar from '$lib/client/components/ui/sidebar';
   import SidebarUser from './sidebar-user.svelte';
-  import type { Course } from '$lib/common/types/prisma-types';
+  import type { Course, SchoolSession } from '$lib/common/types/prisma-types';
   import SidebarSwitcher from './sidebar-switcher.svelte';
   import { makeSidebarSections } from './sidebar-data';
   import { page } from '$app/state';
@@ -10,10 +10,11 @@
 
   type Props = {
     user: App.PageData['user'];
+    currentSession: SchoolSession | null;
     courses: Course<{ presentations: true }>[];
   };
 
-  const { user, courses }: Props = $props();
+  const { user, currentSession, courses }: Props = $props();
 
   const lastSelectedSidebarId = preferences.lastSelectedCourseId();
 
@@ -39,9 +40,9 @@
 </script>
 
 <Sidebar.Root collapsible="icon">
-  {#if selectedCourse}
+  {#if selectedCourse && currentSession}
     <Sidebar.Header>
-      <SidebarSwitcher {courses} {selectedCourse} />
+      <SidebarSwitcher {currentSession} {courses} {selectedCourse} />
     </Sidebar.Header>
   {/if}
   <Sidebar.Content>

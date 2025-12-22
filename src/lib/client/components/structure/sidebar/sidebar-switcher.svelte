@@ -4,15 +4,21 @@
   import { useSidebar } from '$lib/client/components/ui/sidebar';
   import { mode } from 'mode-watcher';
   import { generateColorPair } from '$lib/common/tools/color-mixer';
-  import type { Course } from '$lib/common/types/prisma-types';
+  import type { Course, SchoolSession } from '$lib/common/types/prisma-types';
   import { page } from '$app/state';
   import { ChevronsUpDown } from 'lucide-svelte';
   import { goto } from '$app/navigation';
   import { cn } from '$lib/client/utils';
+  import { resolve } from '$app/paths';
+  import { localizeSeason } from '$lib/common/tools/localizer';
 
-  type Props = { courses: Course[]; selectedCourse: Course };
+  type Props = {
+    currentSession: SchoolSession;
+    courses: Course[];
+    selectedCourse: Course;
+  };
 
-  let { courses, selectedCourse }: Props = $props();
+  let { currentSession, courses, selectedCourse }: Props = $props();
 
   const sidebar = useSidebar();
 
@@ -70,16 +76,28 @@
         sideOffset={4}
       >
         <DropdownMenu.Group>
-          <DropdownMenu.Label class="text-xs text-foreground-discreet">Cours</DropdownMenu.Label>
+          <DropdownMenu.Label class="text-xs text-foreground-discreet">
+            {localizeSeason(currentSession.season)}
+            {currentSession.year}
+          </DropdownMenu.Label>
           <DropdownMenu.Separator />
           {#each courses as course (course)}
             <DropdownMenu.Item
-              class={cn('gap-3 p-2', selectedCourse.id === course.id && 'bg-secondary')}
+              class={cn(
+                'cursor-pointer gap-3 p-2',
+                selectedCourse.id === course.id && 'bg-secondary'
+              )}
               onSelect={() => onCourseSelected(course)}
             >
               {@render courseItem(course)}
             </DropdownMenu.Item>
           {/each}
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item class="flex cursor-pointer justify-center">
+            {#snippet child({ props })}
+              <a href={resolve('/savant/courses')} {...props}>Voir tous mes cours</a>
+            {/snippet}
+          </DropdownMenu.Item>
         </DropdownMenu.Group>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
