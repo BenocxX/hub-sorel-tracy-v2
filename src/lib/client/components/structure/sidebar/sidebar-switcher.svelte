@@ -11,6 +11,7 @@
   import { cn } from '$lib/client/utils';
   import { resolve } from '$app/paths';
   import { localizeSeason } from '$lib/common/tools/localizer';
+  import { match } from 'arktype';
 
   type Props = {
     currentSession: SchoolSession;
@@ -26,12 +27,24 @@
     return generateColorPair(`${course.name}-${course.group}`, mode.current);
   }
 
+  function isOnCoursePage(path: string) {
+    return path.match(/\/courses\/\d+/) != null;
+  }
+
+  function replaceCourseId(path: string, id: number) {
+    return path.replace(/\/courses\/\d+/, `/courses/${id}`);
+  }
+
+  function makeCoursePath(id: number) {
+    return `/savant/courses/${id}`;
+  }
+
   function onCourseSelected(course: Course) {
     const currentPath = page.url.pathname;
 
-    const pathname = currentPath.includes('/courses')
-      ? page.url.pathname.replace(/\/courses\/\d+/, `/courses/${course.id}`)
-      : `/savant/courses/${course.id}`;
+    const pathname = isOnCoursePage(currentPath)
+      ? replaceCourseId(currentPath, course.id)
+      : makeCoursePath(course.id);
 
     goto(pathname + page.url.search);
   }

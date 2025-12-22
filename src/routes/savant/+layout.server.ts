@@ -10,7 +10,6 @@ export const load = async (event) => {
       students: user?.role === 'Student' ? { some: { id: user?.id } } : undefined,
       teachers:
         user?.role === 'Teacher' || user?.role === 'Admin' ? { some: { id: user?.id } } : undefined,
-      schoolSession: { isCurrent: true },
     },
     orderBy: { name: 'asc' },
     include: { presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] } },

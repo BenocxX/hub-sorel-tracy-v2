@@ -42,7 +42,11 @@
 <Sidebar.Root collapsible="icon">
   {#if selectedCourse && currentSession}
     <Sidebar.Header>
-      <SidebarSwitcher {currentSession} {courses} {selectedCourse} />
+      <SidebarSwitcher
+        {currentSession}
+        courses={courses.filter((course) => course.schoolSessionId === currentSession.id)}
+        {selectedCourse}
+      />
     </Sidebar.Header>
   {/if}
   <Sidebar.Content>
