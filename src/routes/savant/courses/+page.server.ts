@@ -3,7 +3,20 @@ import { db } from '$lib/server/prisma';
 
 export const load = async (event) => {
   const courses = await getCourses(event.locals.user!);
-  return { courses };
+  const sessions = await db.schoolSession.findMany({
+    where: {
+      courses: {
+        some: {
+          id: {
+            in: courses.map((course) => course.id),
+          },
+        },
+      },
+    },
+    orderBy: [{ year: 'asc' }, { season: 'desc' }],
+  });
+
+  return { courses, sessions };
 };
 
 async function getCourses(user: User) {

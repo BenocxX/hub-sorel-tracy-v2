@@ -9,8 +9,10 @@ export function localizeSeason(season: Season) {
   return localizedSeasonObject[season];
 }
 
-export function displaySession(session: SchoolSession) {
-  return `${localizeSeason(session.season)[0]}${session.year}`;
+export function displaySession(session: SchoolSession, options?: { short?: boolean }) {
+  const fullLocalizedSeason = localizeSeason(session.season);
+  const season = options?.short ? fullLocalizedSeason.charAt(0) : fullLocalizedSeason + ' ';
+  return `${season}${session.year}`;
 }
 
 export function localizeRole(role: Role) {

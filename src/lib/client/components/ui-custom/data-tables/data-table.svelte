@@ -35,6 +35,8 @@
     pagination?: { disabled?: boolean; index?: number; size?: number };
     visibility?: boolean;
     createDialogFormSnippet?: Snippet;
+    beforeSearchSnippet?: Snippet;
+    afterSearchSnippet?: Snippet;
   };
 
   const {
@@ -43,6 +45,8 @@
     pagination: paginationConfig,
     visibility = true,
     createDialogFormSnippet,
+    beforeSearchSnippet,
+    afterSearchSnippet,
   }: DataTableProps<TData, TValue> = $props();
 
   let pagination = $state<PaginationState>({
@@ -141,6 +145,7 @@
           </Dialog.Content>
         </Dialog.Root>
       {/if}
+      {@render beforeSearchSnippet?.()}
       <Input
         id="search"
         placeholder="Recherche..."
@@ -152,6 +157,7 @@
         }}
         class="max-w-sm"
       />
+      {@render afterSearchSnippet?.()}
     </div>
     {#if visibility}
       <DropdownMenu.Root>

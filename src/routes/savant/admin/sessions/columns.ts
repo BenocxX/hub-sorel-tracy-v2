@@ -8,7 +8,7 @@ import type {
   DeleteSessionSchema,
   ToggleCurrentSessionSchema,
 } from '$lib/common/schemas/school-session-schemas';
-import { localizeSeason } from '$lib/common/tools/localizer';
+import { displaySession, localizeSeason } from '$lib/common/tools/localizer';
 
 export function makeColumns({
   deleteSessionForm,
@@ -24,8 +24,7 @@ export function makeColumns({
       header: 'ID',
       cell: ({ row }) => {
         const cellSnippet = createRawSnippet(() => ({
-          render: () =>
-            `<div>${localizeSeason(row.original.season).charAt(0) + row.original.year}</div>`,
+          render: () => `<div>${displaySession(row.original, { short: true })}</div>`,
         }));
         return renderSnippet(cellSnippet, '');
       },
