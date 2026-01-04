@@ -34,6 +34,7 @@
     data: TData[];
     pagination?: { disabled?: boolean; index?: number; size?: number };
     visibility?: boolean;
+    search?: boolean;
     createDialogFormSnippet?: Snippet;
     beforeSearchSnippet?: Snippet;
     afterSearchSnippet?: Snippet;
@@ -44,6 +45,7 @@
     columns,
     pagination: paginationConfig,
     visibility = true,
+    search = true,
     createDialogFormSnippet,
     beforeSearchSnippet,
     afterSearchSnippet,
@@ -131,96 +133,17 @@
 <div>
   <div class="flex items-center justify-between gap-2 py-4">
     <div class="flex w-full items-center gap-2">
-      {#if createDialogFormSnippet}
-        <Dialog.Root>
-          <Dialog.Trigger>
-            {#snippet child({ props })}
-              <Button variant="outline" size="icon" class="aspect-square" {...props}>
-                <Plus />
-              </Button>
-            {/snippet}
-          </Dialog.Trigger>
-          <Dialog.Content>
-            {@render createDialogFormSnippet()}
-          </Dialog.Content>
-        </Dialog.Root>
-      {/if}
+      {@render createEntityDialog()}
       {@render beforeSearchSnippet?.()}
-      <Input
-        id="search"
-        placeholder="Recherche..."
-        onchange={(e) => {
-          table.setGlobalFilter(String(e.currentTarget.value));
-        }}
-        oninput={(e) => {
-          table.setGlobalFilter(String(e.currentTarget.value));
-        }}
-        class="max-w-sm"
-      />
+      {@render searchBar()}
       {@render afterSearchSnippet?.()}
     </div>
-    {#if visibility}
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger>
-          {#snippet child({ props })}
-            <Button {...props} variant="outline">
-              <Settings2 />
-              Affichage
-            </Button>
-          {/snippet}
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content align="end">
-          {#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
-            <DropdownMenu.CheckboxItem
-              bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
-            >
-              {column.columnDef.meta?.frenchName ?? column.id}
-            </DropdownMenu.CheckboxItem>
-          {/each}
-        </DropdownMenu.Content>
-      </DropdownMenu.Root>
-    {/if}
+    {@render columnVisibilityDropdown()}
   </div>
   <div class="rounded-md border">
     <Table.Root>
-      <Table.Header>
-        {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-          <Table.Row>
-            {#each headerGroup.headers as header (header.id)}
-              <Table.Head
-                class={cn(header.column.columnDef.meta?.class)}
-                style={`width: ${header.column.columnDef.meta?.width || 'auto'};`}
-                colspan={header.colSpan}
-              >
-                {#if !header.isPlaceholder}
-                  <FlexRender
-                    content={header.column.columnDef.header}
-                    context={header.getContext()}
-                  />
-                {/if}
-              </Table.Head>
-            {/each}
-          </Table.Row>
-        {/each}
-      </Table.Header>
-      <Table.Body>
-        {#each rows as row (row.id)}
-          <Table.Row data-state={row.getIsSelected() && 'selected'}>
-            {#each row.getVisibleCells() as cell (cell.id)}
-              {@const meta = cell.column.columnDef.meta}
-              <Table.Cell class={cn(meta?.class)} style={`width: ${meta?.width || 'auto'};`}>
-                <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
-              </Table.Cell>
-            {/each}
-          </Table.Row>
-        {:else}
-          <Table.Row>
-            <Table.Cell colspan={columns.length} class="h-24 text-center">
-              Aucun résultat.
-            </Table.Cell>
-          </Table.Row>
-        {/each}
-      </Table.Body>
+      <Table.Header>{@render tableHeader()}</Table.Header>
+      <Table.Body>{@render tableBody()}</Table.Body>
     </Table.Root>
   </div>
   {#if !paginationConfig?.disabled}
@@ -236,7 +159,7 @@
         >
           <Select.Trigger class="h-8 w-max gap-2">{pagination.pageSize}</Select.Trigger>
           <Select.Content>
-            {#each Array.of(10, 20, 30, 40, 50) as itemPerPage (itemPerPage)}
+            {#each Array.of(5, 10, 20, 30, 40, 50) as itemPerPage (itemPerPage)}
               <Select.Item value={itemPerPage.toString()}>{itemPerPage}</Select.Item>
             {/each}
           </Select.Content>
@@ -249,7 +172,7 @@
             variant="outline"
             size="icon-sm"
             onclick={() => table.firstPage()}
-            disabled={pagination.pageIndex === 0}
+            disabled={!table.getCanPreviousPage}
           >
             <ChevronsLeft />
           </Button>
@@ -257,7 +180,7 @@
             variant="outline"
             size="icon-sm"
             onclick={() => table.previousPage()}
-            disabled={pagination.pageIndex === 0}
+            disabled={!table.getCanPreviousPage()}
           >
             <ChevronLeft />
           </Button>
@@ -265,7 +188,7 @@
             variant="outline"
             size="icon-sm"
             onclick={() => table.nextPage()}
-            disabled={table.getPageCount() === pagination.pageIndex + 1}
+            disabled={!table.getCanNextPage()}
           >
             <ChevronRight />
           </Button>
@@ -273,7 +196,7 @@
             variant="outline"
             size="icon-sm"
             onclick={() => table.lastPage()}
-            disabled={table.getPageCount() === pagination.pageIndex + 1}
+            disabled={!table.getCanNextPage()}
           >
             <ChevronsRight />
           </Button>
@@ -282,3 +205,95 @@
     </div>
   {/if}
 </div>
+
+{#snippet createEntityDialog()}
+  {#if createDialogFormSnippet}
+    <Dialog.Root>
+      <Dialog.Trigger>
+        {#snippet child({ props })}
+          <Button variant="outline" size="icon" class="aspect-square" {...props}>
+            <Plus />
+          </Button>
+        {/snippet}
+      </Dialog.Trigger>
+      <Dialog.Content>
+        {@render createDialogFormSnippet()}
+      </Dialog.Content>
+    </Dialog.Root>
+  {/if}
+{/snippet}
+
+{#snippet searchBar()}
+  {#if search}
+    <Input
+      id="search"
+      placeholder="Recherche..."
+      onchange={(e) => {
+        table.setGlobalFilter(String(e.currentTarget.value));
+      }}
+      oninput={(e) => {
+        table.setGlobalFilter(String(e.currentTarget.value));
+      }}
+      class="max-w-sm"
+    />
+  {/if}
+{/snippet}
+
+{#snippet columnVisibilityDropdown()}
+  {#if visibility}
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
+        {#snippet child({ props })}
+          <Button {...props} variant="outline">
+            <Settings2 />
+            Affichage
+          </Button>
+        {/snippet}
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content align="end">
+        {#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
+          <DropdownMenu.CheckboxItem
+            bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
+          >
+            {column.columnDef.meta?.frenchName ?? column.id}
+          </DropdownMenu.CheckboxItem>
+        {/each}
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  {/if}
+{/snippet}
+
+{#snippet tableHeader()}
+  {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
+    <Table.Row>
+      {#each headerGroup.headers as header (header.id)}
+        <Table.Head
+          class={cn(header.column.columnDef.meta?.class)}
+          style={`width: ${header.column.columnDef.meta?.width || 'auto'};`}
+          colspan={header.colSpan}
+        >
+          {#if !header.isPlaceholder}
+            <FlexRender content={header.column.columnDef.header} context={header.getContext()} />
+          {/if}
+        </Table.Head>
+      {/each}
+    </Table.Row>
+  {/each}
+{/snippet}
+
+{#snippet tableBody()}
+  {#each rows as row (row.id)}
+    <Table.Row data-state={row.getIsSelected() && 'selected'}>
+      {#each row.getVisibleCells() as cell (cell.id)}
+        {@const meta = cell.column.columnDef.meta}
+        <Table.Cell class={cn(meta?.class)} style={`width: ${meta?.width || 'auto'};`}>
+          <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
+        </Table.Cell>
+      {/each}
+    </Table.Row>
+  {:else}
+    <Table.Row>
+      <Table.Cell colspan={columns.length} class="h-24 text-center">Aucun résultat.</Table.Cell>
+    </Table.Row>
+  {/each}
+{/snippet}
