@@ -18,7 +18,6 @@
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import * as InputGroup from '$lib/client/components/ui/input-group/index.js';
   import { Button, type ButtonProps } from '$lib/client/components/ui/button';
-  import { Input } from '$lib/client/components/ui/input';
   import {
     ChevronLeft,
     ChevronRight,
@@ -229,7 +228,10 @@
     <Table.Row data-state={row.getIsSelected() && 'selected'}>
       {#each row.getVisibleCells() as cell (cell.id)}
         {@const meta = cell.column.columnDef.meta}
-        <Table.Cell class={cn(meta?.class)} style={`width: ${meta?.width || 'auto'};`}>
+        <Table.Cell
+          class={cn(meta?.class)}
+          style={`width: ${meta?.width || 'auto'}; min-width: ${meta?.minWidth || 'auto'};`}
+        >
           <FlexRender content={cell.column.columnDef.cell} context={cell.getContext()} />
         </Table.Cell>
       {/each}

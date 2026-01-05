@@ -25,6 +25,7 @@ declare module '@tanstack/table-core' {
 
     // Source: https://github.com/TanStack/table/discussions/3192#discussioncomment-8419949
     width?: string;
+    minWidth?: string;
   }
 }
 

@@ -17,7 +17,7 @@ export function makeColumns({
 }): ColumnDef<Pick<Session, 'createdAt' | 'expiresAt' | 'lastUsed' | 'publicId' | 'name'>>[] {
   return [
     {
-      meta: { frenchName: 'Nom' },
+      meta: { frenchName: 'Nom', minWidth: '300px' },
       accessorKey: 'name',
       header: 'Nom',
       cell: ({ row }) => {
@@ -33,7 +33,7 @@ export function makeColumns({
       },
     },
     {
-      meta: { frenchName: 'Date de création' },
+      meta: { frenchName: 'Date de création', minWidth: '200px' },
       accessorKey: 'createdAt',
       header: 'Date de création',
       cell: ({ row }) => {
@@ -44,7 +44,7 @@ export function makeColumns({
       },
     },
     {
-      meta: { frenchName: 'Expiration' },
+      meta: { frenchName: 'Expiration', minWidth: '200px' },
       accessorKey: 'expiresAt',
       header: 'Expiration',
       cell: ({ row }) => {
@@ -55,7 +55,7 @@ export function makeColumns({
       },
     },
     {
-      meta: { frenchName: 'Dernière utilisation' },
+      meta: { frenchName: 'Dernière utilisation', minWidth: '200px' },
       accessorKey: 'lastUsed',
       header: 'Dernière utilisation',
       cell: ({ row }) => {
@@ -66,7 +66,7 @@ export function makeColumns({
       },
     },
     {
-      meta: { frenchName: 'Actions' },
+      meta: { frenchName: 'Actions', minWidth: '100px' },
       id: 'actions',
       header: () => {
         const actionsHeaderSnippet = createRawSnippet(() => ({
