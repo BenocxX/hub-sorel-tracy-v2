@@ -15,7 +15,7 @@
   role="group"
   class={cn(
     'group/input-group relative flex w-full items-center rounded-md border border-input shadow-sm outline-none ring-offset-background transition-[color,box-shadow]',
-    'h-9 has-[>textarea]:h-auto',
+    'h-10 has-[>textarea]:h-auto',
     // Variants based on alignment.
     'has-[>[data-align=inline-start]]:[&>input]:ps-2',
     'has-[>[data-align=inline-end]]:[&>input]:pe-2',

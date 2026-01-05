@@ -16,6 +16,7 @@
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import * as Select from '$lib/client/components/ui/select';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
+  import * as InputGroup from '$lib/client/components/ui/input-group/index.js';
   import { Button, type ButtonProps } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
   import {
@@ -24,6 +25,7 @@
     ChevronsLeft,
     ChevronsRight,
     Plus,
+    SearchIcon,
     Settings2,
   } from 'lucide-svelte';
   import type { Snippet } from 'svelte';
@@ -162,17 +164,21 @@
 
 {#snippet searchBar()}
   {#if search}
-    <Input
-      id="search"
-      placeholder="Recherche..."
-      onchange={(e) => {
-        table.setGlobalFilter(String(e.currentTarget.value));
-      }}
-      oninput={(e) => {
-        table.setGlobalFilter(String(e.currentTarget.value));
-      }}
-      class="max-w-sm"
-    />
+    <InputGroup.Root class="max-w-sm">
+      <InputGroup.Input
+        id="search"
+        placeholder="Recherche..."
+        onchange={(e) => {
+          table.setGlobalFilter(String(e.currentTarget.value));
+        }}
+        oninput={(e) => {
+          table.setGlobalFilter(String(e.currentTarget.value));
+        }}
+      />
+      <InputGroup.Addon>
+        <SearchIcon />
+      </InputGroup.Addon>
+    </InputGroup.Root>
   {/if}
 {/snippet}
 
