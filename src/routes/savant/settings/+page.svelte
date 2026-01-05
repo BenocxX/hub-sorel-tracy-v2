@@ -3,9 +3,15 @@
   import SetPasswordForm from '$lib/client/components/structure/forms/settings/set-password-form.svelte';
   import UpdateNamesForm from '$lib/client/components/structure/forms/settings/update-names-form.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
-  import SessionList from '$lib/client/components/structure/pages/settings/session-list.svelte';
+  import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
+  import { makeColumns } from './columns.js';
 
   const { data } = $props();
+
+  const columns = makeColumns({
+    deleteForm: data.deleteSessionForm,
+    currentSessionPublicId: data.currentSessionPublicId,
+  });
 </script>
 
 <PageTitle title="Paramètres" subtitle="Gérez les différents paramètres de votre compte." />
@@ -38,9 +44,13 @@
       <SetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.setPasswordForm} />
     {/if}
   </div>
-  <SessionList
-    sessions={data.sessions}
-    currentSessionPublicId={data.currentSessionPublicId}
-    deleteForm={data.deleteSessionForm}
-  />
+  <div class="py-12">
+    <div>
+      <h2 class="font-semibold">Sessions</h2>
+      <p class="mt-1 text-sm/6 text-foreground-discreet">
+        Gérez vos sessions actives et déconnectez-vous de celles que vous ne reconnaissez pas.
+      </p>
+    </div>
+    <DataTable {columns} data={data.sessions} />
+  </div>
 </div>

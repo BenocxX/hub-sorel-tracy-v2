@@ -14,7 +14,7 @@
   type Props = {
     session: PublicSessionDTO;
     data: SuperValidated<Infer<DeleteSessionSchema>>;
-    buttonProps: ButtonProps;
+    buttonProps?: ButtonProps;
   };
 
   const { session, data, buttonProps }: Props = $props();
@@ -37,8 +37,5 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {...buttonProps} {delayed} class="w-full" variant="destructive">
-    Supprimer la session
-    <Trash />
-  </Form.Button>
+  <Form.Button {...buttonProps} {delayed} variant="destructive">Supprimer</Form.Button>
 </form>
