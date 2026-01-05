@@ -20,12 +20,15 @@ export const load = async (event) => {
 };
 
 async function getCourses(user: User) {
-  const role: 'student' | 'teacher' = user.role === 'Student' ? 'student' : 'teacher';
+  const coursePrismaQuery = {
+    courses: { include: { schoolSession: true }, orderBy: { name: 'asc' } },
+  } as const;
+
   const data = await db.user.findFirst({
     where: { id: user.id },
     select: {
-      student: { select: { courses: { include: { schoolSession: true } } } },
-      teacher: { select: { courses: { include: { schoolSession: true } } } },
+      student: { select: coursePrismaQuery },
+      teacher: { select: coursePrismaQuery },
     },
   });
 
@@ -33,5 +36,6 @@ async function getCourses(user: User) {
     return [];
   }
 
+  const role: 'student' | 'teacher' = user.role === 'Student' ? 'student' : 'teacher';
   return data[role]?.courses ?? [];
 }
