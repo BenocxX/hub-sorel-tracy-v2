@@ -24,9 +24,13 @@ export function makeColumns({
         const snippet = createRawSnippet(() => ({
           render: () => {
             const { device, browser } = UAParser(row.original.name);
+            const vendor = device.vendor ? device.vendor : '';
+            const model = device.model ? device.model : '';
+            const browserName = browser.name ? browser.name : '';
+            const hasDeviceInfo = vendor || model;
             const isActive = row.original.publicId === currentSessionPublicId;
             const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-icon lucide-circle-check ${!isActive && 'text-transparent'}"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`;
-            return `<span class="flex items-center gap-2">${checkIcon}${device.vendor} ${device.model} · ${browser.name}</span>`;
+            return `<span class="flex items-center gap-2">${checkIcon}${vendor} ${model} ${hasDeviceInfo && '·'} ${browserName}</span>`;
           },
         }));
         return renderSnippet(snippet, '');
