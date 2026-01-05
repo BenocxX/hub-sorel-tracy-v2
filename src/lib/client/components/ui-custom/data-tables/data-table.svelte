@@ -16,7 +16,7 @@
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
   import * as Select from '$lib/client/components/ui/select';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
-  import { Button } from '$lib/client/components/ui/button';
+  import { Button, type ButtonProps } from '$lib/client/components/ui/button';
   import { Input } from '$lib/client/components/ui/input';
   import {
     ChevronLeft,
@@ -140,64 +140,7 @@
       <Table.Body>{@render tableBody()}</Table.Body>
     </Table.Root>
   </div>
-  {#if !paginationConfig?.disabled}
-    <div
-      class=" flex flex-col-reverse items-end justify-end sm:flex-row sm:items-center sm:gap-10 md:flex-col-reverse md:items-end md:gap-0 lg:flex-row lg:items-center lg:gap-10"
-    >
-      <div class="flex items-center gap-2">
-        <span class="text-sm">Rangées par page</span>
-        <Select.Root
-          type="single"
-          value={pagination.pageSize.toString()}
-          onValueChange={(value) => table.setPageSize(+value)}
-        >
-          <Select.Trigger class="h-8 w-max gap-2">{pagination.pageSize}</Select.Trigger>
-          <Select.Content>
-            {#each Array.of(5, 10, 20, 30, 40, 50) as itemPerPage (itemPerPage)}
-              <Select.Item value={itemPerPage.toString()}>{itemPerPage}</Select.Item>
-            {/each}
-          </Select.Content>
-        </Select.Root>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="text-sm">Page {pagination.pageIndex + 1} sur {table.getPageCount()}</div>
-        <div class="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onclick={() => table.firstPage()}
-            disabled={!table.getCanPreviousPage}
-          >
-            <ChevronsLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onclick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onclick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon-sm"
-            onclick={() => table.lastPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <ChevronsRight />
-          </Button>
-        </div>
-      </div>
-    </div>
-  {/if}
+  {@render tablePagination()}
 </div>
 
 {#snippet createEntityDialog()}
@@ -290,4 +233,62 @@
       <Table.Cell colspan={columns.length} class="h-24 text-center">Aucun résultat.</Table.Cell>
     </Table.Row>
   {/each}
+{/snippet}
+
+{#snippet tablePagination()}
+  {#if !paginationConfig?.disabled}
+    <div
+      class=" flex flex-col-reverse items-end justify-end sm:flex-row sm:items-center sm:gap-10 md:flex-col-reverse md:items-end md:gap-0 lg:flex-row lg:items-center lg:gap-10"
+    >
+      <div class="flex items-center gap-2">
+        {@render rowsPerPageSelect()}
+      </div>
+      <div class="flex items-center gap-4">
+        {@render currentPageDisplay()}
+        {@render controls()}
+      </div>
+    </div>
+  {/if}
+
+  {#snippet rowsPerPageSelect()}
+    <span class="text-sm">Rangées par page</span>
+    <Select.Root
+      type="single"
+      value={pagination.pageSize.toString()}
+      onValueChange={(value) => table.setPageSize(+value)}
+    >
+      <Select.Trigger class="h-8 w-max gap-2">{pagination.pageSize}</Select.Trigger>
+      <Select.Content>
+        {#each Array.of(10, 20, 30, 40, 50) as itemPerPage (itemPerPage)}
+          <Select.Item value={itemPerPage.toString()}>{itemPerPage}</Select.Item>
+        {/each}
+      </Select.Content>
+    </Select.Root>
+  {/snippet}
+
+  {#snippet currentPageDisplay()}
+    <div class="text-sm">Page {pagination.pageIndex + 1} sur {table.getPageCount()}</div>
+  {/snippet}
+
+  {#snippet controls()}
+    {@const props: ButtonProps = { variant: "outline", size: "icon-sm" }}
+    <div class="flex items-center justify-end space-x-2 py-4">
+      <Button {...props} onclick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
+        <ChevronsLeft />
+      </Button>
+      <Button
+        {...props}
+        onclick={() => table.previousPage()}
+        disabled={!table.getCanPreviousPage()}
+      >
+        <ChevronLeft />
+      </Button>
+      <Button {...props} onclick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        <ChevronRight />
+      </Button>
+      <Button {...props} onclick={() => table.lastPage()} disabled={!table.getCanNextPage()}>
+        <ChevronsRight />
+      </Button>
+    </div>
+  {/snippet}
 {/snippet}
