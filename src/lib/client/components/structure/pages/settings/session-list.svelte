@@ -9,6 +9,7 @@
   import AlertDialogConfirm from '$lib/client/components/ui-custom/dialogs/alert-dialog-confirm.svelte';
   import type { DeleteSessionSchema } from '$lib/common/schemas/settings-schemas';
   import DeleteSessionForm from '../../forms/settings/delete-session-form.svelte';
+  import { UAParser } from 'ua-parser-js';
 
   type Props = {
     sessions: PublicSessionDTO[];
@@ -43,9 +44,11 @@
 </div>
 
 {#snippet sessionListItem({ session }: { session: PublicSessionDTO })}
+  {@const { device, browser } = UAParser(session.name)}
+
   <li class="flex items-center justify-between">
     <div class="overflow-x-hidden pr-8">
-      <p class="truncate">{session.name}</p>
+      <p class="truncate">{device.vendor} {device.model} · {browser.name}</p>
       <div class="mt-1 flex flex-wrap gap-1.5">
         {#if session.publicId === currentSessionPublicId}
           <Badge variant="success">Session actuelle</Badge>
