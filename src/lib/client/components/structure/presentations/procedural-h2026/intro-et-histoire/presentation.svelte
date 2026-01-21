@@ -10,7 +10,7 @@
     niveauLangages: 'Niveau des langages de programmation',
   };
 
-  currentPresentation.title = 'Concepts objets avancés';
+  currentPresentation.title = 'Introduction et histoire du langage C';
 
   initializeSlideLinks();
 </script>
