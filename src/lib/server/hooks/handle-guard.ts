@@ -1,8 +1,9 @@
 import { redirect, type Handle, type RequestEvent } from '@sveltejs/kit';
 import { resolve } from '$app/paths';
 import { RedirectToCookie } from '../cookies/redirect-to-cookie';
+import { db } from '../prisma';
 
-const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard];
+const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard, isUserPartOfCourse];
 
 export const handleGuard: Handle = async ({ event, resolve }) => {
   if (!event.route.id) {
@@ -50,5 +51,21 @@ async function teacherGuard({ route: { id } }: RequestEvent, user?: App.Locals['
 async function adminGuard({ route: { id } }: RequestEvent, user?: App.Locals['user']) {
   if (id!.includes(resolve('/savant/admin')) && (!user || user.role !== 'Admin')) {
     throw redirect(303, resolve('/savant'));
+  }
+}
+
+async function isUserPartOfCourse(event: RequestEvent, user?: App.Locals['user']) {
+  if (event.route.id!.includes('/savant/courses/[courseId=number]')) {
+    const courseId = Number(event.params.courseId);
+    const course = await db.course.findFirst({
+      where: {
+        id: courseId,
+        OR: [{ students: { some: { id: user?.id } } }, { teachers: { some: { id: user?.id } } }],
+      },
+    });
+
+    if (!course) {
+      throw redirect(303, resolve('/savant'));
+    }
   }
 }
