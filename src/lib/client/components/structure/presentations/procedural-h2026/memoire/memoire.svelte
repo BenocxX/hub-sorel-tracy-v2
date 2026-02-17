@@ -61,7 +61,7 @@
     pendant l'exécution de votre programme. Voici une commande permettant d'obtenir un fichier assembleur
     à partir d'un fichier source en C :
   </p>
-  <CodeBlock language="Bash" code="gcc -S -o fichier.s ./fichier.o" />
+  <CodeBlock fragment language="Bash" code="gcc -S -o fichier.s ./fichier.c" />
 </BasicSlide>
 <BasicSlide>
   <p>
@@ -95,14 +95,6 @@
     et les adresses de retour des fonctions. Il est géré automatiquement par le système d'exploitation
     et le compilateur.
   </p>
-</BasicSlide>
-<BasicSlide>
-  <p>
-    Comme dit plus tôt, le <BoldItalic>code</BoldItalic> représente les instructions machines de notre
-    programme. Voici une commande gcc permettant d'obtenir un fichier assembleur à partir d'un fichier
-    source en C :
-  </p>
-  <CodeBlock language="Bash" code="gcc -S -O2 -fverbose-asm ./fichier.c -o fichier.s" />
 </BasicSlide>
 <BasicSlide>
   <p>Dessinons ensemble la représentation de la mémoire du programme suivant :</p>
