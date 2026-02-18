@@ -199,3 +199,168 @@ int y = *p; // y obtient la valeur stockée à l'adresse pointée par p (c'est-�
     </li>
   </List>
 </BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`#include <stdlib.h>
+    
+int main() {
+    // variable locale stockée dans la pile (stack)
+    int x = 10;
+
+    // allocation dynamique dans le heap
+    int *p = malloc(sizeof(int));
+
+    // stocke la valeur 20 à l'adresse pointée par p
+    *p = 20;
+
+    // libère la mémoire allouée pour p
+    free(p);
+    return 0;
+}`}
+  />
+</BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`#include <stdlib.h>
+
+int main() {
+    // alloue de la mémoire pour un tableau de 5 entiers
+    int *numbers = malloc(5 * sizeof(int));
+
+    // stocke les valeurs 1, 2, 3, 4, 5 dans le tableau
+    for (int i = 0; i < 5; i++) {
+        numbers[i] = i + 1;
+    }
+
+    // libère la mémoire allouée pour le tableau
+    free(numbers);
+    return 0;
+}`}
+  />
+</BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`#include <stdlib.h>
+
+int main() {
+    // alloue de la mémoire pour un tableau de 5 entiers et initialise la mémoire à zéro
+    int *numbers = calloc(5, sizeof(int));
+
+    // syntaxe normale
+    numbers[1] = 1;
+
+    // syntaxe avec pointeurs (ne pas utiliser)
+    *(numbers + 1) = 2; // équivalent à numbers[1]
+
+    // libère la mémoire allouée pour le tableau
+    free(numbers);
+    return 0;
+}`}
+  />
+</BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`#include <stdlib.h>
+
+int main() {
+    // alloue de la mémoire pour un tableau de 5 entiers et initialise la mémoire à zéro
+    int *numbers = calloc(5, sizeof(int));
+
+    // redimensionne le tableau pour qu'il puisse contenir 10 entiers
+    numbers = realloc(numbers, 10 * sizeof(int));
+
+    // libère la mémoire allouée pour le tableau
+    free(numbers);
+    return 0;
+}`}
+  />
+</BasicSlide>
+<BasicSlide>
+  <p>
+    Vous avez peut-être remarqué qu'il est impossible de retourner un tableau d'une fonction en C.
+  </p>
+  <p class="fragment">Pour y arriver, il faut retourner un pointeur vers le début du tableau.</p>
+  <p class="fragment">
+    Cependant, il est important de s'assurer que la mémoire allouée pour le tableau reste valide
+    après la fin de la fonction. Cela signifie que le tableau doit être alloué dans le heap, et non
+    dans la pile (stack), pour éviter que la mémoire soit libérée automatiquement à la fin de la
+    fonction.
+  </p>
+</BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`#include <stdlib.h>
+
+int *createArray(int size) {
+    // alloue de la mémoire pour un tableau de 'size' entiers et initialise la mémoire à zéro
+    int *array = calloc(size, sizeof(int));
+
+    // initialise le tableau avec des valeurs (par exemple, 0, 1, 2, ...)
+    for (int i = 0; i < size; i++) {
+        array[i] = i;
+    }
+
+    // retourne un pointeur vers le début du tableau
+    return array;
+}
+
+int main() {
+    int *myArray = createArray(5);
+
+    // utilise myArray (par exemple, affiche les valeurs)
+    printf("Array value index 1: %d\\n", myArray[1]); // affiche 1
+
+    // libère la mémoire allouée pour myArray
+    free(myArray);
+    return 0;
+}`}
+  />
+</BasicSlide>
+<BasicSlide>
+  <p>
+    Cette stratégie de retourner un pointeur vers une zone de mémoire allouée dynamiquement est
+    couramment utilisée en C pour gérer des données dont la taille n'est pas connue à l'avance ou
+    qui doivent persister au-delà de la durée d'une fonction.
+  </p>
+  <p class="fragment">Notamment pour les tableaux, les strings et les structures.</p>
+</BasicSlide>
+<BasicSlide>
+  <p>
+    Notez qu'un pointeur peut également pointer vers un autre pointeur, créant ainsi une chaîne de
+    pointeurs. Cela peut être utile pour gérer des structures de données plus complexes, comme les
+    tableaux de tableaux (matrices) ou les listes chaînées.
+  </p>
+  <p>
+    Vous ne devriez pas avoir à utiliser cette technique dans le cours, mais vous devez être capable
+    de la comprendre si vous la voyez dans le code.
+  </p>
+</BasicSlide>
+<BasicSlide>
+  <CodeBlock
+    language="C"
+    code={`int main() {
+    int a = 10;
+
+    // p pointe vers l'adresse de a (ex: 0x00000000)
+    int *p = &a;
+
+    // pp pointe vers l'adresse de p (ex: 0x00000004) qui 
+    // pointe vers l'adresse de a (ex: 0x00000000)
+    int **pp = &p; 
+
+    // pour accéder à la valeur de a à partir de pp, on doit déréférencer deux fois
+    int addressOfA = *pp; // addressOfA obtient l'adresse de a
+    int value = *addressOfA; // value obtient la valeur de a (10)
+
+    // on peut aussi faire cela en une seule ligne
+    int valueDirect = **pp; // valueDirect obtient directement la valeur de a (10)
+    printf("Valeur de a: %d\\n", valueDirect);
+    return 0;
+}`}
+  />
+</BasicSlide>
