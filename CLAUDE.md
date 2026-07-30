@@ -48,7 +48,48 @@ Three hooks run in sequence via `sequence()`:
 ### Presentation system
 Presentations are Svelte components registered by a string `componentId` that must match the `componentId` column in the `Presentation` DB table. The viewer resolves which component to render via `getPresentationComponent()` in `src/lib/client/components/structure/presentations/index.ts`.
 
-**To add a presentation:**
+There are two authoring formats:
+
+#### Markdown format (new — preferred for new presentations)
+
+One `.svx` file = one complete presentation. See `procedural-h2026/recursivite/presentation.svx` as a reference example.
+
+```svx
+---
+title: Mon titre
+layout: presentation
+---
+
+## Premier slide
+
+Contenu en **Markdown**. Listes, `code inline`, paragraphes.
+
+---
+
+## Deuxième slide
+
+```c
+int main() { return 0; }
+```
+```
+
+Rules:
+- `layout: presentation` is required in frontmatter
+- `---` separates slides; `## Heading` becomes the slide title (removed from body automatically)
+- Fenced code blocks get syntax highlighting via Reveal.js
+- `<p class="fragment">` works for step-by-step reveals
+- For advanced Svelte components (`MultiCodeBlock`, `QuoteBlock`, etc.), add an optional `<script>` block and import them
+
+**Build pipeline:** `svelte.config.js` wires `revealSlidePlugin` (splits `---` into slides), `revealHighlighter` (code blocks), and `presentation-md-layout.svelte` (wraps in `PresentationRoot`). Plugin and highlighter live in `src/lib/server/mdsvex/`.
+
+**To add a presentation (Markdown):**
+1. Create `src/lib/client/components/structure/presentations/[course]/[topic]/presentation.svx`
+2. Register in `[course]/index.ts`: `import X from './topic/presentation.svx'` → `{ id: 'course-topic', component: X }`
+3. Insert a `Presentation` row in the DB with matching `componentId`
+
+#### Legacy Svelte format (existing presentations — do not migrate)
+
+**To add a presentation (Svelte):**
 1. Create `src/lib/client/components/structure/presentations/[course]-[semester]/[topic]/`
 2. Write slide `.svelte` files using primitives from `src/lib/client/components/revealjs/custom/` (see below)
 3. Create `presentation.svelte` — set `currentPresentation.title`, call `initializeSlideLinks()`, wrap slides in `<PresentationRoot>`

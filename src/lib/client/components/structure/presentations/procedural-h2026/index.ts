@@ -8,6 +8,7 @@ import Fichiers from './fichiers/presentation.svelte';
 import Memoire from './memoire/presentation.svelte';
 import Pointeurs from './pointeurs/presentation.svelte';
 import Structures from './structures/presentation.svelte';
+import Recursivite from './recursivite/presentation.svx';
 
 export function makeProceduralPresentationComponents() {
   return [
@@ -21,5 +22,6 @@ export function makeProceduralPresentationComponents() {
     { id: 'procedural-h2026-memoire', component: Memoire },
     { id: 'procedural-h2026-pointeurs', component: Pointeurs },
     { id: 'procedural-h2026-structures', component: Structures },
+    { id: 'procedural-h2026-recursivite', component: Recursivite },
   ];
 }

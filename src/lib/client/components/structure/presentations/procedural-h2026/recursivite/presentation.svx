@@ -1,0 +1,94 @@
+---
+title: La récursivité en C
+layout: presentation
+---
+
+## Qu'est-ce que la récursivité ?
+
+La **récursivité** est une technique où une fonction s'appelle elle-même pour résoudre un problème.
+
+Toute fonction récursive doit avoir :
+
+- Un **cas de base** — la condition d'arrêt qui stoppe les appels
+- Un **cas récursif** — l'appel à soi-même avec des données réduites
+
+---
+
+## Cas de base
+
+Sans cas de base, la fonction s'appelle indéfiniment jusqu'au **stack overflow**.
+
+```c
+// ❌ Récursion infinie — pas de cas de base
+void compter(int n) {
+    printf("%d\n", n);
+    compter(n + 1);
+}
+```
+
+```c
+// ✅ Avec cas de base
+void compter(int n, int max) {
+    if (n > max) return;   // cas de base
+    printf("%d\n", n);
+    compter(n + 1, max);   // cas récursif
+}
+```
+
+---
+
+## Exemple classique : factorielle
+
+La factorielle de `n` est définie comme `n! = n × (n-1) × ... × 1`.
+
+```c
+int factorielle(int n) {
+    if (n <= 1) return 1;        // cas de base
+    return n * factorielle(n - 1); // cas récursif
+}
+```
+
+Pour `factorielle(4)`, la pile d'appels ressemble à :
+
+- `factorielle(4)` → `4 × factorielle(3)`
+- `factorielle(3)` → `3 × factorielle(2)`
+- `factorielle(2)` → `2 × factorielle(1)`
+- `factorielle(1)` → `1` ← cas de base atteint
+
+---
+
+## Récursion vs itération
+
+La même logique peut souvent être exprimée avec une boucle :
+
+```c
+// Version récursive
+int factorielle_rec(int n) {
+    if (n <= 1) return 1;
+    return n * factorielle_rec(n - 1);
+}
+
+// Version itérative
+int factorielle_iter(int n) {
+    int resultat = 1;
+    for (int i = 2; i <= n; i++) {
+        resultat *= i;
+    }
+    return resultat;
+}
+```
+
+La version **itérative** est généralement plus efficace en mémoire car elle n'empile pas de frames sur le stack.
+
+---
+
+## Quand utiliser la récursion ?
+
+La récursivité brille pour les problèmes **naturellement récursifs** :
+
+- Parcours d'arbres et de graphes
+- Algorithmes de tri (merge sort, quick sort)
+- Exploration de chemins (labyrinthe, backtracking)
+- Calculs mathématiques (Fibonacci, puissances)
+
+Pour des boucles simples, préférer l'**itération**.

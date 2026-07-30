@@ -23,7 +23,7 @@
     <InlineCodeBlock>resize: none</InlineCodeBlock>.
   </p>
   <CodeBlock
-    language="css"
+    language="CSS"
     code={`textarea {
     resize: none;
 }`}

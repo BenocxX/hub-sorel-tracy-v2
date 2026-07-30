@@ -1,19 +1,32 @@
 import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-node';
-
-// import adapter from '@sveltejs/adapter-auto';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { fileURLToPath } from 'url';
+import { revealSlidePlugin } from './src/lib/server/mdsvex/reveal-slide-plugin.js';
+import { revealHighlighter } from './src/lib/server/mdsvex/reveal-highlighter.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  // Consult https://svelte.dev/docs/kit/integrations
-  // for more information about preprocessors
-  preprocess: [vitePreprocess(), mdsvex()],
+  preprocess: [
+    vitePreprocess(),
+    mdsvex({
+      // Named layout — only applied to .svx files with `layout: presentation` in frontmatter
+      layout: {
+        presentation: fileURLToPath(
+          new URL(
+            './src/lib/client/components/revealjs/custom/presentation-md-layout.svelte',
+            import.meta.url
+          )
+        ),
+      },
+      remarkPlugins: [revealSlidePlugin],
+      highlight: {
+        highlighter: revealHighlighter,
+      },
+    }),
+  ],
 
   kit: {
-    // adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
-    // If your environment is not supported, or you settled on a specific environment, switch out the adapter.
-    // See https://svelte.dev/docs/kit/adapters for more information about adapters.
     adapter: adapter(),
   },
 

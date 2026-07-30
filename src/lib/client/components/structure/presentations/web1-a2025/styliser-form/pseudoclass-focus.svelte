@@ -22,7 +22,7 @@
     lorsque l'élément obtient le focus.
   </p>
   <CodeBlock
-    language="css"
+    language="CSS"
     code={`input[type=text]:focus,
 input[type=password]:focus {
     border: 1px solid #EEE;
