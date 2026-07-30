@@ -61,14 +61,14 @@ Pour `factorielle(4)`, la pile d'appels ressemble à :
 
 La même logique peut souvent être exprimée avec une boucle :
 
-```c
-// Version récursive
+```c label="Récursif"
 int factorielle_rec(int n) {
     if (n <= 1) return 1;
     return n * factorielle_rec(n - 1);
 }
+```
 
-// Version itérative
+```c label="Itératif"
 int factorielle_iter(int n) {
     int resultat = 1;
     for (int i = 2; i <= n; i++) {
@@ -91,4 +91,4 @@ La récursivité brille pour les problèmes **naturellement récursifs** :
 - Exploration de chemins (labyrinthe, backtracking)
 - Calculs mathématiques (Fibonacci, puissances)
 
-Pour des boucles simples, préférer l'**itération**.
+Pour des boucles simples, préférer l'**itération**. Le code `int n` déclare un entier *n*.

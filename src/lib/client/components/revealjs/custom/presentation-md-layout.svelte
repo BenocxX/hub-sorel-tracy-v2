@@ -1,8 +1,15 @@
 <script module lang="ts">
-  // Re-export MdSlide so mdsvex can reference it as Components.MdSlide.
+  // Re-export components so mdsvex can reference them as Components.*.
   // mdsvex generates: import Layout, * as Components from '...layout.svelte'
-  // This named export makes Components.MdSlide resolve to our slide wrapper.
+  // These named exports make Components.MdSlide, Components.Bold, etc. resolve correctly.
   export { default as MdSlide } from './md-slide.svelte';
+  export { default as Bold } from './bold.svelte';
+  export { default as Italic } from './italic.svelte';
+  export { default as BoldItalic } from './bold-italic.svelte';
+  export { default as InlineCodeBlock } from './inline-code-block.svelte';
+  export { default as CodeBlock } from './code-block.svelte';
+  export { default as MultiCodeBlock } from './multi-code-block.svelte';
+  export { default as Image } from './image.svelte';
 </script>
 
 <script lang="ts">
