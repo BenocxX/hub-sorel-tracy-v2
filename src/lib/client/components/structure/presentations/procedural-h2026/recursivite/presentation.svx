@@ -94,3 +94,13 @@ La récursivité brille pour les problèmes **naturellement récursifs** :
 Pour des boucles simples, préférer l'**itération**.
 
 > Le code `int n` déclare un entier *n*.
+
+---
+
+## Test
+
+<Components.CodeBlock
+    language="C"
+    code={`int x = 42;
+int *p = &x;`}
+/>
