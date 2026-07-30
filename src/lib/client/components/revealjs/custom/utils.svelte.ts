@@ -59,4 +59,6 @@ export type CodeLanguage =
   | 'SCSS'
   | 'SASS'
   | 'Java'
-  | 'Dockerfile';
+  | 'C'
+  | 'Dockerfile'
+  | 'Makefile';
