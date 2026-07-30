@@ -9,6 +9,7 @@
   export { default as InlineCodeBlock } from './inline-code-block.svelte';
   export { default as CodeBlock } from './code-block.svelte';
   export { default as MultiCodeBlock } from './multi-code-block.svelte';
+  export { default as List } from './list.svelte';
   export { default as Image } from './image.svelte';
 </script>
 

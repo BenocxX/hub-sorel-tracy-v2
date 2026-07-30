@@ -9,8 +9,8 @@ La **récursivité** est une technique où une fonction s'appelle elle-même pou
 
 Toute fonction récursive doit avoir :
 
-- Un **cas de base** — la condition d'arrêt qui stoppe les appels
-- Un **cas récursif** — l'appel à soi-même avec des données réduites
+> - Un **cas de base** — la condition d'arrêt qui stoppe les appels
+> - Un **cas récursif** — l'appel à soi-même avec des données réduites
 
 ---
 
@@ -26,7 +26,7 @@ void compter(int n) {
 }
 ```
 
-```c
+```c fragment
 // ✅ Avec cas de base
 void compter(int n, int max) {
     if (n > max) return;   // cas de base
@@ -91,4 +91,6 @@ La récursivité brille pour les problèmes **naturellement récursifs** :
 - Exploration de chemins (labyrinthe, backtracking)
 - Calculs mathématiques (Fibonacci, puissances)
 
-Pour des boucles simples, préférer l'**itération**. Le code `int n` déclare un entier *n*.
+Pour des boucles simples, préférer l'**itération**.
+
+> Le code `int n` déclare un entier *n*.

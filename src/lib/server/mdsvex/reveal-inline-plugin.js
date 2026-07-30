@@ -79,12 +79,11 @@ function serializeInline(nodes) {
 }
 
 /**
- * Serialize a MDAST list node to HTML, preserving inline element replacements
- * inside list item content.
+ * Serialize <li> items from an MDAST list node, preserving inline replacements
+ * and handling nested lists recursively.
  */
-function serializeList(node) {
-  const tag = node.ordered ? 'ol' : 'ul';
-  const items = node.children
+function serializeListItems(items) {
+  return items
     .map((item) => {
       const content = item.children
         .map((child) => {
@@ -96,22 +95,51 @@ function serializeList(node) {
       return `<li>${content}</li>`;
     })
     .join('');
-  return `<${tag}>${items}</${tag}>`;
 }
 
 /**
- * Parse key="value" pairs from a fenced code block info string.
+ * Serialize an MDAST list node to a <Components.List> component string.
  *
- * Example: `c label="Bien"` produces meta `label="Bien"`, parsed as { label: 'Bien' }.
+ * @param {object} node - MDAST list node
+ * @param {boolean} fragment - If true, adds fragment={true} prop (whole list
+ *   appears as one Reveal.js fragment step). Use via blockquote syntax: `> - item`.
+ */
+function serializeList(node, fragment = false) {
+  const listType = node.ordered ? 'ol' : 'ul';
+  const fragmentProp = fragment ? ' fragment={true}' : '';
+  const items = serializeListItems(node.children);
+  return `<Components.List listType="${listType}"${fragmentProp}>${items}</Components.List>`;
+}
+
+/**
+ * Parse a fenced code block info string into a metadata object.
+ *
+ * Handles two forms:
+ * - key="value" pairs  →  { label: 'Bien' }
+ * - bare keywords      →  { fragment: true }
+ *
+ * Example: `c fragment label="Bien"` → { fragment: true, label: 'Bien' }
  */
 function parseMeta(meta) {
   const result = {};
   if (!meta) return result;
-  const re = /(\w+)="([^"]*)"/g;
+
+  // Parse key="value" pairs first
+  const kvRe = /(\w+)="([^"]*)"/g;
   let m;
-  while ((m = re.exec(meta)) !== null) {
+  while ((m = kvRe.exec(meta)) !== null) {
     result[m[1]] = m[2];
   }
+
+  // Parse bare keywords as boolean flags (strip already-matched key="value" pairs first)
+  const stripped = meta.replace(/\w+="[^"]*"/g, '');
+  const bareRe = /\b(\w+)\b/g;
+  while ((m = bareRe.exec(stripped)) !== null) {
+    if (!(m[1] in result)) {
+      result[m[1]] = true;
+    }
+  }
+
   return result;
 }
 
@@ -120,10 +148,15 @@ function parseMeta(meta) {
  *
  * Converts:
  * - `code` nodes               → <Components.CodeBlock> html nodes
+ *   - with bare `fragment` in meta → fragment={true} prop
  * - Consecutive labeled `code` → <Components.MultiCodeBlock> html node
  * - `paragraph` nodes          → <p> html nodes with inline replacements
- * - `list` nodes               → <ul>/<ol> html nodes with inline replacements
+ * - `list` nodes               → <Components.List> html nodes
  * - `heading` (depth > 2)      → <h3>/<h4>... html nodes with inline replacements
+ * - `blockquote` nodes         → Reveal.js fragment wrappers:
+ *     - single paragraph  → <p class="fragment">
+ *     - single list       → <Components.List fragment={true}>
+ *     - multiple children → <div class="fragment">
  *
  * Passes through unchanged:
  * - `yaml` (frontmatter), `thematicBreak`, `heading` (depth 2 — slide title),
@@ -145,7 +178,12 @@ function walkNodes(nodes) {
       while (j < nodes.length && nodes[j].type === 'code') {
         const n = nodes[j];
         const meta = parseMeta(n.meta);
-        group.push({ lang: mapLang(n.lang), label: meta.label, code: n.value });
+        group.push({
+          lang: mapLang(n.lang),
+          label: meta.label,
+          code: n.value,
+          fragment: meta.fragment === true,
+        });
         j++;
       }
 
@@ -167,10 +205,11 @@ function walkNodes(nodes) {
         for (const g of group) {
           const langProp = g.lang ? ` language="${g.lang}"` : '';
           const labelProp = g.label ? ` label="${g.label}"` : '';
+          const fragmentProp = g.fragment ? ' fragment={true}' : '';
           const codeProp = ` code={${JSON.stringify(g.code)}}`;
           result.push({
             type: 'html',
-            value: `<Components.CodeBlock${langProp}${labelProp}${codeProp} />`,
+            value: `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${codeProp} />`,
           });
         }
       }
@@ -203,12 +242,38 @@ function walkNodes(nodes) {
       continue;
     }
 
-    // ── Blockquotes ──────────────────────────────────────────────────────────
+    // ── Blockquotes → Reveal.js fragment wrappers ────────────────────────────
+    //
+    // Blockquotes have no presentational purpose in slides (use <QuoteBlock>
+    // for actual quotes), so they're repurposed as a fragment signal:
+    //
+    //   > Single paragraph text      →  <p class="fragment">text</p>
+    //   > - list item                →  <Components.List fragment={true}>...</>
+    //   > paragraph\n> another       →  <div class="fragment"><p>...</p>...</div>
+    //
     if (node.type === 'blockquote') {
-      const inner = walkNodes(node.children)
-        .map((n) => (n.type === 'html' ? n.value : ''))
-        .join('');
-      result.push({ type: 'html', value: `<blockquote>${inner}</blockquote>` });
+      const children = node.children;
+
+      if (children.length === 1 && children[0].type === 'paragraph') {
+        // Single paragraph → fragment paragraph
+        result.push({
+          type: 'html',
+          value: `<p class="fragment">${serializeInline(children[0].children)}</p>`,
+        });
+      } else if (children.length === 1 && children[0].type === 'list') {
+        // Single list → fragment list (whole list appears as one step)
+        result.push({
+          type: 'html',
+          value: serializeList(children[0], true),
+        });
+      } else {
+        // Multiple children → fragment div wrapping all content
+        const inner = walkNodes(children)
+          .map((n) => (n.type === 'html' ? n.value : ''))
+          .join('');
+        result.push({ type: 'html', value: `<div class="fragment">${inner}</div>` });
+      }
+
       i++;
       continue;
     }

@@ -22,9 +22,11 @@
 </script>
 
 <div class={cn('space-y-4 sm:space-y-6', fragment && 'fragment')}>
-  <p>
-    <SnippetOrString children={paragraph} />
-  </p>
+  {#if paragraph}
+    <p>
+      <SnippetOrString children={paragraph} />
+    </p>
+  {/if}
   <svelte:element
     this={listType}
     class={cn(
