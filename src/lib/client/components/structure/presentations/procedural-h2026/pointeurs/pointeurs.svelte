@@ -155,7 +155,7 @@ int y = *p; // y obtient la valeur stockée à l'adresse pointée par p (c'est-�
       pointée par la variable
     </li>
     <li class="fragment">
-      <InlineCodeBlock>x</InlineCodeBlock> -&gt; nom de la variable dont on veut obtenir la valeur à
+      <InlineCodeBlock>p</InlineCodeBlock> -&gt; nom de la variable dont on veut obtenir la valeur à
       partir de son adresse
     </li>
   </List>
