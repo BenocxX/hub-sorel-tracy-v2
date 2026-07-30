@@ -19,19 +19,23 @@
 <Collapsible.Root open={true} class="group/collapsible">
   {#snippet child({ props })}
     <Sidebar.MenuItem {...props}>
-      <Sidebar.MenuButton {isActive} class="pr-0">
-        {#snippet tooltipContent()}{tooltip}{/snippet}
-        {@render trigger({ props: { class: 'flex flex-1 items-center gap-2 [&>svg]:size-4' } })}
+      <div class="flex items-center">
+        <Sidebar.MenuButton {isActive} class="flex-1">
+          {#snippet tooltipContent()}{tooltip}{/snippet}
+          {@render trigger({
+            props: { class: 'flex flex-1 items-center gap-2 [&>svg]:size-4' },
+          })}
+        </Sidebar.MenuButton>
         <Collapsible.Trigger>
           {#snippet child({ props })}
-            <Button variant="ghost" size="icon-sm" {...props}>
+            <Button variant="ghost" size="icon-sm" class="group-data-[collapsible=icon]:hidden" {...props}>
               <ChevronRightIcon
                 class="size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90"
               />
             </Button>
           {/snippet}
         </Collapsible.Trigger>
-      </Sidebar.MenuButton>
+      </div>
       <Collapsible.Content>
         <Sidebar.MenuSub>
           {#each items as item (item)}
