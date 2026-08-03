@@ -11,6 +11,7 @@
   export { default as MultiCodeBlock } from './multi-code-block.svelte';
   export { default as List } from './list.svelte';
   export { default as Image } from './image.svelte';
+  export { default as QuoteBlock } from './quote-block.svelte';
 </script>
 
 <script lang="ts">

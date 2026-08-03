@@ -46,6 +46,28 @@ function escapeText(str) {
 }
 
 /**
+ * Escape a value for use inside a double-quoted Svelte template attribute
+ * (e.g. an image `src`/`alt`/`caption`).
+ */
+function escapeAttr(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/\{/g, '&#123;')
+    .replace(/\}/g, '&#125;');
+}
+
+/**
+ * Serialize an MDAST image node to a <Components.Image> component string.
+ * The markdown `title` (`![alt](url "title")`) becomes the `caption` prop.
+ */
+function serializeImage(node) {
+  const altProp = ` alt="${escapeAttr(node.alt ?? '')}"`;
+  const captionProp = node.title ? ` caption="${escapeAttr(node.title)}"` : '';
+  return `<Components.Image src="${escapeAttr(node.url)}"${altProp}${captionProp} />`;
+}
+
+/**
  * Recursively serialize inline MDAST nodes to a Svelte template HTML string,
  * replacing standard markdown elements with their Components.* equivalents.
  *
@@ -62,6 +84,8 @@ function serializeInline(nodes) {
           return node.value;
         case 'inlineCode':
           return `<Components.InlineCodeBlock>${escapeText(node.value)}</Components.InlineCodeBlock>`;
+        case 'image':
+          return serializeImage(node);
         case 'strong':
           return `<Components.Bold>${serializeInline(node.children)}</Components.Bold>`;
         case 'emphasis':
@@ -147,10 +171,14 @@ function parseMeta(meta) {
  * Process the top-level children of an MDAST tree.
  *
  * Converts:
- * - `code` nodes               → <Components.CodeBlock> html nodes
+ * - `code` nodes with lang `quote` → <Components.QuoteBlock> html nodes
+ *   (meta key="value" pairs map onto QuoteBlock props)
+ * - other `code` nodes         → <Components.CodeBlock> html nodes
  *   - with bare `fragment` in meta → fragment={true} prop
+ *   - `fileName="..."` / `lines="..."` meta forwarded as props
  * - Consecutive labeled `code` → <Components.MultiCodeBlock> html node
  * - `paragraph` nodes          → <p> html nodes with inline replacements
+ *   - a paragraph containing only an image → <Components.Image> html node
  * - `list` nodes               → <Components.List> html nodes
  * - `heading` (depth > 2)      → <h3>/<h4>... html nodes with inline replacements
  * - `blockquote` nodes         → Reveal.js fragment wrappers:
@@ -169,6 +197,29 @@ function walkNodes(nodes) {
   while (i < nodes.length) {
     const node = nodes[i];
 
+    // ── Quote blocks (```quote) → <Components.QuoteBlock> ────────────────────
+    // Blockquote syntax (`>`) is reserved for fragments (see below), so real
+    // quotes use a fenced block with the `quote` language instead. Meta
+    // key="value" pairs map straight onto QuoteBlock's props, e.g.:
+    //   ```quote personName="Ada Lovelace" personTitle="Mathématicienne"
+    //   La machine analytique n'a aucune prétention à créer quoi que ce soit.
+    //   ```
+    if (node.type === 'code' && node.lang === 'quote') {
+      const meta = parseMeta(node.meta);
+      const fragmentProp = meta.fragment === true ? ' fragment={true}' : '';
+      const personNameProp = meta.personName ? ` personName="${meta.personName}"` : '';
+      const personTitleProp = meta.personTitle ? ` personTitle="${meta.personTitle}"` : '';
+      const srcProp = meta.src ? ` src="${meta.src}"` : '';
+      const altProp = meta.alt ? ` alt="${meta.alt}"` : '';
+      const fallbackProp = meta.fallback ? ` fallback="${meta.fallback}"` : '';
+      result.push({
+        type: 'html',
+        value: `<Components.QuoteBlock${fragmentProp}${personNameProp}${personTitleProp}${srcProp}${altProp}${fallbackProp}>${escapeText(node.value)}</Components.QuoteBlock>`,
+      });
+      i++;
+      continue;
+    }
+
     // ── Fenced code blocks ───────────────────────────────────────────────────
     // Collect consecutive code blocks. If they all have labels, merge into
     // MultiCodeBlock. Otherwise render as individual CodeBlocks.
@@ -181,6 +232,8 @@ function walkNodes(nodes) {
         group.push({
           lang: mapLang(n.lang),
           label: meta.label,
+          fileName: meta.fileName,
+          lines: meta.lines,
           code: n.value,
           fragment: meta.fragment === true,
         });
@@ -206,10 +259,12 @@ function walkNodes(nodes) {
           const langProp = g.lang ? ` language="${g.lang}"` : '';
           const labelProp = g.label ? ` label="${g.label}"` : '';
           const fragmentProp = g.fragment ? ' fragment={true}' : '';
+          const fileNameProp = g.fileName ? ` fileName="${g.fileName}"` : '';
+          const linesProp = g.lines ? ` lines="${g.lines}"` : '';
           const codeProp = ` code={${JSON.stringify(g.code)}}`;
           result.push({
             type: 'html',
-            value: `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${codeProp} />`,
+            value: `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${fileNameProp}${linesProp}${codeProp} />`,
           });
         }
       }
@@ -220,6 +275,14 @@ function walkNodes(nodes) {
 
     // ── Paragraphs ───────────────────────────────────────────────────────────
     if (node.type === 'paragraph') {
+      // A paragraph containing only an image (i.e. `![alt](url)` on its own
+      // line) renders as a block-level <Components.Image> rather than being
+      // wrapped in a <p>, since <Components.Image> renders a <figure>.
+      if (node.children.length === 1 && node.children[0].type === 'image') {
+        result.push({ type: 'html', value: serializeImage(node.children[0]) });
+        i++;
+        continue;
+      }
       result.push({ type: 'html', value: `<p>${serializeInline(node.children)}</p>` });
       i++;
       continue;

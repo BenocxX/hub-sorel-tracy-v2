@@ -47,6 +47,23 @@ export function revealSlidePlugin() {
 }
 
 /**
+ * Recursively extract plain text from MDAST inline nodes (text, inlineCode,
+ * and anything nested inside strong/emphasis/etc via .children).
+ *
+ * @param {object[]} nodes
+ * @returns {string}
+ */
+function flattenText(nodes) {
+  return nodes
+    .map((node) => {
+      if (node.value !== undefined) return node.value;
+      if (node.children) return flattenText(node.children);
+      return '';
+    })
+    .join('');
+}
+
+/**
  * @param {object[]} out - Output AST node array to push into
  * @param {object[]} nodes - Nodes collected for this slide section
  * @param {number} slideIndex - Zero-based index of this slide in the file
@@ -55,10 +72,9 @@ function flushSlide(out, nodes, slideIndex) {
   const h2Index = nodes.findIndex((n) => n.type === 'heading' && n.depth === 2);
   const h2 = h2Index !== -1 ? nodes[h2Index] : null;
 
-  // Flatten heading children to plain text (handles bold/code inside headings)
-  const title = h2
-    ? h2.children.map((c) => c.value ?? '').join('')
-    : `Slide ${slideIndex + 1}`;
+  // Flatten heading children to plain text (BasicSlide's title prop is a plain
+  // string, so formatting like **bold** can't survive anyway — just recover the text).
+  const title = h2 ? flattenText(h2.children) : `Slide ${slideIndex + 1}`;
 
   // +2 accounts for TitleSlide (page 0) and TableOfContentSlide (page 1)
   // auto-prepended by PresentationRoot

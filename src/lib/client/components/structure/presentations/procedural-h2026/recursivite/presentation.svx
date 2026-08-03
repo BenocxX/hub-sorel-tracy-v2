@@ -132,3 +132,21 @@ int *p = &x;`}
     </Table.Row>
 </Table.Body>
 </Table.Root>
+
+---
+
+## Test image
+
+Syntaxe markdown standard — le `title` entre guillemets devient la légende (`caption`) de `<Image>`.
+
+![Dennis Ritchie](/img/procedural-h2026/dennis-ritchie.png "Dennis Ritchie, créateur du langage C")
+
+Dennis Ritchie a conçu le langage **C** dans les années 1970 aux Bell Labs — un langage où la récursivité est native.
+
+---
+
+## Test citation
+
+```quote personName="Dennis Ritchie" personTitle="Créateur du langage C" src="/img/procedural-h2026/dennis-ritchie.png"
+C is quirky, flawed, and an enormous success.
+```
