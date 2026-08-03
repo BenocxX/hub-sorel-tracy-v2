@@ -193,6 +193,10 @@ function parseMeta(meta) {
  * Passes through unchanged:
  * - `yaml` (frontmatter), `thematicBreak`, `heading` (depth 2 — slide title),
  *   and any existing `html` nodes.
+ *
+ * Every `html` node this function creates is tagged `generated: true`, so
+ * revealSlidePlugin can tell "converted from real markdown" apart from raw
+ * markup the author wrote directly (used for its MdSlide pass-through rule).
  */
 function walkNodes(nodes) {
   const result = [];
@@ -219,6 +223,7 @@ function walkNodes(nodes) {
       result.push({
         type: 'html',
         value: `<Components.QuoteBlock${fragmentProp}${personNameProp}${personTitleProp}${srcProp}${altProp}${fallbackProp}>${jsText(node.value)}</Components.QuoteBlock>`,
+        generated: true,
       });
       i++;
       continue;
@@ -256,6 +261,7 @@ function walkNodes(nodes) {
         result.push({
           type: 'html',
           value: `<Components.MultiCodeBlock codes={${JSON.stringify(codes)}} />`,
+          generated: true,
         });
       } else {
         // One or more unlabeled blocks → individual CodeBlocks
@@ -269,6 +275,7 @@ function walkNodes(nodes) {
           result.push({
             type: 'html',
             value: `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${fileNameProp}${linesProp}${codeProp} />`,
+            generated: true,
           });
         }
       }
@@ -283,18 +290,22 @@ function walkNodes(nodes) {
       // line) renders as a block-level <Components.Image> rather than being
       // wrapped in a <p>, since <Components.Image> renders a <figure>.
       if (node.children.length === 1 && node.children[0].type === 'image') {
-        result.push({ type: 'html', value: serializeImage(node.children[0]) });
+        result.push({ type: 'html', value: serializeImage(node.children[0]), generated: true });
         i++;
         continue;
       }
-      result.push({ type: 'html', value: `<p>${serializeInline(node.children)}</p>` });
+      result.push({
+        type: 'html',
+        value: `<p>${serializeInline(node.children)}</p>`,
+        generated: true,
+      });
       i++;
       continue;
     }
 
     // ── Lists ────────────────────────────────────────────────────────────────
     if (node.type === 'list') {
-      result.push({ type: 'html', value: serializeList(node) });
+      result.push({ type: 'html', value: serializeList(node), generated: true });
       i++;
       continue;
     }
@@ -304,7 +315,11 @@ function walkNodes(nodes) {
     // as slide titles. h3+ are converted to html with inline replacements.
     if (node.type === 'heading' && node.depth > 2) {
       const tag = `h${node.depth}`;
-      result.push({ type: 'html', value: `<${tag}>${serializeInline(node.children)}</${tag}>` });
+      result.push({
+        type: 'html',
+        value: `<${tag}>${serializeInline(node.children)}</${tag}>`,
+        generated: true,
+      });
       i++;
       continue;
     }
@@ -326,19 +341,25 @@ function walkNodes(nodes) {
         result.push({
           type: 'html',
           value: `<p class="fragment">${serializeInline(children[0].children)}</p>`,
+          generated: true,
         });
       } else if (children.length === 1 && children[0].type === 'list') {
         // Single list → fragment list (whole list appears as one step)
         result.push({
           type: 'html',
           value: serializeList(children[0], true),
+          generated: true,
         });
       } else {
         // Multiple children → fragment div wrapping all content
         const inner = walkNodes(children)
           .map((n) => (n.type === 'html' ? n.value : ''))
           .join('');
-        result.push({ type: 'html', value: `<div class="fragment">${inner}</div>` });
+        result.push({
+          type: 'html',
+          value: `<div class="fragment">${inner}</div>`,
+          generated: true,
+        });
       }
 
       i++;

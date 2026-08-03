@@ -1,0 +1,48 @@
+---
+title: L'utilisation des Flexbox
+layout: presentation
+---
+
+<script>
+    import { Image } from '$lib/client/components/revealjs/custom';
+    import FlexboxLayout from './flexbox-layout.png';
+    import ProprietesParent from './proprietes-parent.svelte';
+    import ProprietesEnfants from './proprietes-enfants.svelte';
+</script>
+
+## C'est quoi les flexbox?
+
+**Flexbox** signifie **Flexible Box**, c'est un modèle de mise en page qui permet de disposer les éléments d'une interface de manière dynamique.
+
+Ainsi, nous pouvons mettre en place, aligner et espacer simplement plusieurs éléments d'un conteneur, et cela même si les éléments ont des tailles inconnues, différentes et/ou dynamiques.
+
+Le but principal des **Flexbox** est d'offrir un moyen flexible d'ajuster la tailles des éléments enfants pour remplir l'espace disponible dans le parent. Cela dans le but de s'adapter à toutes les tailles d'écrans et de résolutions.
+
+En savoir plus : [CSS Flexbox Layout Guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+
+---
+
+## Structure d'un flexbox
+
+Pour utiliser le modèle **Flexbox**, il faut 2 éléments :
+
+- **Parent** : l'élément qui contient les éléments enfants à disposer.
+- **Enfants** : les éléments à disposer dans le parent.
+
+---
+
+## Diagramme
+
+<Image
+    src={FlexboxLayout}
+    alt="Diagramme de la structure d'un modèle Flexbox."
+    href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/#aa-basics-and-terminology"
+    caption="CSS Flexbox Layout Guide"
+    class="border-2"
+/>
+
+---
+
+<ProprietesParent section="Propriétés du parent" />
+
+<ProprietesEnfants section="Propriétés des enfants" />

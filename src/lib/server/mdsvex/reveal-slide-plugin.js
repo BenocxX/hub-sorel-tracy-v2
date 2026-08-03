@@ -8,6 +8,9 @@
  * - The first `## Heading` in each section becomes the title prop
  * - That heading is removed from the slide body (BasicSlide renders it from the prop)
  * - Page numbering starts at 2: PresentationRoot auto-inserts TitleSlide (0) and TOCSlide (1)
+ * - A heading-less section made entirely of raw markup (no markdown-derived
+ *   content) is treated as already being one or more complete slides and is
+ *   emitted as-is — see flushSlide's pass-through branch.
  *
  * The `Components.MdSlide` reference is resolved because the mdsvex layout
  * (`presentation-md-layout.svelte`) re-exports MdSlide as a named module export,
@@ -28,8 +31,9 @@ export function revealSlidePlugin() {
 
       if (node.type === 'thematicBreak') {
         if (currentSection.length > 0) {
-          flushSlide(out, currentSection, slideIndex);
-          slideIndex++;
+          if (flushSlide(out, currentSection, slideIndex)) {
+            slideIndex++;
+          }
         }
         currentSection = [];
       } else {
@@ -67,10 +71,32 @@ function flattenText(nodes) {
  * @param {object[]} out - Output AST node array to push into
  * @param {object[]} nodes - Nodes collected for this slide section
  * @param {number} slideIndex - Zero-based index of this slide in the file
+ * @returns {boolean} true if this section consumed a slideIndex (i.e. was
+ *   wrapped in exactly one MdSlide), false if it was passed through raw.
  */
 function flushSlide(out, nodes, slideIndex) {
   const h2Index = nodes.findIndex((n) => n.type === 'heading' && n.depth === 2);
   const h2 = h2Index !== -1 ? nodes[h2Index] : null;
+
+  // Pass-through: a heading-less section made ENTIRELY of raw markup the
+  // author wrote directly (every node is an `html` node NOT produced by
+  // revealInlinePlugin's markdown-to-Components.* conversion) is assumed to
+  // already be one or more complete slides — e.g. a component invocation
+  // like `<ProprietesParent section="..." />` that internally renders many
+  // <BasicSlide>s sharing a Reveal.js auto-animate section (which requires
+  // its own component-instance/context boundary, so it can't be expressed
+  // as plain markdown wrapped in MdSlide's own <BasicSlide>). Emit as-is,
+  // with no MdSlide/BasicSlide wrapper.
+  //
+  // Known limitation: slides produced this way aren't counted toward the
+  // page numbers auto-computed for subsequent `##` slides in the same file
+  // (their count isn't known until runtime), so a pass-through section
+  // should either be the last content in the file, or register its own TOC
+  // entries (as BasicSlide/registerInTOC already requires it to).
+  if (!h2 && nodes.every((n) => n.type === 'html' && !n.generated)) {
+    out.push(...nodes);
+    return false;
+  }
 
   // Flatten heading children to plain text (BasicSlide's title prop is a plain
   // string, so formatting like **bold** can't survive anyway — just recover the text).
@@ -89,4 +115,5 @@ function flushSlide(out, nodes, slideIndex) {
   });
   out.push(...body);
   out.push({ type: 'html', value: '</Components.MdSlide>' });
+  return true;
 }
