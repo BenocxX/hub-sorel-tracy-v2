@@ -28,7 +28,7 @@
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function throttle(callback: (...args: any[]) => void, delay: number) {
-    let timeoutId: number | null = null;
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (...args: any[]) => {

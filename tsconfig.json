@@ -9,7 +9,16 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    // Prevents TypeScript from auto-including every @types/* package found in
+    // node_modules globally into this browser-side app (e.g. @types/node
+    // would otherwise leak Node-only globals here). Note this does NOT block
+    // types forced in via an explicit `/// <reference types="node" />` (Vite's
+    // own .d.ts does this, and vite.config.ts shares this program) — code
+    // relying on setTimeout's return type should use `ReturnType<typeof
+    // setTimeout>` rather than assuming `number`, regardless of this setting.
+    // Node/Bun-only tooling (scripts/) has its own separate tsconfig.
+    "types": []
   }
   // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
   // except $lib which is handled by https://svelte.dev/docs/kit/configuration#files

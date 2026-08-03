@@ -31,7 +31,7 @@
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function debounce(callback: (...args: any[]) => void, delay: number) {
-    let timeoutId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return async function (...args: any[]) {
