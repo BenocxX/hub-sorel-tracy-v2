@@ -32,17 +32,18 @@ function mapLang(lang) {
 }
 
 /**
- * Escape text content for use in a Svelte template:
- * - Standard HTML entities (&, <, >)
- * - Svelte template delimiters ({ and }) so they're not parsed as expressions
+ * Embed raw text as a Svelte JS-expression child (`{"..."}`) rather than as
+ * literal HTML text.
+ *
+ * mdast `text` node values are always raw/unescaped (unlike `inlineCode`,
+ * which mdsvex pre-escapes at parse time since CommonMark guarantees code
+ * spans render as literal text). A JSON-stringified JS expression is a
+ * simpler and more robust way to safely embed that raw text than manually
+ * chaining HTML-entity + Svelte-delimiter replacements — Svelte evaluates
+ * the string and renders it verbatim, with no HTML-entity handling involved.
  */
-function escapeText(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\{/g, '&#123;')
-    .replace(/\}/g, '&#125;');
+function jsText(str) {
+  return `{${JSON.stringify(str)}}`;
 }
 
 /**
@@ -78,12 +79,15 @@ function serializeInline(nodes) {
     .map((node) => {
       switch (node.type) {
         case 'text':
-          return escapeText(node.value);
+          return jsText(node.value);
         case 'html':
           // Already-processed html nodes (e.g. from other plugins) — pass through
           return node.value;
         case 'inlineCode':
-          return `<Components.InlineCodeBlock>${escapeText(node.value)}</Components.InlineCodeBlock>`;
+          // mdsvex already HTML-escapes inlineCode.value at parse time (code
+          // spans must always render as literal text per CommonMark) — do NOT
+          // re-escape here, that would double-escape (&lt; → &amp;lt;).
+          return `<Components.InlineCodeBlock>${node.value}</Components.InlineCodeBlock>`;
         case 'image':
           return serializeImage(node);
         case 'strong':
@@ -214,7 +218,7 @@ function walkNodes(nodes) {
       const fallbackProp = meta.fallback ? ` fallback="${meta.fallback}"` : '';
       result.push({
         type: 'html',
-        value: `<Components.QuoteBlock${fragmentProp}${personNameProp}${personTitleProp}${srcProp}${altProp}${fallbackProp}>${escapeText(node.value)}</Components.QuoteBlock>`,
+        value: `<Components.QuoteBlock${fragmentProp}${personNameProp}${personTitleProp}${srcProp}${altProp}${fallbackProp}>${jsText(node.value)}</Components.QuoteBlock>`,
       });
       i++;
       continue;

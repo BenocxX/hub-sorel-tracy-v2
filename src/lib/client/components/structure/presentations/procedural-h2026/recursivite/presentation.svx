@@ -5,7 +5,7 @@ layout: presentation
 
 <script>
     import * as Table from '$lib/client/components/ui/table/index.js';
-    import { CodeBlock, InlineCodeBlock } from '$lib/client/components/revealjs/custom';
+    import { CodeBlock, InlineCodeBlock, SideBySide, Columns } from '$lib/client/components/revealjs/custom';
 </script>
 
 ## Qu'est-ce que la récursivité ?
@@ -150,3 +150,60 @@ Dennis Ritchie a conçu le langage **C** dans les années 1970 aux Bell Labs —
 ```quote personName="Dennis Ritchie" personTitle="Créateur du langage C" src="/img/procedural-h2026/dennis-ritchie.png"
 C is quirky, flawed, and an enormous success.
 ```
+
+---
+
+## Test layout côte à côte
+
+Un `<div>` brut fonctionne aussi (voir CLAUDE.md), mais `<SideBySide>` évite de répéter les mêmes classes Tailwind sur chaque slide. Une ligne vide après la balise ouvrante est requise pour que le Markdown à l'intérieur soit interprété.
+
+<SideBySide>
+
+![Dennis Ritchie](/img/procedural-h2026/dennis-ritchie.png "Dennis Ritchie")
+
+<div>
+
+La récursivité existe depuis les tout débuts du **C** — Ritchie s'en servait déjà pour illustrer le langage dans sa documentation d'origine.
+
+<div class="h-8"></div>
+
+- Pas de mot-clé spécial : une fonction s'appelle simplement elle-même
+- Le compilateur gère la pile d'appels automatiquement
+
+</div>
+
+</SideBySide>
+
+---
+
+## Test mise en colonnes
+
+`<Columns>` répartit son contenu en grille — pratique pour des blocs courts qui n'ont pas besoin d'un empilement vertical complet.
+
+<Columns cols={3}>
+
+<div>
+
+**Flexible**
+
+S'adapte à plusieurs styles de problèmes.
+
+</div>
+
+<div>
+
+**Compact**
+
+Peu de code pour exprimer la logique.
+
+</div>
+
+<div>
+
+**Risqué**
+
+Sans cas de base, c'est le stack overflow garanti.
+
+</div>
+
+</Columns>
