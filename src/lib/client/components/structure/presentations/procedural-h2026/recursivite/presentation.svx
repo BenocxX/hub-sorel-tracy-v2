@@ -3,6 +3,11 @@ title: La récursivité en C
 layout: presentation
 ---
 
+<script>
+    import * as Table from '$lib/client/components/ui/table/index.js';
+    import { CodeBlock, InlineCodeBlock } from '$lib/client/components/revealjs/custom';
+</script>
+
 ## Qu'est-ce que la récursivité ?
 
 La **récursivité** est une technique où une fonction s'appelle elle-même pour résoudre un problème.
@@ -99,8 +104,31 @@ Pour des boucles simples, préférer l'**itération**.
 
 ## Test
 
-<Components.CodeBlock
+<CodeBlock
     language="C"
     code={`int x = 42;
 int *p = &x;`}
 />
+
+---
+
+## Test custom component
+
+<Table.Root class="mx-auto w-2/3 text-center">
+<Table.Header>
+    <Table.Row>
+    <Table.Head class="w-1/2 text-center">Adresse</Table.Head>
+    <Table.Head class="w-1/2 text-center">Valeur</Table.Head>
+    </Table.Row>
+</Table.Header>
+<Table.Body>
+    <Table.Row>
+        <Table.Cell>
+            <InlineCodeBlock>0x0000000</InlineCodeBlock>
+        </Table.Cell>
+        <Table.Cell>
+            <InlineCodeBlock>Value</InlineCodeBlock>
+        </Table.Cell>
+    </Table.Row>
+</Table.Body>
+</Table.Root>
