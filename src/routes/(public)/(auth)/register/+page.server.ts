@@ -4,6 +4,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { AuthService } from '$lib/server/services/auth-service';
 import { registerSchema } from '$lib/common/schemas/auth-schemas';
 import { resolve } from '$app/paths';
+import { registerRateLimiter } from '$lib/server/security/auth-rate-limiters';
 
 export const load = async () => {
   return {
@@ -17,6 +18,10 @@ export const actions = {
 
     if (!form.valid) {
       return fail(400, { form });
+    }
+
+    if (!registerRateLimiter.consume(event.getClientAddress())) {
+      return setError(form, 'username', 'Trop de tentatives. Réessayez plus tard.');
     }
 
     const authService = new AuthService();

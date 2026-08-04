@@ -6,6 +6,7 @@ import { AuthService } from '$lib/server/services/auth-service';
 import { loginSchema } from '$lib/common/schemas/auth-schemas';
 import { resolve } from '$app/paths';
 import { RedirectToCookie } from '$lib/server/cookies/redirect-to-cookie.js';
+import { loginRateLimiter } from '$lib/server/security/auth-rate-limiters';
 
 export const load = async ({ url }) => {
   const form = await superValidate(zod(loginSchema), {
@@ -24,6 +25,11 @@ export const actions = {
 
     if (!form.valid) {
       return fail(400, { form });
+    }
+
+    const rateLimitKey = `${event.getClientAddress()}:${form.data.username.toLowerCase()}`;
+    if (!loginRateLimiter.consume(rateLimitKey)) {
+      return setError(form, 'username', 'Trop de tentatives. Réessayez dans quelques minutes.');
     }
 
     const authService = new AuthService();
