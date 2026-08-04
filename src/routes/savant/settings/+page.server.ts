@@ -1,4 +1,4 @@
-import { fail, setError, superValidate } from 'sveltekit-superforms';
+import { fail, message, setError, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/server/prisma';
 import { AuthService } from '$lib/server/services/auth-service';
@@ -6,6 +6,7 @@ import {
   deleteSessionSchema,
   resetPasswordSchema,
   setPasswordSchema,
+  unlinkDiscordSchema,
   updateNamesSchema,
 } from '$lib/common/schemas/settings-schemas';
 import { SessionService } from '$lib/server/services/session-service.js';
@@ -32,6 +33,7 @@ export const load = async (event) => {
     resetPasswordForm: await superValidate(zod(resetPasswordSchema)),
     setPasswordForm: await superValidate(zod(setPasswordSchema)),
     deleteSessionForm: await superValidate(zod(deleteSessionSchema)),
+    unlinkDiscordForm: await superValidate(zod(unlinkDiscordSchema)),
     userHasPassword: await authService.doesUserHavePassword(userId),
     currentSessionPublicId: event.locals.session!.publicId,
     sessions,
@@ -113,6 +115,25 @@ export const actions = {
         userId: event.locals.user!.id,
       },
     });
+
+    return { form };
+  },
+  unlinkDiscord: async (event) => {
+    const form = await superValidate(event, zod(unlinkDiscordSchema));
+
+    const authService = new AuthService();
+    if (!(await authService.doesUserHavePassword(event.locals.user!.id))) {
+      return message(
+        form,
+        "Vous devez d'abord définir un mot de passe pour votre compte avant de délier Discord.",
+        { status: 400 }
+      );
+    }
+
+    const userId = event.locals.user!.id;
+    await db.discordUser.deleteMany({ where: { userId } });
+    // Otherwise the next session refresh would silently re-link it via the OAuth token.
+    await db.oAuthToken.deleteMany({ where: { session: { userId } } });
 
     return { form };
   },

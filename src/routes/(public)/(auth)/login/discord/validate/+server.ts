@@ -19,6 +19,13 @@ export const GET = async (event) => {
   }
 
   const discordUser = await discordAuthService.getDiscordUser(tokens.accessToken());
+
+  // If the browser comes back here with an active session, this is a "link Discord to my
+  // existing account" flow started from /savant/settings, not a login/signup.
+  if (event.locals.user) {
+    return await linkDiscordAccount(event, discordUser);
+  }
+
   await authenticate(event, discordUser, tokens);
 
   return redirect(302, RedirectToCookie.get(event.cookies, resolve('/savant')));
@@ -33,4 +40,18 @@ async function authenticate(event: RequestEvent, discordUser: DiscordUser, token
   }
 
   await authService.createSession(event, user, tokens);
+}
+
+async function linkDiscordAccount(event: RequestEvent, discordUser: DiscordUser) {
+  const authService = new AuthService();
+  const existingOwner = await authService.getUserByDiscordId(discordUser.id);
+
+  if (existingOwner && existingOwner.id !== event.locals.user!.id) {
+    return redirect(302, `${resolve('/savant/settings')}?discordError=already-linked`);
+  }
+
+  const discordAuthService = new DiscordAuthService();
+  await discordAuthService.updateLocalDiscordUserData(discordUser, event.locals.user!);
+
+  return redirect(302, resolve('/savant/settings'));
 }

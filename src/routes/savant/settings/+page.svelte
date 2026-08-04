@@ -2,9 +2,13 @@
   import ResetPasswordForm from '$lib/client/components/structure/forms/settings/reset-password-form.svelte';
   import SetPasswordForm from '$lib/client/components/structure/forms/settings/set-password-form.svelte';
   import UpdateNamesForm from '$lib/client/components/structure/forms/settings/update-names-form.svelte';
+  import UnlinkDiscordForm from '$lib/client/components/structure/forms/settings/unlink-discord-form.svelte';
+  import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import { makeColumns } from './columns.js';
+  import { resolve } from '$app/paths';
+  import { page } from '$app/state';
 
   const { data } = $props();
 
@@ -12,6 +16,8 @@
     deleteForm: data.deleteSessionForm,
     currentSessionPublicId: data.currentSessionPublicId,
   });
+
+  const discordError = $derived(page.url.searchParams.get('discordError'));
 </script>
 
 <PageTitle title="Paramètres" subtitle="Gérez les différents paramètres de votre compte." />
@@ -71,6 +77,37 @@
     {:else}
       <SetPasswordForm class="flex flex-col gap-4 md:col-span-2" data={data.setPasswordForm} />
     {/if}
+  </div>
+  <div
+    class="grid grid-cols-1 items-center gap-x-8 gap-y-10 border-b py-12 md:grid-cols-1 lg:grid-cols-3"
+  >
+    <div>
+      <h2 class="font-semibold">Compte Discord</h2>
+      <p class="mt-1 text-sm/6 text-foreground-discreet">
+        {#if data.user?.discordUser}
+          Votre compte est lié à Discord ({data.user.discordUser.username}). Vous pouvez le délier{#if !data.userHasPassword}
+            une fois un mot de passe défini ci-dessus{/if}.
+        {:else}
+          Liez votre compte Discord pour pouvoir vous connecter avec, en plus de votre mot de passe.
+        {/if}
+      </p>
+    </div>
+    <div class="ml-auto flex items-center gap-4 md:col-span-2">
+      {#if discordError === 'already-linked'}
+        <div
+          class="rounded-md border border-destructive bg-destructive/10 p-2.5 text-sm text-destructive"
+        >
+          Ce compte Discord est déjà lié à un autre utilisateur.
+        </div>
+      {/if}
+      {#if data.user?.discordUser}
+        <UnlinkDiscordForm data={data.unlinkDiscordForm} disabled={!data.userHasPassword} />
+      {:else}
+        <DiscordButton href={resolve('/savant/settings/link-discord')} class="w-max">
+          Lier mon compte Discord
+        </DiscordButton>
+      {/if}
+    </div>
   </div>
   <div class="py-12">
     <div>

@@ -25,10 +25,17 @@ export const handleGuard: Handle = async ({ event, resolve }) => {
 };
 
 /**
- * Guard public auth routes from authenticated users
+ * Guard public auth routes from authenticated users.
+ * The Discord validate callback is exempted: an already-logged-in user lands back on it when
+ * linking their Discord account from the settings page, and the callback needs to run to
+ * complete the link instead of being bounced home before it gets the chance.
  */
 async function publicGuard({ route: { id } }: RequestEvent, user?: App.Locals['user']) {
-  if (id!.includes('/(public)/(auth)') && user) {
+  if (
+    id!.includes('/(public)/(auth)') &&
+    !id!.includes(resolve('/login/discord/validate')) &&
+    user
+  ) {
     throw redirect(303, resolve('/'));
   }
 }
