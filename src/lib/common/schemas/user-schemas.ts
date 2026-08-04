@@ -10,5 +10,10 @@ export const deleteUserSchema = z.object({
   id: z.string().min(1),
 });
 
+export const resetUserPasswordSchema = z.object({
+  id: z.string().min(1),
+});
+
 export type ChangeRoleSchema = typeof changeRoleSchema;
 export type DeleteUserSchema = typeof deleteUserSchema;
+export type ResetUserPasswordSchema = typeof resetUserPasswordSchema;

@@ -10,6 +10,7 @@
   const columns = makeColumns({
     deleteUserForm: data.deleteUserForm,
     changeRoleForm: data.changeRoleForm,
+    resetUserPasswordForm: data.resetUserPasswordForm,
   });
 
   let localizedRole = $derived.by(() => {

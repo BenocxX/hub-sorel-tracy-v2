@@ -11,4 +11,8 @@
     Vous n'avez pas de compte? <a href={resolve('/register')} class="link">S'inscrire</a>
   </p>
   <LoginForm data={data.form} />
+  <p class="mt-4 text-sm text-foreground-discreet">
+    Mot de passe oublié? Contactez votre enseignant sur Discord ou en personne, il pourra vous en
+    générer un nouveau.
+  </p>
 </div>

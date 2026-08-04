@@ -6,19 +6,25 @@
   import type { User } from '$lib/common/types/prisma-types';
   import DeleteUserForm from '$lib/client/components/structure/forms/admin/users/delete-user-form.svelte';
   import ChangeRoleForm from '$lib/client/components/structure/forms/admin/users/change-role-form.svelte';
+  import ResetUserPasswordForm from '$lib/client/components/structure/forms/admin/users/reset-user-password-form.svelte';
   import type { Infer, SuperValidated } from 'sveltekit-superforms';
-  import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/user-schemas';
+  import type {
+    ChangeRoleSchema,
+    DeleteUserSchema,
+    ResetUserPasswordSchema,
+  } from '$lib/common/schemas/user-schemas';
   import { formatUserNames } from '$lib/common/tools/format';
 
   type Props = {
     user: User;
     deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
     changeRoleForm: SuperValidated<Infer<ChangeRoleSchema>>;
+    resetUserPasswordForm: SuperValidated<Infer<ResetUserPasswordSchema>>;
   };
 
-  const { user, deleteUserForm, changeRoleForm }: Props = $props();
+  const { user, deleteUserForm, changeRoleForm, resetUserPasswordForm }: Props = $props();
 
-  let currentDialog = $state<'delete' | undefined>(undefined);
+  let currentDialog = $state<'delete' | 'resetPassword' | undefined>(undefined);
 </script>
 
 <div class="text-right">
@@ -60,6 +66,14 @@
           </DropdownMenu.Group>
           <DropdownMenu.Separator />
           <DropdownMenu.Item
+            onclick={() => (currentDialog = 'resetPassword')}
+            class="w-full cursor-pointer"
+          >
+            {#snippet child({ props })}
+              <Dialog.Trigger {...props}>Réinitialiser le mot de passe</Dialog.Trigger>
+            {/snippet}
+          </DropdownMenu.Item>
+          <DropdownMenu.Item
             onclick={() => (currentDialog = 'delete')}
             class="w-full cursor-pointer"
           >
@@ -86,6 +100,20 @@
         <Dialog.Footer>
           <DeleteUserForm {user} data={deleteUserForm} />
         </Dialog.Footer>
+      </Dialog.Content>
+    {:else if currentDialog === 'resetPassword'}
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>
+            Réinitialiser le mot de passe de <em>{formatUserNames(user, { hideUsername: true })}</em
+            >
+          </Dialog.Title>
+          <Dialog.Description>
+            Un nouveau mot de passe temporaire sera généré et toutes les sessions actives de
+            <em>{formatUserNames(user)}</em> seront déconnectées.
+          </Dialog.Description>
+        </Dialog.Header>
+        <ResetUserPasswordForm {user} data={resetUserPasswordForm} />
       </Dialog.Content>
     {/if}
   </Dialog.Root>

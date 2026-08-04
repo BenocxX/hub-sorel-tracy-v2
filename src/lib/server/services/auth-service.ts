@@ -101,12 +101,16 @@ export class AuthService {
 
   /** Logs out the user by invalidating all of their sessions. */
   public async fullLogout(event: RequestEvent) {
-    const sessions = await db.session.findMany({ where: { userId: event.locals.user!.id } });
+    await this.invalidateAllSessions(event.locals.user!.id);
+    this.sessionService.deleteCookie(event);
+  }
+
+  /** Invalidates every session belonging to the given user. */
+  public async invalidateAllSessions(userId: string) {
+    const sessions = await db.session.findMany({ where: { userId } });
     for (const session of sessions) {
       await this.sessionService.invalidate(session.id);
     }
-
-    this.sessionService.deleteCookie(event);
   }
 
   public async changePassword(user: User, newPassword: string) {
@@ -116,6 +120,28 @@ export class AuthService {
       where: { id: user?.id },
       data: { passwordHash },
     });
+  }
+
+  /**
+   * Resets a user's password to a freshly generated random one and logs them out everywhere.
+   * Meant for a teacher/admin to relay to a student out-of-band (Discord, in person), who then
+   * logs in with it and sets their own password from the settings page.
+   * Returns the plaintext temporary password so it can be shown to the admin once.
+   */
+  public async resetPasswordToTemporary(userId: string) {
+    const temporaryPassword = this.generateTemporaryPassword();
+    const passwordHash = await this.argon2id.hash(temporaryPassword);
+
+    await db.user.update({ where: { id: userId }, data: { passwordHash } });
+    await this.invalidateAllSessions(userId);
+
+    return temporaryPassword;
+  }
+
+  /** Generates a random, human-relayable temporary password (64 bits of entropy). */
+  private generateTemporaryPassword() {
+    const bytes = crypto.getRandomValues(new Uint8Array(8));
+    return base32.encode(bytes, { includePadding: false });
   }
 
   public async isUsernameAlreadyUsed(username: string) {

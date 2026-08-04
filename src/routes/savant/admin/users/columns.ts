@@ -3,7 +3,11 @@ import type { User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
 import { createRawSnippet } from 'svelte';
 import type { Infer, SuperValidated } from 'sveltekit-superforms';
-import type { ChangeRoleSchema, DeleteUserSchema } from '$lib/common/schemas/user-schemas';
+import type {
+  ChangeRoleSchema,
+  DeleteUserSchema,
+  ResetUserPasswordSchema,
+} from '$lib/common/schemas/user-schemas';
 import DataTableActions from './data-table-actions.svelte';
 import DataTableSortHeaderButton from '$lib/client/components/ui-custom/data-tables/data-table-sort-header-button.svelte';
 import { localizeRole } from '$lib/common/tools/localizer';
@@ -12,9 +16,11 @@ import UsernameAvatar from './username-avatar.svelte';
 export function makeColumns({
   deleteUserForm,
   changeRoleForm,
+  resetUserPasswordForm,
 }: {
   deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
   changeRoleForm: SuperValidated<Infer<ChangeRoleSchema>>;
+  resetUserPasswordForm: SuperValidated<Infer<ResetUserPasswordSchema>>;
 }): ColumnDef<User<{ discordUser: true }>>[] {
   return [
     {
@@ -96,6 +102,7 @@ export function makeColumns({
           user: row.original,
           deleteUserForm,
           changeRoleForm,
+          resetUserPasswordForm,
         });
       },
     },

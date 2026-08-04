@@ -1,7 +1,12 @@
 import { roleSchema } from '$lib/common/schemas/prisma-schema.js';
-import { changeRoleSchema, deleteUserSchema } from '$lib/common/schemas/user-schemas.js';
+import {
+  changeRoleSchema,
+  deleteUserSchema,
+  resetUserPasswordSchema,
+} from '$lib/common/schemas/user-schemas.js';
 import { db } from '$lib/server/prisma';
-import { fail, superValidate } from 'sveltekit-superforms';
+import { AuthService } from '$lib/server/services/auth-service';
+import { fail, message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 export const load = async ({ url }) => {
@@ -11,6 +16,7 @@ export const load = async ({ url }) => {
     users,
     changeRoleForm: await superValidate(zod(changeRoleSchema)),
     deleteUserForm: await superValidate(zod(deleteUserSchema)),
+    resetUserPasswordForm: await superValidate(zod(resetUserPasswordSchema)),
   };
 };
 
@@ -65,6 +71,23 @@ export const actions = {
     });
 
     return { form };
+  },
+  resetPassword: async (event) => {
+    const form = await superValidate(event, zod(resetUserPasswordSchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    const user = await db.user.findFirst({ where: { id: form.data.id } });
+    if (!user) {
+      return fail(400, { form });
+    }
+
+    const authService = new AuthService();
+    const temporaryPassword = await authService.resetPasswordToTemporary(user.id);
+
+    return message(form, temporaryPassword);
   },
 };
 
