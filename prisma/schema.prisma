@@ -21,6 +21,21 @@ model User {
   teacher     Teacher?
   discordUser DiscordUser?
   sessions    Session[]
+  passkeys    Passkey[]
+}
+
+model Passkey {
+  id         String   @id // WebAuthn credential ID, base64url-encoded
+  userId     String
+  publicKey  Bytes
+  counter    Int
+  transports String[]
+  deviceType String
+  backedUp   Boolean
+  name       String
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Student {

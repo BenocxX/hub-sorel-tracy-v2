@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@prisma/client": "6.12.0",
+    "@simplewebauthn/browser": "^13.3.0",
+    "@simplewebauthn/server": "^13.3.2",
     "@types/node": "^26.1.2",
     "@types/reveal.js": "^5.0.5",
     "arctic": "^3.7.0",

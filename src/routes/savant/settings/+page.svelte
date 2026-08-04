@@ -3,10 +3,12 @@
   import SetPasswordForm from '$lib/client/components/structure/forms/settings/set-password-form.svelte';
   import UpdateNamesForm from '$lib/client/components/structure/forms/settings/update-names-form.svelte';
   import UnlinkDiscordForm from '$lib/client/components/structure/forms/settings/unlink-discord-form.svelte';
+  import AddPasskeyForm from '$lib/client/components/structure/forms/settings/add-passkey-form.svelte';
   import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
   import PageTitle from '$lib/client/components/structure/page-title.svelte';
   import DataTable from '$lib/client/components/ui-custom/data-tables/data-table.svelte';
   import { makeColumns } from './columns.js';
+  import { makePasskeyColumns } from './passkey-columns.js';
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
 
@@ -16,6 +18,8 @@
     deleteForm: data.deleteSessionForm,
     currentSessionPublicId: data.currentSessionPublicId,
   });
+
+  const passkeyColumns = makePasskeyColumns({ deleteForm: data.deletePasskeyForm });
 
   const discordError = $derived(page.url.searchParams.get('discordError'));
 </script>
@@ -106,6 +110,23 @@
         <DiscordButton href={resolve('/savant/settings/link-discord')} class="w-max">
           Lier mon compte Discord
         </DiscordButton>
+      {/if}
+    </div>
+  </div>
+  <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b py-12 md:grid-cols-1 lg:grid-cols-3">
+    <div>
+      <h2 class="font-semibold">Clés d'accès (passkeys)</h2>
+      <p class="mt-1 text-sm/6 text-foreground-discreet">
+        Ajoutez une clé d'accès (empreinte, visage, code de l'appareil...) pour vous connecter sans
+        mot de passe.
+      </p>
+    </div>
+    <div class="flex flex-col gap-4 md:col-span-2">
+      <div class="ml-auto">
+        <AddPasskeyForm />
+      </div>
+      {#if data.passkeys.length > 0}
+        <DataTable columns={passkeyColumns} data={data.passkeys} />
       {/if}
     </div>
   </div>

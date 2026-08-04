@@ -3,6 +3,7 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { db } from '$lib/server/prisma';
 import { AuthService } from '$lib/server/services/auth-service';
 import {
+  deletePasskeySchema,
   deleteSessionSchema,
   resetPasswordSchema,
   setPasswordSchema,
@@ -10,6 +11,7 @@ import {
   updateNamesSchema,
 } from '$lib/common/schemas/settings-schemas';
 import { SessionService } from '$lib/server/services/session-service.js';
+import { PasskeyService } from '$lib/server/services/passkey-service';
 import { redirect } from '@sveltejs/kit';
 import { resolve } from '$app/paths';
 
@@ -18,7 +20,9 @@ export const load = async (event) => {
 
   const authService = new AuthService();
   const sessionService = new SessionService();
+  const passkeyService = new PasskeyService();
   const sessions = await sessionService.getUserSessionsSortedByLastUsed(userId);
+  const passkeys = await passkeyService.getUserPasskeys(userId);
 
   const updateNamesForm = await superValidate(zod(updateNamesSchema), {
     defaults: {
@@ -34,9 +38,11 @@ export const load = async (event) => {
     setPasswordForm: await superValidate(zod(setPasswordSchema)),
     deleteSessionForm: await superValidate(zod(deleteSessionSchema)),
     unlinkDiscordForm: await superValidate(zod(unlinkDiscordSchema)),
+    deletePasskeyForm: await superValidate(zod(deletePasskeySchema)),
     userHasPassword: await authService.doesUserHavePassword(userId),
     currentSessionPublicId: event.locals.session!.publicId,
     sessions,
+    passkeys,
   };
 };
 
@@ -134,6 +140,18 @@ export const actions = {
     await db.discordUser.deleteMany({ where: { userId } });
     // Otherwise the next session refresh would silently re-link it via the OAuth token.
     await db.oAuthToken.deleteMany({ where: { session: { userId } } });
+
+    return { form };
+  },
+  deletePasskey: async (event) => {
+    const form = await superValidate(event, zod(deletePasskeySchema));
+
+    if (!form.valid) {
+      return fail(400, { form });
+    }
+
+    const passkeyService = new PasskeyService();
+    await passkeyService.deletePasskey(event.locals.user!.id, form.data.id);
 
     return { form };
   },

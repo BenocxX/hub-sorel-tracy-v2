@@ -33,8 +33,13 @@ export const deleteSessionSchema = z.object({
 
 export const unlinkDiscordSchema = z.object({});
 
+export const deletePasskeySchema = z.object({
+  id: z.string().min(1),
+});
+
 export type UpdateNamesSchema = typeof updateNamesSchema;
 export type ResetPasswordSchema = typeof resetPasswordSchema;
 export type SetPasswordSchema = typeof setPasswordSchema;
 export type DeleteSessionSchema = typeof deleteSessionSchema;
 export type UnlinkDiscordSchema = typeof unlinkDiscordSchema;
+export type DeletePasskeySchema = typeof deletePasskeySchema;

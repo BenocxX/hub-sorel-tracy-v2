@@ -1,6 +1,7 @@
 <script lang="ts">
   import { dev } from '$app/environment';
   import DiscordButton from '$lib/client/components/ui-custom/buttons/discord-button.svelte';
+  import PasskeyLoginButton from '$lib/client/components/ui-custom/buttons/passkey-login-button.svelte';
   import * as Form from '$lib/client/components/ui/form/index.js';
   import { Input } from '$lib/client/components/ui/input';
   import Separator from '$lib/client/components/ui/separator/separator.svelte';
@@ -57,6 +58,7 @@
       <Separator class="flex-1" />
     </div>
     <DiscordButton class="flex-1">Se connecter avec Discord</DiscordButton>
+    <PasskeyLoginButton class="flex-1" />
   </div>
   {#if dev}
     <div class="mt-4 flex gap-2 *:flex-1">
