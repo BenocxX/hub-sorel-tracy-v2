@@ -26,6 +26,34 @@
     </div>
     <UpdateNamesForm data={data.updateNamesForm} class="flex flex-col gap-4 md:col-span-2" />
   </div>
+  {#if data.user?.mustChangePassword}
+    <div
+      class="-mb-4 mt-12 flex items-center gap-4 rounded-md border border-amber-500/50 bg-amber-500/10 p-4 text-sm text-amber-700 dark:text-amber-400"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-circle-alert-icon lucide-circle-alert min-h-6 min-w-6"
+        ><circle cx="12" cy="12" r="10" /><line x1="12" x2="12" y1="8" y2="12" /><line
+          x1="12"
+          x2="12.01"
+          y1="16"
+          y2="16"
+        /></svg
+      >
+      <p>
+        Vous vous êtes connecté avec un mot de passe temporaire. Veuillez en choisir un nouveau
+        ci-dessous avant de continuer.
+      </p>
+    </div>
+  {/if}
   <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b py-12 md:grid-cols-1 lg:grid-cols-3">
     <div>
       <h2 class="font-semibold">Mot de passe</h2>

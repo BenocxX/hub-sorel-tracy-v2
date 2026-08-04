@@ -113,26 +113,30 @@ export class AuthService {
     }
   }
 
+  /** Sets a new password chosen by the user themselves, clearing any pending forced change. */
   public async changePassword(user: User, newPassword: string) {
     const passwordHash = await this.argon2id.hash(newPassword);
 
     await db.user.update({
       where: { id: user?.id },
-      data: { passwordHash },
+      data: { passwordHash, mustChangePassword: false },
     });
   }
 
   /**
-   * Resets a user's password to a freshly generated random one and logs them out everywhere.
-   * Meant for a teacher/admin to relay to a student out-of-band (Discord, in person), who then
-   * logs in with it and sets their own password from the settings page.
+   * Resets a user's password to a freshly generated random one, flags the account so the user is
+   * forced to pick their own password on next login, and logs them out everywhere. Meant for a
+   * teacher/admin to relay to a student out-of-band (Discord, in person).
    * Returns the plaintext temporary password so it can be shown to the admin once.
    */
   public async resetPasswordToTemporary(userId: string) {
     const temporaryPassword = this.generateTemporaryPassword();
     const passwordHash = await this.argon2id.hash(temporaryPassword);
 
-    await db.user.update({ where: { id: userId }, data: { passwordHash } });
+    await db.user.update({
+      where: { id: userId },
+      data: { passwordHash, mustChangePassword: true },
+    });
     await this.invalidateAllSessions(userId);
 
     return temporaryPassword;

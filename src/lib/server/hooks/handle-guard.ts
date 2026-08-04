@@ -3,7 +3,14 @@ import { resolve } from '$app/paths';
 import { RedirectToCookie } from '../cookies/redirect-to-cookie';
 import { db } from '../prisma';
 
-const guards = [publicGuard, dashboardGuard, teacherGuard, adminGuard, isUserPartOfCourse];
+const guards = [
+  publicGuard,
+  dashboardGuard,
+  mustChangePasswordGuard,
+  teacherGuard,
+  adminGuard,
+  isUserPartOfCourse,
+];
 
 export const handleGuard: Handle = async ({ event, resolve }) => {
   if (!event.route.id) {
@@ -33,6 +40,25 @@ async function dashboardGuard(event: RequestEvent, user?: App.Locals['user']) {
   if (event.route.id!.includes(resolve('/savant')) && !user) {
     RedirectToCookie.set(event.cookies, event.url);
     throw redirect(303, resolve('/login'));
+  }
+}
+
+/**
+ * Force users with a pending forced password change (e.g. after an admin-issued temporary
+ * password) to the settings page before they can use the rest of the dashboard. The logout
+ * action is exempted so a student isn't trapped on the settings page if they'd rather log out.
+ */
+async function mustChangePasswordGuard(event: RequestEvent, user?: App.Locals['user']) {
+  const { route } = event;
+  const isLogoutAction = event.request.method === 'POST' && event.url.searchParams.has('/logout');
+
+  if (
+    user?.mustChangePassword &&
+    route.id!.includes(resolve('/savant')) &&
+    !route.id!.includes(resolve('/savant/settings')) &&
+    !isLogoutAction
+  ) {
+    throw redirect(303, resolve('/savant/settings'));
   }
 }
 
