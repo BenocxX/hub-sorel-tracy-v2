@@ -7,6 +7,11 @@
  * - `---` (thematicBreak) separates slides
  * - The first `## Heading` in each section becomes the title prop
  * - That heading is removed from the slide body (BasicSlide renders it from the prop)
+ * - `## Heading {#my-id}` sets an explicit stable slide id; otherwise one is
+ *   slugified from the title (see registerInTOC in utils.svelte.ts). This id
+ *   is what should be used to anchor anything to a specific slide (comments,
+ *   deep links, ...) — unlike `page`, it doesn't shift when slides elsewhere
+ *   in the file are added/removed/reordered.
  * - Page numbering starts at 2: PresentationRoot auto-inserts TitleSlide (0) and TOCSlide (1)
  * - A heading-less section made entirely of raw markup (no markdown-derived
  *   content) is treated as already being one or more complete slides and is
@@ -100,7 +105,15 @@ function flushSlide(out, nodes, slideIndex) {
 
   // Flatten heading children to plain text (BasicSlide's title prop is a plain
   // string, so formatting like **bold** can't survive anyway — just recover the text).
-  const title = h2 ? flattenText(h2.children) : `Slide ${slideIndex + 1}`;
+  const rawTitle = h2 ? flattenText(h2.children) : `Slide ${slideIndex + 1}`;
+
+  // Optional explicit stable id: "## Title {#my-id}". Without one, a slug of
+  // the title is used instead (see registerInTOC in utils.svelte.ts) — an
+  // explicit id is only needed to survive the title itself being reworded,
+  // or to disambiguate two slides that would otherwise share a title.
+  const idMatch = rawTitle.match(/\s*\{#([a-z0-9][a-z0-9-]*)\}\s*$/i);
+  const explicitId = idMatch ? idMatch[1] : null;
+  const title = idMatch ? rawTitle.slice(0, idMatch.index).trimEnd() : rawTitle;
 
   // +2 accounts for TitleSlide (page 0) and TableOfContentSlide (page 1)
   // auto-prepended by PresentationRoot
@@ -109,9 +122,10 @@ function flushSlide(out, nodes, slideIndex) {
   // Remove the h2 from the body; BasicSlide renders the title in its own header
   const body = h2Index !== -1 ? nodes.filter((_, i) => i !== h2Index) : nodes;
 
+  const idProp = explicitId ? ` id={${JSON.stringify(explicitId)}}` : '';
   out.push({
     type: 'html',
-    value: `<Components.MdSlide title={${JSON.stringify(title)}} page={${page}}>`,
+    value: `<Components.MdSlide title={${JSON.stringify(title)}} page={${page}}${idProp}>`,
   });
   out.push(...body);
   out.push({ type: 'html', value: '</Components.MdSlide>' });

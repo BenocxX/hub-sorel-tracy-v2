@@ -207,3 +207,21 @@ Sans cas de base, c'est le stack overflow garanti.
 </div>
 
 </Columns>
+
+---
+
+## Hello
+
+Ceci est la première diapo d'une section
+
+---
+
+## Hello {#hello-pt2}
+
+Ceci est la deuxieme diapo d'une section 
+
+---
+
+## Hello {#hello-pt3}
+
+Ceci est la troisieme diapo d'une section

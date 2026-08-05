@@ -6,16 +6,18 @@
   type Props = {
     title: string;
     page: number;
+    /** Explicit stable id, set via "## Title {#your-id}" in the source markdown. */
+    id?: string;
     children: Snippet;
   };
 
-  const { title, page, children }: Props = $props();
+  const { title, page, id, children }: Props = $props();
 
   // Both calls must run synchronously at component init — setContext() requires it.
   setSlideSection(title);
-  registerInTOC({ page });
+  const { id: slideId } = registerInTOC({ page, id });
 </script>
 
-<BasicSlide {title}>
+<BasicSlide {title} id={slideId}>
   {@render children()}
 </BasicSlide>

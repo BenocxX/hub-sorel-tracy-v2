@@ -76,6 +76,7 @@ int main() { return 0; }
 Rules:
 - `layout: presentation` is required in frontmatter
 - `---` separates slides; `## Heading` becomes the slide title (removed from body automatically)
+- `## Heading {#my-id}` sets a stable slide id (otherwise one is slugified from the title). This id — not the slide's position — is what should be used to link anything to a specific slide, since it survives slides being added/reordered elsewhere in the file.
 - Fenced code blocks get syntax highlighting via Reveal.js
 - `<p class="fragment">` works for step-by-step reveals
 - For advanced Svelte components (`MultiCodeBlock`, `QuoteBlock`, etc.), add an optional `<script>` block and import them
