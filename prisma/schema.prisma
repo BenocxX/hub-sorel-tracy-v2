@@ -22,6 +22,7 @@ model User {
   discordUser DiscordUser?
   sessions    Session[]
   passkeys    Passkey[]
+  comments    Comment[]
 }
 
 model Passkey {
@@ -66,7 +67,8 @@ model Presentation {
 
   courseId Int
 
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course   Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  comments Comment[]
 }
 
 model Course {
@@ -79,8 +81,42 @@ model Course {
   teachers        Teacher[]
   students        Student[]
   presentations   Presentation[]
+  comments        Comment[]
 
   schoolSession SchoolSession @relation(fields: [schoolSessionId], references: [id])
+}
+
+/// A student or teacher comment anchored to one slide of a presentation (see the stable slide
+/// `id` produced by registerInTOC in utils.svelte.ts — slide content itself isn't in the DB, so
+/// this is just a free-form string, not a relation).
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  slideId   String
+  /// Only meaningful on a top-level comment (parentId null); set by a teacher of the course to
+  /// mark a question as answered. Drives which reply is pinned/highlighted as "the" answer.
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  presentationId Int
+  presentation   Presentation @relation(fields: [presentationId], references: [id], onDelete: Cascade)
+
+  /// Denormalized from presentation.courseId so a future "comments needing an answer" view can
+  /// be queried per course without joining through Presentation.
+  courseId Int
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  /// Null for a top-level comment (a "question"). Set for a reply — replies are flat (a reply's
+  /// parent is never itself a reply), enforced in the createComment action, not here.
+  parentId Int?
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies  Comment[] @relation("CommentReplies")
+
+  @@index([presentationId, slideId])
+  @@index([courseId, resolved])
 }
 
 model SchoolSession {

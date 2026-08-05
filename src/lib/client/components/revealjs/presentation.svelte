@@ -1,6 +1,6 @@
 <script lang="ts">
   import { tick, type Snippet } from 'svelte';
-  import { setPresentation } from './store.svelte.js';
+  import { setPresentation, currentPresentation } from './store.svelte.js';
   import 'reveal.js/dist/reveal.css';
 
   type Options = {
@@ -77,11 +77,18 @@
       }
     }
 
+    // An element with no `id` attribute has `.id === ''` — normalize that to undefined so
+    // consumers (e.g. the per-slide comments section) can tell "no id" from a real empty string.
+    function syncCurrentSlideId(slideEl?: HTMLElement) {
+      currentPresentation.currentSlideId = slideEl?.id || undefined;
+    }
+
     // keep track of current slide
     deck.on('slidechanged', (event) => {
       if ('currentSlide' in event) {
         const currentSlideEl = event.currentSlide as HTMLElement;
         currentSlideEl?.dispatchEvent(inEvent);
+        syncCurrentSlideId(currentSlideEl);
       }
 
       if ('previousSlide' in event) {
@@ -90,6 +97,13 @@
       }
 
       dispatchFocused();
+    });
+
+    // `slidechanged` doesn't fire for the slide shown on first load — only `ready` sees it.
+    deck.on('ready', (event) => {
+      if ('currentSlide' in event) {
+        syncCurrentSlideId(event.currentSlide as HTMLElement);
+      }
     });
 
     deck.on('slidetransitionend', (event) => {
