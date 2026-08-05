@@ -7,7 +7,8 @@
     resolveCommentSchema,
     type ResolveCommentSchema,
   } from '$lib/common/schemas/comment-schemas';
-  import { CheckCircle2, Circle } from 'lucide-svelte';
+  import { CheckCircle2 } from 'lucide-svelte';
+  import { cn } from '$lib/client/utils';
 
   type Props = {
     data: SuperValidated<Infer<ResolveCommentSchema>>;
@@ -48,13 +49,16 @@
       {/snippet}
     </Form.Control>
   </Form.Field>
-  <Form.Button {delayed} variant="outline" size="sm" class="gap-1.5">
-    {#if resolved}
-      <Circle size={14} />
-      Marquer comme non répondu
-    {:else}
-      <CheckCircle2 size={14} />
-      Marquer comme répondu
-    {/if}
+  <Form.Button
+    {delayed}
+    variant="ghost"
+    size="icon-sm"
+    class={cn(
+      'text-foreground-discreet hover:text-foreground',
+      resolved && 'text-green-600 hover:text-green-700 dark:text-green-400'
+    )}
+  >
+    <span class="sr-only">{resolved ? 'Marquer comme non répondu' : 'Marquer comme répondu'}</span>
+    <CheckCircle2 size={16} />
   </Form.Button>
 </form>

@@ -2,10 +2,6 @@
   import CommentItem from './comment-item.svelte';
   import CommentComposer from './comment-composer.svelte';
   import ResolveCommentToggle from './resolve-comment-toggle.svelte';
-  import { Badge } from '$lib/client/components/ui/badge';
-  import { Button } from '$lib/client/components/ui/button';
-  import { CheckCircle2, MessageSquareReply } from 'lucide-svelte';
-  import { cn } from '$lib/client/utils';
   import { getPresentationCommentsContext, type CommentWithAuthor } from './context.svelte.js';
 
   type Props = {
@@ -31,19 +27,25 @@
   const canComment = $derived(!ctx.isLocked || ctx.isTeacher);
 </script>
 
-<div class={cn('space-y-3 rounded-lg border p-3', comment.resolved && 'border-green-600/30')}>
-  <div class="space-y-2">
-    <CommentItem {comment} canDelete={ctx.isTeacher || comment.authorId === ctx.userId} />
-    {#if comment.resolved}
-      <Badge variant="success" class="gap-1">
-        <CheckCircle2 size={12} />
-        Répondu
-      </Badge>
-    {/if}
-  </div>
+<div class="space-y-3">
+  <CommentItem
+    {comment}
+    canDelete={ctx.isTeacher || comment.authorId === ctx.userId}
+    onReply={canComment ? () => (showReplyComposer = !showReplyComposer) : undefined}
+  >
+    {#snippet extraActions()}
+      {#if ctx.isTeacher}
+        <ResolveCommentToggle
+          data={ctx.forms.resolveComment}
+          commentId={comment.id}
+          resolved={comment.resolved}
+        />
+      {/if}
+    {/snippet}
+  </CommentItem>
 
   {#if sortedReplies.length > 0}
-    <div class="ml-6 space-y-2 border-l pl-3">
+    <div class="ml-4 space-y-3 border-l pl-4">
       {#each sortedReplies as reply (reply.id)}
         <CommentItem
           comment={reply}
@@ -55,35 +57,17 @@
     </div>
   {/if}
 
-  <div class="ml-6 flex flex-wrap items-center gap-2">
-    {#if ctx.isTeacher}
-      <ResolveCommentToggle
-        data={ctx.forms.resolveComment}
-        commentId={comment.id}
-        resolved={comment.resolved}
-      />
-    {/if}
-    {#if canComment}
-      <Button
-        variant="ghost"
-        size="sm"
-        class="gap-1.5"
-        onclick={() => (showReplyComposer = !showReplyComposer)}
-      >
-        <MessageSquareReply size={14} />
-        Répondre
-      </Button>
-    {/if}
-  </div>
-
   {#if showReplyComposer}
-    <div class="ml-6">
+    <div class="ml-11">
       <CommentComposer
         data={ctx.forms.createComment}
         slideId={comment.slideId}
         parentId={comment.id}
         formId={`reply-${comment.id}`}
         placeholder="Écrire une réponse…"
+        compact
+        autofocus
+        onSubmitted={() => (showReplyComposer = false)}
       />
     </div>
   {/if}

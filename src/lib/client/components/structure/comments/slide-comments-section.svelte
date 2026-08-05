@@ -3,6 +3,8 @@
   import { getPresentationCommentsContext, type CommentWithAuthor } from './context.svelte.js';
   import CommentThread from './comment-thread.svelte';
   import CommentComposer from './comment-composer.svelte';
+  import { Badge } from '$lib/client/components/ui/badge';
+  import Separator from '$lib/client/components/ui/separator/separator.svelte';
   import { MessageSquare } from 'lucide-svelte';
 
   const ctx = getPresentationCommentsContext();
@@ -35,20 +37,15 @@
   the user navigates, without remounting the deck itself. Renders nothing when the current slide
   has no stable id (title/TOC slides, or a legacy slide that hasn't opted into one — see
   registerInTOC in revealjs/custom/utils.svelte.ts) since there's nothing to anchor comments to.
+
+  Width mirrors the Presentation component above it (`w-[85%]`, see presentation-root.svelte) so
+  the two stay visually aligned and the section scales with the viewport instead of being capped
+  at a fixed max-width.
 -->
 {#if slideId}
-  <section class="mx-auto w-full max-w-3xl space-y-4 px-4 py-12">
-    <div class="flex items-center gap-2">
-      <MessageSquare size={18} />
-      <h2 class="text-lg font-medium">
-        Commentaires{#if topLevelComments.length > 0}
-          <span class="text-foreground-discreet">· {topLevelComments.length}</span>
-        {/if}
-      </h2>
-    </div>
-
+  <section class="mx-auto w-[85%] space-y-6 py-12">
     {#if ctx.isLocked && !ctx.isTeacher}
-      <p class="text-sm text-foreground-discreet">
+      <p class="rounded-2xl bg-muted/60 p-4 text-sm text-foreground-discreet">
         Cette présentation est verrouillée — vous ne pouvez pas encore commenter.
       </p>
     {:else}
@@ -60,8 +57,18 @@
       />
     {/if}
 
+    <Separator />
+
+    <div class="flex items-center gap-2">
+      <MessageSquare size={18} />
+      <h2 class="text-lg font-semibold">Commentaires</h2>
+      {#if topLevelComments.length > 0}
+        <Badge variant="secondary">{topLevelComments.length}</Badge>
+      {/if}
+    </div>
+
     {#if topLevelComments.length > 0}
-      <div class="space-y-3">
+      <div class="space-y-8">
         {#each topLevelComments as comment (comment.id)}
           <CommentThread {comment} replies={repliesByParent.get(comment.id) ?? []} />
         {/each}
