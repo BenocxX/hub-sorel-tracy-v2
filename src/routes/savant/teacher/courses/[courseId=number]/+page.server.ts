@@ -43,10 +43,23 @@ export const load = async (event) => {
 
   const users = await db.user.findMany({ orderBy: { role: 'desc' } });
 
+  // Only top-level comments (questions) — replies are conversation detail you'd see once you
+  // click through to the actual slide, not something that needs its own row here.
+  const comments = await db.comment.findMany({
+    where: { courseId: id, parentId: null },
+    include: {
+      author: { include: { discordUser: true } },
+      presentation: { select: { id: true, title: true } },
+      _count: { select: { replies: true } },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
   return {
     course,
     courseUsers,
     users,
+    comments,
     modifyCourseForm: await superValidate(zod(modifyCourseSchema), { defaults: course }),
     addUserToCourseForm: await superValidate(zod(addUserToCourseSchema)),
     removeUserFromCourse: await superValidate(zod(removeUserFromCourseSchema)),

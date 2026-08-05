@@ -17,12 +17,13 @@ model User {
   role               Role    @default(Student)
   mustChangePassword Boolean @default(false)
 
-  student     Student?
-  teacher     Teacher?
-  discordUser DiscordUser?
-  sessions    Session[]
-  passkeys    Passkey[]
-  comments    Comment[]
+  student       Student?
+  teacher       Teacher?
+  discordUser   DiscordUser?
+  sessions      Session[]
+  passkeys      Passkey[]
+  comments      Comment[]
+  notifications Notification[]
 }
 
 model Passkey {
@@ -115,8 +116,33 @@ model Comment {
   parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
   replies  Comment[] @relation("CommentReplies")
 
+  notifications Notification[]
+
   @@index([presentationId, slideId])
   @@index([courseId, resolved])
+}
+
+/// One row per (recipient, comment) event. Two triggers only, both created alongside the comment
+/// action that causes them (see notification-service.ts): a new top-level comment notifies every
+/// teacher of the course; a top-level comment being marked resolved notifies its author.
+model Notification {
+  id        Int              @id @default(autoincrement())
+  type      NotificationType
+  read      Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  commentId Int
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+}
+
+enum NotificationType {
+  NewQuestion
+  QuestionAnswered
 }
 
 model SchoolSession {

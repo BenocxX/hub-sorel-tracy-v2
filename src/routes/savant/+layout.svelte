@@ -5,6 +5,7 @@
   import Footer from '$lib/client/components/structure/footer.svelte';
   import Button from '$lib/client/components/ui/button/button.svelte';
   import * as DropdownMenu from '$lib/client/components/ui/dropdown-menu';
+  import NotificationBell from '$lib/client/components/structure/notifications/notification-bell.svelte';
   import { Sun, LogOut, Moon, Home, Cog } from 'lucide-svelte';
   import { page } from '$app/state';
   import { cn } from '$lib/client/utils';
@@ -42,6 +43,12 @@
         </div>
       </div>
       <div class="itemsnter flex gap-2">
+        {#if data.user}
+          <NotificationBell
+            notifications={data.notifications}
+            unreadCount={data.unreadNotificationCount}
+          />
+        {/if}
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
             {#snippet child({ props })}

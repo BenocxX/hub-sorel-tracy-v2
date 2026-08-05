@@ -1,7 +1,14 @@
 import { resolve } from '$app/paths';
 import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
-import { Archive, ContactRound, GraduationCap, Presentation, Users } from 'lucide-svelte';
+import {
+  Archive,
+  ContactRound,
+  GraduationCap,
+  MessageSquare,
+  Presentation,
+  Users,
+} from 'lucide-svelte';
 
 function makePresentationLinksForCourse(course: Course<{ presentations: true }> | null) {
   if (!course) return [];
@@ -87,6 +94,12 @@ export function makeSidebarSections({
           label: 'Présentations',
           icon: Presentation,
           url: `${teacherUrl}?tab=presentations`,
+        },
+        {
+          type: 'link',
+          label: 'Commentaires',
+          icon: MessageSquare,
+          url: `${teacherUrl}?tab=comments`,
         },
       ],
     },

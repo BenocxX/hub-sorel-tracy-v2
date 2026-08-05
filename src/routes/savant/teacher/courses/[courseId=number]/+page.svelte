@@ -9,8 +9,9 @@
   import { Button } from '$lib/client/components/ui/button/index.js';
   import * as Dialog from '$lib/client/components/ui/dialog/index.js';
   import * as Tabs from '$lib/client/components/ui/tabs/index.js';
+  import { Badge } from '$lib/client/components/ui/badge/index.js';
   import { displaySession } from '$lib/common/tools/localizer.js';
-  import { makePresentationColumns, makeUserColumns } from './columns.js';
+  import { makeCommentColumns, makePresentationColumns, makeUserColumns } from './columns.js';
 
   const { data } = $props();
   const userColumns = makeUserColumns({
@@ -24,6 +25,9 @@
     togglePresentationLocked: data.togglePresentationLockedForm,
     deletePresentation: data.deletePresentation,
   });
+
+  const commentColumns = makeCommentColumns();
+  const unansweredCount = $derived(data.comments.filter((comment) => !comment.resolved).length);
 
   function getUsersNotInCourse() {
     return data.users.filter(
@@ -44,6 +48,12 @@
     <Tabs.Trigger value="students">Étudiants</Tabs.Trigger>
     <Tabs.Trigger value="teachers">Enseignants</Tabs.Trigger>
     <Tabs.Trigger value="presentations">Présentations</Tabs.Trigger>
+    <Tabs.Trigger value="comments" class="gap-1.5">
+      Commentaires
+      {#if unansweredCount > 0}
+        <Badge variant="secondary">{unansweredCount}</Badge>
+      {/if}
+    </Tabs.Trigger>
   </Tabs.List>
   <Dialog.Root>
     <Dialog.Trigger>
@@ -109,5 +119,8 @@
         <CreatePresentationForm data={data.createPresentation} />
       {/snippet}
     </DataTable>
+  </Tabs.Content>
+  <Tabs.Content value="comments">
+    <DataTable columns={commentColumns} data={data.comments} pagination={{ size: 50 }} />
   </Tabs.Content>
 </Tabs.Root>

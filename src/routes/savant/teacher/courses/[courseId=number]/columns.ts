@@ -1,5 +1,5 @@
 import { renderComponent, renderSnippet } from '$lib/client/components/ui/data-table';
-import type { Course, User } from '$lib/common/types/prisma-types';
+import type { Comment, Course, User } from '$lib/common/types/prisma-types';
 import type { ColumnDef } from '@tanstack/table-core';
 import { createRawSnippet } from 'svelte';
 import DataTableUsersActions from './data-table-users-actions.svelte';
@@ -14,8 +14,11 @@ import type {
   TogglePresentationLockedSchema,
 } from '$lib/common/schemas/presentation-schemas';
 import { localizeRole } from '$lib/common/tools/localizer';
+import { formatTimeBetween } from '$lib/common/tools/format';
 import UsernameAvatar from './username-avatar.svelte';
 import PresentationTitleLink from '$lib/client/components/ui-custom/data-tables/presentations/presentation-title-link.svelte';
+import CommentContentLink from '$lib/client/components/ui-custom/data-tables/comments/comment-content-link.svelte';
+import CommentStatusBadge from '$lib/client/components/ui-custom/data-tables/comments/comment-status-badge.svelte';
 
 export function makeUserColumns({
   course,
@@ -154,6 +157,78 @@ export function makePresentationColumns({
           togglePresentationLocked,
           deletePresentation,
         });
+      },
+    },
+  ];
+}
+
+export type CommentDashboardRow = Comment<{
+  author: { include: { discordUser: true } };
+  presentation: { select: { id: true; title: true } };
+  _count: { select: { replies: true } };
+}>;
+
+export function makeCommentColumns(): ColumnDef<CommentDashboardRow>[] {
+  return [
+    {
+      meta: { frenchName: 'Question' },
+      accessorKey: 'content',
+      header: 'Question',
+      cell: ({ row }) => renderComponent(CommentContentLink, { comment: row.original }),
+    },
+    {
+      meta: { frenchName: 'Présentation' },
+      id: 'presentation',
+      accessorFn: (row) => row.presentation.title,
+      header: ({ column }) => {
+        return renderComponent(DataTableSortHeaderButton, {
+          isSorted: column.getIsSorted(),
+          text: 'Présentation',
+          onclick: column.getToggleSortingHandler(),
+        });
+      },
+    },
+    {
+      meta: { frenchName: 'Auteur' },
+      id: 'author',
+      accessorFn: (row) => `${row.author.firstname} ${row.author.lastname}`,
+      header: 'Auteur',
+      cell: ({ row }) => renderComponent(UsernameAvatar, { user: row.original.author }),
+    },
+    {
+      meta: { frenchName: 'Statut' },
+      id: 'status',
+      accessorFn: (row) => row.resolved,
+      header: ({ column }) => {
+        return renderComponent(DataTableSortHeaderButton, {
+          isSorted: column.getIsSorted(),
+          text: 'Statut',
+          onclick: column.getToggleSortingHandler(),
+        });
+      },
+      cell: ({ row }) => renderComponent(CommentStatusBadge, { resolved: row.original.resolved }),
+    },
+    {
+      meta: { frenchName: 'Réponses' },
+      id: 'replyCount',
+      accessorFn: (row) => row._count.replies,
+      header: 'Réponses',
+    },
+    {
+      meta: { frenchName: 'Date' },
+      accessorKey: 'createdAt',
+      header: ({ column }) => {
+        return renderComponent(DataTableSortHeaderButton, {
+          isSorted: column.getIsSorted(),
+          text: 'Date',
+          onclick: column.getToggleSortingHandler(),
+        });
+      },
+      cell: ({ row }) => {
+        const cellSnippet = createRawSnippet(() => ({
+          render: () => `<div>${formatTimeBetween(row.original.createdAt)}</div>`,
+        }));
+        return renderSnippet(cellSnippet, '');
       },
     },
   ];

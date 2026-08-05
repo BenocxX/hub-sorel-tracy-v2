@@ -6,6 +6,10 @@ import {
   resolveCommentSchema,
 } from '$lib/common/schemas/comment-schemas.js';
 import { db } from '$lib/server/prisma/index.js';
+import {
+  notifyAuthorOfResolution,
+  notifyTeachersOfNewQuestion,
+} from '$lib/server/services/notification-service.js';
 import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -105,7 +109,7 @@ export const actions = {
       }
     }
 
-    await db.comment.create({
+    const comment = await db.comment.create({
       data: {
         content: form.data.content,
         slideId: form.data.slideId,
@@ -115,6 +119,19 @@ export const actions = {
         courseId: presentation.courseId,
       },
     });
+
+    if (form.data.parentId === null) {
+      // Best-effort: a notification failing shouldn't fail the comment that triggered it.
+      try {
+        await notifyTeachersOfNewQuestion({
+          id: comment.id,
+          courseId: presentation.courseId,
+          authorId: comment.authorId,
+        });
+      } catch (error) {
+        console.error('Failed to notify teachers of new question', error);
+      }
+    }
 
     return { form };
   },
@@ -170,6 +187,19 @@ export const actions = {
       where: { id: comment.id },
       data: { resolved: form.data.resolved },
     });
+
+    // Only the false → true transition is "answered" — toggling it back off, or an already-
+    // resolved comment being re-saved as resolved, shouldn't notify again.
+    if (!comment.resolved && form.data.resolved) {
+      try {
+        await notifyAuthorOfResolution(
+          { id: comment.id, authorId: comment.authorId },
+          event.locals.user!.id
+        );
+      } catch (error) {
+        console.error('Failed to notify author of resolution', error);
+      }
+    }
 
     return { form };
   },

@@ -1,5 +1,5 @@
 import { resolve } from '$app/paths';
-import type { Presentation } from '@prisma/client';
+import type { Comment, Presentation } from '@prisma/client';
 import { formatDate, formatDistance } from 'date-fns';
 import { frCA } from 'date-fns/locale';
 import type { User } from '../types/prisma-types';
@@ -42,9 +42,22 @@ export function formatToId(section: string) {
     .toLowerCase();
 }
 
-export function formatPresentationUrl({ id, courseId }: Presentation) {
+export function formatPresentationUrl({ id, courseId }: Pick<Presentation, 'id' | 'courseId'>) {
   return resolve('/savant/courses/[courseId=number]/presentations/[presentationId=number]', {
     courseId: courseId.toString(),
     presentationId: id.toString(),
   });
+}
+
+/** Deep-links straight to the slide a comment is on, via Reveal's native id-based navigation
+ * (see registerInTOC in revealjs/custom/utils.svelte.ts) — no query to validate the slide still
+ * exists, since slide content lives outside the DB entirely. */
+export function formatCommentUrl(
+  comment: Pick<Comment, 'presentationId' | 'courseId' | 'slideId'>
+) {
+  const presentationUrl = formatPresentationUrl({
+    id: comment.presentationId,
+    courseId: comment.courseId,
+  });
+  return `${presentationUrl}#/${encodeURIComponent(comment.slideId)}`;
 }
