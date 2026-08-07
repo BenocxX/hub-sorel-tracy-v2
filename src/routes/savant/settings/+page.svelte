@@ -11,6 +11,8 @@
   import { makePasskeyColumns } from './passkey-columns.js';
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
+  import { Button } from '$lib/client/components/ui/button/index.js';
+  import { Plus } from 'lucide-svelte';
 
   const { data } = $props();
 
@@ -96,7 +98,7 @@
         {/if}
       </p>
     </div>
-    <div class="ml-auto flex items-center gap-4 md:col-span-2">
+    <div class="ml-auto flex w-full items-center gap-4 sm:w-max md:col-span-2">
       {#if discordError === 'already-linked'}
         <div
           class="rounded-md border border-destructive bg-destructive/10 p-2.5 text-sm text-destructive"
@@ -107,26 +109,38 @@
       {#if data.user?.discordUser}
         <UnlinkDiscordForm data={data.unlinkDiscordForm} disabled={!data.userHasPassword} />
       {:else}
-        <DiscordButton href={resolve('/savant/settings/link-discord')} class="w-max">
+        <DiscordButton href={resolve('/savant/settings/link-discord')} class="w-full sm:w-max">
           Lier mon compte Discord
         </DiscordButton>
       {/if}
     </div>
   </div>
-  <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b py-12 md:grid-cols-1 lg:grid-cols-3">
+  <div class="py-12">
     <div>
       <h2 class="font-semibold">Clés d'accès (passkeys)</h2>
       <p class="mt-1 text-sm/6 text-foreground-discreet">
         Ajoutez une clé d'accès (empreinte, visage, code de l'appareil...) pour vous connecter sans
         mot de passe.
       </p>
-    </div>
-    <div class="flex flex-col gap-4 md:col-span-2">
-      <div class="ml-auto">
-        <AddPasskeyForm />
-      </div>
       {#if data.passkeys.length > 0}
-        <DataTable columns={passkeyColumns} data={data.passkeys} />
+        <DataTable columns={passkeyColumns} data={data.passkeys}>
+          {#snippet beforeSearchSnippet()}
+            <AddPasskeyForm>
+              {#snippet children({ props })}
+                <Button {...props} class="hidden sm:inline-flex">Ajouter une clé d'accès</Button>
+                <Button {...props} size="icon" class="w-12 sm:hidden">
+                  <Plus class="!size-5" />
+                </Button>
+              {/snippet}
+            </AddPasskeyForm>
+          {/snippet}
+        </DataTable>
+      {:else}
+        <div class="flex flex-col gap-4 md:col-span-2">
+          <div class="ml-auto">
+            <AddPasskeyForm />
+          </div>
+        </div>
       {/if}
     </div>
   </div>
