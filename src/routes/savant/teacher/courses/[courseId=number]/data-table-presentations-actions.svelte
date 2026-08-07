@@ -16,6 +16,7 @@
   import * as AlertDialog from '$lib/client/components/ui/alert-dialog/index.js';
   import SingleButtonForm from '$lib/client/components/structure/forms/single-button-form.svelte';
   import { zodClient } from 'sveltekit-superforms/adapters';
+  import { formatChapterTitle } from '$lib/common/tools/chapter';
 
   type Props = {
     course: Course;
@@ -80,8 +81,9 @@
         <Dialog.Header>
           <Dialog.Title>Modification de présentation</Dialog.Title>
           <Dialog.Description>
-            La soumission de ce formulaire va modifier la présentation "{presentation.title}" dans
-            le système.
+            La soumission de ce formulaire va modifier la présentation "{formatChapterTitle(
+              presentation
+            )}" dans le système.
           </Dialog.Description>
         </Dialog.Header>
         <ModifyPresentationForm {presentation} data={modifyPresentation} />
@@ -93,7 +95,8 @@
           <AlertDialog.Header>
             <AlertDialog.Title>Confirmation de la suppression</AlertDialog.Title>
             <AlertDialog.Description>
-              La présentation "{presentation.title}" sera supprimée de façon permanente du système.
+              La présentation "{formatChapterTitle(presentation)}" sera supprimée de façon
+              permanente du système.
             </AlertDialog.Description>
           </AlertDialog.Header>
           <AlertDialog.Footer>

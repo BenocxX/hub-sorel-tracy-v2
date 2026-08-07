@@ -1,4 +1,5 @@
 import { resolve } from '$app/paths';
+import { formatChapterTitle } from '$lib/common/tools/chapter';
 import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
 import {
@@ -19,7 +20,7 @@ function makePresentationLinksForCourse(course: Course<{ presentations: true }> 
     .map(
       (presentation): SidebarLinkItem => ({
         type: 'link',
-        label: presentation.title,
+        label: formatChapterTitle(presentation),
         url:
           presentation.url ??
           resolve('/savant/courses/[courseId=number]/presentations/[presentationId=number]', {
@@ -54,7 +55,7 @@ export function makeSidebarSections({
     {
       type: 'section',
       label: 'Informations',
-      isHidden: !selectedCourse || (user!.role === 'Teacher' || user!.role === 'Admin'),
+      isHidden: !selectedCourse || user!.role === 'Teacher' || user!.role === 'Admin',
       items: [
         {
           type: 'collapsible',

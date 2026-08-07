@@ -2,6 +2,7 @@
   import { page } from '$app/state';
   import { cn } from '$lib/client/utils';
   import { formatPresentationUrl } from '$lib/common/tools/format';
+  import { formatChapterTitle } from '$lib/common/tools/chapter';
   import type { Presentation } from '@prisma/client';
 
   const presentation: Presentation = $props();
@@ -38,7 +39,7 @@
       <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   {/if}
-  {presentation.title}
+  {formatChapterTitle(presentation)}
   {#if presentation.url}
     <svg
       xmlns="http://www.w3.org/2000/svg"

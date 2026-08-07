@@ -4,7 +4,7 @@ const notificationInclude = {
   comment: {
     include: {
       author: { include: { discordUser: true } },
-      presentation: { select: { id: true, title: true } },
+      presentation: { select: { id: true, title: true, chapter: true } },
     },
   },
 } satisfies Prisma.NotificationInclude;

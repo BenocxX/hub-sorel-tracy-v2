@@ -15,6 +15,7 @@ import type {
 } from '$lib/common/schemas/presentation-schemas';
 import { localizeRole } from '$lib/common/tools/localizer';
 import { formatTimeBetween } from '$lib/common/tools/format';
+import { formatChapterTitle } from '$lib/common/tools/chapter';
 import UsernameAvatar from './username-avatar.svelte';
 import PresentationTitleLink from '$lib/client/components/ui-custom/data-tables/presentations/presentation-title-link.svelte';
 import CommentContentLink from '$lib/client/components/ui-custom/data-tables/comments/comment-content-link.svelte';
@@ -164,7 +165,7 @@ export function makePresentationColumns({
 
 export type CommentDashboardRow = Comment<{
   author: { include: { discordUser: true } };
-  presentation: { select: { id: true; title: true } };
+  presentation: { select: { id: true; title: true; chapter: true } };
   _count: { select: { replies: true } };
 }>;
 
@@ -179,7 +180,7 @@ export function makeCommentColumns(): ColumnDef<CommentDashboardRow>[] {
     {
       meta: { frenchName: 'Présentation' },
       id: 'presentation',
-      accessorFn: (row) => row.presentation.title,
+      accessorFn: (row) => formatChapterTitle(row.presentation),
       header: ({ column }) => {
         return renderComponent(DataTableSortHeaderButton, {
           isSorted: column.getIsSorted(),

@@ -1,9 +1,14 @@
+import { CHAPTER_PATTERN } from '$lib/common/tools/chapter';
 import { z } from 'zod';
+
+const chapterSchema = z
+  .string()
+  .regex(CHAPTER_PATTERN, 'Doit être un nombre valide (ex: 6, 6.1, 5.12)');
 
 export const createPresentationSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
-  chapter: z.number().min(1).default(1),
+  chapter: chapterSchema.default('1'),
   url: z.string().nullable(),
   componentId: z.string().nullable(),
   isLocked: z.boolean().default(true),
@@ -14,7 +19,7 @@ export const modifyPresentationSchema = z.object({
   id: z.number(),
   title: z.string().min(1),
   description: z.string().min(1),
-  chapter: z.number().min(1).default(1),
+  chapter: chapterSchema.default('1'),
   url: z.string().nullable(),
   componentId: z.string().nullable(),
   isLocked: z.boolean().default(true),

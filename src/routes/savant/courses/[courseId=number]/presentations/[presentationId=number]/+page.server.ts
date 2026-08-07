@@ -5,6 +5,7 @@ import {
   deleteCommentSchema,
   resolveCommentSchema,
 } from '$lib/common/schemas/comment-schemas.js';
+import { formatChapterTitle } from '$lib/common/tools/chapter.js';
 import { db } from '$lib/server/prisma/index.js';
 import {
   notifyAuthorOfResolution,
@@ -63,7 +64,7 @@ export const load = async ({ params, locals }) => {
         label: presentation.course.name,
         href: resolve('/savant/courses/[courseId=number]', { courseId: params.courseId }),
       },
-      { label: presentation.title }
+      { label: formatChapterTitle(presentation) }
     ),
     presentation,
     comments,

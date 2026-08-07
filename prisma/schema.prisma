@@ -61,7 +61,10 @@ model Presentation {
   id              Int     @id @default(autoincrement())
   title           String
   description     String
-  chapter         Int
+  /// A dotted chapter/section number like "6", "6.1", "5.12" (see chapter.ts for parsing/
+  /// comparison) — stored separately from title and prepended to it in the UI only, never
+  /// written into the title column itself.
+  chapter         String
   url             String?
   componentId     String?
   isLocked        Boolean @default(true)

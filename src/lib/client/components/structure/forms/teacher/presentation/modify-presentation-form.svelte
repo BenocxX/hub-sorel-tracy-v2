@@ -59,7 +59,7 @@
       <Form.Control>
         {#snippet children({ props })}
           <Form.Label>Chapitre</Form.Label>
-          <Input placeholder="1" type="number" min="1" {...props} bind:value={$formData.chapter} />
+          <Input placeholder="6.1" inputmode="decimal" {...props} bind:value={$formData.chapter} />
         {/snippet}
       </Form.Control>
       <Form.FieldErrors />

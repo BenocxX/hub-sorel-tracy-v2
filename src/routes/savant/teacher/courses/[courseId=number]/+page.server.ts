@@ -9,6 +9,7 @@ import {
   modifyPresentationSchema,
   togglePresentationLockedSchema,
 } from '$lib/common/schemas/presentation-schemas.js';
+import { sortByChapter } from '$lib/common/tools/chapter.js';
 import { db } from '$lib/server/prisma/index.js';
 import { error, fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms';
@@ -17,11 +18,11 @@ import { zod } from 'sveltekit-superforms/adapters';
 export const load = async (event) => {
   const id = Number(event.params.courseId);
 
-  const course = await db.course.findFirst({
+  const rawCourse = await db.course.findFirst({
     where: { id },
     include: {
       schoolSession: true,
-      presentations: { orderBy: [{ chapter: 'asc' }, { title: 'asc' }] },
+      presentations: true,
       students: {
         include: { user: { include: { discordUser: true } } },
         orderBy: [{ user: { firstname: 'asc' } }, { user: { lastname: 'asc' } }],
@@ -33,9 +34,13 @@ export const load = async (event) => {
     },
   });
 
-  if (!course) {
+  if (!rawCourse) {
     return error(404, 'Not Found');
   }
+
+  // Chapter is a dotted string ("6.1", "5.12", ...), so it can no longer sort correctly at the
+  // database level (that'd be a plain lexicographic sort) — see chapter.ts.
+  const course = { ...rawCourse, presentations: sortByChapter(rawCourse.presentations) };
 
   const teacherUsers = course.teachers.map((teacher) => teacher.user);
   const studentUsers = course.students.map((student) => student.user);
@@ -49,7 +54,7 @@ export const load = async (event) => {
     where: { courseId: id, parentId: null },
     include: {
       author: { include: { discordUser: true } },
-      presentation: { select: { id: true, title: true } },
+      presentation: { select: { id: true, title: true, chapter: true } },
       _count: { select: { replies: true } },
     },
     orderBy: { createdAt: 'desc' },

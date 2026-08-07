@@ -4,6 +4,7 @@
   import Separator from '$lib/client/components/ui/separator/separator.svelte';
   import { Bell, CircleHelp, CheckCircle2 } from 'lucide-svelte';
   import { formatCommentUrl, formatTimeBetween, formatUserNames } from '$lib/common/tools/format';
+  import { formatChapterTitle } from '$lib/common/tools/chapter';
   import { cn } from '$lib/client/utils';
   import type { NotificationWithComment } from './types.js';
 
@@ -98,7 +99,7 @@
                 {/if}
               </p>
               <p class="truncate text-xs text-foreground-discreet">
-                {notification.comment.presentation.title}
+                {formatChapterTitle(notification.comment.presentation)}
               </p>
               <p class="text-xs text-foreground-discreet">
                 {formatTimeBetween(notification.createdAt)}
