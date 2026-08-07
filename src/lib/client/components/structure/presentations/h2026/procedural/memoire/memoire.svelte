@@ -17,15 +17,6 @@
   registerInTOC({ page: 2 });
 </script>
 
-<!--
-  Contexte:
-  - Présentation sur la structure de la mémoire d'un ordinateur
-  - RAM
-  - Stack, heap, uninitialized data, initialized data, code
-  - Les adresses mémoire et comment elles sont utilisées pour accéder aux données
-  - Comment la mémoire est organisée et gérée par le système d'exploitation
- -->
-
 <BasicSlide>
   <p>
     La mémoire d'un ordinateur est un composant essentiel qui nous permet de stocker et accéder aux

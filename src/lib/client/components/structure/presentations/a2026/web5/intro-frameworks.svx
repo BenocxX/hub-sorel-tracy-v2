@@ -1,0 +1,14 @@
+---
+title: Introduction aux frameworks
+layout: presentation
+---
+
+## Qu'est-ce qu'un framework?
+
+Un framework JavaScript est une bibliothèque qui fournit une structure et des outils pour développer des applications web. Il facilite le développement en offrant des fonctionnalités prêtes à l'emploi, telles que la gestion de l'état, le routage, et la manipulation du DOM.
+
+---
+
+## Cas de base
+
+Une bonne utilisation d'un framework peut simplifier le développement d'une application web en fournissant des conventions et des abstractions qui permettent de se concentrer sur la logique métier plutôt que sur les détails techniques.
