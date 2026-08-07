@@ -88,6 +88,12 @@ export const actions = {
       return fail(404, { form });
     }
 
+    // A teacher can turn comments off for a presentation entirely — no exceptions, not even for
+    // other teachers, since the whole point is to shut the feature off for that class.
+    if (!presentation.commentsEnabled) {
+      return fail(403, { form });
+    }
+
     const isTeacher = await isTeacherOfCourse(event.locals.user!.id, presentation.courseId);
 
     // Students can't ask questions on content the teacher hasn't opened up yet; teachers can

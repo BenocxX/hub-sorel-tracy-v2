@@ -82,13 +82,27 @@
   <Form.Field {form} name="isLocked" class="flex items-center justify-between">
     <Form.Control>
       {#snippet children({ props })}
-        <div class="space-y-0.5">
+        <div class="mt-2 space-y-0.5">
           <Form.Label>Présentation bloqué aux étudiants</Form.Label>
           <Form.Description>
             La présentation n'est pas encore accessible aux étudiants
           </Form.Description>
         </div>
         <Switch {...props} bind:checked={$formData.isLocked} />
+      {/snippet}
+    </Form.Control>
+  </Form.Field>
+  <Form.Field {form} name="commentsEnabled" class="flex items-center justify-between">
+    <Form.Control>
+      {#snippet children({ props })}
+        <div class="mt-3 space-y-0.5">
+          <Form.Label>Commentaires activés</Form.Label>
+          <Form.Description class="mr-2">
+            Les étudiants et enseignants peuvent commenter les diapositives. Cette fonctionnalité
+            fonctionne uniquement sur les présentations utilisant le format Markdown.
+          </Form.Description>
+        </div>
+        <Switch {...props} bind:checked={$formData.commentsEnabled} />
       {/snippet}
     </Form.Control>
   </Form.Field>

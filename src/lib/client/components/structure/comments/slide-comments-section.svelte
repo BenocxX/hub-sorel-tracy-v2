@@ -41,8 +41,12 @@
   Width mirrors the Presentation component above it (`w-[85%]`, see presentation-root.svelte) so
   the two stay visually aligned and the section scales with the viewport instead of being capped
   at a fixed max-width.
+
+  Renders nothing at all when a teacher has turned comments off for this presentation
+  (ctx.commentsEnabled) — not even existing comments are shown, matching createComment's own
+  server-side check.
 -->
-{#if slideId}
+{#if ctx.commentsEnabled && slideId}
   <section class="mx-auto w-[85%] space-y-6 py-12">
     {#if ctx.isLocked && !ctx.isTeacher}
       <p class="rounded-2xl bg-muted/60 p-4 text-sm text-foreground-discreet">

@@ -58,13 +58,16 @@ model Teacher {
 }
 
 model Presentation {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String
-  chapter     Int
-  url         String?
-  componentId String?
-  isLocked    Boolean @default(true)
+  id              Int     @id @default(autoincrement())
+  title           String
+  description     String
+  chapter         Int
+  url             String?
+  componentId     String?
+  isLocked        Boolean @default(true)
+  /// When false, the per-slide comment section doesn't render at all for this presentation
+  /// (existing comments are kept, just hidden — see the presentation route's load/createComment).
+  commentsEnabled Boolean @default(true)
 
   courseId Int
 

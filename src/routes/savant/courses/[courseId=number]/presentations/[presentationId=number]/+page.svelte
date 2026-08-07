@@ -16,6 +16,9 @@
     get isLocked() {
       return data.presentation.isLocked;
     },
+    get commentsEnabled() {
+      return data.presentation.commentsEnabled;
+    },
     get comments() {
       return data.comments;
     },

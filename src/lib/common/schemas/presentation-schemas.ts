@@ -7,6 +7,7 @@ export const createPresentationSchema = z.object({
   url: z.string().nullable(),
   componentId: z.string().nullable(),
   isLocked: z.boolean().default(true),
+  commentsEnabled: z.boolean().default(true),
 });
 
 export const modifyPresentationSchema = z.object({
@@ -17,6 +18,7 @@ export const modifyPresentationSchema = z.object({
   url: z.string().nullable(),
   componentId: z.string().nullable(),
   isLocked: z.boolean().default(true),
+  commentsEnabled: z.boolean().default(true),
 });
 
 export const togglePresentationLockedSchema = z.object({

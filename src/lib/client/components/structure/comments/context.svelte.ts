@@ -18,6 +18,8 @@ export type PresentationCommentsContextValue = {
   userId: string;
   /** Students can't start new threads while true; teachers always can. */
   isLocked: boolean;
+  /** Set by a teacher per presentation; when false the whole comments section doesn't render. */
+  commentsEnabled: boolean;
   comments: CommentWithAuthor[];
   forms: {
     createComment: SuperValidated<Infer<CreateCommentSchema>>;
