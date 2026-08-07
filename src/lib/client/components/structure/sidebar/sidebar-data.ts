@@ -2,7 +2,8 @@ import { resolve } from '$app/paths';
 import type { Course } from '$lib/common/types/prisma-types';
 import type { SidebarLinkItem, SidebarSection } from '$lib/common/types/sidebar-types';
 import {
-  Archive,
+  BookCheck,
+  CalendarRange,
   ContactRound,
   GraduationCap,
   MessageSquare,
@@ -53,7 +54,7 @@ export function makeSidebarSections({
     {
       type: 'section',
       label: 'Informations',
-      isHidden: !selectedCourse,
+      isHidden: !selectedCourse || (user!.role === 'Teacher' || user!.role === 'Admin'),
       items: [
         {
           type: 'collapsible',
@@ -128,22 +129,16 @@ export function makeSidebarSections({
           ],
         },
         {
-          type: 'collapsible',
-          label: 'Contenu',
-          icon: Archive,
-          isOpen: true,
-          items: [
-            {
-              type: 'link',
-              label: 'Cours',
-              url: `${resolve('/savant/admin/courses')}`,
-            },
-            {
-              type: 'link',
-              label: 'Sessions',
-              url: `${resolve('/savant/admin/sessions')}`,
-            },
-          ],
+          type: 'link',
+          label: 'Sessions',
+          icon: CalendarRange,
+          url: resolve('/savant/admin/sessions'),
+        },
+        {
+          type: 'link',
+          label: 'Cours',
+          icon: BookCheck,
+          url: resolve('/savant/admin/courses'),
         },
       ],
     },
