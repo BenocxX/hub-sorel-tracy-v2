@@ -1,0 +1,21 @@
+---
+title: Introduction aux frameworks
+layout: presentation
+---
+
+## Avant les frameworks JS
+
+Avant les années 2010, le développement web était principalement basé sur le HTML, le CSS et le JavaScript natif. Les développeurs devaient gérer manuellement le DOM, les événements et les requêtes AJAX, ce qui pouvait rendre le code complexe et difficile à maintenir.
+
+La complexité amplifiait avec la taille du projet, surtout lors de la réutilisation d'éléments commun à plusieurs pages, comme des dropdowns, des modals ou simplement des boutons.
+
+---
+
+## Avant les frameworks JS
+
+La réutilisation d'un bouton se fait relativement facilement, il suffit d'importer le bon CSS et de créer l'élément HTML correspondant avec les bonnes classes. Mais pour des composants plus complexes, comme un dropdown, il faut gérer l'état du composant (ouvert/fermé), les événements de clic, le focus, et potentiellement des animations.
+
+Construire un dropdown n'est pas l'embuches, le défi est de s'assurer que toute l'équipe de développement utilise le même code pour ce dropdown, et que ce code est maintenable et évolutif.
+
+> C'est là que le concept de "composant" entre en jeu!
+
