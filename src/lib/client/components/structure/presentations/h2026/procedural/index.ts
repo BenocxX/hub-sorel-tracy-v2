@@ -8,7 +8,7 @@ import Fichiers from './fichiers/presentation.svelte';
 import Memoire from './memoire/presentation.svelte';
 import Pointeurs from './pointeurs/presentation.svelte';
 import Structures from './structures/presentation.svelte';
-import Recursivite from './recursivite/presentation.svx';
+import Recursivite from './recursivite.svx';
 
 export function makeProceduralPresentationComponents() {
   return [

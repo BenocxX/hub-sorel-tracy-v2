@@ -1,9 +1,8 @@
 import type { Presentation } from '@prisma/client';
 import type { Component } from 'svelte';
-import { makeWeb1PresentationComponents } from './web1-a2025';
-import { makeWeb3PresentationComponents } from './web3-a2025';
-import { makePoo2PresentationComponents } from './poo2-a2025';
-import { makeProceduralPresentationComponents } from './procedural-h2026';
+import { makeA2025PresentationComponents } from './a2025';
+import { makeH2026PresentationComponents } from './h2026';
+import { makeA2026PresentationComponents } from './a2026';
 
 type PresentationComponent = {
   id: string;
@@ -11,10 +10,9 @@ type PresentationComponent = {
 };
 
 const presentationComponents: PresentationComponent[] = [
-  ...makeWeb1PresentationComponents(),
-  ...makeWeb3PresentationComponents(),
-  ...makePoo2PresentationComponents(),
-  ...makeProceduralPresentationComponents(),
+  ...makeA2025PresentationComponents(),
+  ...makeH2026PresentationComponents(),
+  ...makeA2026PresentationComponents(),
 ];
 
 export function getPresentationComponent(presentation: Presentation) {

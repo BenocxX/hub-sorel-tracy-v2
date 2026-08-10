@@ -21,8 +21,8 @@
   const { delayed, enhance, message } = form;
 </script>
 
-<form method="POST" action="?/unlinkDiscord" class="flex flex-col gap-2" use:enhance>
-  <Form.Button {...buttonProps} {delayed} {disabled} variant="destructive" class="w-max">
+<form method="POST" action="?/unlinkDiscord" class="flex w-full flex-col gap-2" use:enhance>
+  <Form.Button {...buttonProps} {delayed} {disabled} variant="destructive" class="w-full">
     Délier mon compte Discord
   </Form.Button>
   {#if $message}

@@ -6,6 +6,13 @@
   import { invalidateAll } from '$app/navigation';
   import { startRegistration } from '@simplewebauthn/browser';
   import { toast } from 'svelte-sonner';
+  import type { Snippet } from 'svelte';
+
+  type Props = {
+    children?: Snippet<[{ props: Record<string, unknown> }]>;
+  };
+
+  const { children }: Props = $props();
 
   let open = $state(false);
   let name = $state('');
@@ -55,7 +62,11 @@
 <Dialog.Root bind:open>
   <Dialog.Trigger>
     {#snippet child({ props })}
-      <Button {...props} class="w-max">Ajouter une clé d'accès</Button>
+      {#if children}
+        {@render children({ props })}
+      {:else}
+        <Button {...props} class="w-max">Ajouter une clé d'accès</Button>
+      {/if}
     {/snippet}
   </Dialog.Trigger>
   <Dialog.Content>
