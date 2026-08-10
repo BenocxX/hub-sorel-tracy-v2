@@ -3,19 +3,192 @@ title: Introduction aux frameworks
 layout: presentation
 ---
 
+<script>
+    import { List } from '$lib/client/components/revealjs/custom';
+</script>
+
 ## Avant les frameworks JS
 
-Avant les années 2010, le développement web était principalement basé sur le HTML, le CSS et le JavaScript natif. Les développeurs devaient gérer manuellement le DOM, les événements et les requêtes AJAX, ce qui pouvait rendre le code complexe et difficile à maintenir.
+Avant les années 2010, le développement web était principalement basé sur le HTML, le CSS et le JavaScript natif. Les développeurs devaient gérer **manuellement** le DOM, les événements et les requêtes AJAX, ce qui pouvait rendre le code **complexe** et **difficile à maintenir**.
 
-La complexité amplifiait avec la taille du projet, surtout lors de la réutilisation d'éléments commun à plusieurs pages, comme des dropdowns, des modals ou simplement des boutons.
+> La complexité amplifiait avec la taille du projet, surtout lors de la réutilisation d'éléments commun à plusieurs pages, comme des dropdowns, des modals ou simplement des boutons.
 
 ---
 
 ## Avant les frameworks JS
 
-La réutilisation d'un bouton se fait relativement facilement, il suffit d'importer le bon CSS et de créer l'élément HTML correspondant avec les bonnes classes. Mais pour des composants plus complexes, comme un dropdown, il faut gérer l'état du composant (ouvert/fermé), les événements de clic, le focus, et potentiellement des animations.
+La réutilisation d'un bouton se fait relativement facilement, il suffit d'importer le bon CSS et de créer l'élément HTML correspondant avec les bonnes classes. Cependant, pour des composants plus complexes, comme un dropdown, il faut gérer l'état du composant (ouvert/fermé), les événements de clic, le focus, et potentiellement des animations.
 
-Construire un dropdown n'est pas l'embuches, le défi est de s'assurer que toute l'équipe de développement utilise le même code pour ce dropdown, et que ce code est maintenable et évolutif.
+> Construire un dropdown n'est pas l'embûche, le défi est de s'assurer que **toute l'équipe de développement** utilise le même code pour ce dropdown, et que ce code est maintenable et évolutif.
 
 > C'est là que le concept de "composant" entre en jeu!
 
+---
+
+## Qu'est-ce qu'un composant?
+
+Un composant est une **unité réutilisable de code** qui encapsule la structure **HTML**, le style **CSS** et le comportement **JavaScript** d'un élément de l'interface utilisateur.
+
+> Vous pouvez penser à un composant comme un **"bloc *Lego*"** que vous pouvez réutiliser partout dans votre site.
+
+---
+
+## Qu'est-ce qu'un composant?
+
+Les composants permettent de créer des interfaces utilisateur **modulaires** et **maintenables**. Ils facilitent la réutilisation du code, la séparation des préoccupations et la collaboration entre les développeurs.
+
+<List paragraph="Voici quelques exemples de composants courants :" fragment>
+    <li class="fragment">Boutons</li>
+    <li class="fragment">Inputs</li>
+    <li class="fragment">Modals</li>
+    <li class="fragment">Dropdowns</li>
+    <li class="fragment">N'importe quoi qu'on souhaite réutiliser dans l'interface.</li>
+</List>
+
+---
+
+## On utilise déjà des composants?
+
+Peut-être que le concept de composant vous semble familier? 
+
+> Depuis web 2 vous utilisez des composants, grâce à **Bootstrap**!
+
+> Bootstrap est une librairie de composant **CSS**, accompagnée de quelques morceaux de **JavaScript** pour gérer les interactions. 
+
+> Bootstrap permet de personnaliser le style de ses composants, mais il est impossible de modifier le comportement JavaScript de ces composants. C'est une des limitations des librairies de composants CSS comme Bootstrap, et c'est là que les frameworks JavaScript entrent en jeu.
+
+---
+
+## Qu'est-ce qu'un framework JavaScript?
+
+Les frameworks JavaScript sont des bibliothèques qui permettent de créer des applications web **complexes** et **interactives** en utilisant presque exclusivement du JavaScript. Ils offrent des outils pour gérer l'état de l'application, le routage, la communication avec les serveurs, et bien plus encore.
+
+<List paragraph="Voici quelques exemples de frameworks JavaScript populaires :" fragment>
+    <li class="fragment">React</li>
+    <li class="fragment">Angular</li>
+    <li class="fragment">Vue</li>
+    <li class="fragment">Svelte</li>
+</List>
+
+---
+
+## Qu'est-ce qu'un framework JavaScript?
+
+Voici un exemple de composant très simple **SANS** framework :
+
+```html label="index.html"
+<button id="myButton" class="primary-button">
+    Cliquez-moi
+</button>
+```
+
+```css label="style.css"
+.primary-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+```
+
+```js label="script.js"
+const buttonElement = document.getElementById('myButton');
+buttonElement.addEventListener('click', function() {
+    // Code à exécuter lors du clic sur le bouton
+});
+```
+
+---
+
+## Qu'est-ce qu'un framework JavaScript?
+
+Maintenant, voici le même composant, mais construit avec différents frameworks :
+
+```jsx label="React"
+// PrimaryButton.jsx
+import React from 'react';
+
+function MyButton() {
+    function handleClick() {
+        // Code à exécuter lors du clic sur le bouton
+    };
+
+    return (
+        <button className="primary-button" onClick={handleClick}>
+            Cliquez-moi
+        </button>
+    );
+}
+
+// CSS dans un fichier séparé
+```
+
+```html label="Vue"
+<!-- PrimaryButton.vue -->
+<script setup>
+    function handleClick() {
+        // Code à exécuter lors du clic sur le bouton
+    }
+</script>
+
+<template>
+    <button class="primary-button" @click="handleClick">
+        Cliquez-moi
+    </button>
+</template>
+
+<style>
+    .primary-button {
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+```
+
+```html label="Svelte"
+<!-- PrimaryButton.svelte -->
+<script>
+    function handleClick() {
+        // Code à exécuter lors du clic sur le bouton
+    }
+</script>
+
+<button class="primary-button" on:click={handleClick}>
+    Cliquez-moi
+</button>
+
+<style>
+    .primary-button {
+        background-color: blue;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+```
+
+---
+
+## Qu'est-ce qu'un framework JavaScript?
+
+Comme vous pouvez le voir, en utilisant un framework JavaScript, nous pouvons encapsuler la structure, le style et le comportement d'un composant dans un seul fichier. Cela rend le code plus **lisible**, **maintenable** et **réutilisable**.
+
+> Dans une équipe de développement, un développeur va pouvoir créer un composant, et un autre développeur pourra l'utiliser sans avoir à se soucier de son implémentation interne.
+
+> Créer un composant, c'est presque comme créer un **nouvel élément HTML** que vous pouvez utiliser dans votre application.
+
+---
+
+## Qu'est-ce qu'un framework JavaScript?
+
+Les frameworks JavaScript offrent également des fonctionnalités avancées, telles que la gestion de l'état, le routage, la communication avec les serveurs, et bien plus encore. Cela permet aux développeurs de créer des applications web **complexes** et **interactives** plus facilement.
+
+> Nous allons regarder tout cela de plus près plus tard dans la session. Pour l'instant, on va se concentrer sur la création de composants simples et réutilisables.
