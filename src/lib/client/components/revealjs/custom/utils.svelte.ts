@@ -45,6 +45,12 @@ export function initializeSlideLinks() {
  * appended and a warning is logged — pass an explicit `id` for anything that
  * needs to stay stable, since the suffix depends on registration order.
  *
+ * Consecutive slides sharing the same title are treated as one chained
+ * section (no sliding animation between them — see basic-slide.svelte's
+ * `animateId`): only the first one gets a Table of Content entry, so the
+ * chain reads as a single chapter there. Each slide still gets its own
+ * reserved id.
+ *
  * Returns the final id so callers can apply it to the slide's DOM element.
  */
 export function registerInTOC({ page, id }: { page: number; id?: string }): { id: string } {
@@ -57,7 +63,10 @@ export function registerInTOC({ page, id }: { page: number; id?: string }): { id
   const slideId = reserveSlideId(usedIds, id ?? formatToId(section));
 
   const slideLinks = getContext<() => SlideLink[]>(slideLinkSymbol)();
-  slideLinks.push({ title: section, page, id: slideId });
+  const isChainContinuation = slideLinks.at(-1)?.title === section;
+  if (!isChainContinuation) {
+    slideLinks.push({ title: section, page, id: slideId });
+  }
 
   return { id: slideId };
 }
