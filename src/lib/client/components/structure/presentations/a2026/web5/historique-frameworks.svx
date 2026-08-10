@@ -1,0 +1,52 @@
+---
+title: Historique des frameworks JavaScript
+layout: presentation
+---
+
+## Avant les premiers frameworks JS
+
+Avant les frameworks JavaScript, le développement web était principalement basé sur le **DOM** et les **manipulations directes** des éléments HTML. Les développeurs utilisaient des bibliothèques comme **jQuery** pour simplifier ces interactions, mais cela restait limité et souvent difficile à maintenir.
+
+> Il y avait aussi beaucoup de développement côté serveur en utilisant des langages comme PHP et Ruby, où le rendu HTML était généré côté serveur et envoyé au client.
+
+---
+
+## Les premiers frameworks JS
+
+Les premiers frameworks JavaScript, comme **Backbone.js** et **AngularJS** (*Google*), ont été créés pour aider les développeurs à créer des applications web plus complexes et plus maintenables. Ils ont introduit des concepts comme le **MVC** (Modèle-Vue-Contrôleur) et la **liaison de données bidirectionnelle** entre les modèles et les vues.
+
+> Ces frameworks ont permis de structurer le code JavaScript et de faciliter la gestion des états de l'application, mais ils avaient encore des limitations en termes de performance et de flexibilité.
+
+---
+
+## Les premiers frameworks modernes
+
+En 2013, *Facebook* a publié **React**, un framework JavaScript qui a révolutionné le développement web. React a introduit le concept de **composants réutilisables** et un **DOM virtuel** pour améliorer les performances. Cela a permis aux développeurs de créer des interfaces utilisateur plus dynamiques et interactives.
+
+> Un *DOM Virtuel* est une représentation en mémoire du DOM réel. Lorsqu'un changement se produit, React met à jour le DOM virtuel et calcule la manière la plus efficace de mettre à jour le DOM réel, ce qui améliore les performances.
+
+---
+
+## Les frameworks modernes
+
+Suite à l'arrivée de React, d'autres frameworks modernes ont émergé, tels que **Vue.js** et **Angular**. Ces frameworks ont continué d'améliorer la manière dont les applications web sont construites, en introduisant des stratégies différentes pour la gestion de l'état, le routage et la communication avec les serveurs.
+
+> Vers les années 2017, plusieurs nouveaux frameworks étaient publiés par année, chacun avec ses propres avantages et inconvénients. Les développeurs avaient désormais un large choix pour créer des applications web performantes et maintenables.
+
+> Aussi, tous les frameworks ont continué d'améliorer les performances au fil des années, et ce, encore aujourd'hui.
+
+---
+
+## Les frameworks modernes
+
+De nos jours, les frameworks les plus populaires incluent **React**, **Vue.js**, **Angular**, **Svelte** et **Solid**. Chacun de ces frameworks a ses propres caractéristiques et avantages, mais ils partagent tous l'objectif commun de faciliter le développement d'applications web modernes.
+
+> Personnellement, j'ai utilisé **React** lors de mes stages en entreprise et à l'université. Toutefois, dans TOUS mes projets personnels j'utilise **Svelte**, mon framework favori depuis près de 4 ans.
+
+> Dans le cadre du cours, nous allons utiliser **React** puisque c'est le framework le plus populaire et le plus demandé par les entreprises. Cependant, je vous encourage à explorer d'autres frameworks comme **Svelte** ou **Vue**, ils sont également très intéressants et offrent des approches différentes pour construire des applications web.
+
+---
+
+## Les frameworks modernes
+
+![Graphique de l'évolution des frameworks](/img/web5-a2026/historique-frameworks.png)

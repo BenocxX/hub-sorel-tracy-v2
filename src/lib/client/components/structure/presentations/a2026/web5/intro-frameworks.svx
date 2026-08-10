@@ -70,6 +70,8 @@ Les frameworks JavaScript sont des bibliothèques qui permettent de créer des a
     <li class="fragment">Svelte</li>
 </List>
 
+> Il est important de garder en tête que les frameworks JavaScript s'exécutent **côté client**, c'est-à-dire dans le navigateur de l'utilisateur, contrairement aux langages côté serveur comme PHP ou Ruby.
+
 ---
 
 ## Qu'est-ce qu'un framework JavaScript?
