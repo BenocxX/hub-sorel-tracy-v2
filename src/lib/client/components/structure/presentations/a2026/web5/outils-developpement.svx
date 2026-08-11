@@ -4,27 +4,171 @@ layout: presentation
 ---
 
 <script>
-    import { List } from '$lib/client/components/revealjs/custom';
+    import { List, SideBySide } from '$lib/client/components/revealjs/custom';
 </script>
 
-## Environnement d'exécution JavaScript (Runtime Environment)
+## Environnement d'exécution (Runtime Environment)
 
-Pour exécuter du code JavaScript sur notre ordinateur (et non pas seulement dans le navigateur), nous avons besoin d'un **environnement d'exécution JavaScript**. Un environnement d'exécution est un logiciel qui permet d'exécuter du code JavaScript en dehors d'un navigateur web, souvent en faisant usage d'un moteur JavaScript comme **V8** (utilisé par Google Chrome).
+Pour exécuter du code JavaScript sur notre ordinateur (et non pas seulement dans le navigateur), nous avons besoin d'un **environnement d'exécution JavaScript**. Un environnement d'exécution est un outil qui permet d'exécuter du code JavaScript en dehors d'un navigateur web, souvent en faisant usage d'un moteur JavaScript comme **V8** (utilisé par *Google Chrome*) ou encore **JavaScriptCore** (utilisé par *Apple Safari*).
 
-> L'environnement d'exécution le plus populaire est **Node.js**. Toutefois, il existe d'autres environnements d'exécution JavaScript, tels que **Deno** et **Bun**, qui offrent des fonctionnalités différentes et des performances améliorées.
+> L'environnement d'exécution le plus populaire est **NodeJS**. Toutefois, il existe d'autres environnements d'exécution JavaScript, tels que **Deno** et **Bun**, qui offrent des fonctionnalités différentes et des performances améliorées.
 
 > Dans notre cas, nous allons utiliser **Bun** puisque c'est l'environnement d'exécution le plus rapide et le plus moderne.
 
 ---
 
-## Environnement d'exécution JavaScript (Runtime Environment)
+## Environnement d'exécution (Runtime Environment)
 
-Attention! En décembre 2025, Anthropic (la compagnie qui a créé le modèle Claude) ont fait l'acquisition de Bun.
+Attention! En décembre 2025, *Anthropic* (la compagnie qui a créé le modèle *Claude*) ont fait l'acquisition de Bun.
 
 <List fragment paragraph="Voici quelques informations intéressantes à propos de Bun et de son acquisition par Anthropic :">
-    <li class="fragment">Anthropic utilisait déjà Bun pour ses propres applications avant l'acquisition</li>
-    <li class="fragment">Les performances de Bun ont été un atoût important dans la création de Claude Code.</li>
-    <li class="fragment">Tous les développeurs de Bun ont rejoint Anthropic après l'acquisition. Cela garantit une maintenance et un développement continus de Bun.</li>
-    <li class="fragment">Anthropic a confirmé que Bun restera open-source, mais ils semblent prendre beaucoup de décisions sans consulter la communauté. (ex: migration de Zig à Rust)</li>
-    <li class="fragment">Possiblement que Bun prendra une place importante dans l'écosystème IA d'ici quelques années.</li>
+
+> - *Anthropic* **utilisait déjà Bun** pour ses propres applications avant l'acquisition
+
+> - Les **performances de Bun** ont été un atout important dans la création de Claude Code.
+
+> - Tous les développeurs de Bun ont rejoint *Anthropic* après l'acquisition. Cela garantit une **maintenance et un développement continus** de Bun.
+
+> - *Anthropic* a confirmé que Bun restera **open-source**, mais ils semblent prendre beaucoup de décisions sans consulter la communauté. (ex: migration de Zig à Rust)
+
 </List>
+
+---
+
+## Environnement d'exécution (Runtime Environment)
+
+<div class="w-full h-full flex items-center justify-center">
+
+![Logo de Bun](/img/web5-a2026/bun-logo.png)
+
+</div>
+
+---
+
+## Gestionnaire de paquets (Package Manager)
+
+Un gestionnaire de paquets est un outil qui permet de gérer les dépendances d'un projet. Il permet d'installer, de mettre à jour et de supprimer des packages (bibliothèques, frameworks, etc.) nécessaires au fonctionnement de l'application.
+
+> Avec NodeJS, on aurait dû utiliser **npm** (Node Package Manager) ou **yarn**. Cependant, Bun vient avec son propre gestionnaire de paquets intégré.
+
+> Voici la commande pour installer un package dans un projet utilisant Bun :
+
+```bash fragment
+bun install <nom-du-package>
+```
+
+---
+
+## Empaqueteur de modules (Module Bundler)
+
+Un empaqueteur de modules est un outil qui permet de regrouper tous les fichiers JavaScript et leurs dépendances en un seul fichier (ou quelques fichiers) pour être utilisé dans un navigateur web. Cela permet d'optimiser le chargement des ressources et d'améliorer les performances de l'application.
+
+> En gros, au lieu que le navigateur de l'utilisateur télécharge plusieurs fichiers JavaScript, il ne télécharge qu'un seul fichier regroupant tout le code nécessaire. C'est plus rapide et plus efficace.
+
+---
+
+## Empaqueteur de modules (Module Bundler)
+
+Avec NodeJs, nous aurions utilisé l'outil **Vite** qui lui aurait utilisé le bundler **Rollup** pour empaqueter les modules. Cependant, Bun vient avec son propre empaqueteur de modules intégré. Nous n'avons donc pas besoin d'utiliser un outil externe pour empaqueter nos modules.
+
+> Pour utiliser le bundler de Bun, il suffit d'exécuter la commande suivante dans le terminal :
+
+```bash fragment
+bun build <nom-du-fichier.(js|ts|jsx|tsx)>
+```
+
+---
+
+## Système de test (Testing Framework)
+
+Un système de test est un outil qui permet d'écrire et d'exécuter des tests automatisés pour vérifier que le code fonctionne correctement. Il permet de détecter les erreurs et les bugs avant que l'application ne soit déployée en production.
+
+> Vous avez fait des tests en Java et possiblement en d'autres langages. Il est aussi possible de faire des tests en JavaScript. Normalement, avec NodeJS, on aurait utilisé la librairie **ViteTest** pour faire des tests unitaires et d'intégration. Cependant, Bun vient avec son propre système de test intégré.
+
+---
+
+## Système de test (Testing Framework)
+
+Pour exécuter les tests avec Bun, il suffit d'exécuter la commande suivante dans le terminal :
+
+```bash fragment
+bun test
+```
+
+> Notez qu'il faut d'abord créer un fichier de test avec l'extension `.test.js` ou `.test.ts` pour que Bun puisse le détecter et l'exécuter.
+
+---
+
+## Typescript
+
+Évidemment, nous allons utiliser **TypeScript** tout au long de la session. Vous ne devriez jamais écrire du code JavaScript pur. Avec NodeJS, nous aurions dû installer TypeScript avec la commande `npm install typescript`. Cependant, Bun vient avec TypeScript intégré. Nous n'avons donc pas besoin d'installer TypeScript séparément!
+
+---
+
+## Framework JavaScript
+
+<SideBySide>
+
+<div class="space-y-8 w-full lg:w-2/3">
+
+Pour notre framework JavaScript, nous allons utiliser **React**. Pour votre projet personnel que vous devrez faire plus tard dans la session, vous pourrez utiliser le framework de votre choix (Angular, Svelte, Vue, Solid, etc.). 
+
+> Cependant, pour tout ce qui est des cours et des évaluations, nous utiliserons que **React**. Il est important de bien comprendre **React** avant d'essayer d'apprendre un autre framework JavaScript.
+
+> De plus, **React** est le framework JavaScript **le plus populaire**, mais aussi **le plus difficile**. Une fois que vous comprenez **React**, il sera beaucoup plus facile d'apprendre un autre framework JavaScript. 
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Logo de React](/img/web5-a2026/react-logo.png)
+
+</div>
+
+</SideBySide>
+
+---
+
+## Meta-framework JavaScript
+
+<SideBySide>
+
+<div class="space-y-8 w-full lg:w-2/3">
+
+Plus tard dans la session, nous allons utiliser un **meta-framework JavaScript** appelé **Tanstack Start**. Un meta-framework est un framework qui est construit sur un autre framework. Dans notre cas, **Tanstack Start** est construit sur **React**.
+
+> Le but d'un meta-framework est d'ajouter des fonctionnalités backend à un framework frontend. Par exemple, **Tanstack Start** permet de créer des applications web complètes avec **React** sans avoir à configurer un serveur backend séparé.
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Logo de Tanstack](/img/web5-a2026/tanstack-logo.png)
+
+</div>
+
+</SideBySide>
+
+---
+
+## Librairie CSS
+
+<SideBySide>
+
+<div class="space-y-8">
+
+Pour notre CSS, nous allons utiliser **TailwindCSS**. C'est une librairie CSS qui permet de créer des interfaces utilisateur rapidement et facilement en utilisant des classes utilitaires.
+
+> À noter que **Tailwind** est un outil assez controversé. Certains développeurs l'adorent, d'autres le détestent. 
+
+> Je suis un grand fan de **Tailwind** et les IAs sont très bonnes à l'utilisation de cette librairie. C'est donc pour ces raisons que nous allons utiliser **Tailwind**. Plus tard dans la session, un cours complet sera dédié à **Tailwind**!
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Logo de Tailwind](/img/web5-a2026/tailwind-logo.png)
+
+</div>
+
+</SideBySide>

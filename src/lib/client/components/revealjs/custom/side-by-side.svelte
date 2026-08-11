@@ -15,7 +15,12 @@
 </script>
 
 <div
-  class={cn('flex gap-16', equal && '*:flex-1', reverse && 'flex-row-reverse', className)}
+  class={cn(
+    'flex flex-col gap-16 lg:flex-row',
+    equal && '*:flex-1',
+    reverse && 'flex-col-reverse lg:flex-row-reverse',
+    className
+  )}
   {...props}
 >
   {@render children()}
