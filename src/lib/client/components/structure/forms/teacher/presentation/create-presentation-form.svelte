@@ -21,6 +21,8 @@
 
   const { data }: Props = $props();
 
+  console.log(data);
+
   const form = superForm(data, { validators: zodClient(createPresentationSchema) });
 
   const { form: formData, delayed, enhance } = form;
@@ -97,6 +99,7 @@
       bind:value={$formData.componentId}
       label="ID du composant"
       emptyValue="Sélectionner un ID de composant..."
+      defaultSearch=""
     >
       {#snippet itemDisplay(item)}
         {item.id}

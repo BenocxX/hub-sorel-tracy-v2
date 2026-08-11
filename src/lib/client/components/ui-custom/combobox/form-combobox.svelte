@@ -12,6 +12,7 @@
     items: T[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value?: any;
+    defaultSearch?: string;
     label: string;
     emptyValue: string;
     contentClass?: string;
@@ -30,6 +31,7 @@
   let {
     items,
     value = $bindable(),
+    defaultSearch = '',
     label,
     emptyValue,
     contentClass,
@@ -82,6 +84,7 @@
         autofocus
         placeholder="Rechercher..."
         class="h-9 placeholder:text-foreground-discreet"
+        value={defaultSearch}
       />
       <Command.Empty>Aucun résultat...</Command.Empty>
       <div class="max-h-[300px] overflow-y-auto">
