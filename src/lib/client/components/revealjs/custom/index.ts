@@ -12,6 +12,7 @@ import Image from './image.svelte';
 import QuoteBlock from './quote-block.svelte';
 import SideBySide from './side-by-side.svelte';
 import Columns from './columns.svelte';
+import DesignBlock from './design-block.svelte';
 import { setSlideSection, type SlideSectionProps } from './utils.svelte';
 import { registerInTOC } from './utils.svelte';
 
@@ -30,6 +31,7 @@ export {
   QuoteBlock,
   SideBySide,
   Columns,
+  DesignBlock,
   setSlideSection,
   registerInTOC,
   type SlideSectionProps,
