@@ -1,0 +1,219 @@
+---
+title: Structure et espacement
+layout: presentation
+---
+
+<script>
+    import { DesignBlock } from "$lib/client/components/revealjs/custom";
+</script>
+
+## Commencer avec trop d'espacement
+
+En général, il est recommandé de commencer un design en **utilisant trop d'espacement**. Cela permet de créer un design plus aéré et de mieux visualiser les éléments. Ensuite, vous pouvez ajuster l'espacement en fonction des besoins du projet.
+
+> Il est plus **facile de réduire l'espacement** que d'en ajouter!
+
+---
+
+## Commencer avec trop d'espacement
+
+![Trop peu d'espacement](/img/conception-interfaces-a2026/structure-et-espacement/1-not-enough-space.png)
+
+---
+
+## Commencer avec trop d'espacement
+
+![Espacement suffisant](/img/conception-interfaces-a2026/structure-et-espacement/1-enough-space.png)
+
+---
+
+## Commencer avec trop d'espacement
+
+Pourquoi est-ce mieux d'enlever de l'espacement que d'en ajouter? 
+
+> Il est pourtant facile d'ajouter de l'espacement jusqu'à ce que le design soit correct. Non?
+
+---
+
+## Commencer avec trop d'espacement
+
+![Trop peu d'espacement](/img/conception-interfaces-a2026/structure-et-espacement/2-not-enough-space.png)
+
+> Ici, il y a trop peu d'espacement. Tout est **trop serré** et le design semble **étouffé**.
+
+---
+
+## Commencer avec trop d'espacement
+
+![Presque assez d'espacement](/img/conception-interfaces-a2026/structure-et-espacement/2-almost-enough-space.png)
+
+> On a ajouté un peu d'espacement, mais ce n'est pas encore suffisant. <span class="fragment">Le problème avec l'ajout d'espacement, c'est que l'on ne sait jamais **quand s'arrêter**. Il est facile de penser avoir ajouté assez d'espacement, mais en réalité, il en faut encore plus. C'est pourquoi il est **préférable de commencer avec trop d'espacement et de réduire progressivement**.</span>
+
+---
+
+## Commencer avec trop d'espacement
+
+![Trop d'espacement](/img/conception-interfaces-a2026/structure-et-espacement/2-too-much-space.png)
+
+---
+
+## Commencer avec trop d'espacement
+
+![Assez d'espacement](/img/conception-interfaces-a2026/structure-et-espacement/2-enough-space.png)
+
+---
+
+## Commencer avec trop d'espacement
+
+Avec cette stratégie, on peut avoir **peur** de se retrouver avec **trop d'espacement**, mais ce qui paraît être trop d'espacement, est **en réalité juste assez** lorsqu'on regarde l'élément dans l'ensemble de la page!
+
+> Toutefois, il est important de **ne pas exagérer**. Il faut trouver un équilibre entre l'espacement et la densité des éléments pour que le design soit agréable à regarder et facile à utiliser.
+
+> Aussi, certains interfaces, comme des tableaux de données, nécessitent un espacement plus réduit pour permettre à l'utilisateur de visualiser plus d'informations à la fois.
+
+---
+
+## Déterminer un système d'espacement
+
+Choisir manuellement l'espacement entre les éléments peut être long et difficile. Il est donc recommandé de **déterminer un système d'espacement** pour l'ensemble du projet. Cela permet de créer une cohérence visuelle et de faciliter la création de nouvelles pages, sections et éléments.
+
+> Un système d'espacement représente les différentes valeurs d'espacement utilisées dans le design, ainsi que les règles pour les appliquer. 
+
+---
+
+## Déterminer un système d'espacement
+
+![Espacement manuel](/img/conception-interfaces-a2026/structure-et-espacement/3-manual-spacing.png)
+
+---
+
+## Déterminer un système d'espacement
+
+Dans l'exemple précédent, comment faire pour savoir si 21px est suffisant ou si 22px serait mieux? De si petits ajustements peuvent être difficiles à déterminer, surtout si l'on n'a pas de référence. 
+
+> L'utilisation d'un système d'espacement permet de **déterminer rapidement** si l'espacement est suffisant ou non, et **d'essayer différentes valeurs** rapidement pour trouver la meilleure option.
+
+---
+
+## Déterminer un système d'espacement
+
+![Boutons avec 4px d'espacement de différence](/img/conception-interfaces-a2026/structure-et-espacement/3-buttons-4px-sizing.png)
+
+---
+
+## Déterminer un système d'espacement
+
+Dans l'exemple précédent, on utilise un système qui offre 4px de différence entre chaque valeur d'espacement. Si l'espacement semble trop petit, on peut rapidement passer à la prochaine valeur pour voir si elle est meilleure. Chaque option est **pré-déterminée**, soit 0px, 4px, 8px, 12px, 16px et etc.
+
+> Toutefois, pensez-vous qu'un augmentation de 4px à 8px est visuellement autant impactant qu'un augmentation de 200px è 204px? <span class="fragment">**Non, ce n'est pas le cas**. L'augmentation de 4px à 8px a un impact visuel beaucoup plus grand que l'augmentation de 200px à 204px.</span>
+
+> Plus les tailles sont grandes, moins l'impact visuel est important. 
+
+---
+
+## Déterminer un système d'espacement
+
+![Faible impact sur grande taille](/img/conception-interfaces-a2026/structure-et-espacement/3-large-size-small-difference.png)
+
+---
+
+## Déterminer un système d'espacement
+
+C'est pourquoi il est recommandé d'utiliser un système d'espacement **non linéaire** pour les grandes tailles, par exemple: 
+
+
+![Système d'espacement non-lineaire](/img/conception-interfaces-a2026/structure-et-espacement/3-linear-spacing.png)
+
+---
+
+## Déterminer un système d'espacement
+
+Je vous déconseille d'inventer votre propre système d'espacement.
+
+> Personnellement, j'utilise le système fournit par [TailwindCSS](https://tailwindcss.com/). 
+
+> Voici un lien vers leur charte d'espacement: [https://v3.tailwindcss.com/docs/customizing-spacing#default-spacing-scale](https://v3.tailwindcss.com/docs/customizing-spacing#default-spacing-scale)
+
+---
+
+## Déterminer un système d'espacement
+
+![Espacement manuel](/img/conception-interfaces-a2026/structure-et-espacement/3-manual-spacing.png)
+
+---
+
+## Déterminer un système d'espacement
+
+![Espacement avec un système](/img/conception-interfaces-a2026/structure-et-espacement/3-using-spacing-system.png)
+
+---
+
+## Pas besoin de remplir tout l'écran
+
+Il peut sembler logique de remplir l'entièreté de l'écran, mais c'est **rarement nécessaire**. Il est souvent **préférable de laisser des espaces vides sur les côtés** de l'écran pour créer un design plus aéré et agréable à regarder.
+
+> Si vous avez besoin de seulement 500px pour votre formulaire et que l'écran est de 1920px, il est une bonne idée d'appliquer un `max-width` de 500px à votre formulaire et de le centrer sur l'écran. Cela permet de créer un design **plus équilibré** et de **mieux guider l'utilisateur vers l'élément principal**.
+
+---
+
+## Pas besoin de remplir tout l'écran
+
+![Écran entièrement remplie](/img/conception-interfaces-a2026/structure-et-espacement/4-full-screen-width.png)
+
+---
+
+## Pas besoin de remplir tout l'écran
+
+![Écran avec des marges vides](/img/conception-interfaces-a2026/structure-et-espacement/4-empty-margin.png)
+
+---
+
+## Pas besoin de remplir tout l'écran
+
+Cette stratégie s'applique **particulièrement bien** aux formulaires d'authentification.
+
+> Notez qu'il est aussi possible d'appliquer de l'espacement sur le côté **seulement pour la section qui en a de besoin**, et de **laisser les autres sections** de la page **occuper l'entièreté de l'écran**.
+
+---
+
+## Pas besoin de remplir tout l'écran
+
+![Formulaire d'authentification centré](/img/conception-interfaces-a2026/structure-et-espacement/4-login-form.png)
+
+---
+
+## Éviter les espacements ambiguës
+
+Lorsque les éléments sont visuellement **séparés par une bordure**, il est **facile de comprendre les regroupements**. Cependant, lorsque les éléments sont **séparés uniquement par de l'espacement**, il peut être **difficile de comprendre quel élément est associé à quel autre**.
+
+> Lorsque vous utilisez de l'espacement pour diviser des groupes d'éléments, il est important de **s'assurer que l'espacement est suffisant** pour que les utilisateurs puissent **comprendre facilement les regroupements**.
+
+---
+
+## Éviter les espacements ambiguës
+
+![Formulaire avec espacement ambigu](/img/conception-interfaces-a2026/structure-et-espacement/5-ambiguous-spacing-form.png)
+
+---
+
+## Éviter les espacements ambiguës
+
+![Formulaire avec espacement non-ambigu](/img/conception-interfaces-a2026/structure-et-espacement/5-not-ambiguous-spacing-form.png)
+
+---
+
+## Éviter les espacements ambiguës
+
+![Article avec espacement ambigu](/img/conception-interfaces-a2026/structure-et-espacement/5-ambiguous-article.png)
+
+---
+
+## Éviter les espacements ambiguës
+
+![Liste avec espacement ambigu](/img/conception-interfaces-a2026/structure-et-espacement/5-ambiguous-list.png)
+
+---
+
+## Éviter les espacements ambiguës
+
+![Icônes avec espacement ambigu](/img/conception-interfaces-a2026/structure-et-espacement/5-ambiguous-icons.png)
