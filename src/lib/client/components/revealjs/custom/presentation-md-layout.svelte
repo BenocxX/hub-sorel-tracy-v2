@@ -14,6 +14,7 @@
   export { default as QuoteBlock } from './quote-block.svelte';
   export { default as SideBySide } from './side-by-side.svelte';
   export { default as Columns } from './columns.svelte';
+  export { default as OutsideLink } from '$lib/client/components/utils/outside-link.svelte';
 </script>
 
 <script lang="ts">

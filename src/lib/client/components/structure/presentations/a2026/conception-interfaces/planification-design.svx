@@ -1,0 +1,185 @@
+---
+title: Planification d'un design
+layout: presentation
+---
+
+<script>
+    import { List, SideBySide } from "$lib/client/components/revealjs/custom";
+</script>
+
+## Choisir une personnalité
+
+Avant de commencer à concevoir un design, il est important de **choisir une personnalité** pour le projet. Cette personnalité guidera les choix esthétiques et fonctionnels tout au long du processus de conception.
+
+<List paragraph="Voici quelques exemples de personnalités que vous pourriez choisir pour votre projet :" fragment>
+
+> - Sérieux et professionnel
+
+> - Amusant et ludique
+
+> - Minimaliste et épuré
+
+> - Coloré et vibrant
+
+> - N'importe quelle autre personnalité qui correspond à votre projet...
+
+> - ... ou encore même un mix de plusieurs personnalités!
+
+</List>
+
+---
+
+## Choisir une personnalité
+
+Comment choisir une personnalité pour votre projet? Il est important de prendre en compte le public cible, les objectifs du projet et l'image que vous souhaitez véhiculer. Vous pouvez également vous inspirer de projets similaires ou de tendances actuelles dans le design.
+
+> Un public cible jeune et dynamique pourrait apprécier un design **coloré et vibrant**, tandis qu'un public professionnel pourrait préférer un design **sérieux et épuré**, ou encore une marque de luxe pourrait opter pour un design **minimaliste et élégant**.
+
+> Lorsqu'on travail avec un client et/ou un designer, il faut voir avec eux quelle personnalité ils souhaitent pour le projet, et s'assurer que cette personnalité est cohérente avec l'image de marque et les objectifs du projet.
+
+---
+
+## Choisir une personnalité
+
+<List paragraph="Voici une liste de sites web qui utilisent différents styles de design et de personnalités :">
+
+> - [Apple](https://www.apple.com/) : Minimaliste et épuré
+
+> - [Hibou Design](https://www.hiboudesignco.com/en) : Sérieux, épuré et structuré
+
+> - [Bernice Bakery](https://bernicebakery.com/) : Amusant, coloré et "glissant"
+
+> - [Banque Desjardins](https://www.desjardins.com/qc/fr.html) : Sérieux, minimaliste et professionnel
+
+> - [Louis Vuitton](https://ca.louisvuitton.com/eng-ca/homepage) : Minimaliste, élégant et épuré
+
+> - [Clair Obscure](https://www.expedition33.com/) : Sérieux, stylisé et "texturé"
+
+> - [Colosse](https://www.colosse.ca/) : Original, coloré et vibrant
+
+</List>
+
+---
+
+## Choisir une personnalité
+
+<List paragraph="Plusieurs éléments de design peuvent influencer la personnalité d'un projet :">
+
+> - La palette de couleurs
+
+> - La police d'écriture
+
+> - Les formes et le niveau d'arrondi des éléments
+
+> - Le style des illustrations et des images
+
+> - Le ton et le style du contenu textuel
+
+</List>
+
+---
+
+## Choisir une personnalité
+
+<SideBySide>
+
+<div class="space-y-8">
+
+Plus les couleurs sont vives et saturées, plus le design sera perçu comme **amusant et ludique**. Des couleurs plus sobres et neutres donneront un aspect **sérieux et professionnel**.
+
+> L'utilisation de gradients et de textures dans les couleurs peut également jouer sur la *vibe* du design.
+
+> Plus tard dans la session, nous verrons comment choisir une palette de couleurs cohérente.
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Design de gâteau Smores](/img/conception-interfaces-a2026/smores-cookie-design.png)
+
+</div>
+
+</SideBySide>
+
+
+---
+
+## Choisir une personnalité
+
+<SideBySide reverse>
+
+<div class="space-y-8">
+
+La police d'écriture peut également influencer la personnalité d'un projet. Des polices avec des empattements (serif) peuvent donner un aspect **traditionnel et sérieux**, tandis que des polices sans empattements (sans-serif) peuvent donner un aspect **moderne et épuré**.
+
+> Nous allons voir plus en détail comment choisir une police d'écriture cohérente avec la personnalité du projet plus tard dans la session.
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Police d'écriture de l'agence Hibou](/img/conception-interfaces-a2026/hibou-font.png)
+
+</div>
+
+</SideBySide>
+
+---
+
+## Choisir une personnalité
+
+<SideBySide>
+
+<div class="space-y-8">
+
+Les formes et le niveau d'arrondi des éléments vont aussi impacter grandement la personnalité du projet. Des formes angulaires et des coins pointus peuvent donner un aspect **sérieux et rigide**, tandis que des formes arrondies et douces peuvent donner un aspect **accueillant et amical**.
+
+> Souvent, les designers utilisent des formes arrondies pour les projets destinés à un public jeune ou familial, et des formes plus angulaires pour des projets professionnels ou techniques.
+
+> Tout comme pour les couleurs et les polices, nous allons voir plus en détail comment choisir des formes et des niveaux d'arrondi cohérents avec la personnalité du projet plus tard dans la session.
+
+</div>
+
+<div class="hidden lg:flex">
+
+![Louis Vuitton arrondissements](/img/conception-interfaces-a2026/louis-vuitton-corners.png)
+
+</div>
+
+</SideBySide>
+
+---
+
+## Comment commencer un design
+
+Pour commencer un design, il est conseillé de débuter par **une fonctionnalité** de notre projet. Par exemple, si nous concevons un site web de vente en ligne, nous pourrions commencer par l'affichage de plusieurs produits sur la page d'accueil. Nous pourrions également commencer par la page de contact, ou encore par la page d'accueil du site web.
+
+> Il est **déconseillé de commencer par la barre de navigation ou le footer**, car ces éléments sont souvent présents sur toutes les pages du site web et ne sont pas spécifiques à une fonctionnalité particulière. Il est difficile de donner un style original à ces éléments, car ils doivent rester cohérents avec le reste du site web.
+
+---
+
+## Comment commencer un design
+
+La première étape devrait toujours être de définir la **structure de la page** que nous voulons concevoir. Où seront les éléments principaux? Comment seront-ils disposés? Quels éléments seront mis en avant? Il est important de réfléchir à la hiérarchie visuelle et à l'expérience utilisateur dès le départ.
+
+> Ensuite, on peut réfléchir aux détails et aux couleurs, mais il est important de ne pas se laisser emporter par les détails avant d'avoir une structure solide. Il est conseillé de créer la structure en utilisant que des formes simples et des couleurs blanche/noire/grise pour éviter les distractions.
+
+> Aussi, éviter de concevoir des sous-fonctionnalités niches avant d'avoir confirmé que les utilisateurs en ont réellement besoin. Il est préférable de se concentrer sur les fonctionnalités principales et de s'assurer qu'elles sont bien conçues avant de passer aux détails.
+
+---
+
+## Comment commencer un design
+
+![Mockup en noir et blanc](/img/conception-interfaces-a2026/grey-mockup.png)
+
+---
+
+## Limiter les choix
+
+Une fois la personnalité et la structure définies, il est important de **limiter les choix** pour éviter de se perdre dans les détails. Trop de choix peuvent rendre le design incohérent et difficile à comprendre pour l'utilisateur.
+
+> Par exemple, est-ce mieux un espacement de `20px` ou de `22px`? Est-ce mieux la couleur `#FF5733` ou `#FF5734`? Est-ce mieux une police de `16px` ou `17px`?
+
+> Souvent, les designers vont concevoir un **système de design** pour le projet, qui inclut des règles et des composants réutilisables. Cela permet de limiter les choix et de garder une cohérence dans le design.
+
+> Plus tard dans la session, nous allons voir plus en détail comment limiter les choix.

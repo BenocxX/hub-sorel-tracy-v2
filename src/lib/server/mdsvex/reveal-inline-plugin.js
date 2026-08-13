@@ -95,7 +95,7 @@ function serializeInline(nodes) {
         case 'emphasis':
           return `<Components.Italic>${serializeInline(node.children)}</Components.Italic>`;
         case 'link':
-          return `<a href="${node.url}" target="_blank" rel="noopener noreferrer">${serializeInline(node.children)}</a>`;
+          return `<Components.OutsideLink href="${escapeAttr(node.url)}" rel="noopener noreferrer">${serializeInline(node.children)}</Components.OutsideLink>`;
         case 'break':
           return '<br />';
         default:
