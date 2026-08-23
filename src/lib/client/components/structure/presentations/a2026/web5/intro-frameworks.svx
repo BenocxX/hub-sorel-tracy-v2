@@ -186,11 +186,3 @@ Comme vous pouvez le voir, en utilisant un framework JavaScript, nous pouvons en
 > Dans une équipe de développement, un développeur va pouvoir créer un composant, et un autre développeur pourra l'utiliser sans avoir à se soucier de son implémentation interne.
 
 > Créer un composant, c'est presque comme créer un **nouvel élément HTML** que vous pouvez utiliser dans votre application.
-
----
-
-## Qu'est-ce qu'un framework JavaScript?
-
-Les frameworks JavaScript offrent également des fonctionnalités avancées, telles que la gestion de l'état, le routage, la communication avec les serveurs, et bien plus encore. Cela permet aux développeurs de créer des applications web **complexes** et **interactives** plus facilement.
-
-> Nous allons regarder tout cela de plus près plus tard dans la session. Pour l'instant, on va se concentrer sur la création de composants simples et réutilisables.

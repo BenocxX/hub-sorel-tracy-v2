@@ -103,6 +103,8 @@ bun test
 
 Évidemment, nous allons utiliser **TypeScript** tout au long de la session. Vous ne devriez jamais écrire du code JavaScript pur. Avec NodeJS, nous aurions dû installer TypeScript avec la commande `npm install typescript`. Cependant, Bun vient avec TypeScript intégré. Nous n'avons donc pas besoin d'installer TypeScript séparément!
 
+> Toutefois, il est **recommandé de quand même installer TypeScript** en tant que dépendance de développement dans votre projet, afin d'avoir accès à la dernière version de TypeScript et de s'assurer que n'importe quel développeur ou serveur qui utilise votre projet ait la même version de TypeScript.
+
 ---
 
 ## Framework JavaScript
@@ -111,11 +113,9 @@ bun test
 
 <div class="space-y-8 w-full lg:w-2/3">
 
-Pour notre framework JavaScript, nous allons utiliser **React**. Pour votre projet personnel que vous devrez faire plus tard dans la session, vous pourrez utiliser le framework de votre choix (Angular, Svelte, Vue, Solid, etc.). 
+Pour notre framework JavaScript, nous allons utiliser **React**. **React** est le framework JavaScript **le plus populaire**, mais aussi **le plus difficile**. Une fois que vous comprenez **React**, il sera beaucoup plus facile d'apprendre un autre framework JavaScript.
 
-> Cependant, pour tout ce qui est des cours et des évaluations, nous utiliserons que **React**. Il est important de bien comprendre **React** avant d'essayer d'apprendre un autre framework JavaScript.
-
-> De plus, **React** est le framework JavaScript **le plus populaire**, mais aussi **le plus difficile**. Une fois que vous comprenez **React**, il sera beaucoup plus facile d'apprendre un autre framework JavaScript. 
+De plus, les intelligences artificielles sont très bonnes pour générer du code React, ce qui est un avantage considérable lorsqu'on travaille avec des agents..
 
 </div>
 
