@@ -1,0 +1,184 @@
+---
+title: L'importance de la hiérarchie
+layout: presentation
+---
+
+<script>
+    import { List } from "$lib/client/components/revealjs/custom";
+</script>
+
+## Les éléments ne sont pas tous égaux
+
+Dans une interface complexe, il y a **plusieurs sections et éléments** qui ont tous une **importance différente**. Certaines informations sont primordiales et doivent être mises en avant, tandis que d'autres sont secondaires et peuvent être moins visibles. 
+
+> Lorsque les éléments se battent pour attirer l'attention de l'utilisateur, l'interface devient **confuse et difficile à utiliser**.
+
+> Il est donc crucial de **hiérarchiser les éléments** pour guider l'utilisateur à travers l'interface.
+
+---
+
+## Les éléments ne sont pas tous égaux
+
+![Interface avec mauvaise hiérarchie](/img/conception-interfaces-a2026/importance-hierarchie/1-interface-no-hierarchy.png)
+
+---
+
+## Les éléments ne sont pas tous égaux
+
+![Interface avec bonne hiérarchie](/img/conception-interfaces-a2026/importance-hierarchie/1-interface-with-hierarchy.png)
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+Il peut sembler évident de **modifier la taille de police** de certains textes pour les rendre plus visibles, mais ce n'est souvent pas suffisant.
+
+> La taille d'une police est un bon moyen de modifier la hiérarchie des informations, mais il faut aussi utiliser la lourdeur, la couleur et l'espacement du texte pour créer une hiérarchie claire.
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+![Problème de hiérarchie lorsqu'on modifie seulement la taille des textes](/img/conception-interfaces-a2026/importance-hierarchie/2-size-problems.png)
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+![Mettre en gras les textes primaires](/img/conception-interfaces-a2026/importance-hierarchie/2-bold-primary-elements.png)
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+![Mettre en couleur plus douce les textes secondaires](/img/conception-interfaces-a2026/importance-hierarchie/2-lighter-secondary-elements.png)
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+![Problèmes de hiérarchie résolus](/img/conception-interfaces-a2026/importance-hierarchie/2-problems-solved.png)
+
+---
+
+## Modifier la taille n'est pas suffisant
+
+En résumé, essayez d'utiliser **deux à trois couleurs différentes** pour vos textes:
+
+> - Une couleur **sombre** pour les **textes primaires**
+> - Une couleur **grise** pour les **textes secondaires**
+> - Une couleur **grise-pâle** pour les **textes tertiaires**
+
+> De même, essayer d'utiliser **deux lourdeurs de polices différentes** pour vos textes:
+
+> - Une **lourdeur normale** pour la **majorité des textes** (400-500)
+> - Une **lourdeur plus lourde** pour les **textes ayant besoin d'emphase** (600-700)
+
+> **Évitez les lourdeurs plus petites que 400**, car elles sont difficiles à lire et ne sont pas accessibles pour les personnes ayant des déficiences visuelles.
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+Utilisez une couleur grise permet de réduire l'emphase d'un texte, mais il est important de **ne pas utiliser de gris sur des fonds colorés**. Cela peut rendre le texte difficile à lire et nuire à l'accessibilité de votre interface.
+
+> Pourquoi? <span class="fragment">Parce que le **contraste entre le texte et le fond est trop faible**.</span>
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+![Texte gris sur fond coloré](/img/conception-interfaces-a2026/importance-hierarchie/3-grey-text-colored-bg.png)
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+Pour réduire l'emphase tout en gardant l'accessibilité, on va vouloir **rapprocher la couleur du texte à celle du fond**, mais pas trop.
+
+> On pourrait penser à simplement changer l'opacité du texte afin qu'il se rapproche de la couleur du fond, mais cela ne fonctionne pas toujours...
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+![Texte avec faible opacité sur un fond de couleur](/img/conception-interfaces-a2026/importance-hierarchie/3-opacity-flat.png)
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+![Texte avec faible opacité sur un fond de couleur avec texture](/img/conception-interfaces-a2026/importance-hierarchie/3-opacity-textured.png)
+
+> Comme vous pouvez le voir, lorsque le fond est texturé ou a des motifs, le texte peut devenir **difficile à lire**. De plus, il est parfois possible de **voir les motifs à travers le texte**, ce qui peut créer un effet visuel **désagréable et peu professionnel**.
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+La solution est tout simplement de choisir une nouvelle couleur pour le texte. Pour se faire, choisissez une couleur avec le même **teinte** (*hue*) que le fond, mais avec une **saturation et luminosité différentes**. 
+
+> Cela permet de garder un contraste suffisant pour que le texte soit lisible, tout en réduisant l'emphase du texte.
+
+---
+
+## N'utilisez pas de textes gris sur des fonds colorés
+
+![Texte avec une couleur adaptée](/img/conception-interfaces-a2026/importance-hierarchie/3-new-color.png)
+
+> Avant de choisir une toute nouvelle couleur, n'hésitez pas à **tester les couleurs déjà disponible dans votre système de design**. Notamment lorsque vous utilisez un framework CSS comme Tailwind, il est possible que vous ayez déjà une couleur qui fonctionne pour votre texte.
+
+---
+
+## Mettre de l'emphase en enlevant de l'emphase
+
+Parfois, l'élément sur lequel vous voulez mettre l'emphase ne parvient pas a assez attirer l'attention des utilisateurs. Dans ces cas, **soit on augmente encore plus l'emphase** si possible, **soit on réduit l'emphase des éléments voisins**.
+
+![Navbar avec problème d'emphase](/img/conception-interfaces-a2026/importance-hierarchie/4-navbar-no-emphasis.png)
+
+---
+
+## Mettre de l'emphase en enlevant de l'emphase
+
+Ici, on a choisi de **réduire l'emphase des liens de navigation** excepté celui de la page actuelle. Ainsi, il est clair pour l'utilisateur que le lien ayant l'emphase est celui de la page sur laquelle il se trouve.
+
+![Navbar avec emphase](/img/conception-interfaces-a2026/importance-hierarchie/4-navbar-with-emphasis.png)
+
+---
+
+## Mettre de l'emphase en enlevant de l'emphase
+
+Vous pouvez **appliquer cette même stratégie sur pleins d'autres éléments** de votre interface. Par exemple, si vous avez une *sidebar* qui attire trop l'attention, vous pouvez réduire son emphase au lieu d'augmenter l'emphase de l'élément que vous voulez mettre en avant.
+
+![Sidebar avant versus après modification de l'emphase](/img/conception-interfaces-a2026/importance-hierarchie/4-sidebar-emphasis.png)
+
+---
+
+## Utiliser les labels en dernier recours
+
+Les labels sont **essentiels pour faire des formulaires** accessibles. Toutefois, il faut faire attention à **ne pas utiliser des labels pour présenter des informations** à nos utilisateurs.
+
+![Information accompagnée de labels](/img/conception-interfaces-a2026/importance-hierarchie/5-info-with-labels.png)
+
+> Cette utilisation des labels **nuit à la hiérarchie** de l'information et **rend l'application d'emphase plus difficile**.
+
+---
+
+## Utiliser les labels en dernier recours
+
+Dans la majorité des cas, il est **possible de déterminer ce que représente une information simplement par son contexte**, sans avoir besoin d'un label. 
+
+<List fragment paragraph="Par exemple, il est facile de déterminer les informations suivantes sans labels:">
+    <li class="fragment">bob@gmail.com</li>
+    <li class="fragment">+1 (234) 567-8901</li>
+    <li class="fragment">Un bouton avec une icône de poubelle</li>
+    <li class="fragment">Etc...</li>
+</List>
+
+---
+
+## Utiliser les labels en dernier recours
+
+![Information sans labels](/img/conception-interfaces-a2026/importance-hierarchie/5-info-without-labels.png)
+
+> Sans utiliser de labels, il est plus facile de mettre de l'emphase sur une information en particulier et de comprendre les différentes informations. Ça rend l'interface plus facile à comprendre et ça la rend plus jolie!
