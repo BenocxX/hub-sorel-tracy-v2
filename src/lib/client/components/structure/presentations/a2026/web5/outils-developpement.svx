@@ -83,7 +83,7 @@ bun build <nom-du-fichier.(js|ts|jsx|tsx)>
 
 Un système de test est un outil qui permet d'écrire et d'exécuter des tests automatisés pour vérifier que le code fonctionne correctement. Il permet de détecter les erreurs et les bugs avant que l'application ne soit déployée en production.
 
-> Vous avez fait des tests en Java et possiblement en d'autres langages. Il est aussi possible de faire des tests en JavaScript. Normalement, avec NodeJS, on aurait utilisé la librairie **ViteTest** pour faire des tests unitaires et d'intégration. Cependant, Bun vient avec son propre système de test intégré.
+> Vous avez fait des tests en Java et possiblement en d'autres langages. Il est aussi possible de faire des tests en JavaScript. Normalement, avec NodeJS, on aurait utilisé la librairie **Vitest** pour faire des tests unitaires et d'intégration. Cependant, Bun vient avec son propre système de test intégré.
 
 ---
 
