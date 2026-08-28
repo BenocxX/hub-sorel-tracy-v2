@@ -180,6 +180,8 @@ function parseMeta(meta) {
  * - other `code` nodes         → <Components.CodeBlock> html nodes
  *   - with bare `fragment` in meta → fragment={true} prop
  *   - `fileName="..."` / `lines="..."` meta forwarded as props
+ *   - a following ```<lang> demo` block → its raw body is injected verbatim
+ *     as the CodeBlock's children (powers the "Démo" dialog button)
  * - Consecutive labeled `code` → <Components.MultiCodeBlock> html node
  * - `paragraph` nodes          → <p> html nodes with inline replacements
  *   - a paragraph containing only an image → <Components.Image> html node
@@ -238,6 +240,16 @@ function walkNodes(nodes) {
       while (j < nodes.length && nodes[j].type === 'code') {
         const n = nodes[j];
         const meta = parseMeta(n.meta);
+
+        // ```<lang> demo → not its own CodeBlock. Its raw body becomes the
+        // "Démo" dialog content of the immediately preceding code block,
+        // injected verbatim as child markup (same as hand-written children).
+        if (meta.demo === true && group.length > 0) {
+          group[group.length - 1].demo = n.value;
+          j++;
+          continue;
+        }
+
         group.push({
           lang: mapLang(n.lang),
           label: meta.label,
@@ -245,11 +257,14 @@ function walkNodes(nodes) {
           lines: meta.lines,
           code: n.value,
           fragment: meta.fragment === true,
+          demo: undefined,
         });
         j++;
       }
 
-      const allHaveLabels = group.length > 1 && group.every((g) => g.label !== undefined);
+      const allHaveLabels =
+        group.length > 1 &&
+        group.every((g) => g.label !== undefined && g.demo === undefined);
 
       if (allHaveLabels) {
         // Multiple labeled blocks → MultiCodeBlock with tabs
@@ -272,9 +287,13 @@ function walkNodes(nodes) {
           const fileNameProp = g.fileName ? ` fileName="${g.fileName}"` : '';
           const linesProp = g.lines ? ` lines="${g.lines}"` : '';
           const codeProp = ` code={${JSON.stringify(g.code)}}`;
+          const openTag = `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${fileNameProp}${linesProp}${codeProp}`;
           result.push({
             type: 'html',
-            value: `<Components.CodeBlock${langProp}${labelProp}${fragmentProp}${fileNameProp}${linesProp}${codeProp} />`,
+            value:
+              g.demo !== undefined
+                ? `${openTag}>${g.demo}</Components.CodeBlock>`
+                : `${openTag} />`,
             generated: true,
           });
         }

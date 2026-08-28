@@ -3,23 +3,6 @@ title: Introduction aux composants React
 layout: presentation
 ---
 
-<script>
-    import { List, CodeBlock } from '$lib/client/components/revealjs/custom';
-
-    const code1 = `function HelloWorld() {
-    return <h1>Hello World!</h1>;
-}
-
-export function App() {
-  return (
-    <div>
-      <HelloWorld />
-      <p>Un paragraph normal</p>
-    </div>
-  );
-}`
-</script>
-
 ## Création d'un nouveau projet React
 
 Pour créer un nouveau projet React avec Bun, nous pouvons utiliser la commande suivante:
@@ -77,14 +60,7 @@ Pour utiliser notre nouveau composant, il suffit de l'utiliser comme une balise 
 
 ## Creation d'un composant React
 
-<CodeBlock code={code1} lines="1-3,8" label="App.tsx">
-    <div>
-        <h1>Hello World!</h1>
-        <p>Un paragraph normal</p>
-    </div>
-</CodeBlock>
-
-```tsx lines="1-3,8" label="App.tsx"
+```tsx lines="1-3,8" fileName="App.tsx"
 function HelloWorld() {
     return <h1>Hello World!</h1>;
 }
@@ -98,6 +74,12 @@ export function App() {
   );
 }
 ```
+```html demo
+<div>
+    <h1>Hello World!</h1>
+    <p>Un paragraph normal</p>
+</div>
+```
 
 ---
 
@@ -105,7 +87,7 @@ export function App() {
 
 Ici, notre composant se trouve dans le même fichier que notre composant `App`. Cependant, il est **recommandé de créer un fichier séparé pour chaque composant**. Par exemple, on pourrait créer un fichier `HelloWorld.tsx` avec le code suivant:
 
-```tsx label="HelloWorld.tsx"
+```tsx fileName="HelloWorld.tsx"
 export function HelloWorld() {
     return <h1>Hello World!</h1>;
 }
@@ -117,7 +99,7 @@ export function HelloWorld() {
 
 Il est essentiel d'exporter le composant si on veut l'utiliser dans un autre fichier. Pour l'importer dans le fichier `App.tsx`, on peut utiliser la syntaxe suivante:
 
-```tsx label="App.tsx"
+```tsx fileName="App.tsx"
 import { HelloWorld } from './HelloWorld';
 ```
 
@@ -127,9 +109,12 @@ import { HelloWorld } from './HelloWorld';
 
 Pour utiliser une **variable JavaScript** dans le **JSX** d'un composant React, il suffit de l'entourer avec des **accolades** `{}`. Par exemple, pour afficher une variable `name` dans notre composant `HelloWorld`, on peut écrire le code suivant:
 
-```tsx label="HelloWorld.tsx"
+```tsx fileName="HelloWorld.tsx"
 export function HelloWorld() {
     const name = "John";
     return <h1>Hello {name}!</h1>;
 }
+```
+```html demo
+<h1>Hello John!</h1>
 ```
