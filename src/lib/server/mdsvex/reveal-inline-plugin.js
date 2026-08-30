@@ -183,6 +183,7 @@ function parseMeta(meta) {
  *   - a following ```<lang> demo` block → its raw body is injected verbatim
  *     as the CodeBlock's children (powers the "Démo" dialog button)
  * - Consecutive labeled `code` → <Components.MultiCodeBlock> html node
+ *   (a trailing ```<lang> demo` block applies to the whole tabbed set)
  * - `paragraph` nodes          → <p> html nodes with inline replacements
  *   - a paragraph containing only an image → <Components.Image> html node
  * - `list` nodes               → <Components.List> html nodes
@@ -262,9 +263,12 @@ function walkNodes(nodes) {
         j++;
       }
 
-      const allHaveLabels =
-        group.length > 1 &&
-        group.every((g) => g.label !== undefined && g.demo === undefined);
+      const allHaveLabels = group.length > 1 && group.every((g) => g.label !== undefined);
+
+      // A ```<lang> demo block attaches to whichever code block precedes it;
+      // for a tabbed MultiCodeBlock the demo applies to the whole set, so
+      // take the first one found.
+      const demo = group.map((g) => g.demo).find((d) => d !== undefined);
 
       if (allHaveLabels) {
         // Multiple labeled blocks → MultiCodeBlock with tabs
@@ -273,9 +277,13 @@ function walkNodes(nodes) {
           label: g.label,
           code: g.code,
         }));
+        const openTag = `<Components.MultiCodeBlock codes={${JSON.stringify(codes)}}`;
         result.push({
           type: 'html',
-          value: `<Components.MultiCodeBlock codes={${JSON.stringify(codes)}} />`,
+          value:
+            demo !== undefined
+              ? `${openTag}>${demo}</Components.MultiCodeBlock>`
+              : `${openTag} />`,
           generated: true,
         });
       } else {

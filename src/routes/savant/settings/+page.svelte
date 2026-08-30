@@ -115,7 +115,7 @@
       {/if}
     </div>
   </div>
-  <div class="py-12">
+  <div class="border-b py-12">
     <div>
       <h2 class="font-semibold">Clés d'accès (passkeys)</h2>
       <p class="mt-1 text-sm/6 text-foreground-discreet">

@@ -118,3 +118,273 @@ export function HelloWorld() {
 ```html demo
 <h1>Hello John!</h1>
 ```
+
+---
+
+## Utilisation de conditions dans le JSX
+
+Il est possible d'utiliser des **conditions** dans le **JSX** afin d'afficher du contenu différent selon certaines paramètres. Par exemple, pour afficher un message différent selon la valeur d'une variable `isAdmin`, on peut écrire le code suivant:
+
+```tsx fileName="HelloWorld.tsx"
+export function HelloWorld() {
+    const isAdmin = true;
+
+    let role;
+    if (isAdmin) {
+        role = <em>admin</em>;
+    } else {
+        role = <em>user</em>;
+    }
+
+    return <h1>Bienvenue sur notre site! Role: {role}</h1>;
+}
+```
+```html demo
+<h1>Bienvenue sur notre site! Role: <em>admin</em></h1>
+```
+
+---
+
+## Utilisation de conditions dans le JSX
+
+On peut aussi écrire les conditions avec un **opérateur ternaire** `?`, ce qui est plus concis:
+
+```tsx fileName="HelloWorld.tsx"
+export function HelloWorld() {
+    const isAdmin = true;
+
+    return (
+        <h1>
+            Bienvenue sur notre site! Role: {isAdmin ? <em>admin</em> : <em>user</em>}
+        </h1>
+    );
+}
+```
+```html demo
+<h1>Bienvenue sur notre site! Role: <em>admin</em></h1>
+```
+
+---
+
+## Utilisation de conditions dans le JSX
+
+On peut aussi utiliser un **opérateur logique** `&&` pour afficher du contenu seulement si une condition est vraie.
+
+```tsx fileName="HelloWorld.tsx"
+export function HelloWorld() {
+    const isAdmin = true;
+
+    return (
+        <h1>
+            Bienvenue sur notre site! {isAdmin && <span>Vous êtes un <em>admin</em></span>}
+        </h1>
+    );
+}
+```
+```html demo
+<h1>Bienvenue sur notre site! <span>Vous êtes un <em>admin</em></span></h1>
+```
+
+---
+
+## Utilisation de boucles dans le JSX
+
+Lorsqu'on travaille avec des **listes de données**, il est souvent nécessaire d'utiliser une **boucle** pour afficher chaque élément de la liste. En React, on peut utiliser la méthode `.map()` pour créer un nouveau tableau d'éléments JSX à partir d'un tableau de données:
+
+```tsx fileName="FruitList.tsx"
+export function FruitList() {
+    const fruits = ["Pomme", "Banane", "Orange"];
+
+    const fruitElements = fruits.map((fruit, index) => (
+        <li key={index}>{fruit}</li>
+    ));
+
+    return (
+        <div>
+            <h2>Liste de fruits:</h2>
+            <ul>
+                {fruitElements}
+            </ul>
+        </div>
+    );
+}
+```
+```html demo
+<div>
+    <h2>Liste de fruits:</h2>
+    <ul class="list-disc list-inside">
+        <li>Pomme</li>
+        <li>Banane</li>
+        <li>Orange</li>
+    </ul>
+</div>
+```
+
+---
+
+## Utilisation de boucles dans le JSX
+
+Nous pouvons aussi directement utiliser la méthode `.map()` dans le JSX sans créer de variable intermédiaire:
+
+```tsx fileName="FruitList.tsx"
+export function FruitList() {
+    const fruits = ["Pomme", "Banane", "Orange"];
+
+    return (
+        <div>
+            <h2>Liste de fruits:</h2>
+            <ul>
+                {fruits.map((fruit, index) => (
+                    <li key={index}>{fruit}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+```
+```html demo
+<div>
+    <h2>Liste de fruits:</h2>
+    <ul class="list-disc list-inside">
+        <li>Pomme</li>
+        <li>Banane</li>
+        <li>Orange</li>
+    </ul>
+</div>
+```
+
+---
+
+## Utilisation de boucles dans le JSX
+
+Ensuite, rien nous empêche de combiner les **conditions** et les **boucles** dans le JSX.
+
+```tsx fileName="FruitList.tsx"
+export function FruitList() {
+    const fruits = ["Pomme", "Banane", "Orange"];
+    const showFruits = false;
+
+    return (
+        <div>
+            <h2>Liste de fruits:</h2>
+            {showFruits ? (
+                <ul>
+                    {fruits.map((fruit, index) => (
+                        <li key={index}>{fruit}</li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Aucun fruit à afficher.</p>
+            )}
+        </div>
+    );
+}
+```
+```html demo
+<div>
+    <h2>Liste de fruits:</h2>
+    <p>Aucun fruit à afficher.</p>
+</div>
+```
+
+---
+
+## Fournir des données à un composant React
+
+Il est possible de **fournir des données à un composant React** en utilisant les **props** (*propriétés*). Les *props* sont des **paramètres** que l'on peut passer à la fonction d'un composant pour le personnaliser. 
+
+```tsx label="FruitList.tsx"
+type FruitListProps {
+    label: string;
+    fruits: string[];
+}
+
+export function FruitList({ label, fruits }: FruitListProps) {
+    return (
+        <div>
+            <h2>{label}</h2>
+            <ul>
+                {fruits.map((fruit, index) => (
+                    <li key={index}>{fruit}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+```
+```tsx label="App.tsx"
+import { FruitList } from './FruitList';
+
+export function App() {
+    const fruits = ["Fraise", "Framboise", "Bleuet", "Cerises"];
+
+    return (
+        <div>
+            <FruitList label="Petits fruits" fruits={fruits} />
+        </div>
+    );
+}
+```
+```html demo
+<div>
+    <h2>Petits fruits:</h2>
+    <ul class="list-disc list-inside">
+        <li>Fraise</li>
+        <li>Framboise</li>
+        <li>Bleuet</li>
+        <li>Cerises</li>
+    </ul>
+</div>
+```
+
+---
+
+## Fournir des données à un composant React
+
+Il est aussi possible de **fournir un enfant** à un composant React en utilisant le *prop* spécial `children`. Ce *prop* contient tout le **contenu qui se trouve entre les balises ouvrantes et fermantes du composant**. 
+
+```tsx label="FruitList.tsx"
+type FruitListProps {
+    fruits: string[];
+    children?: React.ReactNode;
+}
+
+export function FruitList({ fruits, children }: FruitListProps) {
+    return (
+        <div>
+            {children}
+            <ul>
+                {fruits.map((fruit, index) => (
+                    <li key={index}>{fruit}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+```
+```tsx label="App.tsx"
+import { FruitList } from './FruitList';
+
+export function App() {
+    const fruits = ["Fraise", "Framboise", "Bleuet", "Cerises"];
+
+    return (
+        <div>
+            <FruitList fruits={fruits}>
+                <p>Petits fruits:</p>
+            </FruitList>
+        </div>
+    );
+}
+```
+```html demo
+<div>
+    <p>Petits fruits:</p>
+    <ul class="list-disc list-inside">
+        <li>Fraise</li>
+        <li>Framboise</li>
+        <li>Bleuet</li>
+        <li>Cerises</li>
+    </ul>
+</div>
+```
