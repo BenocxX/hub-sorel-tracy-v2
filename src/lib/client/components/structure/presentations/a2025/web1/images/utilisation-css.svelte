@@ -16,8 +16,9 @@
   setSlideSection(section);
   registerInTOC({ page: 10 });
 
+  // Needs to be smaller than 400px to avoid the image being cut off in the code block demo dialog
   const gameOfThroneImage =
-    'https://images.justwatch.com/poster/297859466/s166/game-of-thrones.webp';
+    'https://i.pinimg.com/474x/3a/1c/ce/3a1cce7747265a9d386d5e1eebb3483f.jpg';
 </script>
 
 <BasicSlide>
