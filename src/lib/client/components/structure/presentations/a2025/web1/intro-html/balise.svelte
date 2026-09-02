@@ -141,8 +141,8 @@
         <annee>2024</annee>
     </jeu>
     <jeu>
-        <titre>Battlefield 6</titre>
-        <annee>2025</annee>
+        <titre>Deadlock</titre>
+        <annee>2026</annee>
     </jeu>
 </steam>`}
   />

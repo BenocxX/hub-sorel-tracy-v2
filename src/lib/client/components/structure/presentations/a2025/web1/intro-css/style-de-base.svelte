@@ -33,5 +33,8 @@
     <li>
       Quel pourrait être le style pour la balise <InlineCodeBlock>del</InlineCodeBlock>?
     </li>
+    <li>
+      Quel pourrait être le style pour la balise <InlineCodeBlock>p</InlineCodeBlock>?
+    </li>
   </List>
 </BasicSlide>

@@ -319,7 +319,7 @@
   ]}
 >
   <p>
-    La balise <InlineCodeBlock>h1</InlineCodeBlock> jusqu'à <InlineCodeBlock>h6</InlineCodeBlock> permettent
+    Les balises <InlineCodeBlock>h1</InlineCodeBlock> jusqu'à <InlineCodeBlock>h6</InlineCodeBlock> permettent
     de définir un titre (heading) dans le document.
   </p>
   <p class="fragment">
