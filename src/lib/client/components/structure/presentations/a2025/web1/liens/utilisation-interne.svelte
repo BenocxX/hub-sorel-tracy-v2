@@ -54,11 +54,13 @@
     codes={[
       {
         language: 'HTML',
-        code: `<!-- Lien vers une page dans le même répertoire que le fichier actuel -->
+        code: `<!-- Nous sommes présentement sur la page "page1.html" du dossier "pages" -->
+
+<!-- Lien vers une page dans le même répertoire que le fichier actuel -->
 <a href="./page2.html">Mon premier lien</a>
 
 <!-- Lien vers une page dans un répertoire enfant -->
-<a href="./page3.html">Mon deuxième lien</a>
+<a href="./sous-pages/page3.html">Mon deuxième lien</a>
 
 <!-- Lien vers une page dans un répertoire parent -->
 <a href="../index.html">Mon troisième lien</a>`,
@@ -68,8 +70,10 @@
         label: 'Structure des fichiers',
         code: `index.html
 pages/
+    page1.html
     page2.html
-    page3.html`,
+    sous-pages/
+        page3.html`,
       },
     ]}
   />

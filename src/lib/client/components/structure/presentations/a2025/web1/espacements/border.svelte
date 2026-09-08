@@ -87,7 +87,7 @@
 <BasicSlide>
   <p>
     Vous pouvez également définir la <Bold>border</Bold> de manière plus concise en utilisant la propriété
-    <InlineCodeBlock>border</InlineCodeBlock> avec 1, 2, 3 ou 4 valeurs.
+    <InlineCodeBlock>border</InlineCodeBlock> avec 1, 2 ou 3 valeurs.
   </p>
   <MultiCodeBlock
     codes={[

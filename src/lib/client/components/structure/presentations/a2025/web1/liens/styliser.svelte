@@ -141,7 +141,7 @@ a:hover {
 }
 
 /* Liens sélectionnés */
-a:selected {
+a:focus-visible {
     color: pink;
 }`}
   >
