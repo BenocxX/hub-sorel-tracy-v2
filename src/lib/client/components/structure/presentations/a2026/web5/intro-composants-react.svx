@@ -3,6 +3,10 @@ title: Introduction aux composants React
 layout: presentation
 ---
 
+<script lang="ts">
+    import { Button } from '$lib/client/components/ui/button';
+</script>
+
 ## Création d'un nouveau projet React
 
 Pour créer un nouveau projet React avec Bun, nous pouvons utiliser la commande suivante:
@@ -386,5 +390,143 @@ export function App() {
         <li>Bleuet</li>
         <li>Cerises</li>
     </ul>
+</div>
+```
+
+---
+
+## Utiliser un event listener
+
+En JavaScript, on peut utiliser `element.addEventListener()` pour écouter les événements sur un élément du DOM. Cela permet de réagir aux interactions de l'utilisateur, comme les clics, les mouvements de souris, ou la saisie au clavier.
+
+> Dans React, il est **fortement déconseillé de manipuler le DOM directement**. Il est préférable d'utiliser les fonctionnalités de React.
+
+---
+
+## Utiliser un event listener
+
+Pour écouter les événements, on peut **utiliser les props d'événements sur les composants**. Par exemple, pour écouter un clic sur un bouton, on peut utiliser le prop `onClick`.
+
+```tsx label="MyButton.tsx"
+function MyButton() {
+    function handleClick() {
+        console.log('Bouton cliqué');
+    }
+
+    return (
+        <button onClick={handleClick}>Cliquez</button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton />
+        </div>
+    );
+}
+```
+```svelte demo
+<div class="flex gap-2">
+    <Button onclick={() => console.log('Bouton cliqué')}>Cliquez</Button>
+</div>
+```
+
+---
+
+## Utiliser un event listener
+
+Il est possible d'utiliser une fonction anonyme directement dans le prop d'événement:
+
+```tsx label="MyButton.tsx"
+function MyButton() {
+    return (
+        <button onClick={() => console.log('Bouton cliqué')}>Cliquez</button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton />
+        </div>
+    );
+}
+```
+```svelte demo
+<div class="flex gap-2">
+    <Button onclick={() => console.log('Bouton cliqué')}>Cliquez</Button>
+</div>
+```
+
+---
+
+## Utiliser un event listener
+
+Vous pouvez utiliser les props du composant à l'intérieur de la fonction de gestion d'événement:
+
+```tsx label="MyButton.tsx"
+function MyButton({ label }: { label: string }) {
+    function handleClick() {
+        console.log(`Bouton ${label} cliqué`);
+    }
+
+    return (
+        <button onClick={handleClick}>Bouton {label}</button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton label="A" />
+            <MyButton label="B" />
+        </div>
+    );
+}
+```
+```svelte demo
+<div class="flex gap-2">
+    <Button onclick={() => console.log('Bouton A cliqué')}>Bouton A</Button>
+    <Button onclick={() => console.log('Bouton B cliqué')}>Bouton B</Button>
+</div>
+```
+
+---
+
+## Utiliser un event listener
+
+Il est aussi possible de fournir un écouteur d'événement à un composant enfant via les props:
+
+```tsx label="MyButton.tsx"
+type MyButtonProps = {
+    onClick: () => void;
+};
+
+function MyButton({ onClick }: MyButtonProps) {
+    return (
+        <button onClick={onClick}>Cliquez</button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    function handleClick() {
+        console.log('Bouton cliqué');
+    }
+
+    return (
+        <div>
+            <MyButton onClick={handleClick} />
+        </div>
+    );
+}
+```
+```svelte demo
+<div class="flex gap-2">
+    <Button onclick={() => console.log('Bouton cliqué')}>Cliquez</Button>
 </div>
 ```

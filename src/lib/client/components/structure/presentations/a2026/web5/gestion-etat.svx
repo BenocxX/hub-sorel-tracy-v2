@@ -1,0 +1,306 @@
+---
+title: L'état d'un composant
+layout: presentation
+---
+
+<script lang="ts">
+    // L'état réactif vit dans des composants enfants : mdsvex compile ce
+    // fichier avec `{...$$props}` (API legacy), incompatible avec le mode
+    // runes qu'activerait un `$state` ici. Un simple `import` ne l'active pas.
+    import BrokenCounter from './gestion-etat-demos/broken-counter.svelte';
+    import StateCounter from './gestion-etat-demos/state-counter.svelte';
+    import MultiState from './gestion-etat-demos/multi-state.svelte';
+    import ObjectState from './gestion-etat-demos/object-state.svelte';
+    import SharedState from './gestion-etat-demos/shared-state.svelte';
+
+    import { List } from '$lib/client/components/revealjs/custom';
+</script>
+
+## Qu'est-ce que l'état d'un composant ?
+
+L'**état** d'un composant représente **les données qui peuvent changer au fil du temps** et qui **influencent le rendu du composant**. Contrairement aux props, qui sont passées par le parent et sont immuables, l'état est **géré à l'intérieur du composant lui-même**.
+
+> Par exemple, un compteur qui s'incrémente lorsqu'on clique sur un bouton peut être représenté par un état.
+
+---
+
+## Utiliser l'état dans un composant
+
+L'exemple suivant **ne fonctionne pas correctement** car rien indique à React que le composant doit se *re-render* lorsque la valeur de `count` change.
+
+```tsx label="MyButton.tsx"
+function MyButton() {
+    let count = 0;
+
+    function handleClick() {
+        count++;
+        console.log(`Vous avez cliqué ${count} fois`);
+    }
+
+    return (
+        <button onClick={handleClick}>
+            Vous avez cliqué {count} fois
+        </button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton />
+        </div>
+    );
+}
+```
+```svelte demo
+<BrokenCounter />
+```
+
+---
+
+## Utiliser l'état dans un composant
+
+Pour que React sache qu'il doit *re-render* le composant lorsque l'état change, il faut utiliser le **hook `useState`**.
+
+> Qu'est-ce qu'un hook? <span class="fragment">Un hook est une fonction qui permet d'utiliser des fonctionnalités de React dans un composant.</span>
+
+> Que fait le hook `useState`? <span class="fragment">Ce hook va nous donner une variable d'état ainsi qu'une fonction pour la modifier. Il est primordial d'utiliser la fonction de mise à jour pour modifier l'état, sinon le composant ne sera pas *re-rendered*.</span>
+
+---
+
+## Utiliser l'état dans un composant
+
+`useState` **prend en paramètre la valeur initiale de l'état** et **retourne un tableau** contenant la valeur actuelle de l'état et une fonction pour la mettre à jour. Il est courant d'utiliser la **destructuration de tableau** pour récupérer ces deux valeurs.
+
+```tsx
+import { useState } from 'react';
+
+function MyComponent() {
+    const [state, setState] = useState(initialValue);
+
+    // ...
+}
+```
+
+---
+
+## Utiliser l'état dans un composant
+
+```tsx label="MyButton.tsx"
+import { useState } from 'react';
+
+function MyButton() {
+    const [count, setCount] = useState(0);
+
+    function handleClick() {
+        setCount(count + 1);
+        console.log(`Vous avez cliqué ${count + 1} fois`); // setCount est asynchrone, donc count n'est pas encore mis à jour ici
+    }
+
+    return (
+        <button onClick={handleClick}>
+            Vous avez cliqué {count} fois
+        </button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton />
+        </div>
+    );
+}
+```
+```svelte demo
+<StateCounter />
+```
+
+---
+
+## Utiliser l'état dans un composant
+
+```tsx
+const [count, setCount] = useState(0);
+```
+
+<List listType="ol" fragment>
+<li class="fragment">
+
+**Votre composant fait son *rendu* initial** : `useState(0)` retourne un tableau contenant la valeur initiale de l'état (`0`) et une fonction pour la mettre à jour (`setCount`). 
+
+</li>
+<li class="fragment">
+
+**Modification de l'état** : lorsque la fonction `setCount(count + 1)` est appelée, en réalité c'est la fonction `setCount(1)` (car `count` vaut `0` à ce moment-là) qui est exécutée. Ainsi, React va garder en mémoire la nouvelle valeur de l'état (`1`) et va planifier un *re-render* du composant.
+
+</li>
+<li class="fragment">
+
+**Votre composant est *re-rendered*** : React va exécuter à nouveau la fonction `MyButton`, et cette fois-ci, `useState` retournera le tableau `[count, setCount]` où `count` aura la nouvelle valeur (`1`). Ainsi, la valeur de `count` sera mise à jour à `1`, et le rendu du composant affichera "Vous avez cliqué 1 fois".
+
+</li>
+</List>
+
+--- 
+
+## Plusieurs états dans un même composant
+
+La fonction `useState` peut être appelée plusieurs fois dans un même composant pour gérer différents états. Chaque appel à `useState` est indépendant et gère sa propre valeur d'état.
+
+```tsx label="MyComponent.tsx"
+import { useState } from 'react';
+
+function MyComponent() {
+    const [count, setCount] = useState(0);
+    const [name, setName] = useState('Bob');
+
+    function handleClick() {
+        setCount(count + 1);
+    }
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        setName(event.target.value);
+    }
+
+    return (
+        <div>
+            <button onClick={handleClick}>
+                Vous avez cliqué {count} fois
+            </button>
+            <input type="text" value={name} onChange={handleChange} />
+            <p>Bonjour, {name}!</p>
+        </div>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyComponent />
+        </div>
+    );
+}
+```
+```svelte demo
+<MultiState />
+```
+
+---
+
+## État isolé à un composant
+
+**L'état d'un composant est isolé à ce composant**. Cela signifie que si vous affichez plusieurs instances du même composant, chacune aura son propre état indépendant.
+
+```tsx label="MyButton.tsx"
+function MyButton() {
+    const [count, setCount] = useState(0);
+
+    function handleClick() {
+        setCount(count + 1);
+    }
+
+    return (
+        <button onClick={handleClick}>
+            Vous avez cliqué {count} fois
+        </button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyButton />
+            <MyButton />
+        </div>
+    );
+}
+```
+```svelte demo
+<div class="flex gap-2">
+    <StateCounter isLogging={false} />
+    <StateCounter isLogging={false} />
+</div>
+```
+
+---
+
+## Utilisation d'objets ou de tableaux dans l'état
+
+Il est possible de **passer un objet ou un tableau** à la fonction `useState`. Cependant, il est important de noter que **la mise à jour de l'état remplace complètement la valeur précédente**. Si vous souhaitez mettre à jour une partie d'un objet ou d'un tableau, vous devez créer une nouvelle copie de cet objet ou tableau avec les modifications souhaitées.
+
+```tsx label="MyComponent.tsx"
+function MyComponent() {
+    const [user, setUser] = useState({ name: 'Bob', age: 25 });
+
+    function updateName(newName: string) {
+        // Crée une nouvelle copie de l'objet user avec le nouveau nom
+        setUser({ ...user, name: newName }); 
+    }
+
+    function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+        updateName(e.target.value);
+    }
+
+    return (
+        <div>
+            <p>Nom: {user.name}</p>
+            <p>Âge: {user.age}</p>
+            <input type="text" value={user.name} onChange={onChange} />
+        </div>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    return (
+        <div>
+            <MyComponent />
+        </div>
+    );
+}
+```
+```svelte demo
+<ObjectState />
+```
+
+---
+
+## Partage d'état entre composants
+
+Parfois, plusieurs composants ont **besoin de partager le même état**. Dans ce cas, il est préférable de **remonter l'état au parent** et de le passer aux enfants via les props.
+
+
+```tsx label="MyButton.tsx"
+type MyButtonProps = {
+    count: number;
+    onClick: () => void;
+};
+
+function MyButton({ count, onClick }: MyButtonProps) {
+    return (
+        <button onClick={onClick}>
+            Vous avez cliqué {count} fois
+        </button>
+    );
+}
+```
+```tsx label="App.tsx"
+function App() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <MyButton count={count} onClick={() => setCount(count + 1)} />
+            <MyButton count={count} onClick={() => setCount(count + 1)} />
+        </div>
+    );
+}
+```
+```svelte demo
+<SharedState />
+```

@@ -21,8 +21,6 @@
 
   const { data }: Props = $props();
 
-  console.log(data);
-
   const form = superForm(data, { validators: zodClient(createPresentationSchema) });
 
   const { form: formData, delayed, enhance } = form;
