@@ -1,0 +1,93 @@
+---
+title: Présentation du logiciel Docker
+layout: presentation
+---
+
+## Introduction
+
+Docker est **un logiciel permettant de rapidement et simplement créer et gérer des conteneurs**. Un conteneur est **une machine virtuelle** légère, isolée du système hôte, qui inclut tout le nécessaire pour exécuter une application.
+
+> Pour utiliser Docker, il faut d'abord **installer le logiciel Docker Desktop**, disponible sur https://www.docker.com/products/docker-desktop/. Une fois installé, Docker peut être utilisé via une interface en ligne de commande (CLI) ou une interface graphique (GUI), notamment via les logiciels JetBrains.
+
+---
+
+## Introduction
+
+Dans chaque projet où l'on veut utiliser Docker, on doit créer ce qu'on appelle un `Dockerfile`. **Ce fichier texte contient une série d'instructions** qui définissent l'environnement du conteneur, les dépendances nécessaires, et les commandes à exécuter pour lancer l'application.
+
+> Il est aussi possible d'avoir un fichier `docker-compose.yml` qui permet de **définir et gérer plusieurs conteneurs Docker en même temps**, facilitant ainsi l'orchestration des services.
+
+---
+
+## Introduction
+
+```bash lines="|1|2|3-8|9-11|12|13|14|"
+mon-projet/
+├── node_modules/
+├── docker/
+│   └── services/
+│       ├── nodejs/
+│       │   └── Dockerfile
+│       └── postgres/
+│           └── Dockerfile
+├── src/
+│   ├── client/
+│   └── server/
+├── main.js
+├── package.json
+└── docker-compose.yml
+```
+
+---
+
+## Dockerfile
+
+Dans le cadre du cours, vous allez avoir un `Dockerfile` **NodeJS** mis en place pour vous. Vous ne devriez pas avoir à le modifier, mais il est important de comprendre son fonctionnement.
+
+> Plus tard dans la session, je vais vous fournir un `Dockerfile` pour **PostgreSQL**, celui-ci sera aussi déjà mis en place pour vous.
+
+---
+
+## Dockerfile
+
+Voici le code complet du `Dockerfile` utilisé dans le cadre du cours :
+
+```dockerfile
+FROM node:24-alpine
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
+```
+
+---
+
+## docker-compose.yml
+
+Le fichier `docker-compose.yml` **définit et configure plusieurs conteneurs Docker** pour une application. Toutefois, rien nous empêche de l'utiliser même pour un seul conteneur, comme dans notre cas.
+
+---
+
+## docker-compose.yml
+
+```yaml lines="|2-11|3|4-5|6-8|9-11|"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+```
