@@ -116,7 +116,7 @@ Pour réduire l'emphase tout en gardant l'accessibilité, on va vouloir **rappro
 
 ## N'utilisez pas de textes gris sur des fonds colorés
 
-La solution est tout simplement de choisir une nouvelle couleur pour le texte. Pour se faire, choisissez une couleur avec le même **teinte** (*hue*) que le fond, mais avec une **saturation et luminosité différentes**. 
+La solution est tout simplement de choisir une nouvelle couleur pour le texte. Pour se faire, choisissez une couleur avec la même **teinte** (*hue*) que le fond, mais avec une **saturation et luminosité différentes**. 
 
 > Cela permet de garder un contraste suffisant pour que le texte soit lisible, tout en réduisant l'emphase du texte.
 
@@ -132,7 +132,7 @@ La solution est tout simplement de choisir une nouvelle couleur pour le texte. P
 
 ## Mettre de l'emphase en enlevant de l'emphase
 
-Parfois, l'élément sur lequel vous voulez mettre l'emphase ne parvient pas a assez attirer l'attention des utilisateurs. Dans ces cas, **soit on augmente encore plus l'emphase** si possible, **soit on réduit l'emphase des éléments voisins**.
+Parfois, l'élément sur lequel vous voulez mettre l'emphase ne parvient pas à assez attirer l'attention des utilisateurs. Dans ces cas, **soit on augmente encore plus l'emphase** si possible, **soit on réduit l'emphase des éléments voisins**.
 
 ![Navbar avec problème d'emphase](/img/conception-interfaces-a2026/importance-hierarchie/4-navbar-no-emphasis.png)
 
@@ -182,3 +182,186 @@ Dans la majorité des cas, il est **possible de déterminer ce que représente u
 ![Information sans labels](/img/conception-interfaces-a2026/importance-hierarchie/5-info-without-labels.png)
 
 > Sans utiliser de labels, il est plus facile de mettre de l'emphase sur une information en particulier et de comprendre les différentes informations. Ça rend l'interface plus facile à comprendre et ça la rend plus jolie!
+
+---
+
+## Utiliser les labels en dernier recours
+
+Lorsque vous voulez afficher une information avec un label, il est préférable de **combiner le label et la valeur** dans un seul élément. Cela permet de **réduire l'emphase du label** et de **mettre plus d'emphase sur la valeur**. De plus, il est plus facile de **comprendre l'information** lorsque le label et la valeur sont combinés!
+
+<div class="fragment">
+
+![Labels combinés avec valeurs](/img/conception-interfaces-a2026/importance-hierarchie/6-labels-with-value.png)
+
+</div>
+
+---
+
+## Utiliser les labels en dernier recours
+
+![Labels combinés avec valeurs](/img/conception-interfaces-a2026/importance-hierarchie/6-labels-with-value-2.png)
+
+---
+
+## Utiliser les labels en dernier recours
+
+Parfois, il vous faudra absolument utiliser un label pour une information, et 
+le combiner avec la valeur n'est pas vraiment possible. 
+
+> Dans ces cas, il est préférable de **mettre le label en dessous ou au dessus de la valeur** plutôt qu'à côté. Cela permet de **réduire l'emphase du label** et de **mettre plus d'emphase sur la valeur**.
+
+<div class="fragment">
+
+![Label qui supporte une valeur](/img/conception-interfaces-a2026/importance-hierarchie/6-labels-to-support-value.png)
+
+</div>
+
+---
+
+## Séparer la hiérarchie visuel de la hiérarchie du document
+
+Il est une bonne pratique *HTML* d'utiliser des `h1`, `h2`, `h3`, etc. pour structurer le contenu d'une page. Cela permet aux utilisateurs de **comprendre la structure du document** et de **naviguer facilement** à travers le contenu.
+
+> Cependant, il arrive parfois que l'utilisation d'un `h1` ou d'un `h2` ait lieu pour identifier une section de la page. Sémantiquement, c'est logique, mais en pratique, **la taille de la police de ces titres est souvent trop grande et attire trop l'attention de l'utilisateur**. Cela peut nuire à la hiérarchie visuelle de la page.
+
+---
+
+## Séparer la hiérarchie visuel de la hiérarchie du document
+
+![Titre trop grand](/img/conception-interfaces-a2026/importance-hierarchie/7-too-big-titles.png)
+
+---
+
+## Séparer la hiérarchie visuel de la hiérarchie du document
+
+![Titre de taille correcte](/img/conception-interfaces-a2026/importance-hierarchie/7-correct-size-titles.png)
+
+---
+
+## Séparer la hiérarchie visuel de la hiérarchie du document
+
+Parfois, **le contenu d'une page est assez clair pour qu'il se décrive lui-même**. Dans ces cas, on peut **cacher le titre visuellement, mais le garder dans le HTML** pour conserver **l'accessibilité et le référencement**.
+
+---
+
+## Une balance de poids et contraste
+
+La raison pour laquelle les textes en gras donnent l'impression d'avoir plus d'emphase est que le texte grassit **couvre une plus grande surface, dans le même espace qu'un texte normal**.
+
+![Texte en gras vs texte normal](/img/conception-interfaces-a2026/importance-hierarchie/8-bold-text-visual.png)
+
+---
+
+## Une balance de poids et contraste
+
+Cette information est importante pour comprendre comment bien utiliser des icônes dans une interface. Les **icônes peuvent souvent prendre trop de d'emphase** par rapport aux textes, ce qui peut nuire à la hiérarchie de l'information. Il est donc important de **réduire l'emphase des icônes** pour qu'elles ne prennent pas trop d'attention par rapport aux textes.
+
+> Toutefois, il est impossible de changer le poids d'une icône, car elles ne sont pas du texte. Dans ces cas, il faut réduire leur emphase autrement, par exemple en réduisant leur **contraste** ou leur **taille**.
+
+---
+
+## Une balance de poids et contraste
+
+![Icônes avec trop d'emphase](/img/conception-interfaces-a2026/importance-hierarchie/9-icons-too-much.png)
+
+---
+
+## Une balance de poids et contraste
+
+![Icônes avec juste assez d'emphase](/img/conception-interfaces-a2026/importance-hierarchie/9-icons-just-enough.png)
+
+---
+
+## Une balance de poids et contraste
+
+Cette stratégie de réduire le contraste d'un élément pour réduire son emphase **peut s'appliquer à plusieurs autres éléments de l'interface**.
+
+> Tout comme le contrast nous aide à réduire l'emphase d'un élément, **augmenter le poids d'un élément peut nous aider à augmenter son emphase**.
+
+> Ceci est utile quand, par exemple, une bordure de 1px est **trop fine en utilisant une couleur douce** et à **trop d'emphase en utilisant une couleur foncée**. Dans ces cas, il est **préférable d'augmenter le poids de la bordure en augmentant son épaisseur** ce qui aide à lui donner de l'emphase sans perdre son visuel discret.
+
+---
+
+## Une balance de poids et contraste
+
+![Bordures avec problèmes d'emphase](/img/conception-interfaces-a2026/importance-hierarchie/10-borders-incorrect.png)
+
+---
+
+## Une balance de poids et contraste
+
+![Bordures avec emphase correct](/img/conception-interfaces-a2026/importance-hierarchie/10-borders-correct.png)
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+Lorsqu'on conçoit une interface, il est important de **prioriser la hiérarchie visuelle** sur la sémantique. Cela signifie que **l'apparence et l'emphase des éléments** doivent guider l'utilisateur à travers l'interface, même si cela signifie **s'éloigner légèrement des conventions sémantiques du HTML**.
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+Par exemple, certaines pages vont offrir plusieurs actions à l'utilisateur, il est facile de **tomber dans le piège de designer ces actions en se basant seulement sur leur sémantique**.
+
+![Boutons designés selon leur sémantique](/img/conception-interfaces-a2026/importance-hierarchie/11-buttons-wrong-design.png)
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+Chaque action sur une page se trouve à l'intérieur d'une pyramide d'importance. La majorité des pages ont seulement **une action primaire, quelques actions secondaires et parfois des actions tertiaires**.
+
+<List fragment paragraph="Lorsqu'on design ces actions, il est important de communiquer leur place dans la hiérarchie :">
+
+<li class="fragment">
+
+**Les actions primaires devraient être évidentes.** Solide, fond avec haut contraste, couleur vive, etc.
+
+</li>
+
+<li class="fragment">
+
+**Les actions secondaires devraient être visibles, mais moins évidentes que les actions primaires.** Fond avec contraste moyen, bordure seulement, couleur plus douce, etc.
+
+</li>
+
+<li class="fragment">
+
+**Les actions tertiaires devraient être découvrable, mais pas évidentes.** Styliser ces actions comme des liens fonctionne souvent bien.
+
+</li>
+
+</List>
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+![Boutons bien designés](/img/conception-interfaces-a2026/importance-hierarchie/11-buttons-right-design.png)
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+![Chartes de boutons](/img/conception-interfaces-a2026/importance-hierarchie/11-buttons-charts.png)
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+Certaines actions sont **destructives** et il est important de **communiquer leur dangerosité à l'utilisateur**. Toutefois, ça ne veut pas dire que ces actions doivent toujours être un gros bouton rouge.
+
+> Si une action destructrice **n'est pas l'action principale** de la page, il est **préférable de lui attribuer un style secondaire ou tertiaire**, mais de **l'accompagner d'un avertissement** pour communiquer sa dangerosité.
+
+<div class="fragment">
+
+![Chartes de boutons destructifs](/img/conception-interfaces-a2026/importance-hierarchie/11-destructive-buttons-charts.png)
+
+</div>
+
+---
+
+## Les sémantiques sont secondaires à la hiérarchie visuelle
+
+![Étape de confirmation](/img/conception-interfaces-a2026/importance-hierarchie/11-confirmation-step.png)
