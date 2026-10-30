@@ -1,0 +1,521 @@
+---
+title: Travailler avec des couleurs
+layout: presentation
+---
+
+<script>
+    import { List } from "$lib/client/components/revealjs/custom";
+</script>
+
+## Utiliser le format HSL
+
+En web, il est très commun d'utiliser les formats **Hexadécimal et RGB** pour définir des couleurs. Cependant, **le format HSL** (Hue, Saturation, Lightness) est souvent plus **intuitif** pour travailler avec des couleurs.
+
+> Les formats Hex et RGB représentent des **couleurs similaires avec des codes totalement différents**:
+
+<div class="fragment">
+
+![Hexadecial codes](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8nOFsywakMcivN5B8OY7VPQhRIE9o0xFz3rtg)
+
+</div>
+
+---
+
+## Utiliser le format HSL
+
+Le format HSL est **plus intuitif** car il représente les couleurs avec des valeurs logiques pour le cerveau humain, soit **la teinte (Hue), la saturation et la luminosité**.
+
+> La teinte est une position sur la roue des couleurs, c'est ce qui nous **permet d'identifier que deux couleurs sont similaires ou non**.
+
+<div class="fragment">
+
+![HSL codes](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N80nu7bvP3aGwTS4dzeLEnycpfRxDvh71NtJZB)
+
+</div>
+
+---
+
+## Utiliser le format HSL
+
+![La roue des couleurs](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8PfziFAYCWD2FNPSIHnB8Ks3bztOiLrXVYcl1)
+
+---
+
+## Utiliser le format HSL
+
+La saturation représente la **quantité de couleur** dans une teinte. Une **saturation faible (0%) donnera une couleur plus grise**, tandis qu'une **saturation élevée (100%) donnera une couleur plus vive**.
+
+![La saturation](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8SbLLPAsTCuazbXrt5BAOHI20fNP9ycFlDUek)
+
+---
+
+## Utiliser le format HSL
+
+**Sans saturation, la teinte est inutile**. On pourrait changer la position sur la roue des couleurs, mais le **résultat serait toujours gris**.
+
+![Hue différents, 0% saturation](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8LCVquVh9S0N8jO2JMXRGZmrigY4nQAf1Ieps)
+
+---
+
+## Utiliser le format HSL
+
+La luminosité représente la **quantité de lumière** dans la couleur. Une **luminosité faible (0%) donnera une couleur plus sombre**, tandis qu'une **luminosité élevée (100%) donnera une couleur plus claire**. Une luminosité de **50% donnera la couleur la plus pure**.
+
+![La luminosité](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8GsfOeZ29gYAHn1rQ2LBEKRaXqcJ0yxwNd63j)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+Vous avez peut-être déjà vu des [générateurs de palettes de couleurs](https://coolors.co/533a71-6184d8-50c5b7-9cec5b-f0f465) en ligne. Ces outils génèrent 5 à 10 couleurs qui sont sensées être **harmonieuses entre elles**. 
+
+![Palette de couleurs](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N87SrJxluBZxTaukUmXJjCFSMWb5O1VnEGcIqd)
+
+> Cette génération mathématique de couleurs **peut sembler pratique**, mais en réalité, elle n'est **pas suffisante pour créer de jolies interfaces**.
+
+---
+
+## Utilisez beaucoup de couleurs
+
+![Interface utilisant la palette de couleurs générée](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8J9qQnhS5bCG0n3c1XWfexuEiz4OUIJS7YhDm)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+Il est **très difficile de construire une jolie interface avec seulement 5 codes de couleurs**. Pour créer quelque chose de concret, **il faut beaucoup plus de couleurs**.
+
+![Interface avec 17 couleurs](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8uefPi0wYsrjfkWNQz9ZU23dlvqEtC7Onw1uJ)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+Pour construire une bonne palette, il faut **utiliser beaucoup de teintes de gris**. En réalité, une grosse partie de toutes les interfaces que vous utilisez tous les jours sont **construites avec des teintes de gris**. Par exemple, les textes, les fonds, les bordures, les ombres, etc. sont **souvent gris**.
+
+![Différentes teintes de gris dans une interface](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8n97RlsPakMcivN5B8OY7VPQhRIE9o0xFz3rt)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+Vous pourriez penser que 3 à 4 teintes de gris suffisent, mais en réalité, vous voudriez **beaucoup plus de teintes de gris** pour construire une interface.
+
+> En pratique, 8 à 10 teintes de gris sont **souvent nécessaires pour construire une interface**.
+
+> N'oubliez pas que le noir pure et le blanc pure sont **souvent trop contrastés** pour être utilisés dans une interface. Il est préférable d'utiliser des teintes de gris **un peu plus douces**.
+
+> Pour créer une palette de gris, **choisissez une teinte très foncée et augmenter graduellement jusqu'à une teinte très pâle**.
+
+<div class="fragment">
+
+![Palette de gris](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8mzDr3073ctgPGECTaASpINYdzkl5yB49bj2v)
+
+</div>
+
+---
+
+## Utilisez beaucoup de couleurs
+
+La majorité des sites ont besoin de une, voir deux couleurs principales pour **mettre en valeur certains éléments**. Se sont ces couleurs qui vont **attirer l'attention de l'utilisateur** et qui détermine **l'identité visuelle de l'interface**. Par exemple, Facebook utilise le bleu, YouTube utilise le rouge et Twitch utilise le mauve.
+
+> Tout comme pour les teintes de gris, **vous devriez utiliser 5 à 10 teintes claires et foncées** de votre couleur principale pour **créer une palette complète**.
+
+<div class="fragment">
+
+![Palette de la couleur principale](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ivDGDxmfgOD0Y9RJ6P2dBE3zqIAaMLsocNhX)
+
+</div>
+
+---
+
+## Utilisez beaucoup de couleurs
+
+En plus de la couleur principale, la majorité des sites ont besoin d'une couleur d'accentuation pour **mettre en valeur certains éléments**. 
+
+![Palette de la couleur d'accentuation](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N89YpIPlTcDf2qR4auojISAVeZKxTvPY6nBdMr)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+En général, **il faut aussi des couleurs pour représenter les différents états**. 
+
+- **Vert**: pour les succès et les messages de confirmation. Toutes les actions réussies devraient être vertes.
+- **Jaune**: pour les avertissements et les messages d'information. Toutes les actions qui nécessitent une attention particulière devraient être jaunes.
+- **Rouge**: pour les erreurs, les alertes et les messages d'avertissement. Toutes les actions destructives devraient être rouges.
+- **Bleu**: pour les informations et les messages neutres. Toutes les actions qui ne nécessitent pas d'attention particulière devraient être bleues.
+
+---
+
+## Utilisez beaucoup de couleurs
+
+![Palette de la couleur de succès](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N892jjUITcDf2qR4auojISAVeZKxTvPY6nBdMr)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+![Palette de la couleur d'avertissement](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8T78Hc19ibaif5CnIHVgcuwspo4yDAULY7B0r)
+
+---
+
+## Utilisez beaucoup de couleurs
+
+![Palette de la couleur destructives](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Oe0as9IYafOwiUGo1K94ePvT6zycV3NBRunq)
+
+> Dans la majorité des interfaces, il faut pleins de teintes de pleins de couleurs. C'est pour cela que Tailwind CSS vient avec une palette de couleurs complète: [Palette de couleurs de Tailwind](https://tailwindcss.com/docs/colors)
+
+---
+
+## Créer une palette de couleurs
+
+Lors de la planification d'une interface, il est important de **créer une palette de couleurs complète**. Une palette devrait ressembler à ceci:
+
+![Exemple d'une palette de couleurs](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8oqqz3WdAYBnWvFQKdC1X8uralENTV5czHjx6)
+
+---
+
+## Créer une palette de couleurs
+
+Comment faire pour créer une palette de couleurs complète? La première étape devrait être de **choisir une couleur principale**. Cette couleur sera utilisée pour **mettre en valeur certains éléments** et pour **déterminer l'identité visuelle de l'interface**.
+
+> Premièrement, **déterminez la teinte de base de votre couleur principale**, soit la teinte qui influencera les teintes plus foncés et plus claires de votre couleur.
+
+---
+
+## Créer une palette de couleurs
+
+Comment choisir cette couleur? **Il n'y a pas vraiment d'algorithme ou de solution miracle**. Il faut y aller au *feeling*! Toutefois, **votre couleur devrait bien fonctionner comme couleur de fond d'un bouton**.
+
+![Essaies de différentes couleurs comme fond d'un bouton](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8dmLsAyp6cEWrKt0SjyOPwX13Yg5LFoJvuTHQ)
+
+> Il est important de garder en tête qu'**il n'y a pas vraiment de règle ici**. Il faut vraiment y aller au feeling. Aussi, **certaines couleurs devront être plus ou moins saturées/lumineuses** pour bien fonctionner comme couleur de fond d'un bouton.
+
+---
+
+## Créer une palette de couleurs
+
+Une fois que vous avez choisi votre couleur principale, **il faut déterminer la couleur la plus foncée et la couleur la plus claire**.
+
+Encore une fois, il n'y a pas vraiment de règle. Une bonne stratégie est de les imaginées dans un contexte réel. **La couleur foncée devrait être la couleur du texte sur la couleur la plus claire**.
+
+![Un composant alerte permettant d'essayer la couleur foncée et la couleur claire](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8xxr5OSzMcTJYkpm4r0gS89zbAufIeoatEZvC)
+
+> Prenez votre couleur principale et **modifiez la saturation et la luminosité, sans toucher à la teinte**.
+
+---
+
+## Créer une palette de couleurs
+
+Maintenant que vous avez les couleurs extrêmes ainsi que la couleur de base, il faut remplir les couleurs intermédiaires. Je vous conseille de créer un total de **9 couleurs pour votre couleur principale**. 
+
+> Neuf est un nombre pratique, car il est **facile de diviser 9 en 3**. Vous pouvez donc créer **3 couleurs foncées, 3 couleurs intermédiaires et 3 couleurs claires**.
+
+> Dans notre palette, la couleur la plus foncée sera la couleur **900**, alors que la plus pâle sera la couleur **100**. La couleur de base sera la couleur **500**.
+
+<div class="fragment">
+
+![Palette manquante](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8LRsFSHLh9S0N8jO2JMXRGZmrigY4nQAf1Iep)
+
+</div>
+
+---
+
+## Créer une palette de couleurs
+
+Remplissez les couleurs intermédiaires en débutant par **700** et **300**.
+
+<div class="fragment">
+
+![Palette presque remplie](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8TnEr7eibaif5CnIHVgcuwspo4yDAULY7B0r9)
+
+</div>
+
+> Ensuite, remplissez les couleurs **800**, **600**, **400** et **200**.
+
+<div class="fragment">
+
+![Palette remplie](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N89mUy2P8TcDf2qR4auojISAVeZKxTvPY6nBdM)
+
+</div>
+
+> **Ne modifiez jamais la teinte**, seulement la saturation et la luminosité. La teinte est ce qui permet de **reconnaître que deux couleurs sont similaires**.
+
+---
+
+## Créer une palette de couleurs
+
+Le même processus s'applique pour les couleurs grises. Toutefois, la couleur de base (**500**) est moins importante. **Vous pouvez simplement choisir le gris foncé et le gris pâle, puis remplir les couleurs intermédiaires**.
+
+![Palette de couleurs grises](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8qgYBdhW4X3BcCEWU5FKohsTtr2Zb0g6Gvm1j)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Avec le format HSL, plus une couleur s'approche de 0% ou 100% de luminosité, plus l'impact de la saturation est faible. En d'autres mots, **le même niveau de saturation pour une couleur ayant 50% de luminausité paraîtra plus saturée qu'une couleur ayant 90% de luminosité**.
+
+![Graphique saturation vs luminausité](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Mp4h0PuoqNCRS0rD7pw98XUAlmLKZBiGEk4n)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Ça veut dire que, si vous ne voulez pas que les couleurs pâles et foncées paraissent désaturées, **il faut ajuster la saturation en fonction de la luminosité**. Plus la couleur est lumineuse ou sombre, plus il faut augmenter la saturation.
+
+![Graphique saturation vs luminausité](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Y7GeLR5PlYfcoOFjRWKwExez1yq3M2dh4pQZ)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Mais que se passe-t-il si votre couleur de base est déjà très saturée? **Comment est-ce qu'on peut augmenter la saturation si on est déjà au maximum**? Pour trouver la solution, il faut comprendre **comment nos yeux perçoivent les couleurs**.
+
+> Selon vous, laquelle de ces deux couleurs est la plus lumineuse?
+
+<div class="fragment">
+
+![Jaune vs Bleu](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8yq7LSpC3Clb9Zd5yuJXWwDsUofSpLhVYF8ti)
+
+</div>
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+On serait porté à penser que le jaune est plus lumineux que le bleu. En réalité, les deux couleurs avaient le même niveau de luminosité. La différence est que **nos yeux perçoivent le jaune comme étant plus lumineux que le bleu**.
+
+<div class="fragment">
+
+![Jaune vs Bleu](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ggXNKfEnfVYirFR4JDL7tQoBu9Pak2EHd5Kl)
+
+</div>
+
+> Chaque couleur a une **luminosité perçue par nos yeux**. Il est possible de calculer cette luminosité perçue avec la formule suivante:
+
+<div class="fragment">
+
+![Formule pour calculer la luminosité perçue](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N84ICgTfv12BzvwnbtWiN86ZSmfX3oArRdhMTC)
+
+</div>
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Voici la formule appliquée pour différents échantillons de couleurs avec 50% de luminosité et 100% de saturation :
+
+![Charte luminosité perçue vs teinte](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ugpRs2wYsrjfkWNQz9ZU23dlvqEtC7Onw1uJ)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Comme on s'y attendait, **le jaune est plus lumineux que le bleu**. Toutefois, ce qui est intéressant dans ce graphique, c'est que la luminosité perçue ne change pas linéairement. **Il y a des teintes nettement plus lumineuses et d'autres nettement plus sombres**.
+
+> Notamment, il y a trois couleurs plus sombres que leur teintes voisines: **le bleu, le rouge et le vert**. De même, il y a trois couleurs plus lumineuses que leur teintes voisines: **le jaune, le cyan et le magenta**.
+
+> Maintenant, voyons voir comment on peut utiliser cette information pour nos couleurs.
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Normalement, quand vous voulez changer la luminosité d'une couleur, vous allez **augmenter ou diminuer la valeur de luminosité HSL**.
+
+![Modifier la luminosité via le L de HSL](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8VepRQBfUgmquZJt6hsLrONdiC0KSnj9kTHe7)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Cette stratégie fonctionne, mais vous allez souvent **perdre un peu de la saturation de la couleur**. 
+
+<div class="fragment">
+
+![Icône ayant un problème de luminosité perçue](https://ygdyb340rg.ufs.sh/f/lyaaqah9s0n8j4v7dbs5bcg0n3c1xwfexueiz4ouijs7yhdm)
+
+</div>
+
+> Puisque certaines teintes sont perçues comme plus lumineuses que d'autres, **on peut essayer de modifier la teinte (H de HSL) pour compenser la perte de saturation**.
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Pour se faire, **vous pouvez diminuer ou augmenter délicatement la teinte de votre couleur vers le prochain *peak* de luminosité perçue**, souvent vers 60°, 180° ou 300°. Cela va **augmenter la saturation perçue de votre couleur**.
+
+<div class="fragment">
+
+![Modification de la teinte pour augmenter la luminosité perçue](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8UL1zEtXu7FelyqwGMHRKBontPdIrW1OTxAmE)
+
+</div>
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+À l'inverse, pour rendre une couleur plus sombre, vous pouvez **modifier la teinte vers le prochain creux de luminosité perçue**, souvent vers 0°, 120° ou 240°.
+
+![Modification de la teinte pour diminuer la luminosité perçue](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8T75J76Vibaif5CnIHVgcuwspo4yDAULY7B0r)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Cette technique est particulièrement utile pour la création d'une palette de couleurs jaune, cyan ou magenta. Ces couleurs sont **très lumineuses et saturées**, donc il est **souvent nécessaire de modifier la teinte pour les rendre plus sombres**.
+
+![Création d'une palette de jaune](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8wRU7Efth1Pxp7LXA5dit2g4j8uOBJavmRUfc)
+
+---
+
+## Comment bien gérer la luminausité et la saturation
+
+Évidemment, vous pouvez combiner différentes techniques ensemble. Par exemple, vous pouvez **modifier partiellement la luminosité avec le L de HSL, puis modifier un peu la teinte pour changer la luminosité perçue**. 
+
+![Utilisation des deux techniques](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8WPJCz5LX0PtK8kIs6ic9H1Qpf7BvZurjEV3w)
+
+---
+
+## Les gris n'ont pas besoin d'être gris
+
+En théorie, un gris *pure* a une saturation de **0%**. **Il n'y a aucune couleur dans un gris *pure***.
+
+![Différents niveaux de gris pure](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8uPUSeYwYsrjfkWNQz9ZU23dlvqEtC7Onw1uJ)
+
+---
+
+## Les gris n'ont pas besoin d'être gris
+
+Pourtant, en réalité, **la majorité des gris** qu'on voit **on un peu de couleur**. Par exemple, un gris peut être légèrement **bleuté, jaunâtre ou rosé**.
+
+![Interface avec plusieurs gris saturés](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8zWls3LgQEuOIt918XVoiRW7cgSTdLnJebMBj)
+
+> C'est cette saturation qui rend les gris plus *froids* ou plus *chauds*.
+
+---
+
+## Les gris n'ont pas besoin d'être gris
+
+Si vous voulez que vos gris soient plus *froids*, **saturez-les légèrement avec une teinte de bleu**.
+
+![Gris froids](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8dPOhjxp6cEWrKt0SjyOPwX13Yg5LFoJvuTHQ)
+
+---
+
+## Les gris n'ont pas besoin d'être gris
+
+Et pour que vos gris soient plus *chauds*, **saturez-les légèrement avec une teinte de orange ou de jaune**.
+
+![Gris chauds](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8gqITXzUEnfVYirFR4JDL7tQoBu9Pak2EHd5K)
+
+---
+
+## Accessibilité des couleurs
+
+Tous vos textes devraient respecter le ratio de contraste minimum de **4.5:1** pour les textes normaux (< 18px) et **3:1** pour les textes larges.
+
+![Exemple de constraste sur des textes normaux](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Bb2xRuyCUzvcZKkMwme9VLp2lbHNurt0P38x)
+
+---
+
+## Accessibilité des couleurs
+
+Tous vos textes devraient respecter le ratio de contraste minimum de **4.5:1** pour les textes normaux (< 18px) et **3:1** pour les textes larges.
+
+![Exemple de constraste sur des textes larges](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8gqhjpggEnfVYirFR4JDL7tQoBu9Pak2EHd5K)
+
+> Sur des textes foncés sur fond clair, le ratio de contraste est assez facile à atteindre. Par contre, dès qu'on travaille avec des fonds colorés, il devient beaucoup plus difficile de respecter le ratio de contraste minimum.
+
+---
+
+## Accessibilité des couleurs
+
+Par exemple, lorsque vous utilisez des couleurs saturées comme fond, il faut les rendre **très sombres pour que le texte soit lisible**.
+
+![Exemple de texte sur fond coloré avec problème de contraste](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N87xcpqHuBZxTaukUmXJjCFSMWb5O1VnEGcIqd)
+
+---
+
+## Accessibilité des couleurs
+
+La solution est de **diminuer la luminosité de la couleur de fond** pour que le texte soit lisible. Toutefois, cela peut impacter la hiérarchie visuelle de votre interface.
+
+![Exemple de texte sur fond coloré avec problème de hiérarchie](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8VCNvVBfUgmquZJt6hsLrONdiC0KSnj9kTHe7)
+
+---
+
+## Accessibilité des couleurs
+
+Par chance, la solution est assez simple. **Il suffit de *flip* la couleur du fond et celle du texte** afin de régler le problème de contraste sans nuire à la hiérarchie visuelle.
+
+![Exemple de texte foncé sur fond clair](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Ol5LYeIYafOwiUGo1K94ePvT6zycV3NBRunq)
+
+---
+
+## Accessibilité des couleurs
+
+**Cette solution fonctionne moins bien pour des textes colorés sur un fond coloré**. Vous rencontrerez ce problème lorsque vous voudrez mettre un texte secondaire sur un fond coloré.
+
+Simplement ajuster la luminosité et la saturation de la couleur du texte ne suffira pas pour atteindre le ratio de contraste minimum.
+
+<div class="fragment">
+
+![Exemple de texte coloré sur fond coloré](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8u0kC4CuwYsrjfkWNQz9ZU23dlvqEtC7Onw1u)
+
+</div>
+
+---
+
+## Accessibilité des couleurs
+
+Dans cette situation, la solution est de modifier légèrement la teinte de la couleur du texte pour **augmenter la luminosité perçue**. Cela va **augmenter le contraste entre le texte et le fond** sans nuire à la hiérarchie visuelle.
+
+<div class="fragment">
+
+![Exemple de texte coloré sur fond coloré, avec bon contraste et bonne hiérarchie](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8JbZRUS5bCG0n3c1XWfexuEiz4OUIJS7YhDma)
+
+</div>
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+Les couleurs sont un outil très puissant pour communiquer des informations à nos utilisateurs. 
+
+> Toutefois, **il ne faut pas se fier uniquement à la couleur pour communiquer une information**, car certaines personnes sont **daltoniennes** et ne peuvent pas distinguer certaines couleurs.
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+![Exemple de problème pour les daltoniens](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8MJ3lYloqNCRS0rD7pw98XUAlmLKZBiGEk4nO)
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+Une solution facile est d'**accompagner la couleur avec une icône ou un texte**.
+
+![Utilisation d'icônes pour améliorer l'accessibilité](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8136p62OrXfWJ67qUjAPwv4b5G0adCYgFE8xS)
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+Par contre, cette solution ne fonctionne pas toujours. Parfois il est impossible d'ajouter un texte ou une icône pour accompagner la couleur. Dans ce cas, **il vaut mieux utiliser différents niveaux de luminosité pour distinguer les différentes couleurs**.
+
+> Pour les daltoniens, il est plus facile de distinguer les couleurs **en fonction de leur luminosité** que de leur teinte.
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+![Problème dans un graphique](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8XBf7AYkFOlAqbK4MrxvW7ZHIuskoiSGmVJDe)
+
+---
+
+## Ne vous fiez pas uniquement à la couleur
+
+![Solution dans un graphique](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N87twTpXzuBZxTaukUmXJjCFSMWb5O1VnEGcIq)

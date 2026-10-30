@@ -1,0 +1,444 @@
+---
+title: Designer du texte
+layout: presentation
+---
+
+<script>
+    import { List } from "$lib/client/components/revealjs/custom";
+</script>
+
+## Établir une échelle de texte
+
+Tout comme pour l'espacement, il est important d'**établir une échelle de texte** pour votre interface. Ne pas utiliser d'échelle de taille de texte est une mauvaise idée car:
+
+> - Ça rend votre **interface moins cohérente**
+> - Ça **ralentit votre vitesse de développement** car vous devez constamment décider quelle taille de texte devrait être utilisée
+
+---
+
+## Établir une échelle de texte
+
+![Aucune échelle utilisée](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8uPyWhuwYsrjfkWNQz9ZU23dlvqEtC7Onw1uJ)
+
+---
+
+## Établir une échelle de texte
+
+![Échelle utilisée](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8M3WEgSoqNCRS0rD7pw98XUAlmLKZBiGEk4nO)
+
+---
+
+## Établir une échelle de texte
+
+Tout comme pour l'échelle d'espacement, il est pratique d'avoir une **échelle exponentielle**, soit une échelle ayant des sauts de taille plus grands à mesure que la taille de texte augmente. Cela permet d'avoir une **hiérarchie plus claire entre les différents niveaux de texte**.
+
+> Voici une échelle de texte exponentielle que vous pouvez utiliser pour vos interfaces:
+
+---
+
+## Établir une échelle de texte
+
+![Échelle de texte](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8VErNSRfUgmquZJt6hsLrONdiC0KSnj9kTHe7)
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+Il existe des tonnes de polices d'écriture disponible gratuitement. Certaines sont super, d'autres sont mauvaises. Il est important de **choisir une bonne police d'écriture** pour votre interface.
+
+> Toutefois, développer un oeil pour déterminer si une police est bonne ou mauvaise peut **prendre du temps**. Pour vous aider, on va voir quelques trucs et astuces pour vous aider à choisir de bonnes polices d'écriture.
+
+<div class="fragment">
+
+![Liste de polices d'écritures](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8T5jaYEibaif5CnIHVgcuwspo4yDAULY7B0r9)
+
+</div>
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+L'option la plus simple est de **choisir une police de votre système d'exploitation**. Ces polices sont généralement bien conçues et sont optimisées pour l'affichage sur écran.
+
+> Elles ne sont pas très audacieuses ni originales, mais elles sont **fiables et fonctionnelles**.
+
+> - **Segeo UI** (Windows)
+> - **Roboto** (Android)
+> - **Noto Sans** (Android)
+> - **Ubuntu** (Linux)
+> - **Cantarell** (Linux)
+> - **Helvetica Neue** (MacOS)
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+Pour choisir une police plus niche, vous pouvez utiliser des sites web comme [Google Fonts](https://fonts.google.com/). Ces sites vous permettent de **parcourir des centaines de polices d'écriture** et de les tester directement dans votre navigateur.
+
+> De plus, ils vous permettent de **filtrer les polices selon différents critères** comme le style, la popularité, la lisibilité, etc. Ils permettent aussi de **télécharger les polices d'écriture** pour les utiliser dans vos projets, souvent gratuitement.
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+En général, les bonnes polices d'écriture viennent avec **plusieurs différentes lourdeurs**. Le site [Google Fonts](https://fonts.google.com/) vous permet de filtrer les polices selon le nombre de lourdeurs disponibles. 
+
+> Il est préférable de choisir une police avec **au moins une dizaine de styles** (lourdeurs et italique) pour avoir plus de flexibilité dans vos interfaces.
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+![Google Fonts filters](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8dxhXDzap6cEWrKt0SjyOPwX13Yg5LFoJvuTH)
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+La majorité des polices d'écriture sont **conçues avec un cas d'utilisation spécifique en tête**. Certaines polices sont faites pour être utilisées dans des titres, d'autres pour du texte de paragraphe, et d'autres avec des cas plus niches. Il est important de **choisir une police d'écriture qui correspond à votre cas d'utilisation**.
+
+> Les **polices pour des titres** ont tendance à avoir un **espacement plus serré** (`letter-spacing`) et une **hauteur de lettre minuscule plus petite** (`x-height`).
+
+> Alors que les **polices pour du texte de paragraphe** ont souvent un **espacement plus large** et des **lettres minuscules plus grandes** pour améliorer la lisibilité.
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+![Police pour titre vs paragraphe](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8sy7MHETvAQzjLw0if9dO58opZYCIRv4UmrBx)
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+En général, si une police est populaire, c'est qu'elle est **fiable, fonctionnelle, lisible et bien conçue**. Il est donc préférable de **choisir une police populaire** plutôt qu'une police moins connue.
+
+> La majorité des plateformes de polices d'écriture vous permettent de **trier les polices par popularité**. Vous pouvez donc facilement trouver les polices les plus populaires et les utiliser dans vos interfaces.
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+![Google Fonts trier par popularité](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Jv68EQ8S5bCG0n3c1XWfexuEiz4OUIJS7YhD)
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+Évidemment, une bonne stratégie pour choisir une police est de **regarder ce que les autres font**. Avec l'inspecteur, vous pouvez **identifier les polices utilisées sur n'importe quel site web** et les tester dans vos interfaces.
+
+> Toutefois, certaines polices d'écriture sont **payantes** et ne peuvent pas être utilisées dans vos projets. Il est donc important de **vérifier la licence d'utilisation** avant d'utiliser une police d'écriture.
+
+---
+
+## Utiliser de bonnes polices d'écriture
+
+![Trouver une police via l'inspecteur](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ppOjX6rKmhTWGyU72w6ElBQzFe4xdYaLros5)
+
+---
+
+## Garder une longueur de ligne lisible
+
+Lorsque vous écrivez un paragraphe, il peut être tentant de **remplir toute la largeur du conteneur** avec le texte. Toutefois, ça peut **nuire énormément à la lisibilité**. Il est préférable de **limiter la largeur du texte** pour que les lignes soient plus courtes et plus faciles à lire.
+
+<div class="fragment">
+
+![Exemple de lignes trop longues](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8n6xTGkakMcivN5B8OY7VPQhRIE9o0xFz3rtg)
+
+</div>
+
+---
+
+## Garder une longueur de ligne lisible
+
+La règle à respecter pour garder une bonne lisibilité de texte est de **limiter la longueur des lignes à 45-75 caractères**.
+
+> Une bonne manière d'y arriver est de **limité la largeur** (`width`) du `<p>` en utilisant **l'unité de mesure `em`**, soit une taille qui varie selon la taille de la police (`font-size`) du texte. Une `width` de `20em`-`35em` devrait être suffisant pour la majorité des textes.
+
+> En d'autres mots, plus votre texte est petit, plus la largeur du texte sera petite. Et plus votre texte est grand, plus la largeur du texte sera grande.
+
+---
+
+## Garder une longueur de ligne lisible
+
+![45-55 caractères par ligne](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8YT7Qma5PlYfcoOFjRWKwExez1yq3M2dh4pQZ)
+
+---
+
+## Garder une longueur de ligne lisible
+
+![55-65 caractères par ligne](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Pu1bE9YCWD2FNPSIHnB8Ks3bztOiLrXVYcl1)
+
+---
+
+## Garder une longueur de ligne lisible
+
+![65-75 caractères par ligne](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8REiz1k4W0kX9SQ3ImTnpicaMzOtULbyA1FZC)
+
+> Parfois, un texte un peu plus long que 75 caractères peut être acceptable, mais il est préférable de **limiter la longueur des lignes à 75 caractères** pour la majorité des textes.
+
+---
+
+## Garder une longueur de ligne lisible
+
+Lorsque vous **mélangez des textes avec des images ou d'autres éléments plus larges**, vous devriez quand même **limiter la largeur du texte** pour garder une bonne lisibilité, et ce, **même si le conteneur doit être plus large** pour accueillir les autres éléments.
+
+![Texte trop large](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8w5yEE0th1Pxp7LXA5dit2g4j8uOBJavmRUfc)
+
+---
+
+## Garder une longueur de ligne lisible
+
+Lorsque vous **mélangez des textes avec des images ou d'autres éléments plus larges**, vous devriez quand même **limiter la largeur du texte** pour garder une bonne lisibilité, et ce, **même si le conteneur doit être plus large** pour accueillir les autres éléments.
+
+![Texte de longueur appropriée](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8hXWqayl0QRnfASFV9yo8CUvLYOXgHj1MsDK4)
+
+---
+
+## Utiliser le baseline pour aligner le texte
+
+Lorsqu'on design un composant, il est commun d'avoir plusieurs textes de tailles différentes alignés sur la même ligne.
+
+> Par exemple, une carte avec un titre dans le coin supérieur gauche et quelques actions dans le coin supérieur droit. Lorsque vous mélangez des textes de tailles différentes, votre instinct pourrait être d'**aligner les textes verticalement en les centrant**.
+
+> S'il y a assez d'espace entre les textes, **ça peut fonctionner**. Toutefois, si les **textes sont plus rapprochés**, on risque de **remarquer que les textes ne sont pas alignés correctement**.
+
+---
+
+## Utiliser le baseline pour aligner le texte
+
+![Textes alignés verticalement en les centrant](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N89kfi0ATcDf2qR4auojISAVeZKxTvPY6nBdMr)
+
+---
+
+## Utiliser le baseline pour aligner le texte
+
+![Textes alignés verticalement en les centant, et trop proche](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8tuM6gE0Ik8h6WsJ1cxRQluBn4FHgXiMESZOv)
+
+---
+
+## Utiliser le baseline pour aligner le texte
+
+La meilleure manière d'aligner des textes de tailles différentes est de **les aligner sur leur baseline**. Le baseline est la ligne imaginaire sur laquelle les lettres reposent. 
+
+> En alignant les textes sur leur baseline, on s'assure que les textes sont **alignés correctement et lisibles**.
+
+---
+
+## Utiliser le baseline pour aligner le texte
+
+![Textes alignés sur leur baseline](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8iqHLGHmfgOD0Y9RJ6P2dBE3zqIAaMLsocNhX)
+
+---
+
+## La hauteur des lignes (line-height)
+
+En général, une `line-height` de **1.5** est un bon point de départ pour la majorité des textes. 
+
+![1.5 line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Je6p5gS5bCG0n3c1XWfexuEiz4OUIJS7YhDm)
+
+---
+
+## La hauteur des lignes (line-height)
+
+La `line-height` sert à **augmenter l'espacement entre les lignes de texte**. Une `line-height` plus grande aide le lecteur à trouver la ligne suivante d'un texte multi-lignes.
+
+> Avez-vous déjà lu une ligne de texte plusieurs fois accidentellement, ou même sauté une ligne?
+
+> Ça arrive souvent lorsque la `line-height` est trop petite, car le lecteur **perd sa place dans le texte**.
+
+---
+
+## La hauteur des lignes (line-height)
+
+Lorsque les lignes d'un texte sont trop rapprochées, il est facile de finir une ligne à la droite de l'écran, puis déplacer nos yeux vers la gauche pour lire la suite, mais **sauter accidentellement une ligne ou relire la même ligne**.
+
+![Pas assez de line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ytlbogC3Clb9Zd5yuJXWwDsUofSpLhVYF8ti)
+
+> Ce problème est amplifié plus les lignes sont longues, car le lecteur doit **déplacer ses yeux plus loin** pour trouver la ligne suivante.
+
+---
+
+## La hauteur des lignes (line-height)
+
+Donc, en théorie, la `line-height` et la longueur d'un paragraphe devraient être **proportionnelles**. Un texte plus court peut avoir un `line-height` de `1.5`, alors qu'un texte plus long devrait avoir un `line-height` plus grand, jusqu'à `2.0` pour les textes très longs.
+
+![Line-height porportionnelles à la longueur du paragraphe](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8WtHUoZLX0PtK8kIs6ic9H1Qpf7BvZurjEV3w)
+
+---
+
+## La hauteur des lignes (line-height)
+
+La longueur d'un paragraphe n'est pas le seul facteur qui influence la `line-height`. La **taille de la police** et le **type de police** sont aussi des facteurs importants.
+
+> Lorsque la police est petite, plus de `line-height` est nécessaire pour faciliter la lecture. 
+
+> Toutefois, plus la police est grande, vos yeux peuvent plus facilement suivre les lignes, donc moins de `line-height` est nécessaire. Il est même possible qu'un `line-height` de `1.0` soit suffisant pour les très grandes polices comme les titres.
+
+> En d'autres mots, la `line-height` devrait être **inversement proportionnelle à la taille de la police**. Utilisez une `line-height` plus grande pour les petites polices, et une `line-height` plus petite pour les grandes polices.
+
+---
+
+## La hauteur des lignes (line-height)
+
+![Pas assez de line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8TIPPkhibaif5CnIHVgcuwspo4yDAULY7B0r9)
+
+---
+
+## La hauteur des lignes (line-height)
+
+![Assez de line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8dxIHSLLp6cEWrKt0SjyOPwX13Yg5LFoJvuTH)
+
+---
+
+## La hauteur des lignes (line-height)
+
+![Titre trop de line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N80NQU24P3aGwTS4dzeLEnycpfRxDvh71NtJZB)
+
+---
+
+## La hauteur des lignes (line-height)
+
+![Titre aucun line-height](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8RWz0XI4W0kX9SQ3ImTnpicaMzOtULbyA1FZC)
+
+---
+
+## Pas tous les liens doivent être colorés
+
+Lorsque vous intégrez un lien dans un bloc de texte, il est commun de **changer la couleur du lien** pour le différencier du reste du texte.
+
+![Paragraphes avec liens colorés](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8ZHdktP1GnzPJKoVdDg4I6Yrf2TG7tbsl31Xh)
+
+---
+
+## Pas tous les liens doivent être colorés
+
+Cependant, lorsque vous designez une interface où presque tous les textes sont des liens, il est préférable de **ne pas changer la couleur des liens** pour éviter de surcharger l'interface avec trop de couleurs.
+
+> À la place, mettez de l'emphase sur les liens de manière plus subtile, comme en **soulignant les liens**, en utilisant une **lourdeur de police plus grande** ou en utilisant une **couleur plus foncée** pour les liens.
+
+---
+
+## Pas tous les liens doivent être colorés
+
+![Tous les liens sont bleus](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8twcAwb0Ik8h6WsJ1cxRQluBn4FHgXiMESZOv)
+
+---
+
+## Pas tous les liens doivent être colorés
+
+![Les liens ont une emphase via la lourdeur de la police](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8c19yVKqFHbuTeR0r4fxNYMpBsz8UWLS6POyt)
+
+> **Certains liens n'ont même pas besoin d'emphase**. On peut simplement les souligner lors du survol de la souris pour indiquer qu'il s'agit d'un lien.
+
+---
+
+## Pas tous les liens doivent être colorés
+
+![Liens avec soulignement au survol](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8PNQfaGEYCWD2FNPSIHnB8Ks3bztOiLrXVYcl)
+
+---
+
+## Aligner pour la lisibilité
+
+En général, les textes devraient être **alignés en suivant le flux de lecture** du langage. Pour l'anglais et le français, ça veut dire que les textes devraient être **alignés à gauche**.
+
+![Interface avec texte aligné à gauche](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8hZs7zYl0QRnfASFV9yo8CUvLYOXgHj1MsDK4)
+
+---
+
+## Aligner pour la lisibilité
+
+Parfois, il est joli de centrer un texte, souvent pour des titres ou de courts textes.
+
+![Texte aligné au centre](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Y7RMBt5PlYfcoOFjRWKwExez1yq3M2dh4pQZ)
+
+> Par contre, si un texte est plus **long que 2 ou 3 lignes**, il serait mieux de **l'aligner à gauche** pour améliorer la lisibilité. 
+
+---
+
+## Aligner pour la lisibilité
+
+![Texte aligné à gauche](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8rAEDS2xe6t8EfKJWhw0UscvzlyZQDmSL7Fk5)
+
+> Si vous avez plusieurs blocs de texte que vous souhaitez centrer, mais qu'un de ces blocs est trop long, la solution la plus facile est de réduire la taille du texte!
+
+---
+
+## Aligner pour la lisibilité
+
+![Raccourcir le texte pour le centrer](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8lHQttsRIyn4dToeB8P7ODJqEMf5jYKxgprNH)
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Lorsqu'on design du texte, on met beaucoup d'effort à trouver la bonne police, la bonne taille, la bonne couleur, etc. Il ne faut pas oublier que l'**espacement entre les lettres** (`letter-spacing`) est aussi un facteur important pour la lisibilité du texte.
+
+![Letter-spacing serré](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8WwiANuLX0PtK8kIs6ic9H1Qpf7BvZurjEV3w)
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Lorsqu'on design du texte, on met beaucoup d'effort à trouver la bonne police, la bonne taille, la bonne couleur, etc. Il ne faut pas oublier que l'**espacement entre les lettres** (`letter-spacing`) est aussi un facteur important pour la lisibilité du texte.
+
+![Letter-spacing serré](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8giFnerEnfVYirFR4JDL7tQoBu9Pak2EHd5Kl)
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Lorsqu'on design du texte, on met beaucoup d'effort à trouver la bonne police, la bonne taille, la bonne couleur, etc. Il ne faut pas oublier que l'**espacement entre les lettres** (`letter-spacing`) est aussi un facteur important pour la lisibilité du texte.
+
+![Letter-spacing élargi](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8iNMg7lmfgOD0Y9RJ6P2dBE3zqIAaMLsocNhX)
+
+> En général, vous n'allez pas modifier le `letter-spacing` pour les textes de paragraphes, mais il quelques situations où vous pourriez vouloir l'utiliser.
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Certaines polices d'écriture sont conçues pour être **très lisible, même à petite taille**. Dans ces cas, leur `letter-spacing` **par défaut est plus grand**. Certaines polices sont conçues pour être **plus audacieuses et originales, mais moins lisibles**. Dans ces cas, leur `letter-spacing` **par défaut est plus petit**.
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+![Open Sans vs Oswald](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8yycvgbC3Clb9Zd5yuJXWwDsUofSpLhVYF8ti)
+
+> La police **Open Sans** est conçue pour être **très lisible**, même à petite taille. C'est pourquoi son `letter-spacing` par défaut est plus grand. À l'inverse, la police **Oswald** est conçue pour les titres, elle a donc un plus petit `letter-spacing` par défaut.
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Si vous voulez utiliser une police d'écriture avec un `letter-spacing` plus grand pour un titre, vous pouvez **réduire le `letter-spacing` pour améliorer la lisibilité**.
+
+![Open Sans avec plus petit letter-spacing](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8Z02EFKGnzPJKoVdDg4I6Yrf2TG7tbsl31Xhx)
+
+> Faites attention, **l'inverse ne fonctionne pas vraiment**. Les polices conçues pour être des titres ne sont pas très jolies lorsqu'on augmente leur `letter-spacing` pour les rendre plus lisibles en tant que paragraphe.
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Le `letter-spacing` dans la majorité des polices est **optimisé pour la lisibilité dans des phrases avec capitalisation normale**, soit une lettre majuscule suivie de lettres minuscules.
+
+> Les lettres minuscules ont beaucoup de variations dans leur forme. Certaines lettres comme **a, e, r et w** rentrent dans la portion `x-height` de la police. D'autres lettres comme **b, d, f et t** dépassent la portion `x-height`, elles possèdent un **ascender**. Et d'autres lettres comme **g, q, p et y** dépassent la portion `baseline`, elles possèdent un **descender**.
+
+<div class="fragment">
+
+![Analyse de la construction des lettres](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8niny6ZakMcivN5B8OY7VPQhRIE9o0xFz3rtg)
+
+</div>
+
+---
+
+## Bien utiliser l'espace entre les lettres
+
+Les textes tout en majuscules sont **moins lisibles** car toutes les letters sont pareilles. Utiliser le `letter-spacing` par défaut peut rendre la lecture plus difficile.
+
+Dans ces cas, il est préférable d'**augmenter le `letter-spacing` pour améliorer la lisibilité**.
+
+![Texte en majuscules avec letter-spacing augmenté](https://ygdyb340rg.ufs.sh/f/LYaAqah9S0N8IBOPQGJYr0S3OF6hiujPztAvGeWpwVq1JLxm)
