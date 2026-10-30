@@ -240,8 +240,6 @@ Remplissez les couleurs intermédiaires en débutant par **700** et **300**.
 
 </div>
 
-> **Ne modifiez jamais la teinte**, seulement la saturation et la luminosité. La teinte est ce qui permet de **reconnaître que deux couleurs sont similaires**.
-
 ---
 
 ## Créer une palette de couleurs
